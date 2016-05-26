@@ -7,6 +7,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<title>Welcome to Coad's school</title>
 </head>
 <body>
-555
+P'Coad eiei
 </body>
 </html>
