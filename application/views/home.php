@@ -4,10 +4,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html>
 <head>
-	<title>haha</title>
+	<title>Welcome to Coad's school</title>
 	<h1>e-dok ros</h1>
 </head>
 <body>
-555
+P'Coad eiei
 </body>
 </html>
