@@ -8,6 +8,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<h1>e-dok ros</h1>
 </head>
 <body>
-P'Coad eiei so handsome
+P'Coad eiei so handsome Good job!!
 </body>
 </html>
