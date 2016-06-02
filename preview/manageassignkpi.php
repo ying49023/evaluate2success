@@ -174,9 +174,7 @@
                                     <button class="btn btn-file">เพิ่ม</button>
                                     <button class="btn btn-microsoft">เรียบร้อย</button>
                                 </div>
-
                             </div>
-
                         </form>
                     </div>
                 </div>
