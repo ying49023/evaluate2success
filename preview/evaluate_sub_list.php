@@ -30,7 +30,7 @@
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="bootstrap/css/metro.css">
+        <!--<link rel="stylesheet" href="bootstrap/css/metro.css">-->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,18 +38,10 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <style>
-            .box-padding{
-                padding: 10px 30px 10px 30px;
-            }
-            .box-padding-small{
-                padding: 10px 15px 10px 15px;
-            }
-            .search-button{
-                max-width: 120px;
-                width: 100%;
-            }
-        </style>
+        
+        <!--CSS ปรับแต่งเอง -->
+        <link rel="stylesheet" href="customize.css">
+
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -83,17 +75,17 @@
                                 <div class="col-sm-3">
                                     <label class="col-sm-6 control-label">รหัสพนักงาน</label>
                                     <div class="col-sm-6">
-                                        <input type="text" name="emp_id">
+                                        <input class="form-control" type="text" name="emp_id">
                                     </div>
                                 </div> 
 
-                                <div class="col-md-3">
-                                    <label class="col-sm-4 control-label">ชื่อพนักงาน</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="emp_id" >
+                                <div class="col-md-4">
+                                    <label class="col-sm-5 control-label">ชื่อพนักงาน</label>
+                                    <div class="col-sm-7">
+                                        <input class="form-control" type="text"  name="emp_id" >
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
 
                                     <label class="col-sm-6 control-label">แผนก/ฝ่าย</label>
                                     <div class="col-sm-6">
@@ -105,7 +97,7 @@
                                     </div>                               
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="button primary"><i class="material-icons">   search   </i></button>
+                                    <button class="btn btn-primary"><i class="material-icons">   search   </i></button>
                                 </div>
 
                             </form>
@@ -113,15 +105,15 @@
                     </div>
                 </div>
                 <div class="row box-padding">
-                    <div class="col-md-12">
-                        <div class="box box-default">
+                        <div class="box box-primary">
 
                             <div class="box-header with-border">
-                                ตารางข้อมูลพนักงาน
+                                <b>ตารางข้อมูลพนักงาน</b>
                             </div>
                             <div class="box-body">
 
-                                <table width="90%" border="1px">
+                                <table class="table table-bordered table-hover" width="90%" >
+                                <thead>
                                     <tr>
                                         <th>รหัสพนักงาน</th>
                                         <th>ชื่อพนักงาน</th>
@@ -130,6 +122,7 @@
                                         <th><center>ประเมิน</center></th>
                                         <th><center>สถานะ</center></th>
                                     </tr>
+                                </thead>
                                     <tr>
                                         <td>130911</td>
                                         <td>น.ส. สมสวย เห็นงาม</td>
@@ -174,7 +167,6 @@
                                 <!-- /.chart-responsive -->
                             </div>
                         </div>
-                    </div>
                 </div>
                 
                 <!-- /.content -->
