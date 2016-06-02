@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 	<title>Welcome to Coad's school</title>
 	<script type="text/javascript " src="assets/jquery/jquery-2.2.4.min.js" language="javascript"></script>
 	<script type="text/javascript">
@@ -38,6 +39,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</script>
 
 
+
 	
 </head>
 <body>
@@ -64,5 +66,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<input type="submit" value="submit">
 		</form>
 	</div>
+
+				<?php
+			$servername = "localhost";
+			$username = "admin";
+			$password = "1234";
+			$dbname = "evaluate2successdb";
+
+			// Create connection
+			$conn = new mysqli($servername, $username, $password, $dbname);
+			// Check connection
+			if ($conn->connect_error) {
+			     die("Connection failed: " . $conn->connect_error);
+			} 
+
+			$sql = "SELECT emp_id, first_name, last_name FROM Employees";
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0) {
+			     echo "<table><tr><th>ID</th><th>Name</th></tr>";
+			     // output data of each row
+			     while($row = $result->fetch_assoc()) {
+			         echo "<tr><td>" . $row["emp_id"]. "</td><td>" . $row["first_name"]. " " . $row["last_name"]. "</td></tr>";
+			     }
+			     echo "</table>";
+			} else {
+			     echo "0 results";
+			}
+
+			$conn->close();
+			?>  
 </body>
-</html>
+</html>  n  
