@@ -65,7 +65,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        กำหนดดัชนีชี้วัดKPI
+                        กำหนดKPIs
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -78,7 +78,7 @@
 
                 <!-- Main content -->
                 <div class="row box-padding">
-                    <div class="box box-success">
+                    <div class="box box-primary">
                         <div class="box-body ">
                             <form >
                                 <div class="col-sm-4">
@@ -105,7 +105,7 @@
                 </div>
 
                 <div class="row box-padding">
-                    <div class="box box-default">
+                    <div class="box box-primary">
      
                         <div class="box-body ">    
                             <table class="table table-bordered">
@@ -116,18 +116,31 @@
                                     <td class="text-center">ID</td>
                                     <td>ชื่อ-นามสกุล</td>
                                     <td class="text-center">ตำแหน่ง</td>
-                                    <td>แผนก</td>
-                                    <td>กำหนดKPI</td>
+                                    <td class="text-center">แผนก</td>
+                                    <td class="text-center">กำหนดKPI</td>
                                     
                                 </tr>
                                 <tr>
                                     <td class="text-center">12345</td>
                                     <td>นายคมศักดิ์  สุริยล</td>
                                     <td class="text-center">พนักงานทั่วไป</td>
-                                    <td>การเงิน</td>
-                                    <td><a href=""><i class="glyphicon glyphicon-folder-open"></i></a></td>
+                                    <td class="text-center">การเงิน</td>
+                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
                                 </tr>
-
+                                <tr>
+                                    <td class="text-center">12345</td>
+                                    <td>นายคมศักดิ์  สุริยล</td>
+                                    <td class="text-center">พนักงานทั่วไป</td>
+                                    <td class="text-center">การเงิน</td>
+                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">12345</td>
+                                    <td>นายคมศักดิ์  สุริยล</td>
+                                    <td class="text-center">พนักงานทั่วไป</td>
+                                    <td class="text-center">การเงิน</td>
+                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
+                                </tr>
                             </table>
 
                         </div>

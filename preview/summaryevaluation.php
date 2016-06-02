@@ -36,21 +36,10 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <style>
-            .box-padding{
-                padding: 10px 30px 10px 30px;
-            }
-            .box-padding-small{
-                padding: 10px 15px 10px 15px;
-            }
-            .search-button{
-                max-width: 120px;
-                width: 100%;
-            }
-            .box-padding-table{
-                padding: 10px 40px 20px 40px;
-            }
-        </style>
+        
+        <!--CSS ปรับแต่งเอง -->    
+        <link rel="stylesheet" href="customize.css">   
+
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -80,13 +69,13 @@
                 <div class="row box-padding">
                     <div class="box box-default ">
                         <div class="box-header with-border">
-                            รอบการประเมิน 2/2559
+                            <b>รอบการประเมิน 2/2559</b>
                         </div>
                         <div class="box-body">    
                             <div class="row">
                                 <div class="col-md-3">
                                     <div class="box-padding">
-                                        <img class="img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" >
+                                        <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" >
                                     </div>
                                 </div>
                                 <div class="col-md-9">
@@ -107,7 +96,7 @@
                                             <tr>
                                                 <td>วันที่เริ่มงาน :</td>
                                                 <td>12 ธ.ค. 2549</td>
-                                                <td>ผู้บังคับบัญชาชั้นต้น</td>
+                                                <td>ผู้บังคับบัญชาชั้นต้น :</td>
                                                 <td>นายอนุสร สถาน</td>
                                             </tr>
                                         </table>
@@ -123,46 +112,49 @@
                             <p class="text-center">
                                 <strong>ผลสรุปคะแนนประเมินเมื่อวันที่  15 ก.ค. 2558</strong>
                             </p>
-                        </div>         
-                        <div class="box-body box-padding-table">    
-                            <table class="table table-bordered">
-                                <tr class="bg-gray-light">
-                                    <td class="text-center">ส่วน</td>
-                                    <td>หัวข้อการประเมิน</td>
-                                    <td class="text-center">คะแนน</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td>คะแนนวันลา(10%)</td>
-                                    <td class="text-center">1.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td>การประเมินประสิทธิภาพส่วนบุคคล(40%)</td>
-                                    <td class="text-center">2</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">3</td>
-                                    <td>คะแนนดัชนีชี้วัดKPIs(50%)</td>
-                                    <td class="text-center">1.5</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">คะแนนรวม</td>
-                                    <td class="text-center">5</td>
-                                </tr>
-                                <tr >
+                        </div>  
+                        <form method="get" action="compareevaluation.php" >
+                            <div class="box-body box-padding-table"> 
 
-                                    <td colspan="2"><strong>ผลการประเมิน</strong></td>
-                                    <td class="bg-green text-center"><strong>A+</strong></td>
-                                </tr>
-                            </table>
+                                <table class="table table-bordered">
+                                    <tr class="bg-gray-light">
+                                        <td class="text-center">ส่วน</td>
+                                        <td>หัวข้อการประเมิน</td>
+                                        <td class="text-center">คะแนน</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>คะแนนวันลา(10%)</td>
+                                        <td class="text-center">1.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>การประเมินประสิทธิภาพส่วนบุคคล(40%)</td>
+                                        <td class="text-center">2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>คะแนนดัชนีชี้วัดKPIs(50%)</td>
+                                        <td class="text-center">1.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">คะแนนรวม</td>
+                                        <td class="text-center">5</td>
+                                    </tr>
+                                    <tr >
 
-                        </div>
-                        <div class="box-footer">
-                            <div class="pull-right box-padding">
-                                <button class="btn btn-foursquare" type="submit">เปรียบเทียบย้อนหลัง</button>
+                                        <td colspan="2"><strong>ผลการประเมิน</strong></td>
+                                        <td class="bg-green text-center"><strong>A+</strong></td>
+                                    </tr>
+                                </table>
+
                             </div>
-                        </div>
+                            <div class="box-footer">
+                                <div class="pull-right box-padding">
+                                    <button class="btn btn-foursquare" type="submit" onclick="window.location.href='compareevaluation.php'"  >เปรียบเทียบย้อนหลัง</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

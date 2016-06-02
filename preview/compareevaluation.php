@@ -132,50 +132,33 @@
                 </div>
                 <div class="row box-padding">
                     <div class="box box-default">
-                        <div class="box-header">
-                            <p class="text-center">
-                                <strong>ผลสรุปคะแนนประเมินเมื่อวันที่  15 ก.ค. 2558</strong>
-                            </p>
-                        </div>         
+
                         <div class="box-body box-padding-table">    
-                            <table class="table table-bordered">
-                                <tr class="bg-gray-light">
-                                    <td class="text-center">ส่วน</td>
-                                    <td>หัวข้อการประเมิน</td>
-                                    <td class="text-center">คะแนน</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td>คะแนนวันลา(10%)</td>
-                                    <td class="text-center">1.5</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td>การประเมินประสิทธิภาพส่วนบุคคล(40%)</td>
-                                    <td class="text-center">2</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">3</td>
-                                    <td>คะแนนดัชนีชี้วัดKPIs(50%)</td>
-                                    <td class="text-center">1.5</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">คะแนนรวม</td>
-                                    <td class="text-center">5</td>
-                                </tr>
-                                <tr >
-
-                                    <td colspan="2"><strong>ผลการประเมิน</strong></td>
-                                    <td class="bg-green text-center"><strong>A+</strong></td>
-                                </tr>
-                            </table>
-
+                            <div id="bar-example"></div>
+                            <script>
+                                /*
+                                 * Play with this code and it'll update in the panel opposite.
+                                 *
+                                 * Why not try some of the options above?
+                                 */
+                                Morris.Bar({
+                                    element: 'bar-example',
+                                    data: [
+                                        {y: '2006', a: 100, b: 90},
+                                        {y: '2007', a: 75, b: 65},
+                                        {y: '2008', a: 50, b: 40},
+                                        {y: '2009', a: 75, b: 65},
+                                        {y: '2010', a: 50, b: 40},
+                                        {y: '2011', a: 75, b: 65},
+                                        {y: '2012', a: 100, b: 90}
+                                    ],
+                                    xkey: 'y',
+                                    ykeys: ['a', 'b'],
+                                    labels: ['Series A', 'Series B']
+                                });
+                            </script>
                         </div>
-                        <div class="box-footer">
-                            <div class="pull-right box-padding">
-                                <button class="btn btn-foursquare" type="submit">เปรียบเทียบย้อนหลัง</button>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
 
@@ -201,13 +184,13 @@
         <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
-            $.widget.bridge('uibutton', $.ui.button);
+                                $.widget.bridge('uibutton', $.ui.button);
         </script>
         <!-- Bootstrap 3.3.6 -->
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <!-- Morris.js charts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="plugins/morris/morris.min.js"></script>
+        <script src="plugins/morris/morris.js"></script>
         <!-- Sparkline -->
         <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
         <!-- jvectormap -->
