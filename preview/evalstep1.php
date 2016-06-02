@@ -126,7 +126,7 @@
                                     <!--ข้อมูลทั่วไป-->
                                     <div id="detail-content">
 
-                                        <TABLE class="table table-bordered " HEIGHT="120" WIDTH="90%"  >
+                                        <TABLE " HEIGHT="120" WIDTH="90%"  >
                                             <TR >
                                                 <TD ><b>ชื่อ</b></TD><TD colspan="2">นาย ศตวรรษ วินวิวัฒน์</TD>
                                                 <TD><b>รหัสพนักงาน</b></TD><TD colspan="2">123456</TD>
