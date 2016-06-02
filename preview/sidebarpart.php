@@ -26,34 +26,34 @@
         <ul class="sidebar-menu">
             <li class="header">เมนูหลัก</li>
             <li class="active treeview">
-                <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>แดชบอร์ด</span> <i class="fa fa-angle-left pull-right"></i>
+                <a href="index.php">
+                    <i class="glyphicon glyphicon-dashboard"></i> <span>แดชบอร์ด</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href=""><i class="fa fa-circle-o"></i> ภาพรวม</a></li>
+                    <li class="active"><a href="index.php"><i class="fa fa-circle-o"></i> ภาพรวม</a></li>
                     <li><a href=""><i class="fa fa-circle-o"></i> รายบุคคล</a></li>
                 </ul>
             </li>
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-files-o"></i>
+                    <i class="glyphicon glyphicon-file"></i>
                     <span>การประเมิน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a></li>
+                    <li><a href="evalstep1.php"><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a></li>
+                    <li><a href="summaryevaluation.php"><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a></li>
                 </ul>
             </li>
             <li>
-                <a href="">
-                    <i class="fa fa-fonticons"></i> <span>การกำหนดKPIs</span>
+                <a href="assignkpi.php">
+                    <i class="glyphicon glyphicon-check"></i> <span>การกำหนดKPIs</span>
 
                 </a>
             </li>
             <li>
                 <a href="">
-                    <i class="fa fa-th"></i> <span>แจ้งปัญหา/รายงานข้อผิดพลาด</span>
+                    <i class="glyphicon glyphicon-envelope"></i> <span>แจ้งปัญหา/รายงานข้อผิดพลาด</span>
 
                 </a>
             </li>
