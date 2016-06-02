@@ -36,21 +36,10 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <style>
-            .box-padding{
-                padding: 10px 30px 10px 30px;
-            }
-            .box-padding-small{
-                padding: 10px 15px 10px 15px;
-            }
-            .search-button{
-                max-width: 120px;
-                width: 100%;
-            }
-            .box-padding-table{
-                padding: 10px 40px 20px 40px;
-            }
-        </style>
+
+        <!--CSS ปรับแต่งเอง -->
+        <link rel="stylesheet" href="customize.css">
+
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">

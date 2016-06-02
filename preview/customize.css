@@ -34,3 +34,6 @@
             .padding-top-table{
     padding-top: 25px;
 }
+.circle-thumbnail{
+    max-height: 120px;
+}
