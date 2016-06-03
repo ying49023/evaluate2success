@@ -248,8 +248,9 @@
                                        
                                    
 										</table>
-										<center><input type="submit" value="ยืนยันการประเมิน" class="btn btn-success" ></center>
+										
                                        </form>
+                                       <center><a href="complete_page.php"><button class="btn btn-success">ยืนยันการประเมิน</button></a></center>
                                 </div>
                                 </div>
 

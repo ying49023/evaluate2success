@@ -30,7 +30,7 @@
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="bootstrap/css/metro.css">
+        
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -136,7 +136,7 @@
                                         <td> </td>
                                         <td> </td>
                                         <td>
-                                            <a href="">    
+                                            <a href="tracking_sub_kpi.php">    
                                             <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
                                             </a>
                                         </td>

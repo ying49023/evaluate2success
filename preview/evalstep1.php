@@ -548,7 +548,7 @@
                         <!--box footer-->
                         <div class="box-footer">
                             <button class="btn btn-success">บันทึกข้อมูล</button>
-                            <button class="btn btn-instagram pull-right" onclick="http://localhost/evaluate2success/preview/prominent_page.php">หน้าถัดไป</button>
+                            <a href="prominent_page.php"><button class="btn btn-instagram pull-right">หน้าถัดไป</button></a>
                         </div>
                         <!--/box footer--> </div>
 

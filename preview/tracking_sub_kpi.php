@@ -85,7 +85,8 @@
                     <div class="box box-success">
                         <div class="box-body">
                             
-                                <img class="img-circle img-thumbnail" src="../img/emp1.jpg" alt="Smiley face" height="100" width="100" align="left" style="margin: 10px 0px 0px 20px">
+                                <img class="img-circle img-thumbnail" src="../img/emp1.jpg" alt="Smiley face" height="100" width="100" align="left" 
+                                    style="margin: 10px 0px 0px 20px">
   
                                     <table border="1px" width="90%" height="100px" align="right" style="margin: 18px 5px 0px 0px; border-color:#EEEEEE ">
                                     <tr>
@@ -229,7 +230,7 @@
                                         </th>
                                         <th>
                                             <center>
-                                                 <a href=""><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                                 <a href="tracking_sub_detail.php"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                                             </center>
                                         </th>
                                                                            
@@ -249,7 +250,7 @@
                                         </th>
                                         <th>
                                             <center>
-                                                 <a href=""><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                                 <a href="tracking_sub_detail.php"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                                             </center>
                                         </th>                                                                           
                                     </tr>

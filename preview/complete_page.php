@@ -114,7 +114,7 @@
                         <br>
                         <center><img src="correct.png" style="width:180px; height:180px "></center>
                         <br>
-                        <center><h4>คุณได้ทำการประเมิน น.ส. สมสวย เห็นงาม <b>เรียบร้อยแล้ว!!</b></h4> </center>
+                        <center><h4>คุณได้ทำการประเมิน นาย ศตวรรษ วินวิวัฒน์ <b>เรียบร้อยแล้ว!!</b></h4> </center>
                         <br>
                         <br>
                         </div>

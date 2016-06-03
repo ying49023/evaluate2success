@@ -224,8 +224,8 @@
                                     </tr>
                                 </thead>
                                     <tr>
-                                        <td>130911</td>
-                                        <td>น.ส. สมสวย เห็นงาม</td>
+                                        <td>123456</td>
+                                        <td>นาย ศตวรรษ วินวิวัฒน์</td>
                                         <td> </td>
                                         <td> </td>
                                         <td>
@@ -234,6 +234,20 @@
                                             </a>
                                         </td>
                                         <td ><center><font color="green" >ประเมินแล้ว</font></center></td>
+                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td>130911</td>
+                                        <td>น.ส. สมสวย เห็นงาม</td>
+                                        <td> </td>
+                                        <td> </td>
+                                        <td>
+                                            <a href="">    
+                                            <center><i class="material-icons">mode_edit</i></center>
+                                            </a>
+                                        </td>
+                                        <td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>
                                     </tr>
                                     <tr>
                                         <td>130912</td>

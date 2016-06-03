@@ -148,18 +148,28 @@
                                     </tr>
                                 </thead>
                                     <tr>
+                                        <td>123456</td>
+                                        <td>นาย ศตวรรษ วินวิวัฒน์</td>
+                                        <td> </td>
+                                        <td> </td>
+                                        
+                                        <td width="100px">
+                                            <div class="progress progress-xs progress-striped active">
+                                                <div class="progress-bar progress-bar-primary" style="width: 35.5%"></div>
+                                            </div>
+                                        </td>
+                                        <td width="60px">
+                                            <span class="badge bg-blue">35.5%</span>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
                                         <td>130911</td>
                                         <td>น.ส. สมสวย เห็นงาม</td>
                                         <td> </td>
                                         <td> </td>
                                         
-                                        <td >
-                                            <a href="summaryevaluation.php">    
-                                                <center>
-                                                    <i class="glyphicon glyphicon-eye-open"></i>
-                                                </center>
-                                            </a>
-                                        </td>
+                                    
                                         <td width="100px">
                                             <div class="progress progress-xs progress-striped active">
                                                 <div class="progress-bar progress-bar-success" style="width: 90%"></div>
@@ -175,13 +185,7 @@
                                         <td> </td>
                                         <td> </td>
                                         
-                                        <td >
-                                            <a href="summaryevaluation.php">    
-                                                <center>
-                                                    <i class="glyphicon glyphicon-eye-open"></i>
-                                                </center>
-                                            </a>
-                                        </td>
+                                        
                                         <td width="100px">
                                             <div class="progress progress-xs progress-striped active">
                                                 <div class="progress-bar progress-bar-warning" style="width: 55%"></div>
@@ -197,13 +201,7 @@
                                         <td> </td>
                                         <td> </td>
                                         
-                                        <td >
-                                            <a href="summaryevaluation.php">    
-                                                <center>
-                                                    <i class="glyphicon glyphicon-eye-open"></i>
-                                                </center>
-                                            </a>
-                                        </td>
+                                        
                                         <td width="100px">
                                             <div class="progress progress-xs progress-striped active">
                                                 <div class="progress-bar progress-bar-primary" style="width: 30%"></div>

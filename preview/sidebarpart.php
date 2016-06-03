@@ -45,12 +45,16 @@
                     <li><a href="search_summaryeval.php"><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a></li>
                 </ul>
             </li>
-            <li>
+            <li >
                 <a href="">
-                    <i class="glyphicon glyphicon-screenshot">
+                    <i class="glyphicon glyphicon-screenshot"></i>
                         <span>ติดตามสถานะการทำงาน</span>
-                    </i>
+                    <i class="fa fa-angle-left pull-right"></i>
                 </a>
+                <ul class="treeview-menu">
+                    <li class="active"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
+                    <li><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>
+                </ul>
             </li>
             <li>
                 <a href="assignkpi.php">
