@@ -87,21 +87,21 @@
                                         <table class="table">
                                             <tr>
                                                 <td>ชื่อ-นามสกุล :</td>
-                                                <td> Mr.sitisak  jomjai</td>
+                                                <td>น.ส. สมสวย  เห็นงาม</td>
                                                 <td>รหัส :</td>
-                                                <td> 12345</td>
+                                                <td> 130911</td>
                                             </tr>
                                             <tr>
                                                 <td>ตำแหน่ง :</td>
                                                 <td>พนักงานทั่วไป</td>
                                                 <td>แผนก :</td>
-                                                <td>programmer</td>
+                                                <td>บัญชี</td>
                                             </tr>
                                             <tr>
                                                 <td>วันที่เริ่มงาน :</td>
                                                 <td>12 ธ.ค. 2549</td>
                                                 <td>ผู้บังคับบัญชาชั้นต้น :</td>
-                                                <td>นายอนุสร สถาน</td>
+                                                <td>นาย นภัทร  จันทร์ใจเอื้อ</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -134,16 +134,16 @@
                                     <tr>
                                         <td class="text-center">2</td>
                                         <td>การประเมินประสิทธิภาพส่วนบุคคล(40%)</td>
-                                        <td class="text-center">2</td>
+                                        <td class="text-center">4</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">3</td>
                                         <td>คะแนนดัชนีชี้วัดKPIs(50%)</td>
-                                        <td class="text-center">1.5</td>
+                                        <td class="text-center">5</td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">คะแนนรวม</td>
-                                        <td class="text-center">5</td>
+                                        <td class="text-center">4.35</td>
                                     </tr>
                                     <tr >
 

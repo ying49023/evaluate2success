@@ -185,7 +185,7 @@
                                       var g5 = new JustGage({
                                         id: "g5",
                                         //value: getRandomInt(0, 100),
-                                        value : 67,
+                                        value : 65,
                                         min: 0,
                                         max: 100,
                                         title: "เดือนพฤษภาคม",
@@ -235,10 +235,10 @@
                         <td>KPI002</td>
                         <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
                         <td>8</td>
-                        <td>8</td>
+                        <td>2</td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-primary" style="width: 20%"></div>
+                              <div class="progress-bar progress-bar-primary" style="width: 25%"></div>
                             </div>
                         </td>
                         <td>
@@ -249,7 +249,7 @@
                         <td>KPI003</td>
                         <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
                         <td>20</td>
-                        <td>15</td>
+                        <td>14</td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
                               <div class="progress-bar progress-bar-warning" style="width: 70%"></div>
@@ -266,11 +266,11 @@
                         <td>10</td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-success" style="width: 82%"></div>
+                              <div class="progress-bar progress-bar-success" style="width: 80%"></div>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-green">82%</span>
+                            <span class="badge bg-green">80%</span>
                         </td>
                     </tr>
                         

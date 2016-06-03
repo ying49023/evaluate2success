@@ -248,7 +248,7 @@
                                        
                                    
 										</table>
-										<center><input type="submit" value="ยืนยันการประเมิน" ></center>
+										<center><input type="submit" value="ยืนยันการประเมิน" class="btn btn-success" ></center>
                                        </form>
                                 </div>
                                 </div>

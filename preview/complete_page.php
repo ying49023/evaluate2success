@@ -110,7 +110,13 @@
                     <div id="col-md-12">
                         <div class="row box-padding">
                         <div class="box box-success">
-                  
+                        <br>
+                        <br>
+                        <center><img src="correct.png" style="width:180px; height:180px "></center>
+                        <br>
+                        <center><h4>คุณได้ทำการประเมิน น.ส. สมสวย เห็นงาม <b>เรียบร้อยแล้ว!!</b></h4> </center>
+                        <br>
+                        <br>
                         </div>
                     </div>
                     </div>

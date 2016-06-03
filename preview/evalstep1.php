@@ -82,13 +82,13 @@
                 <center>
                     <ul class="nav nav-pills">
                         <li role="presentation" class="active" style="width:30%">
-                            <a href="#">Step I</a>
+                            <a href="#">ส่วนที่1 การวัความสามารถในการปฏิบัติงาน</a>
                         </li>
                         <li role="presentation" class="bg-info  " style="width:30%">
-                            <a href="#">Step II</a>
+                            <a href="#">ส่วนที่2 ความจำเป็นในการพัฒนา</a>
                         </li>
                         <li role="presentation" class="bg-info" style="width:30%">
-                            <a href="#">Comfirm Form</a>
+                            <a href="#">การประเมินเรียบร้อย</a>
                         </li>
                     </ul>
 
@@ -548,7 +548,7 @@
                         <!--box footer-->
                         <div class="box-footer">
                             <button class="btn btn-success">บันทึกข้อมูล</button>
-                            <button class="btn btn-instagram pull-right">หน้าถัดไป</button>
+                            <button class="btn btn-instagram pull-right" onclick="http://localhost/evaluate2success/preview/prominent_page.php">หน้าถัดไป</button>
                         </div>
                         <!--/box footer--> </div>
 
