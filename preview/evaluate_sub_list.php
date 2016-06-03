@@ -68,6 +68,7 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
+                <!--search-->
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body">
@@ -97,18 +98,117 @@
                                     </div>                               
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-primary"><i class="material-icons">   search   </i></button>
+                                    <button class="btn btn-primary search-button"><i class="glyphicon glyphicon-search"></i></button>
                                 </div>
 
                             </form>
                         </div>
                     </div>
                 </div>
+                <!--/search-->
+                
+                <div class="row box-padding">
+                    <!--Style 1 don't delete  อย่าเพิ่งลบ-->
+                    <!--
+                    <div class="col-md-4">
+                        <div class="small-box bg-green">
+                        <div class="inner">
+                          <h3>50 คน</h3>
+
+                          <p>ประเมินแล้ว</p>
+                        </div>
+                        <div class="icon">
+                          <i class="ion ion-person-add"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">ดูรายชื่อทั้งหมด<i class="glyphicon glyphicon-option-horizontal"></i></a>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="small-box bg-orange">
+                        <div class="inner">
+                          <h3>7 คน</h3>
+
+                          <p>ยังไม่ประเมิน</p>
+                        </div>
+                        <div class="icon">
+                          <i class="ion ion-person"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">ดูรายชื่อทั้งหมด<i class="glyphicon glyphicon-option-horizontal"></i></a>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="small-box bg-blue">
+                        <div class="inner">
+                          <h3>57 คน</h3>
+
+                          <p>สมาชิกในแผนก</p>
+                        </div>
+                        <div class="icon">
+                          <i class="ion ion-person-stalker"></i>
+                        </div>
+                        <a href="#" class="small-box-footer">ดูรายชื่อทั้งหมด<i class="glyphicon glyphicon-option-horizontal"></i></a>
+                      </div>
+                    </div>-->
+                    <!--/Style1-->
+                    
+                    <!--Style2 don't delete อย่าเพิ่งลบ-->
+                    
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-ok"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">ประเมินแล้ว</span>
+                          <span class="info-box-number">50 คน</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+                    
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-orange"><i class="glyphicon glyphicon-remove"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">ยังไม่ประเมิน</span>
+                          <span class="info-box-number">7 คน</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                      <div class="info-box">
+                        <span class="info-box-icon bg-blue"><i class="glyphicon glyphicon-user"></i></span>
+
+                        <div class="info-box-content">
+                          <span class="info-box-text">สมาชิกในแผนก</span>
+                          <span class="info-box-number">57 คน</span>
+                        </div>
+                        <!-- /.info-box-content -->
+                      </div>
+                      <!-- /.info-box -->
+                    </div>
+                    <!--/Style2-->
+                </div>
+
+                <!--list employee-->
                 <div class="row box-padding">
                         <div class="box box-primary">
 
                             <div class="box-header with-border">
                                 <b>ตารางข้อมูลพนักงาน</b>
+                                <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> 
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                
+                                <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                </div>
                             </div>
                             <div class="box-body">
 
@@ -129,7 +229,7 @@
                                         <td> </td>
                                         <td> </td>
                                         <td>
-                                            <a href="">    
+                                            <a href="evalstep1.php">    
                                             <center><i class="material-icons">mode_edit</i></center>
                                             </a>
                                         </td>
@@ -168,6 +268,7 @@
                             </div>
                         </div>
                 </div>
+                <!--/list employee-->
                 
                 <!-- /.content -->
             </div>

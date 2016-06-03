@@ -66,24 +66,26 @@
 
                 <!-- Main content -->
                 <div class="row box-padding">
-                    <div class="box box-primary">
+                    <div class="box box-success">
                         <div class="box-body ">
                             <form >
-                                <div class="col-sm-4">
-                                    <div class="col-md-10">
-                                        <label class=" control-label">รหัสพนักงาน</label>
-                                        <input class="form-control" type="text" />
-                                    </div>
-                                </div> 
-                                <div class="col-sm-4">
-                                    <div class="col-md-10">
-                                        <label class=" control-label">ชื่อ-นามสกุล</label>
-                                        <input class="form-control" type="text" />
+                                <div class="col-md-4">
+                                    <label class="col-sm-5 control-label">รหัสพนักงาน</label>
+                                    <div class="col-sm-7">
+                                        <input class="form-control" type="text"  name="emp_id" >
                                     </div>
                                 </div>
+                                
+                                <div class="col-md-4">
+                                    <label class="col-sm-5 control-label">ชื่อนามสกุล</label>
+                                    <div class="col-sm-7">
+                                        <input class="form-control" type="text"  name="emp_name" >
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-2 ">
-                                    <button style="margin-top: 25px;" class="btn btn-default search-button" type="submit">ค้นหา</button>
+                                    <button  class="btn btn-primary search-button" type="submit">ค้นหา</button>
                                 </div>
 
                             </form>
@@ -94,20 +96,31 @@
 
                 <div class="row box-padding">
                     <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h4>ตารางรายชื่อพนักงาน</h4>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                                </button>
+                                
+                                <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
      
                         <div class="box-body ">    
-                            <table class="table table-bordered">
-                                <tr>
-                                    <td colspan="6"><h2>ตารางรายชื่อพนักงาน</h2></td>
-                                </tr>
-                                <tr class="bg-gray-light">
-                                    <td class="text-center">ID</td>
-                                    <td>ชื่อ-นามสกุล</td>
-                                    <td class="text-center">ตำแหน่ง</td>
-                                    <td class="text-center">แผนก</td>
-                                    <td class="text-center">กำหนดKPI</td>
-                                    
-                                </tr>
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                               
+                                    <tr class="bg-gray-light">
+                                        <th class="text-center">ID</th>
+                                        <th>ชื่อ-นามสกุล</th>
+                                        <th class="text-center">ตำแหน่ง</th>
+                                        <th class="text-center">แผนก</th>
+                                        <th class="text-center">กำหนดKPI</th>
+                                        
+                                    </tr>
+                                </thead>
                                 <tr>
                                     <td class="text-center">12345</td>
                                     <td>นายคมศักดิ์  สุริยล</td>

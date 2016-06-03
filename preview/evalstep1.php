@@ -97,13 +97,24 @@
                 <div id="col-md-12">
                     <div class="row box-padding">
                         <div class="box box-success">
-                            <h4 class="box-title" style="text-indent: 10px"> <b>ข้อมูลทั่วไปเกี่ยวกับผู้ถูกประเมิน</b>
+                            <div class="box-header with-border">
+                                <h4 class="box-title" style="text-indent: 10px"> <b>ข้อมูลทั่วไปเกี่ยวกับผู้ถูกประเมิน</b>
                             </h4>
-                            <hr width="100%" align="left" size="1" noshade color="#E6E6E6">
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                                    </button>
+                                    
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                        <i class="fa fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        
                             <div class="box-body">
 
                                 <div id="img-box">
-                                    <img class="img-circle img-thumbnail" src="../img/emp1.jpg" alt="Smiley face" height="150" width="150"></div>
+                                    <img class="img-circle img-thumbnail" src="../img/emp1.jpg" alt="Smiley face" height="150" width="150">
+                                </div>
 
                                 <!--ข้อมูลทั่วไป-->
                                 <div id="detail-content">
@@ -172,26 +183,7 @@
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-wrench"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#">Action</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Another action</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                
                                 <button type="button" class="btn btn-box-tool" data-widget="remove">
                                     <i class="fa fa-times"></i>
                                 </button>
@@ -206,6 +198,7 @@
                                     <center>
 
                                         <TABLE class="table table-bordered" border="1" WIDTH="100%" >
+                                        <thead>
                                             <TR>
                                                 <TD>
                                                     <b>ลาป่วย</b>
@@ -226,6 +219,8 @@
                                                     <b>ลงโทษทางวินัย</b>
                                                 </TD>
                                             </TR>
+                                        </thead>
+                                            
                                             <TR>
                                                 <TD>1วัน</TD>
                                                 <TD>1วัน</TD>
@@ -262,29 +257,6 @@
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                     <i class="fa fa-minus"></i>
                                 </button>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                                        <i class="fa fa-wrench"></i>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li>
-                                            <a href="#">Action</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Another action</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Something else here</a>
-                                        </li>
-                                        <li class="divider"></li>
-                                        <li>
-                                            <a href="#">Separated link</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove">
-                                    <i class="fa fa-times"></i>
-                                </button>
                             </div>
                         </div>
                         <!-- /.box-header -->
@@ -294,6 +266,7 @@
                                 <div class="col-md-12">
                                     <center>
                                         <TABLE class="table table-bordered" HEIGHT="100" WIDTH="100%" border="1" >
+                                        <thead>
                                             <TR>
                                                 <th style="padding-top:25px;" rowspan="2" colspan="4">ความสามารถ(Competency)</th>
                                                 <th style="padding-top:25px;" rowspan="2" >%น้ำหนัก(W)</th>
@@ -310,6 +283,7 @@
                                                 <td>5</td>
                                                 <td>รวม</td>
                                             </tr>
+                                            </thead>
                                             <TR>
                                                 <th colspan="13">
                                                     ความสามารถในการปฏิบัติงาน (Competency) - ผู้บังคับบัญชากรุณาทำความเข้าใจ "คำอธิบายระดับความสามารถ" เพื่อประเมินได้ถูกต้อง

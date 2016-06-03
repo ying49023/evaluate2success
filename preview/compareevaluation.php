@@ -68,7 +68,7 @@
                 <!-- Main content -->
                 <div class="row box-padding">
                     <div class="box box-success">
-                        <div class="box-body ">
+                        <div class="box-header ">
                             <form >
                                 <div class="col-sm-5">
                                     <label class="col-sm-6 control-label">ปีการประเมิน</label>
@@ -96,9 +96,21 @@
                                 </div>
 
                             </form>
+                            <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                                    </button>
+                                    
+                                </div>
                         </div>
-                        <div class="">
+                        <div class="box-body">
                             <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>ลำดับ</td>
+                                        <td>ปี/ครั้งการประเมิน</td>
+                                    </tr>    
+                                </thead>
+                                
                                 <tr>
                                     <td>1</td>
                                     <td><a href="">ปี 2559 ครั้งที่ 1</a></td>
@@ -119,37 +131,49 @@
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    window.onload = function () {
+                        var chart = new CanvasJS.Chart("chartContainer",
+                        {
+                            title:{
+                                text: "เปรียบเทียบข้อมูลแต่ละปี"
+                            },
+
+                            data: [
+                            {
+                                type: "bar",
+
+                                dataPoints: [
+                                { x: 10, y: 4, label:"2/2558" },
+                                { x: 20, y: 4.6, label:"2/2557" },
+                                { x: 30, y: 3.51, label:"2/2556" },
+                                { x: 40, y: 0, label:"-" },
+                                
+                                ]
+                            }
+                            ]
+                        });
+
+                        chart.render();
+                    }
+                </script>
                 <div class="row box-padding">
-                    <div class="box box-default">
+                    <div class="box box-primary">
 
-                        <div class="box-body box-padding-table">    
-                            <div id="bar-example"></div>
-                            <script>
-                                /*
-                                 * Play with this code and it'll update in the panel opposite.
-                                 *
-                                 * Why not try some of the options above?
-                                 */
-                                Morris.Bar({
-                                    element: 'bar-example',
-                                    data: [
-                                        {y: '2006', a: 100, b: 90},
-                                        {y: '2007', a: 75, b: 65},
-                                        {y: '2008', a: 50, b: 40},
-                                        {y: '2009', a: 75, b: 65},
-                                        {y: '2010', a: 50, b: 40},
-                                        {y: '2011', a: 75, b: 65},
-                                        {y: '2012', a: 100, b: 90}
-                                    ],
-                                    xkey: 'y',
-                                    ykeys: ['a', 'b'],
-                                    labels: ['Series A', 'Series B']
-                                });
-                            </script>
-                        </div>
-
+                        <div class="box-body box-padding-small row">
+                            <div class="col-md-8">
+                                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                            </div>  
+                            <div class="col-md-4">
+                                <h1>
+                                    <i class="glyphicon glyphicon-info-sign"></i>
+                                </h1>
+                            </div>  
+                       </div>
+                    
                     </div>
                 </div>
+
 
                 <!-- /.content -->
             </div>
@@ -166,7 +190,9 @@
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
-
+        
+        <!--CanvasJS-->
+        <script src="plugins/canvasjs/canvasjs.min.js"></script>
         <!-- jQuery 2.2.0 -->
         <script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
         <!-- jQuery UI 1.11.4 -->

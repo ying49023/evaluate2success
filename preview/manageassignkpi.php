@@ -70,7 +70,14 @@
             <!-- Main content -->
             <div class="row box-padding">
                 <div class="box box-primary ">
-                    <div class="box-header with-border"><b>ข้อมูลทั่วไป</b></div>
+                    <div class="box-header with-border">
+                        <b>ข้อมูลทั่วไป</b>
+                        <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                                    </button>
+                                    
+                                </div>
+                    </div>
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-3">
@@ -117,8 +124,9 @@
                                 <td>รหัส</td>
                                 <td>ชื่อตัวชี้วัด</td>
                                 <td>คำอธิบาย</td>
-                                <td>น้ำหนัก</td>
-                                <td>การจัดการ</td>
+                                <td width="60px">น้ำหนัก</td>
+                                <td width="70px">เป้าหมาย</td>
+                                <td width="80px">การจัดการ</td>
                             </tr>
                             <tr>
                                 <td>KPI001</td>
@@ -127,6 +135,43 @@
                                     ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
                                 </td>
                                 <td>20%</td>
+                                <td>40</td>
+                                <td class="text-center">
+                                    <a href=""> <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                    |
+                                    <a href="">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>KPI002</td>
+                                <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                                <td>
+                                    ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
+                                </td>
+                                <td>20%</td>
+                                <td>25</td>
+                                <td class="text-center">
+                                    <a href=""> <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                    |
+                                    <a href="">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                </td>
+                                
+                                
+                            </tr>
+                            <tr>
+                                <td>KPI003</td>
+                                <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                                <td>
+                                    ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
+                                </td>
+                                <td>20%</td>
+                                <td>25</td>
                                 <td class="text-center">
                                     <a href=""> <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
@@ -144,10 +189,10 @@
             <div class="row box-padding">
                 <div class="box box-primary">
                     <div class="box-header with-border"><b>เพิ่มเติม/แก้ไขKPI</b></div>
-                    <div class="box-body">
+                    <div class="box-body box-padding-small">
                         <form action="">
                             <div class="row">
-                                <div class="form-group col-sm-5" >
+                                <div class="form-group col-sm-6" >
                                     <label class="control-label pull-left">ชื่อ KPI</label>
                                     <div class="">
                                         <select class="form-control">
@@ -164,6 +209,12 @@
                             <div class="row">
                                 <div class="form-group col-sm-3">
                                     <label class="control-label pull-left">น้ำหนัก(%)</label>
+                                    <div ">
+                                        <input class="form-control" type="text" />
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                    <label class="control-label pull-left">เป้าหมาย</label>
                                     <div ">
                                         <input class="form-control" type="text" />
                                     </div>
