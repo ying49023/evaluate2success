@@ -54,7 +54,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        เปรียบเทียบย้อนหลัง
+                        เปรียบเทียบผลการประเมินย้อนหลัง
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -92,7 +92,7 @@
                                     </div>                               
                                 </div>
                                 <div class="col-md-2 ">
-                                    <button class="btn btn-default search-button" type="submit">เพิ่ม +</button>
+                                    <button class="btn btn-success search-button" type="submit">เพิ่ม +</button>
                                 </div>
 
                             </form>
@@ -136,7 +136,7 @@
                         var chart = new CanvasJS.Chart("chartContainer",
                         {
                             title:{
-                                text: "เปรียบเทียบข้อมูลแต่ละปี"
+                                text: "เปรียบเทียบผลการประเมิน"
                             },
 
                             data: [
@@ -144,9 +144,9 @@
                                 type: "bar",
 
                                 dataPoints: [
-                                { x: 10, y: 4, label:"2/2558" },
-                                { x: 20, y: 4.6, label:"2/2557" },
-                                { x: 30, y: 3.51, label:"2/2556" },
+                                { x: 10, y: 4, label:"2/2559" },
+                                { x: 20, y: 4.6, label:"2/2558" },
+                                { x: 30, y: 3.51, label:"2/2557" },
                                 { x: 40, y: 0, label:"-" },
                                 
                                 ]
@@ -161,13 +161,49 @@
                     <div class="box box-primary">
 
                         <div class="box-body box-padding-small row">
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                                 <div id="chartContainer" style="height: 300px; width: 100%;"></div>
                             </div>  
-                            <div class="col-md-4">
-                                <h1>
-                                    <i class="glyphicon glyphicon-info-sign"></i>
-                                </h1>
+                            <div class="col-md-8">
+                                <h3>
+                                    <i class="glyphicon glyphicon-info-sign text-blue"></i>
+                                    คำอธิบาย : สรุปการประเมินผลการปฏิบัติงานโดยรวม (ระดับการประเมิน)
+                                </h3>
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr class="bg-gray">
+                                            <th width="160px">เกรด</th>
+                                            <th width="80px">คะแนน</th>
+                                            <th>คำนิยาม (Definition)</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tr>
+                                        <td><b>A+</b> : Outstanding (ดีเลิศ)</td>
+                                        <td>4.26 - 5.00</td>
+                                        <td>ความสามารถและผลการปฏิบัติงานสูงกว่าเป้าหมายที่กำหนดไว้เกินคาด</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>A</b>   : Very Good (ดีมาก)</td>
+                                        <td>3.26 - 4.25</td>
+                                        <td>    ความสามารถและผลการปฏิบัติงานสูงกว่าเป้าหมายที่กำหนดไว้</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>B</b>   : Good (ดี)</td>
+                                        <td>2.01 - 3.25</td>
+                                        <td>ความสามารถและผลการปฏิบัติงานบรรลุตามเป้าหมายที่กำหนดไว้</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>C</b>   : Acceptable (พอใช้)</td>
+                                        <td>1.01 - 2.00</td>
+                                        <td>    ความสามารถและผลการปฏิบัติงานบรรลุตามเป้าหมายที่กำหนดไว้บางส่วน</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>D</b>   : Need Improved (ต้องปรับปรุง)</td>
+                                        <td>ต่ำกว่า 1</td>
+                                        <td>    ความสามารถและผลการปฏิบัติงานไม่บรรลุตามเป้าหมายที่กำหนดไว้</td>
+                                    </tr>
+                                </table>
                             </div>  
                        </div>
                     

@@ -218,10 +218,10 @@
                         </tr>
                     </thead>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>KPI001</td>
+                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                        <td>10</td>
+                        <td>9</td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
                               <div class="progress-bar progress-bar-success" style="width: 90%"></div>
@@ -232,10 +232,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>KPI002</td>
+                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                        <td>8</td>
+                        <td>8</td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
                               <div class="progress-bar progress-bar-primary" style="width: 20%"></div>
@@ -246,10 +246,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>KPI003</td>
+                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                        <td>20</td>
+                        <td>15</td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
                               <div class="progress-bar progress-bar-warning" style="width: 70%"></div>
@@ -260,10 +260,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>KPI004</td>
+                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                        <td>30</td>
+                        <td>10</td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
                               <div class="progress-bar progress-bar-success" style="width: 82%"></div>
