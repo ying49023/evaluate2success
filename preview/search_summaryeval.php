@@ -29,6 +29,8 @@
         <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
         <!-- bootstrap wysihtml5 - text editor -->
         <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!--<link rel="stylesheet" href="bootstrap/css/metro.css">-->
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -36,18 +38,10 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <style>
-            .box-padding{
-                padding: 10px 30px 10px 30px;
-            }
-            .box-padding-small{
-                padding: 10px 15px 10px 15px;
-            }
-            .search-button{
-                max-width: 120px;
-                width: 100%;
-            }
-        </style>
+        
+        <!--CSS ปรับแต่งเอง -->
+        <link rel="stylesheet" href="customize.css">
+
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -62,8 +56,8 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        Dashboard
-                        <small>Control panel</small>
+                        ดูผลการประเมิน
+                        <small>ค้นหาพนักงาน</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -74,60 +68,142 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
+                <!--search-->
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body">
                             <form >
                                 <div class="col-sm-3">
-                                    <label class="col-sm-6 control-label">ปีการประเมิน</label>
+                                    <label class="col-sm-6 control-label">รหัสพนักงาน</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control " name="selectyear" id="selectyear">
-                                            <option value="2013">2013</option>
-                                            <option value="2014">2014</option>
-                                            <option value="2015" >2015</option>
-                                            <option value="2016">2016</option>
-                                        </select>
+                                        <input class="form-control" type="text" name="emp_id">
                                     </div>
                                 </div> 
 
-                                
                                 <div class="col-md-4">
+                                    <label class="col-sm-5 control-label">ชื่อพนักงาน</label>
+                                    <div class="col-sm-7">
+                                        <input class="form-control" type="text"  name="emp_id" >
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
 
-                                    <label class="col-sm-6 control-label">รอบการประเมิน</label>
+                                    <label class="col-sm-6 control-label">แผนก/ฝ่าย</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" id="selectperiod" name="selectperiod">
-                                            <option value="1">ครั้งที่ 1 </option>
-                                            <option value="2">ครั้งที่ 2 </option>
+                                        <select class="form-control">
+                                            <option>บุคคล/ฝ่ายบุคคล </option>
+                                            <option>บริหาร/การเงิน</option>
+                                            <option>บริหาร/บัญชี</option>
                                         </select>
                                     </div>                               
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="btn btn-default search-button" type="submit">ค้นหา</button>
+                                    <button class="btn btn-primary search-button"><i class="glyphicon glyphicon-search"></i></button>
                                 </div>
 
                             </form>
                         </div>
                     </div>
                 </div>
+                <!--/search-->
+                
+                <!--list employee-->
                 <div class="row box-padding">
-                    <div class="col-md-8">
-                        <div class="box box-default">
+                        <div class="box box-primary">
 
                             <div class="box-header with-border">
-                                เปรียบเทียบผลการประเมิน
+                                <b>ตารางข้อมูลพนักงาน</b>
+                                <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> 
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                
+                                <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                </div>
                             </div>
                             <div class="box-body">
 
-                                <p class="text-center">
-                                    <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
+                                <table class="table table-bordered table-hover" width="90%" >
+                                <thead>
+                                    <tr>
+                                        <th>รหัสพนักงาน</th>
+                                        <th>ชื่อพนักงาน</th>
+                                        <th>ตำแหน่ง</th>
+                                        <th>ฝ่าย/แผนก</th>
+                                        <th><center>ดูผลการประเมิน</center></th>
+                                        <th><center>สถานะ</center></th>
+                                        
+                                    </tr>
+                                </thead>
+                                    <tr>
+                                        <td>130911</td>
+                                        <td>น.ส. สมสวย เห็นงาม</td>
+                                        <td> </td>
+                                        <td> </td>
+                                        
+                                        <td >
+                                            <a href="summaryevaluation.php">    
+                                                <center>
+                                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                                </center>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <font color="green" >ประเมินแล้ว</font>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>130912</td>
+                                        <td>นาย ชัยเดช พ่วงเพชร</td>
+                                        <td> </td>
+                                        <td> </td>
+                                        
+                                        <td >
+                                            <a href="summaryevaluation.php">    
+                                                <center>
+                                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                                </center>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <font color="red" >ยังไม่ประเมิน</font>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>130913</td>
+                                        <td>นาย ศักดิ์ดา เกียรติกมล</td>
+                                        <td> </td>
+                                        <td> </td>
+                                        
+                                        <td >
+                                            <a href="summaryevaluation.php">    
+                                                <center>
+                                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                                </center>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <font color="red" >ยังไม่ประเมิน</font>
+                                            </center>
+                                        </td>
+                                    </tr>
                                     
-                                </p>
+                                </table>
 
                                 
+                                
+                                <!-- /.chart-responsive -->
                             </div>
                         </div>
-                    </div>
                 </div>
+                <!--/list employee-->
                 
                 <!-- /.content -->
             </div>

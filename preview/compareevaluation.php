@@ -36,21 +36,10 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <style>
-            .box-padding{
-                padding: 10px 30px 10px 30px;
-            }
-            .box-padding-small{
-                padding: 10px 15px 10px 15px;
-            }
-            .search-button{
-                max-width: 120px;
-                width: 100%;
-            }
-            .box-padding-table{
-                padding: 10px 40px 20px 40px;
-            }
-        </style>
+
+        <!--CSS ปรับแต่งเอง -->
+        <link rel="stylesheet" href="customize.css">
+
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -65,7 +54,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        เปรียบเทียบย้อนหลัง
+                        เปรียบเทียบผลการประเมินย้อนหลัง
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -79,7 +68,7 @@
                 <!-- Main content -->
                 <div class="row box-padding">
                     <div class="box box-success">
-                        <div class="box-body ">
+                        <div class="box-header ">
                             <form >
                                 <div class="col-sm-5">
                                     <label class="col-sm-6 control-label">ปีการประเมิน</label>
@@ -103,13 +92,25 @@
                                     </div>                               
                                 </div>
                                 <div class="col-md-2 ">
-                                    <button class="btn btn-default search-button" type="submit">เพิ่ม +</button>
+                                    <button class="btn btn-success search-button" type="submit">เพิ่ม +</button>
                                 </div>
 
                             </form>
+                            <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                                    </button>
+                                    
+                                </div>
                         </div>
-                        <div class="">
+                        <div class="box-body">
                             <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <td>ลำดับ</td>
+                                        <td>ปี/ครั้งการประเมิน</td>
+                                    </tr>    
+                                </thead>
+                                
                                 <tr>
                                     <td>1</td>
                                     <td><a href="">ปี 2559 ครั้งที่ 1</a></td>
@@ -130,37 +131,85 @@
                         </div>
                     </div>
                 </div>
+                <script type="text/javascript">
+                    window.onload = function () {
+                        var chart = new CanvasJS.Chart("chartContainer",
+                        {
+                            title:{
+                                text: "เปรียบเทียบผลการประเมิน"
+                            },
+
+                            data: [
+                            {
+                                type: "bar",
+
+                                dataPoints: [
+                                { x: 10, y: 4, label:"2/2559" },
+                                { x: 20, y: 4.6, label:"2/2558" },
+                                { x: 30, y: 3.51, label:"2/2557" },
+                                { x: 40, y: 0, label:"-" },
+                                
+                                ]
+                            }
+                            ]
+                        });
+
+                        chart.render();
+                    }
+                </script>
                 <div class="row box-padding">
-                    <div class="box box-default">
+                    <div class="box box-primary">
 
-                        <div class="box-body box-padding-table">    
-                            <div id="bar-example"></div>
-                            <script>
-                                /*
-                                 * Play with this code and it'll update in the panel opposite.
-                                 *
-                                 * Why not try some of the options above?
-                                 */
-                                Morris.Bar({
-                                    element: 'bar-example',
-                                    data: [
-                                        {y: '2006', a: 100, b: 90},
-                                        {y: '2007', a: 75, b: 65},
-                                        {y: '2008', a: 50, b: 40},
-                                        {y: '2009', a: 75, b: 65},
-                                        {y: '2010', a: 50, b: 40},
-                                        {y: '2011', a: 75, b: 65},
-                                        {y: '2012', a: 100, b: 90}
-                                    ],
-                                    xkey: 'y',
-                                    ykeys: ['a', 'b'],
-                                    labels: ['Series A', 'Series B']
-                                });
-                            </script>
-                        </div>
-
+                        <div class="box-body box-padding-small row">
+                            <div class="col-md-4">
+                                <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                            </div>  
+                            <div class="col-md-8">
+                                <h3>
+                                    <i class="glyphicon glyphicon-info-sign text-blue"></i>
+                                    คำอธิบาย : สรุปการประเมินผลการปฏิบัติงานโดยรวม (ระดับการประเมิน)
+                                </h3>
+                                <table class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr class="bg-gray">
+                                            <th width="160px">เกรด</th>
+                                            <th width="80px">คะแนน</th>
+                                            <th>คำนิยาม (Definition)</th>
+                                        </tr>
+                                    </thead>
+                                    
+                                    <tr>
+                                        <td><b>A+</b> : Outstanding (ดีเลิศ)</td>
+                                        <td>4.26 - 5.00</td>
+                                        <td>ความสามารถและผลการปฏิบัติงานสูงกว่าเป้าหมายที่กำหนดไว้เกินคาด</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>A</b>   : Very Good (ดีมาก)</td>
+                                        <td>3.26 - 4.25</td>
+                                        <td>    ความสามารถและผลการปฏิบัติงานสูงกว่าเป้าหมายที่กำหนดไว้</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>B</b>   : Good (ดี)</td>
+                                        <td>2.01 - 3.25</td>
+                                        <td>ความสามารถและผลการปฏิบัติงานบรรลุตามเป้าหมายที่กำหนดไว้</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>C</b>   : Acceptable (พอใช้)</td>
+                                        <td>1.01 - 2.00</td>
+                                        <td>    ความสามารถและผลการปฏิบัติงานบรรลุตามเป้าหมายที่กำหนดไว้บางส่วน</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>D</b>   : Need Improved (ต้องปรับปรุง)</td>
+                                        <td>ต่ำกว่า 1</td>
+                                        <td>    ความสามารถและผลการปฏิบัติงานไม่บรรลุตามเป้าหมายที่กำหนดไว้</td>
+                                    </tr>
+                                </table>
+                            </div>  
+                       </div>
+                    
                     </div>
                 </div>
+
 
                 <!-- /.content -->
             </div>
@@ -177,7 +226,9 @@
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
-
+        
+        <!--CanvasJS-->
+        <script src="plugins/canvasjs/canvasjs.min.js"></script>
         <!-- jQuery 2.2.0 -->
         <script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
         <!-- jQuery UI 1.11.4 -->

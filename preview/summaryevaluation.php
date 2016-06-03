@@ -67,9 +67,13 @@
 
                 <!-- Main content -->
                 <div class="row box-padding">
-                    <div class="box box-default ">
+                    <div class="box box-primary ">
                         <div class="box-header with-border">
                             <b>รอบการประเมิน 2/2559</b>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="box-body">    
                             <div class="row">
@@ -107,7 +111,7 @@
                     </div>
                 </div>
                 <div class="row box-padding">
-                    <div class="box box-default">
+                    <div class="box box-primary">
                         <div class="box-header">
                             <p class="text-center">
                                 <strong>ผลสรุปคะแนนประเมินเมื่อวันที่  15 ก.ค. 2558</strong>
