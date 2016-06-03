@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 	<title>Welcome to Coad's school</title>
 <<<<<<< HEAD
 
@@ -57,7 +58,7 @@ P'Coad eiei
 		}
 		$(document).ready(function(){
 			$("#form").submit(function(event){				
-				// empid=$("#empid").val();
+				 empid=$("#empid").val();
 				//fname=$("#fname").val();
 				// lname=$("#lname").val();
 				// deptid=$("#deptid").val();
@@ -80,6 +81,7 @@ P'Coad eiei
 			});
 		});
 	</script>
+
 
 
 	
@@ -108,6 +110,39 @@ P'Coad eiei
 			<input type="submit" value="submit">
 		</form>
 	</div>
+<<<<<<< HEAD
 >>>>>>> 4ab98aa8140efe59215ac9121b5c151e437a3c08
+=======
+
+				<?php
+			$servername = "localhost";
+			$username = "admin";
+			$password = "1234";
+			$dbname = "evaluate2successdb";
+
+			// Create connection
+			$conn = new mysqli($servername, $username, $password, $dbname);
+			// Check connection
+			if ($conn->connect_error) {
+			     die("Connection failed: " . $conn->connect_error);
+			} 
+
+			$sql = "SELECT emp_id, first_name, last_name FROM Employees";
+			$result = $conn->query($sql);
+
+			if ($result->num_rows > 0) {
+			     echo "<table><tr><th>ID</th><th>Name</th></tr>";
+			     // output data of each row
+			     while($row = $result->fetch_assoc()) {
+			         echo "<tr><td>" . $row["emp_id"]. "</td><td>" . $row["first_name"]. " " . $row["last_name"]. "</td></tr>";
+			     }
+			     echo "</table>";
+			} else {
+			     echo "0 results";
+			}
+
+			$conn->close();
+			?>  
+>>>>>>> 6ec1a549ada1f129f8f59db755d0cec2979b935d
 </body>
-</html>
+</html>  n  

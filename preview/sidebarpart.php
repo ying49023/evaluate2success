@@ -31,7 +31,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="active"><a href="index.php"><i class="fa fa-circle-o"></i> ภาพรวม</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i> รายบุคคล</a></li>
+                    <li><a href="total_personal_dashboard.php"><i class="fa fa-circle-o"></i> รายบุคคล</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -41,9 +41,16 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a></li>
-                    <li><a href="summaryevaluation.php"><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a></li>
+                    <li><a href="evaluate_sub_list.php"><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a></li>
+                    <li><a href="search_summaryeval.php"><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a></li>
                 </ul>
+            </li>
+            <li>
+                <a href="">
+                    <i class="glyphicon glyphicon-screenshot">
+                        <span>ติดตามสถานะการทำงาน</span>
+                    </i>
+                </a>
             </li>
             <li>
                 <a href="assignkpi.php">

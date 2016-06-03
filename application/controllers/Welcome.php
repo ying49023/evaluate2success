@@ -19,10 +19,11 @@ class Welcome extends CI_Controller {
 
 
 	public function index(){
+
 		$this->load->view('welcome_message');
 	}
 
-<<<<<<< HEAD
+
 	public function goToLogin(){
 		$this->load->view('login_page');
 	}
@@ -36,9 +37,7 @@ class Welcome extends CI_Controller {
 		if($empmodel->employee($empid,$fname,$lname)==TRUE){
 			
 		}
-	}
 
-=======
 	public function gotowelcomemessage(){
 		$this->load->view('welcome_message');
 	}
@@ -57,5 +56,5 @@ class Welcome extends CI_Controller {
 
 
 	}
->>>>>>> 4ab98aa8140efe59215ac9121b5c151e437a3c08
+
 }
