@@ -70,8 +70,8 @@
             <div class="row box-padding">
                 <div class="box box-success">
                     <div class="box-body">
-                        <form >
-                            <div class="col-sm-3">
+                        <form>
+                            <div class="col-sm-4">
                                 <label class="col-sm-6 control-label">ปีการประเมิน</label>
                                 <div class="col-sm-6">
                                     <select class="form-control ">
@@ -106,7 +106,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <button class="btn btn-primary search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
 
@@ -132,10 +132,10 @@
 
                                 <p class="text-center"> <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
                                 </p>
-
+                                <img src="chart.PNG" width="100%" />
                                 <div class="chart">
                                     <!-- Sales Chart Canvas -->
-                                    <canvas id="salesChart" style="height: 180px; width: 703px;" width="703" height="180"></canvas>
+                                    <!--<canvas id="salesChart" style="height: 180px; width: 703px;" width="703" height="180"></canvas>-->
                                 </div>
                                 <script>
                                         var salesChartData = {

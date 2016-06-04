@@ -53,7 +53,7 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="active"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>
+                    <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
                 </ul>
             </li>
             <li>
@@ -63,7 +63,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="report.php">
                     <i class="glyphicon glyphicon-envelope"></i> <span>แจ้งปัญหา/รายงานข้อผิดพลาด</span>
 
                 </a>

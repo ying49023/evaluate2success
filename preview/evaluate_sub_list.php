@@ -72,7 +72,7 @@
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body">
-                            <form >
+                            <form>
                                 <div class="col-sm-3">
                                     <label class="col-sm-6 control-label">รหัสพนักงาน</label>
                                     <div class="col-sm-6">
@@ -80,16 +80,16 @@
                                     </div>
                                 </div> 
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <label class="col-sm-5 control-label">ชื่อพนักงาน</label>
                                     <div class="col-sm-7">
-                                        <input class="form-control" type="text"  name="emp_id" >
+                                        <input class="form-control" type="text" name="emp_id">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
 
-                                    <label class="col-sm-6 control-label">แผนก/ฝ่าย</label>
-                                    <div class="col-sm-6">
+                                    <label class="col-sm-4 control-label">แผนก/ฝ่าย</label>
+                                    <div class="col-sm-8">
                                         <select class="form-control">
                                             <option>บุคคล/ฝ่ายบุคคล </option>
                                             <option>บริหาร/การเงิน</option>

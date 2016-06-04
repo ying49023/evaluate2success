@@ -71,8 +71,8 @@
             <div class="row box-padding">
                 <div class="box box-success">
                     <div class="box-body">
-                        <form >
-                            <div class="col-sm-3">
+                        <form>
+                            <div class="col-sm-4">
                                 <label class="col-sm-6 control-label">ปีการประเมิน</label>
                                 <div class="col-sm-6">
                                     <select class="form-control ">
@@ -107,7 +107,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <button class="btn btn-primary search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
                             </div>
 

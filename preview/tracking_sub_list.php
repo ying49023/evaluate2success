@@ -38,18 +38,9 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        <style>
-            .box-padding{
-                padding: 10px 30px 10px 30px;
-            }
-            .box-padding-small{
-                padding: 10px 15px 10px 15px;
-            }
-            .search-button{
-                max-width: 120px;
-                width: 100%;
-            }
-        </style>
+        
+        <!--CSS ปรับแต่งเอง -->
+        <link rel="stylesheet" href="customize.css">
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -76,6 +67,7 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
+                <!--search form-->
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body">
@@ -83,20 +75,20 @@
                                 <div class="col-sm-3">
                                     <label class="col-sm-6 control-label">รหัสพนักงาน</label>
                                     <div class="col-sm-6">
-                                        <input type="text" name="emp_id">
+                                        <input class="form-control" type="text" name="emp_id">
                                     </div>
                                 </div> 
 
                                 <div class="col-md-3">
-                                    <label class="col-sm-4 control-label">ชื่อพนักงาน</label>
-                                    <div class="col-sm-8">
-                                        <input type="text" name="emp_id" >
+                                    <label class="col-sm-5 control-label">ชื่อพนักงาน</label>
+                                    <div class="col-sm-7">
+                                        <input class="form-control" type="text" name="emp_id" >
                                     </div>
                                 </div>
                                 <div class="col-md-4">
 
-                                    <label class="col-sm-6 control-label">แผนก/ฝ่าย</label>
-                                    <div class="col-sm-6">
+                                    <label class="col-sm-4 control-label">แผนก/ฝ่าย</label>
+                                    <div class="col-sm-8">
                                         <select class="form-control">
                                             <option>บุคคล/ฝ่ายบุคคล </option>
                                             <option>บริหาร/การเงิน</option>
@@ -105,23 +97,33 @@
                                     </div>                               
                                 </div>
                                 <div class="col-md-2">
-                                    <button class="button primary"><i class="material-icons">   search   </i></button>
+                                    <button class="btn btn-primary search-button"><i class="glyphicon glyphicon-search"></i></button>
                                 </div>
 
                             </form>
                         </div>
                     </div>
                 </div>
+                <!--/search form-->
                 <div class="row box-padding">
-                    <div class="col-md-12">
-                        <div class="box box-default">
+                        <div class="box box-primary">
 
                             <div class="box-header with-border">
-                                ตารางข้อมูลพนักงาน
+                                <b>ตารางข้อมูลพนักงาน</b>
+                                <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> 
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                
+                                <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                    <i class="fa fa-times"></i>
+                                </button>
+                                </div>
                             </div>
                             <div class="box-body">
 
-                                <table width="90%" height="150px" border="1px">
+                                <table class="table table-bordered" width="90%" height="150px" border="1px">
+                                <thead>
                                     <tr>
                                         <th>รหัสพนักงาน</th>
                                         <th>ชื่อพนักงาน</th>
@@ -130,6 +132,8 @@
                                         <th><center>ติดตามสถานะKPI</center></th>
                                     
                                     </tr>
+                                </thead>
+                                    
                                     <tr>
                                         <td>123456</td>
                                         <td>นาย ศตวรรษ วินวิวัฒน์</td>
@@ -186,7 +190,6 @@
                                 <!-- /.chart-responsive -->
                             </div>
                         </div>
-                    </div>
                 </div>
                 
                 <!-- /.content -->
