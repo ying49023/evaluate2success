@@ -38,7 +38,7 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
+
         <!--CSS ปรับแต่งเอง -->
         <link rel="stylesheet" href="customize.css">
 
@@ -61,7 +61,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">report</li>
+                        <li class="active">Report</li>
                     </ol>
                     <hr>
                 </section>
@@ -149,7 +149,7 @@
             <?php include './footer.php'; ?>
 
             <!-- Control Sidebar -->
-            <?php include './Controlsidebar.php'; ?>
+            <?php include './controlsidebar.php'; ?>
                         
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->

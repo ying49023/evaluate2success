@@ -59,7 +59,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">summary evaluation</li>
+                        <li class="active">Summary evaluation</li>
                     </ol>
                     <hr>
                 </section>
@@ -77,15 +77,12 @@
                         </div>
                         <div class="box-body">    
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="box-padding">
-                                        <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" >
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
                                     <div class="box-padding">
                                         <table class="table">
                                             <tr>
+                                                <td rowspan="4">
+                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" >
+                                                </td>
                                                 <td>ชื่อ-นามสกุล :</td>
                                                 <td>น.ส. สมสวย  เห็นงาม</td>
                                                 <td>รหัส :</td>
@@ -105,7 +102,6 @@
                                             </tr>
                                         </table>
                                     </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -170,7 +166,7 @@
             <?php include './footer.php'; ?>
 
             <!-- Control Sidebar -->
-            <?php include './Controlsidebar.php'; ?>
+            <?php include './controlsidebar.php'; ?>
 
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->

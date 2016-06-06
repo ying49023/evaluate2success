@@ -113,14 +113,15 @@
 
                     <div class="box-body">
 
-                        <div id="img-box">
-                            <img class="img-circle img-thumbnail" src="../img/emp1.jpg" alt="Smiley face" height="150" width="150"></div>
-
                         <!--ข้อมูลทั่วไป-->
-                        <div id="detail-content">
+                        <div id="">
 
                             <TABLE class="table table-bordered " HEIGHT="120" WIDTH="90%"  >
                                 <TR >
+                                    <td rowspan="4">
+                                        <div id="img-box">
+                                            <img class="img-circle img-thumbnail" src="img/emp1.jpg" alt="Smiley face"></div>
+                                    </td>
                                     <TD > <b>ชื่อ</b>
                                     </TD>
                                     <TD colspan="2">นาย ศตวรรษ วินวิวัฒน์</TD>
@@ -241,26 +242,26 @@
             <!--555555555555555555555555555555555-->
 
             <div class="row box-padding ">
-                    <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h3 class="box-title">
-                                <b>การวัดความสามารถ (Competency)</b>
-                                ในการปฏิบัติงานตามตำแหน่งงานของพนักงานในระดับนี้ที่บริษัทกำหนดไว้ (career level)
-                            </h3>
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <b>การวัดความสามารถ (Competency)</b>
+                            ในการปฏิบัติงานตามตำแหน่งงานของพนักงานในระดับนี้ที่บริษัทกำหนดไว้ (career level)
+                        </h3>
 
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
                         </div>
-                        <!-- /.box-header -->
-                        <!--box-body-->
-                        <div class="box-body">
-                            <!-- /.row -->
-                            <div class="row">
-                                <div class="box-padding-small">
-                                    <center>
+                    </div>
+                    <!-- /.box-header -->
+                    <!--box-body-->
+                    <div class="box-body">
+                        <!-- /.row -->
+                        <div class="row">
+                            <div class="box-padding-small">
+                                <center>
                                     <TABLE class="table table-bordered" HEIGHT="100" WIDTH="100%" border="1" >
                                         <thead>
                                             <TR>
@@ -525,12 +526,12 @@
 
                                 </center>
 
-                                </div>
-                                
                             </div>
 
                         </div>
-                        <!-- ./box-body -->
+
+                    </div>
+                    <!-- ./box-body -->
                     <!-- /.content -->
 
                     <!--box footer-->
@@ -556,7 +557,7 @@
 <?php include './footer.php'; ?>
 
 <!-- Control Sidebar -->
-<?php include './Controlsidebar.php'; ?></div>
+<?php include './controlsidebar.php'; ?></div>
 <!-- ./wrapper -->
 
 <!-- jQuery 2.2.0 -->

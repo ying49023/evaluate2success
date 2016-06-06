@@ -63,51 +63,45 @@
                     </li>
                     <li class="active">Assign KPIs</li>
                 </ol>
-                <hr>
-            </section>
+                <hr></section>
             <!--/Page header -->
 
             <!-- Main content -->
             <div class="row box-padding">
                 <div class="box box-primary ">
-                    <div class="box-header with-border">
-                        <b>ข้อมูลทั่วไป</b>
+                    <div class="box-header with-border"> <b>ข้อมูลทั่วไป</b>
                         <div class="box-tools pull-right">
-                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                                    </button>
-                                    
-                                </div>
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                            </button>
+
+                        </div>
                     </div>
                     <div class="box-body">
                         <div class="row">
-                            <div class="col-md-3">
-                                <div class="box-padding">
-                                    <img class=" circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" >
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <div class="box-padding">
-                                    <table class="table">
-                                        <tr>
-                                            <td>ชื่อ-นามสกุล :</td>
-                                            <td>นาย คมศักดิ์ สุริยล</td>
-                                            <td>รหัส :</td>
-                                            <td>12345</td>
-                                        </tr>
-                                        <tr>
-                                            <td>ตำแหน่ง :</td>
-                                            <td>พนักงานทั่วไป</td>
-                                            <td>แผนก :</td>
-                                            <td>บัญชี</td>
-                                        </tr>
-                                        <tr>
-                                            <td>วันที่เริ่มงาน :</td>
-                                            <td>12 ธ.ค. 2549</td>
-                                            <td>ผู้บังคับบัญชาชั้นต้น</td>
-                                            <td>นายนภัทร จันทร์ใจเเอื่อ</td>
-                                        </tr>
-                                    </table>
-                                </div>
+                            <div class="box-padding"></div>
+                            <div class="box-padding">
+                                <table class="table">
+                                    <tr>
+                                        <td rowspan="4">
+                                            <img class=" circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" style="margin: 10px 10px 0px 10px;"></td>
+                                        <td>ชื่อ-นามสกุล :</td>
+                                        <td>นาย คมศักดิ์ สุริยล</td>
+                                        <td>รหัส :</td>
+                                        <td>12345</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ตำแหน่ง :</td>
+                                        <td>พนักงานทั่วไป</td>
+                                        <td>แผนก :</td>
+                                        <td>บัญชี</td>
+                                    </tr>
+                                    <tr>
+                                        <td>วันที่เริ่มงาน :</td>
+                                        <td>12 ธ.ค. 2549</td>
+                                        <td>ผู้บังคับบัญชาชั้นต้น</td>
+                                        <td>นายนภัทร จันทร์ใจเเอื่อ</td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -137,7 +131,8 @@
                                 <td>20%</td>
                                 <td>40</td>
                                 <td class="text-center">
-                                    <a href=""> <i class="glyphicon glyphicon-pencil"></i>
+                                    <a href="">
+                                        <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                     |
                                     <a href="">
@@ -154,15 +149,15 @@
                                 <td>20%</td>
                                 <td>25</td>
                                 <td class="text-center">
-                                    <a href=""> <i class="glyphicon glyphicon-pencil"></i>
+                                    <a href="">
+                                        <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                     |
                                     <a href="">
                                         <i class="glyphicon glyphicon-trash"></i>
                                     </a>
                                 </td>
-                                
-                                
+
                             </tr>
                             <tr>
                                 <td>KPI003</td>
@@ -173,7 +168,8 @@
                                 <td>20%</td>
                                 <td>25</td>
                                 <td class="text-center">
-                                    <a href=""> <i class="glyphicon glyphicon-pencil"></i>
+                                    <a href="">
+                                        <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                     |
                                     <a href="">
@@ -188,7 +184,8 @@
             </div>
             <div class="row box-padding">
                 <div class="box box-primary">
-                    <div class="box-header with-border"><b>เพิ่มเติม/แก้ไขKPI</b></div>
+                    <div class="box-header with-border"> <b>เพิ่มเติม/แก้ไขKPI</b>
+                    </div>
                     <div class="box-body box-padding-small">
                         <form action="">
                             <div class="row">
@@ -239,7 +236,7 @@
         <?php include './footer.php'; ?>
 
         <!-- Control Sidebar -->
-        <?php include './Controlsidebar.php'; ?>
+        <?php include './controlsidebar.php'; ?>
 
         <!-- Add the sidebar's background. This div must be placed
                      immediately after the control sidebar -->

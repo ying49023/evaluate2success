@@ -61,7 +61,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
+                        <li class="active">Competency evaluation</li>
                     </ol>
                     <hr>
                 </section>
@@ -292,7 +292,7 @@
             <?php include './footer.php'; ?>
 
             <!-- Control Sidebar -->
-            <?php include './Controlsidebar.php'; ?>
+            <?php include './controlsidebar.php'; ?>
                         
             <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->

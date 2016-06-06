@@ -39,6 +39,12 @@
   
   <!--CSS ปรับแต่งเอง -->
   <link rel="stylesheet" href="customize.css">
+  <style>
+    table.table tr td,th{
+                text-align: center;
+            }
+
+  </style>
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -107,14 +113,17 @@
 
               <div class="box-body">
 
-                <div id="img-box">
-                  <img class="img-circle img-thumbnail" src="../img/emp1.jpg" alt="Smiley face" height="150" width="150">
-                </div>
+                
 
                 <div id="detail-content">
 
                   <TABLE class="table table-bordered " HEIGHT="120" WIDTH="90%"  >
                     <TR >
+                      <td rowspan="4">
+                        <div id="img-box">
+                        <img class="img-circle img-thumbnail" src="img/emp1.jpg" alt="Smiley face" >
+                      </div>
+                      </td>
                       <TD > <b>ชื่อ</b>
                       </TD>
                       <TD colspan="2">นาย ศตวรรษ วินวิวัฒน์</TD>
@@ -276,7 +285,7 @@
       <?php include './footer.php'; ?>
 
       <!-- Control Sidebar -->
-      <?php include './Controlsidebar.php'; ?>
+      <?php include './controlsidebar.php'; ?>
 
       <!-- Add the sidebar's background. This div must be placed
                  immediately after the control sidebar -->
