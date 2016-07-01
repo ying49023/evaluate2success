@@ -52,8 +52,8 @@
             <!-- Content Header (Page header)  -->
             <section class="content-header">
                 <h1>
-                    กำหนดKPIs
-                    <small>รอบที่ 1 2559</small>
+                    อนุมัติKPIs
+                    <small>รอบที่ 2 2559</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li>
@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="row box-padding">
-                <h3>KPIs สำหรับการประเมินในรอบ ม.ค. - มิ.ย. 59</h3>
+                <h3>KPIs สำหรับการประเมินในรอบ ก.ค.-ธ.ค. 59</h3>
             </div>
             <div class="row box-padding">
                 <div class="box box-primary">
@@ -239,6 +239,7 @@
                                 <div class="col-sm-4">
                                     <button class="btn btn-file">เพิ่ม</button>
                                     <button class="btn btn-microsoft">บันทึก</button>
+                                    <button class="btn btn-success">ยืนยันการอนุมัติ</button>
                                 </div>
                             </div>
                         </form>
