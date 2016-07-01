@@ -70,18 +70,6 @@
                     <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
                 </ul>
             </li>
-            <li>
-                <a href="assignkpi.php">
-                    <i class="glyphicon glyphicon-check"></i> <span>การกำหนดKPIs</span>
-
-                </a>
-            </li>
-            <li>
-                <a href="report.php">
-                    <i class="glyphicon glyphicon-envelope"></i> <span>แจ้งปัญหา/รายงานข้อผิดพลาด</span>
-
-                </a>
-            </li>
              <!-- เมนู HR-->
             <li >
                 <a href="">
