@@ -253,7 +253,7 @@
                         <td>10 วัน</td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-success" style="width: 35%%"></div>
+                              <div class="progress-bar progress-bar-success" style="width: 35%"></div>
                             </div>
                         </td>
                         <td>
