@@ -36,9 +36,10 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        
+        <!--CSS ปรับแต่งเอง -->    
+        <link rel="stylesheet" href="customize.css">   
 
-        <!--CSS ปรับแต่งเอง -->
-        <link rel="stylesheet" href="customize.css">
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -53,12 +54,12 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        กำหนดKPIs
+                        ดูผลการประเมิน
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Assign KPIs</li>
+                        <li class="active">Summary evaluation</li>
                     </ol>
                     <hr>
                 </section>
@@ -66,93 +67,94 @@
 
                 <!-- Main content -->
                 <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body ">
-                            <form >
-                                <div class="col-md-4">
-                                    <label class="col-sm-5 control-label">รหัสพนักงาน</label>
-                                    <div class="col-sm-7">
-                                        <input class="form-control" type="text"  name="emp_id" >
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    <label class="col-sm-5 control-label">ชื่อนามสกุล</label>
-                                    <div class="col-sm-7">
-                                        <input class="form-control" type="text"  name="emp_name" >
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-2 ">
-                                    <button  class="btn btn-primary search-button" type="submit">ค้นหา</button>
-                                </div>
-
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="row box-padding">
-                    <div class="box box-primary">
+                    <div class="box box-primary ">
                         <div class="box-header with-border">
-                            <h4>ตารางรายชื่อพนักงาน</h4>
+                            <b>รอบการประเมิน 2/2559</b>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
-                                
-                                <button type="button" class="btn btn-box-tool" data-widget="remove">
-                                    <i class="fa fa-times"></i>
-                                </button>
                             </div>
                         </div>
-     
-                        <div class="box-body ">    
-                            <table class="table table-bordered table-hover">
-                                <thead>
-                               
-                                    <tr class="bg-gray-light">
-                                        <th class="text-center">ID</th>
-                                        <th>ชื่อ-นามสกุล</th>
-                                        <th class="text-center">ตำแหน่ง</th>
-                                        <th class="text-center">แผนก</th>
-                                        <th class="text-center">กำหนดKPI</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tr>
-                                    <td class="text-center">123456</td>
-                                    <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">130911</td>
-                                    <td>น.ส. สมสวย เห็นงาม</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">130912</td>
-                                    <td>นาย ชัยเดช พ่วงเพชร</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">130913</td>
-                                    <td>นาย ศักดิ์ดา เกียรติกมล</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                            </table>
-
+                        <div class="box-body">    
+                            <div class="row">
+                                    <div class="box-padding">
+                                        <table class="table">
+                                            <tr>
+                                                <td rowspan="4">
+                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/user2-160x160.jpg" >
+                                                </td>
+                                                <td>ชื่อ-นามสกุล :</td>
+                                                <td>นาย นภัทร อินทร์ใจเอื้อ</td>
+                                                <td>รหัส :</td>
+                                                <td> 11111</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ตำแหน่ง :</td>
+                                                <td>หัวหน้าฝ่ายบุคคล</td>
+                                                <td>แผนก :</td>
+                                                <td>บุคคล</td>
+                                            </tr>
+                                            <tr>
+                                                <td>วันที่เริ่มงาน :</td>
+                                                <td>12 ธ.ค. 2549</td>
+                                                <td>ผู้บังคับบัญชาชั้นต้น :</td>
+                                                <td>นาย ภาคิน คำวิลัยศักดิ์</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row box-padding">
+                    <div class="box box-primary">
+                        <div class="box-header">
+                            <p class="text-center">
+                                <strong>ผลสรุปคะแนนประเมินเมื่อวันที่  15 ก.ค. 2558</strong>
+                            </p>
+                        </div>  
+                        <form method="get" action="compareevaluation.php" >
+                            <div class="box-body box-padding-table"> 
 
+                                <table class="table table-bordered">
+                                    <tr class="bg-gray-light">
+                                        <td class="text-center">ส่วน</td>
+                                        <td>หัวข้อการประเมิน</td>
+                                        <td class="text-center">คะแนน</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">1</td>
+                                        <td>คะแนนวันลา(10%)</td>
+                                        <td class="text-center">1.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">2</td>
+                                        <td>การประเมินประสิทธิภาพส่วนบุคคล(40%)</td>
+                                        <td class="text-center">4</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">3</td>
+                                        <td>คะแนนดัชนีชี้วัดKPIs(50%)</td>
+                                        <td class="text-center">5</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">คะแนนรวม</td>
+                                        <td class="text-center">4.35</td>
+                                    </tr>
+                                    <tr >
+
+                                        <td colspan="2"><strong>ผลการประเมิน</strong></td>
+                                        <td class="bg-green text-center"><strong>A+</strong></td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <div class="box-footer">
+                                <div class="pull-right box-padding">
+                                    <button class="btn btn-foursquare" type="submit" onclick="window.location.href='compareevaluation.php'"  >เปรียบเทียบย้อนหลัง</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

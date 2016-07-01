@@ -83,23 +83,23 @@
                                 <table class="table">
                                     <tr>
                                         <td rowspan="4">
-                                            <img class=" circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" style="margin: 10px 10px 0px 10px;"></td>
+                                            <img class=" circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg" style="margin: 10px 10px 0px 10px;"></td>
                                         <td>ชื่อ-นามสกุล :</td>
-                                        <td>นาย คมศักดิ์ สุริยล</td>
+                                        <td>นาย ศตวรรษ วินวิวัฒน์</td>
                                         <td>รหัส :</td>
-                                        <td>12345</td>
+                                        <td>123456</td>
                                     </tr>
                                     <tr>
                                         <td>ตำแหน่ง :</td>
-                                        <td>พนักงานทั่วไป</td>
+                                        <td>พนักงานฝ่ายบุคคล</td>
                                         <td>แผนก :</td>
-                                        <td>บัญชี</td>
+                                        <td>ฝ่ายบุคคล</td>
                                     </tr>
                                     <tr>
                                         <td>วันที่เริ่มงาน :</td>
-                                        <td>12 ธ.ค. 2549</td>
+                                        <td>1 ก.พ. 2556</td>
                                         <td>ผู้บังคับบัญชาชั้นต้น</td>
-                                        <td>นายนภัทร จันทร์ใจเเอื่อ</td>
+                                        <td>นายนภัทร อินทร์ใจเเอื่อ</td>
                                     </tr>
                                 </table>
                             </div>
@@ -123,13 +123,13 @@
                                 <td width="80px">การจัดการ</td>
                             </tr>
                             <tr>
-                                <td>KPI001</td>
-                                <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                                <td>1201</td>
+                                <td>ความสามารถในการสรรหาตรงตามเวลาที่กำหนด(60วัน)</td>
                                 <td>
                                     ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
                                 </td>
                                 <td>20%</td>
-                                <td>40</td>
+                                <td>>=80%</td>
                                 <td class="text-center">
                                     <a href="">
                                         <i class="glyphicon glyphicon-pencil"></i>
@@ -141,13 +141,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>KPI002</td>
-                                <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                                <td>1202</td>
+                                <td>เความสามารถจัดทำอัตราแผนความสามารถกำลังคน</td>
                                 <td>
                                     ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
                                 </td>
                                 <td>20%</td>
-                                <td>25</td>
+                                <td><20%</td>
                                 <td class="text-center">
                                     <a href="">
                                         <i class="glyphicon glyphicon-pencil"></i>
@@ -160,13 +160,31 @@
 
                             </tr>
                             <tr>
-                                <td>KPI003</td>
-                                <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
+                                <td>1203</td>
+                                <td>อัตราจำนวนชั่วโมงการฝึกอบรม/คน/ครึ่งปี</td>
                                 <td>
                                     ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
                                 </td>
                                 <td>20%</td>
-                                <td>25</td>
+                                <td>>=6ชั่วโมง</td>
+                                <td class="text-center">
+                                    <a href="">
+                                        <i class="glyphicon glyphicon-pencil"></i>
+                                    </a>
+                                    |
+                                    <a href="">
+                                        <i class="glyphicon glyphicon-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>1204</td>
+                                <td>การจัดปฐมนิเทศให้กับพนักงานใหม่ภายใน 3 วันทำการ</td>
+                                <td>
+                                    ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
+                                </td>
+                                <td>20%</td>
+                                <td>35%</td>
                                 <td class="text-center">
                                     <a href="">
                                         <i class="glyphicon glyphicon-pencil"></i>

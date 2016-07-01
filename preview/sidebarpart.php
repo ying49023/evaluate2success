@@ -7,7 +7,7 @@
                 <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
-                <p>นภัทร จันทร์ใจเอื้อ </p>
+                <p>นภัทร อินทร์ใจเอื้อ </p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
@@ -32,6 +32,7 @@
                 <ul class="treeview-menu">
                     <li class="active"><a href="index.php"><i class="fa fa-circle-o"></i> ภาพรวม</a></li>
                     <li><a href="total_personal_dashboard.php"><i class="fa fa-circle-o"></i> รายบุคคล</a></li>
+                    <li><a href="myindex.php"><i class="fa fa-circle-o"></i>ของตนเอง</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -43,6 +44,7 @@
                 <ul class="treeview-menu">
                     <li><a href="evaluate_sub_list.php"><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a></li>
                     <li><a href="search_summaryeval.php"><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a></li>
+                    <li><a href="my_summaryevaluation.php"><i class="fa fa-circle-o"></i>ดูผลการประเมินของตนเอง</a></li>
                 </ul>
             </li>
             <li >
@@ -53,6 +55,18 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="active"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
+                    <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
+                </ul>
+            </li>
+            <!-- เมนูsubordinate-->
+            <li >
+                <a href="">
+                    <i class="glyphicon glyphicon-level-up"></i>
+                        <span>อัพเดทสถานะการทำงาน</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="active"><a href="update_kpi.php"><i class="fa fa-circle-o"></i>อัพเดทKPIs</a></li>
                     <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
                 </ul>
             </li>
