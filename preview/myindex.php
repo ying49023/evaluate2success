@@ -122,8 +122,8 @@
                                 </p>
                                 <img src="chart.PNG" width="100%" />
                                 <div class="chart">
-                                    <!-- Sales Chart Canvas -->
-                                    <!--<canvas id="salesChart" style="height: 180px; width: 703px;" width="703" height="180"></canvas>-->
+                                <!-- Sales Chart Canvas -->
+                                <!--<canvas id="salesChart" style="height: 180px; width: 703px;" width="703" height="180"></canvas>-->
                                 </div>
                                 <script>
                                         var salesChartData = {
@@ -183,7 +183,6 @@
                                   });
                                     </script>
                                 </div>
-                                
                             </div>
                         </div>
 
