@@ -207,7 +207,7 @@
                     <div class="box-body box-padding-small">
                         <form action="">
                             <div class="row">
-                                <div class="form-group col-sm-6" >
+                                <div class="form-group col-sm-7">
                                     <label class="control-label pull-left">ชื่อ KPI</label>
                                     <div class="">
                                         <select class="form-control">
@@ -222,17 +222,17 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="form-group col-sm-3">
+                                <div class="form-group col-sm-2">
                                     <label class="control-label pull-left">น้ำหนัก(%)</label>
-                                    <div ">
-                                        <input class="form-control" type="text" />
-                                    </div>
+                                        <input class="form-control" type="text">
                                 </div>
                                 <div class="form-group col-sm-3">
                                     <label class="control-label pull-left">เป้าหมาย</label>
-                                    <div ">
-                                        <input class="form-control" type="text" />
-                                    </div>
+                                        <input class="form-control" type="text">
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label class="control-label pull-left">หน่วย</label>
+                                    <input class="form-control" type="text" placeholder="(เปลี่ยนตามหัวข้อKPI)" readonly="">
                                 </div>
                             </div>
                             <div class="row">

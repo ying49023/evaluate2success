@@ -117,7 +117,7 @@
                     <br>
                     <br>
                     <center>
-                        <img src="correct.png" style="width:180px; height:180px "></center>
+                        <img src="img/icon_success.png" style="width:180px; height:180px "></center>
                     <br>
                     <center>
                         <h4>

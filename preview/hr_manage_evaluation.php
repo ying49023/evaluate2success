@@ -72,80 +72,122 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        รายละเอียด KPI -2001
+                        จัดการระบบประเมิน
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">summary evaluation</li>
+                        <li class="active">Manage evaluation</li>
                     </ol>
                     <hr>
                 </section>
                 <!--/Page header -->
 
                 <!-- Main content -->
-                  <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body">
+                  <div class="row box-padding ">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">
+                            <b>การวัดความสามารถ (Competency)</b>
+                            ในการปฏิบัติงานตามตำแหน่งงานของพนักงานในระดับนี้ที่บริษัทกำหนดไว้ (career level)
+                        </h3>
 
-                            <table class="table table-bordered" width="90%" height="100px" align="right" style="margin: 18px 5px 0px 0px;">
-                                <tbody>
-                                    <tr>
-                                        <th rowspan="2">
-                                            <img class="img-circle img-thumbnail" src="img/emp1.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px; width:100px;"></th>
-                                        <th>
-                                        <center>รหัสพนักงาน</center>
-                                        </th>
-                                        <th>
-                                        <center>ชื่อพนักงาน</center>
-                                        </th>
-                                        <th>
-                                        <center>ตำแหน่ง</center>
-                                        </th>
-                                        <th>
-                                        <center>ฝ่าย/แผนก</center>
-                                        </th>
-                                        <th>
-                                        <center>เป้าหมาย</center>
-                                        </th>
-                                        <th>
-                                        <center>ค่าจริง</center>
-                                        </th>
-                                        <th>
-                                        <center>เทียบกับเป้าหมาย</center>
-                                        </th>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <!--box-body-->
+                    <div class="box-body">
+                        <!-- /.row -->
+                        <div class="row">
+                            <div class="box-padding-small">
+                                <center>
+                                    <table class="table table-bordered" height="100" width="100%" border="1">
+                                        <thead>
+                                            <tr>
+                                                <th style="padding-top:25px;" colspan="">ความสามารถ(Competency)</th>
+                                                <th style="padding-top:25px;">%น้ำหนัก(W)</th>
+                                                <th>ระดับที่คาดหวัง (E)</th>
+                                            </tr>                                     
+                                        </thead>
+                                        <tbody><tr>
+                                            <th colspan="3">
+                                                ความสามารถในการปฏิบัติงาน (Competency) - ผู้บังคับบัญชากรุณาทำความเข้าใจ "คำอธิบายระดับความสามารถ" เพื่อประเมินได้ถูกต้อง
+                                            </th>
                                         </tr>
                                         <tr>
-                                            <td>
-                                        <center>123456</center>
-                                        </td>
-                                        <td>
-                                        <center>นาย ศตวรรษ วินวิวัฒน์</center>
-                                        </td>
-                                        <td>
-                                        <center>พนักงานฝ่ายบุคคล</center>
-                                        </td>
-                                        <td>
-                                        <center>ฝ่ายบุคคล</center>
-                                        </td>
-                                        <th>
-                                        <center>&gt;=80%</center>
-                                        </th>
-                                        <th>
-                                        <center>35.5%</center>
-                                        </th>
-                                        <th>
-                                        <center></center>
-                                        </th>
-                                </tr>
+                                            <th style="text-align:left" colspan="3">ความสามารถในการบริหารหรือจัดการงาน (10%)</th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">1. การวางแผนงาน</td>                                                  
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">2. การดำเนินการตามแผนและติดตามผลงาน</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">3. การแก้ไขปัญหาและการตัดสินใจ</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">4. การพัฒนาผู้ใต้บังคับบัญชา</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">5. การสร้างทีมงาน</td>
+                                        </tr>
 
-                                </tbody>
-                            </table>    
+                                        <tr>
+                                            <th style="text-align:left" colspan="3">ความสามารถในงาน (ความรู้ ,ทักษะ ,คุณสมบัติเฉพาะบุคคล) (20%)</th>
+
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">6. ความรู้ความเข้าใจในหน้าที่งานที่รับผิดชอบ</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">7. ความละเอียดรอบคอบ</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">8. ความสามารถในการสื่อสาร</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">9. มนุษยสัมพันธ์ในการทำงาน</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">10. การบริหารจัดการรายงานและเอกสารต่างๆ</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">11. ความรับผิดชอบและไว้วางใจได้</td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align:left" colspan="4">12. ความร่วมมือต่อทั้งผู้บังคับบัญชาและบริษัทฯ</td>
+
+                                        </tr>
+                                        
+                                    </tbody>
+                                    </table>
+
+                                </center>
+
+                            </div>
 
                         </div>
-                            
+
                     </div>
-                </div>
+                    <!-- ./box-body -->
+                    <!-- /.content -->
+
+                    <!--box footer-->
+                    <div class="box-footer">
+                        <button class="btn btn-success">บันทึกข้อมูล</button>
+                        <a href="prominent_page.php">
+                            <button class="btn btn-instagram pull-right">หน้าถัดไป</button>
+                        </a>
+                    </div>
+                    <!--/box footer--> </div>
+
+                <!-- /.content-wrapper --> </div>
                 <div class="row box-padding">
                     <div class="box box-default ">
                         <div class="box-header with-border">

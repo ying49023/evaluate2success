@@ -67,6 +67,7 @@
             <!--/Page header -->
 
             <!-- Main content -->
+            <!-- Filter tab-->
             <div class="row box-padding">
                 <div class="box box-success">
                     <div class="box-body">
@@ -102,81 +103,83 @@
                     </div>
                 </div>
             </div>
-
+            <!-- /Filter tab-->
+            
+            <!--Table-->
             <div class="row box-padding">
-            <div class="box box-primary">
-                <div class="box-body">
-                    <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            
-                            <th>รายการ</th>
-                            <th>ดูรายละเอียด</th>
-                            <th>ออกรายงาน</th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        
-                        <td>รายงานการพัฒนา ฝึกอบรมประจำปี</td>
-                        <td>
-                            <a href="">    
-                                <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
-                            </a>
-                        </td>
-                        <td> </td>
+                <div class="box box-primary">
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
 
-                    </tr>
-                    <tr>
-                        
-                        <td>รายงานด้านเงินเดือนค่าจ้าง โบนัส ประจำปี</td>
-                        <td>
-                            <a href="">    
-                                <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
-                            </a>
-                        </td>
-                        <td> </td>
-                        
-                    </tr>
-                    <tr>
-                        
-                        <td>รายงานสถิติพนักงานจำแนกตามหน่วยงาน การขาด ลา มาสาย การหยุดงาน ประจำปี</td>
-                        <td>
-                            <a href="">    
-                                <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
-                            </a>
-                        </td>
-                        <td> </td>
-                       
-                    </tr>
-                    <tr>
-                        
-                        <td>รายงานผลการประเมินผลการปฏิบัติงานทั่วทั้งองค์การ(ส่วนของเกรด)</td>
-                        <td>
-                            <a href="hr_report_grade.php">    
-                                <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
-                            </a>
-                        </td>
-                        <td> </td>
-                       
-                    </tr>
-                    <tr>
-                        
-                        <td>รายงานผลการปฏิบัติงานตามตัวชี้วัดความสำเร็จที่กำหนดไว้(ส่วนที่4 KPIs)</td>
-                        <td>
-                            <a href="">    
-                                <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
-                            </a>
-                        </td>
-                        <td> </td>
-                       
-                    </tr>
-                        
-                    </table>
+                                    <th>รายการ</th>
+                                    <th>ดูรายละเอียด</th>
+                                    <th>ออกรายงาน</th>
+                                </tr>
+                            </thead>
+                            <tr>
+
+                                <td>รายงานการพัฒนา ฝึกอบรมประจำปี</td>
+                                <td>
+                                    <a href="">    
+                                        <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
+                                    </a>
+                                </td>
+                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
+
+                            </tr>
+                            <tr>
+
+                                <td>รายงานด้านเงินเดือนค่าจ้าง โบนัส ประจำปี</td>
+                                <td>
+                                    <a href="">    
+                                        <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
+                                    </a>
+                                </td>
+                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
+
+                            </tr>
+                            <tr>
+
+                                <td>รายงานสถิติพนักงานจำแนกตามหน่วยงาน การขาด ลา มาสาย การหยุดงาน ประจำปี</td>
+                                <td>
+                                    <a href="">    
+                                        <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
+                                    </a>
+                                </td>
+                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
+
+                            </tr>
+                            <tr>
+
+                                <td>รายงานผลการประเมินผลการปฏิบัติงานทั่วทั้งองค์การ(ส่วนของเกรด)</td>
+                                <td>
+                                    <a href="hr_report_grade.php">    
+                                        <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
+                                    </a>
+                                </td>
+                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
+
+                            </tr>
+                            <tr>
+
+                                <td>รายงานผลการปฏิบัติงานตามตัวชี้วัดความสำเร็จที่กำหนดไว้(ส่วนที่4 KPIs)</td>
+                                <td>
+                                    <a href="">    
+                                        <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
+                                    </a>
+                                </td>
+                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
+
+                            </tr>
+
+                        </table>
+                    </div>
                 </div>
-            </div>
-                
-            </div>
 
+            </div>
+            <!--/Table
             <!-- /.content --> </div>
         <!-- /.content-wrapper -->
 
