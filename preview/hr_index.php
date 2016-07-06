@@ -63,7 +63,7 @@
                     </li>
                     <li class="active">Dashboard</li>
                 </ol>
-                <hr></section>
+            </section>
             <!--/Page header -->
 
             <!-- Main content -->

@@ -63,7 +63,7 @@
                     </li>
                     <li class="active">All KPIs</li>
                 </ol>
-                <hr></section>
+            </section>
             <!--/Page header -->
 
             <!-- Main content -->

@@ -55,7 +55,7 @@
                 <section class="content-header">
                     <h1>
                         ดูผลการประเมิน
-                        <small></small>
+                        <small>รอบการประเมิน 2/2559</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -68,39 +68,43 @@
                 <!-- Main content -->
                 <div class="row box-padding">
                     <div class="box box-primary ">
-                        <div class="box-header with-border">
-                            <b>รอบการประเมิน 2/2559</b>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="box-body">    
+                        <div class="box-body">
                             <div class="row">
                                     <div class="box-padding">
-                                        <table class="table">
+                                        <table class="table table-bordered table-condensed">
                                             <tr>
-                                                <td rowspan="4">
+                                                <th rowspan="4">
                                                 <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" >
-                                                </td>
-                                                <td>ชื่อ-นามสกุล :</td>
-                                                <td>น.ส. สมสวย  เห็นงาม</td>
-                                                <td>รหัส :</td>
-                                                <td> 130911</td>
+                                                </th>
+                                                <th align="center" width="">ชื่อ-นามสกุล</th>
+                                                <th align="center" width="120px">รหัส</th>
+                                                <th align="center" width="">ตำแหน่ง</th>
+                                                <th align="center" width="">แผนก</th>
                                             </tr>
                                             <tr>
-                                                <td>ตำแหน่ง :</td>
-                                                <td>พนักงานทั่วไป</td>
-                                                <td>แผนก :</td>
-                                                <td>บัญชี</td>
-                                            </tr>
-                                            <tr>
-                                                <td>วันที่เริ่มงาน :</td>
-                                                <td>12 ธ.ค. 2549</td>
-                                                <td>ผู้บังคับบัญชาชั้นต้น :</td>
-                                                <td>นาย นภัทร  อินทร์ใจเอื้อ</td>
+                                                <td >น.ส. สมสวย  เห็นงาม</td>
+                                                <td >130911</td>
+                                                <td >พนักงานทั่วไป</td>
+                                                <td >บัญชี</td>
                                             </tr>
                                         </table>
+                                        <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                            <i class="glyphicon glyphicon-triangle-bottom"></i>รายละเอียดบุคคลเพิ่มเติม
+                                        </a>
+                                        <div class="collapse" id="collapseExample">
+                                            <table class="table table-responsive table-bordered">
+                                                <thead>
+                                                    <tr class="">
+                                                        <th colspan="3" width="50%">วันที่เริ่มงาน</th>
+                                                        <th colspan="3">ผู้บังคับบัญชา</th>
+                                                    </tr>
+                                                </thead>
+                                                <tr>
+                                                    <td colspan="3">12 ธ.ค. 2549</td>
+                                                    <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                             </div>
                         </div>

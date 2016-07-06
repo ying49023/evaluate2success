@@ -80,10 +80,9 @@
             <!-- Content Header (Page header)  -->
 
             <section class="content-header">
-                <center>
-                    <h1>แบบฟอร์มประเมินผลการปฏิบัติงาน</h1>
-                    <h3>แบบเน้น Competency, KPIs และ Development</h3>
-                </center>
+
+                <h1>แบบฟอร์มประเมินผลการปฏิบัติงาน<small>แบบเน้น Competency, KPIs และ Development</small></h1>
+
                 <ol class="breadcrumb">
                     <li>
                         <a href="#"> <i class="fa fa-dashboard"></i>
@@ -92,7 +91,8 @@
                     </li>
                     <li class="active">Evaluation</li>
                 </ol>
-                <hr></section>
+                <hr>
+            </section>
             <!--/Page header -->
 
             <!-- Main content -->

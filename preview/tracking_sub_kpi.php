@@ -76,25 +76,18 @@
                     </li>
                     <li class="active">KPIs</li>
                 </ol>
-                <hr></section>
+            </section>
             <!--/Page header -->
 
             <!-- Main content -->
             <div class="row box-padding">
                 <div class="box box-success">
-                    <div class="box-header">
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                            </button>
-
-                        </div>
-                    </div>
                     <div class="box-body">
 
-                        <table class="table table-bordered" width="90%" height="100px" align="right" style="margin: 18px 5px 0px 0px;">
+                        <table class="table table-bordered table-condensed" width="90%" height="100px" align="right" >
                             <tr>
                                 <th rowspan="2">
-                                    <img class="img-circle img-thumbnail" src="img/emp1.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px; width:100px;"></th>
+                                    <img class="img-circle img-thumbnail circle-thumbnail" src="img/emp1.jpg" alt="Smiley face" style="margin:10px 0px 0px 15px;"></th>
                                 <th>
                                     <center>รหัสพนักงาน</center>
                                 </th>
@@ -183,7 +176,7 @@
                         <div class="box box-primary">
 
                             <div class="box-header with-border">
-                                รายการKPIs
+                                <strong>รายการKPIs</strong>
                                 <div class="box-tools pull-right">
                                     <button type="button" class="btn btn-box-tool" data-widget="collapse">
                                         <i class="fa fa-minus"></i>

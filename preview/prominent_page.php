@@ -59,20 +59,18 @@
 
       <!-- Content Header (Page header)  -->
       <section class="content-header">
-        <center>
-          <h1>แบบฟอร์มประเมินผลการปฏิบัติงาน</h1>
-          <h3>แบบเน้น Competency, KPIs และ Development</h3>
-        </center>
 
-        <ol class="breadcrumb">
-          <li>
-            <a href="#"> <i class="fa fa-dashboard"></i>
-              Home
-            </a>
-          </li>
-          <li class="active">Evaluation</li>
-        </ol>
-        <hr>
+          <h1>แบบฟอร์มประเมินผลการปฏิบัติงาน<small>แบบเน้น Competency, KPIs และ Development</small></h1>
+
+          <ol class="breadcrumb">
+              <li>
+                  <a href="#"> <i class="fa fa-dashboard"></i>
+                      Home
+                  </a>
+              </li>
+              <li class="active">Evaluation</li>
+          </ol>
+          <hr>
       </section>
       <!--/Page header -->
 
@@ -97,80 +95,77 @@
 
       <!--ข้อมูลทั่วไป-->
           <div class="row box-padding">
-            <div class="box box-success">
-              <div class="box-header with-border">
-                <h4 class="box-title" style="text-indent: 10px"> <b>ข้อมูลทั่วไปเกี่ยวกับผู้ถูกประเมิน</b>
-                </h4>
-                <div class="box-tools pull-right">
-                  <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                  </button>
+                <div class="box box-success">
+                    <div class="box-body">
+                        <div class="row"> 
+                            <div class="box-padding">
+                                <!--ข้อมูลทั่วไป-->
+                                <table class="table table-bordered table-condensed">
+                                    <tbody><tr>
+                                            <th rowspan="4">
+                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg">
+                                            </th>
+                                            <th align="center" width="">ชื่อ-นามสกุล</th>
+                                            <th align="center" width="120px">รหัส</th>
+                                            <th align="center" width="">ตำแหน่ง</th>
+                                            <th align="center" width="">แผนก</th>
+                                            <th align="center" width="">ครั้งที่ 1 </th>
 
-                  <button type="button" class="btn btn-box-tool" data-widget="remove">
-                    <i class="fa fa-times"></i>
-                  </button>
+                                        </tr>
+                                        <tr>
+                                            <td>นาย ศตวรรษ วินวิวัฒน์</td>
+                                            <td> 123456</td>
+                                            <td>พนักงานฝ่ายบุคคล</td>
+                                            <td>ฝ่ายบุคคล</td>
+                                            <td><span class="text-green"><i class="glyphicon glyphicon-ok"></i></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table><!--/ข้อมูลทั่วไป-->
+                                <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <i class="glyphicon glyphicon-triangle-bottom"></i>รายละเอียดบุคคลเพิ่มเติม
+                                </a>
+                                <div class="collapse" id="collapseExample" style="margin-top:10px;">
+                                    <table class="table table-responsive table-bordered ">
+                                        <thead>
+                                            <tr class="">
+                                                <th colspan="3">วันที่เริ่มงาน</th>
+                                                <th colspan="3">ผู้บังคับบัญชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td colspan="3">1 ก.พ. 2556</td>
+                                            <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
+                                        </tr>
+                                        <thead>
+                                            <tr class="">
+                                                <th colspan="6">
+                                                    สถิติการมาปฏิบัติงาน
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>ลาป่วย</th>
+                                                <th>ลากิจ</th>
+                                                <th>ลาอื่นๆ</th>
+                                                <th>ขาดงาน</th>
+                                                <th>ลางาน</th>
+                                                <th width="16%">ลงโทษทางวินัย</th>
+                                            </tr>
+                                        </thead>
+                                        <TR>
+                                            <TD>1วัน</TD>
+                                            <TD>1วัน</TD>
+                                            <TD>-</TD>
+                                            <TD>-</TD>
+                                            <TD>2วัน</TD>
+                                            <TD>-</TD>
+                                        </TR>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>  
+                    </div>
                 </div>
-              </div>
-
-              <div class="box-body">
-
-                
-
-                <div id="detail-content">
-
-                  <TABLE class="table table-bordered " HEIGHT="120" WIDTH="90%"  >
-                    <TR >
-                      <td rowspan="4">
-                        <div id="img-box">
-                        <img class="img-circle img-thumbnail" src="img/emp1.jpg" alt="Smiley face" >
-                      </div>
-                      </td>
-                      <TD > <b>ชื่อ</b>
-                      </TD>
-                      <TD colspan="2">นาย ศตวรรษ วินวิวัฒน์</TD>
-                      <TD>
-                        <b>รหัสพนักงาน</b>
-                      </TD>
-                      <TD colspan="2">123456</TD>
-                    </TR>
-
-                    <TR>
-                      <TD>
-                        <b>ตำแหน่ง</b>
-                      </TD>
-                      <TD colspan="2">พนักงานฝ่ายบุคคล</TD>
-                      <TD>
-                        <b>วันที่เริ่มงาน</b>
-                      </TD>
-                      <TD colspan="2">1 ก.พ. 2556</TD>
-                    </TR>
-                    <TR>
-                      <TD>
-                        <b>ฝ่าย/แผนก</b>
-                      </TD>
-                      <TD colspan="2">ฝ่ายบุคคล</TD>
-                      <TD>
-                        <b>ผู้บังคับบัญชาขั้นต้น</b>
-                      </TD>
-                      <TD colspan="2">นาย นภัทร อินทร์ใจเอื้อ</TD>
-                    </TR>
-                    <TR>
-                      <TD>
-                        <b>ครึ่งปีแรก(ม.ค.-มิ.ย.)</b>
-                      </TD>
-                      <TD colspan="2">
-                        <span class="text-green">ประเมินแล้ว</span>
-                      </TD>
-                      <TD>
-                        <b>ครึ่งปีหลัง(ก.ค.-ธ.ค.)</b>
-                      </TD>
-                      <TD colspan="2">-</TD>
-                    </TR>
-                  </TABLE>
-                </div>
-                <!--/ข้อมูลทั่วไป--> 
-              </div>
             </div>
-          </div>
   
         <div class="row box-padding">
           <div class="box box-primary">

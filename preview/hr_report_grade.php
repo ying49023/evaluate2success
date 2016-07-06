@@ -65,7 +65,7 @@
                     </li>
                     <li class="active">Summary evaluation</li>
                 </ol>
-                <hr></section>
+            </section>
             <!--/Page header -->
 
             <!-- Main content -->

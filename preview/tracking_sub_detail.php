@@ -79,72 +79,68 @@
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">summary evaluation</li>
                     </ol>
-                    <hr>
                 </section>
                 <!--/Page header -->
 
                 <!-- Main content -->
                   <div class="row box-padding">
                     <div class="box box-success">
-                        <div class="box-body">
+                    <div class="box-body">
 
-                            <table class="table table-bordered" width="90%" height="100px" align="right" style="margin: 18px 5px 0px 0px;">
-                                <tbody>
-                                    <tr>
-                                        <th rowspan="2">
-                                            <img class="img-circle img-thumbnail" src="img/emp1.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px; width:100px;"></th>
-                                        <th>
-                                        <center>รหัสพนักงาน</center>
-                                        </th>
-                                        <th>
-                                        <center>ชื่อพนักงาน</center>
-                                        </th>
-                                        <th>
-                                        <center>ตำแหน่ง</center>
-                                        </th>
-                                        <th>
-                                        <center>ฝ่าย/แผนก</center>
-                                        </th>
-                                        <th>
-                                        <center>เป้าหมาย</center>
-                                        </th>
-                                        <th>
-                                        <center>ค่าจริง</center>
-                                        </th>
-                                        <th>
-                                        <center>เทียบกับเป้าหมาย</center>
-                                        </th>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                        <center>123456</center>
-                                        </td>
-                                        <td>
-                                        <center>นาย ศตวรรษ วินวิวัฒน์</center>
-                                        </td>
-                                        <td>
-                                        <center>พนักงานฝ่ายบุคคล</center>
-                                        </td>
-                                        <td>
-                                        <center>ฝ่ายบุคคล</center>
-                                        </td>
-                                        <th>
-                                        <center>&gt;=80%</center>
-                                        </th>
-                                        <th>
-                                        <center>35.5%</center>
-                                        </th>
-                                        <th>
-                                        <center></center>
-                                        </th>
-                                </tr>
+                        <table class="table table-bordered table-condensed" width="90%" height="100px" align="right" >
+                            <tr>
+                                <th rowspan="2">
+                                    <img class="img-circle img-thumbnail circle-thumbnail" src="img/emp1.jpg" alt="Smiley face" style="margin:10px 0px 0px 15px;"></th>
+                                <th>
+                                    <center>รหัสพนักงาน</center>
+                                </th>
+                                <th>
+                                    <center>ชื่อพนักงาน</center>
+                                </th>
+                                <th>
+                                    <center>ตำแหน่ง</center>
+                                </th>
+                                <th>
+                                    <center>ฝ่าย/แผนก</center>
+                                </th>
+                                <th>
+                                    <center>เป้าหมาย</center>
+                                </th>
+                                <th>
+                                    <center>ค่าจริง</center>
+                                </th>
+                                <th>
+                                    <center>เทียบกับเป้าหมาย</center>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <center>123456</center>
+                                </td>
+                                <td>
+                                    <center>นาย ศตวรรษ วินวิวัฒน์</center>
+                                </td>
+                                <td>
+                                    <center>พนักงานฝ่ายบุคคล</center>
+                                </td>
+                                <td>
+                                    <center>ฝ่ายบุคคล</center>
+                                </td>
+                                <th>
+                                    <center>>=80%</center>
+                                </th>
+                                <th>
+                                    <center>35.5%</center>
+                                </th>
+                                <th>
+                                    <center></center>
+                                </th>
+                            </tr>
 
-                                </tbody>
-                            </table>    
-
-                        </div>
-                            
+                        </table>
                     </div>
+
+                </div>
                 </div>
                 <div class="row box-padding">
                     <div class="box box-default ">

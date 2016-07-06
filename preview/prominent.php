@@ -69,7 +69,6 @@
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">การประเมิน</li>
                     </ol>
-                    <hr>
                 </section>
                 <!--/Page header -->
 

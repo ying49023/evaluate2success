@@ -63,7 +63,7 @@
                     </li>
                     <li class="active">Personal dashboard</li>
                 </ol>
-                <hr></section>
+            </section>
             <!--/Page header -->
 
             <!-- Main content -->
@@ -143,72 +143,85 @@
                                         <th width="150px"><center>ตำแหน่ง</center></th>
                                         <th width="150px"><center>ฝ่าย/แผนก</center></th>
                                         <th width="100px"><center>ดูผลงาน</center></th>
-                                        <th colspan="2"><center>ความสำเร็จ(%)</center></th>
-                                        
+                                        <th width="120px"><center>ความสำเร็จ(%)</center></th>
+                                        <th width="50px">ติดตาม</th>   
                                     </tr>
                                 </thead>
                                     <tr>
                                         <td>123456</td>
                                         <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        
+                                        <td class="text-center" >พนักงานทั่วไป</td>
+                                        <td class="text-center" >ฝ่ายบัญชี</td>
                                         <td width="100px">
                                             <div class="progress progress-xs progress-striped active">
                                                 <div class="progress-bar progress-bar-primary" style="width: 35.5%"></div>
                                             </div>
                                         </td>
-                                        <td width="60px">
-                                            <span class="badge bg-blue">35.5%</span>
+                                        <td class="text-center" >
+                                            <span class="badge bg-blue ">35.5%</span>
+                                        </td>
+                                        <td>
+                                            <a href="tracking_sub_kpi.php">    
+                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
+                                            </a>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td>130911</td>
                                         <td>น.ส. สมสวย เห็นงาม</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        
-                                    
+                                        <td class="text-center" >พนักงานทั่วไป</td>
+                                        <td class="text-center" >ฝ่ายบัญชี</td>
                                         <td width="100px">
                                             <div class="progress progress-xs progress-striped active">
                                                 <div class="progress-bar progress-bar-success" style="width: 90%"></div>
                                             </div>
                                         </td>
-                                        <td width="60px">
+                                        <td class="text-center" >
                                             <span class="badge bg-green">90%</span>
+                                        </td>
+                                        <td>
+                                            <a href="tracking_sub_kpi.php">    
+                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>130912</td>
                                         <td>นาย ชัยเดช พ่วงเพชร</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        
-                                        
+                                        <td class="text-center" >พนักงานทั่วไป</td>
+                                        <td class="text-center" >ฝ่ายบัญชี</td>
                                         <td width="100px">
                                             <div class="progress progress-xs progress-striped active">
                                                 <div class="progress-bar progress-bar-warning" style="width: 55%"></div>
                                             </div>
                                         </td>
-                                        <td width="60px">
+                                        <td class="text-center" >
                                             <span class="badge bg-orange">55%</span>
+                                        </td>
+                                        <td>
+                                            <a href="tracking_sub_kpi.php">    
+                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
+                                            </a>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>130913</td>
                                         <td>นาย ศักดิ์ดา เกียรติกมล</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        
-                                        
+                                        <td class="text-center" >พนักงานทั่วไป</td>
+                                        <td class="text-center" >ฝ่ายบัญชี</td>
                                         <td width="100px">
                                             <div class="progress progress-xs progress-striped active">
                                                 <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
                                             </div>
                                         </td>
-                                        <td width="60px">
-                                            <span class="badge bg-blue">30%</span>
+                                        <td class="text-center" >
+                                            <span class="badge bg-blue ">30%</span>
+                                        </td>
+                                        <td>
+                                            <a href="tracking_sub_kpi.php">    
+                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
+                                            </a>
                                         </td>
                                     </tr>
                                     

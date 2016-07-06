@@ -63,51 +63,83 @@
                     </li>
                     <li class="active">Assign KPIs</li>
                 </ol>
-                <hr></section>
+                </section>
             <!--/Page header -->
 
             <!-- Main content -->
             <div class="row box-padding">
-                <div class="box box-primary ">
-                    <div class="box-header with-border"> <b>ข้อมูลทั่วไป</b>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                            </button>
-
-                        </div>
-                    </div>
+                <div class="box box-success">
                     <div class="box-body">
-                        <div class="row">
-                            <div class="box-padding"></div>
+                        <div class="row"> 
                             <div class="box-padding">
-                                <table class="table">
-                                    <tr>
-                                        <td rowspan="4">
-                                            <img class=" circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg" style="margin: 10px 10px 0px 10px;"></td>
-                                        <td>ชื่อ-นามสกุล :</td>
-                                        <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                        <td>รหัส :</td>
-                                        <td>123456</td>
-                                    </tr>
-                                    <tr>
-                                        <td>ตำแหน่ง :</td>
-                                        <td>พนักงานฝ่ายบุคคล</td>
-                                        <td>แผนก :</td>
-                                        <td>ฝ่ายบุคคล</td>
-                                    </tr>
-                                    <tr>
-                                        <td>วันที่เริ่มงาน :</td>
-                                        <td>1 ก.พ. 2556</td>
-                                        <td>ผู้บังคับบัญชาชั้นต้น</td>
-                                        <td>นายนภัทร อินทร์ใจเเอื่อ</td>
-                                    </tr>
-                                </table>
+                                <!--ข้อมูลทั่วไป-->
+                                <table class="table table-bordered table-condensed">
+                                    <tbody><tr>
+                                            <th rowspan="4">
+                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg">
+                                            </th>
+                                            <th align="center" width="">ชื่อ-นามสกุล</th>
+                                            <th align="center" width="120px">รหัส</th>
+                                            <th align="center" width="">ตำแหน่ง</th>
+                                            <th align="center" width="">แผนก</th>
+                                            <th align="center" width="">ครั้งที่ 1 </th>
+
+                                        </tr>
+                                        <tr>
+                                            <td>นาย ศตวรรษ วินวิวัฒน์</td>
+                                            <td> 123456</td>
+                                            <td>พนักงานฝ่ายบุคคล</td>
+                                            <td>ฝ่ายบุคคล</td>
+                                            <td><span class="text-green"><i class="glyphicon glyphicon-ok"></i></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table><!--/ข้อมูลทั่วไป-->
+                                <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <i class="glyphicon glyphicon-triangle-bottom"></i>รายละเอียดบุคคลเพิ่มเติม
+                                </a>
+                                <div class="collapse" id="collapseExample" style="margin-top:10px;">
+                                    <table class="table table-responsive table-bordered ">
+                                        <thead>
+                                            <tr class="">
+                                                <th colspan="3">วันที่เริ่มงาน</th>
+                                                <th colspan="3">ผู้บังคับบัญชา</th>
+                                            </tr>
+                                        </thead>
+                                        <tr>
+                                            <td colspan="3">1 ก.พ. 2556</td>
+                                            <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
+                                        </tr>
+                                        <thead>
+                                            <tr class="">
+                                                <th colspan="6">
+                                                    สถิติการมาปฏิบัติงาน
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>ลาป่วย</th>
+                                                <th>ลากิจ</th>
+                                                <th>ลาอื่นๆ</th>
+                                                <th>ขาดงาน</th>
+                                                <th>ลางาน</th>
+                                                <th width="16%">ลงโทษทางวินัย</th>
+                                            </tr>
+                                        </thead>
+                                        <TR>
+                                            <TD>1วัน</TD>
+                                            <TD>1วัน</TD>
+                                            <TD>-</TD>
+                                            <TD>-</TD>
+                                            <TD>2วัน</TD>
+                                            <TD>-</TD>
+                                        </TR>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
             </div>
-            <div class="row box-padding">
+            <div class="row box-padding" style="margin-top: -20px;">
                 <h3>KPIs สำหรับการประเมินในรอบ ก.ค.-ธ.ค. 59</h3>
             </div>
             <div class="row box-padding">

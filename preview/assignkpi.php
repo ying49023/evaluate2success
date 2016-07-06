@@ -60,7 +60,6 @@
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Assign KPIs</li>
                     </ol>
-                    <hr>
                 </section>
                 <!--/Page header -->
 

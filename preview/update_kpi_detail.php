@@ -79,21 +79,19 @@
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">summary evaluation</li>
                     </ol>
-                    <hr>
                 </section>
                 <!--/Page header -->
 
                 <!-- Main content -->
                   <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body">
-                            
-                                
-                        <table class="table table-bordered" width="90%" height="100px" align="right" style="margin: 18px 5px 0px 0px;">
+                <div class="box box-success">
+                    <div class="box-body">
+
+                        <table class="table table-bordered" width="90%" height="100px" align="right">
                             <tbody>
                             <tr>
                                 <th rowspan="2">
-                                    <img class="img-circle img-thumbnail" src="dist/img/user2-160x160.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px; width:100px;"></th>
+                                    <img class="img-circle img-thumbnail circle-thumbnail" src="dist/img/user2-160x160.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px;"></th>
                                 <th>
                                     <center>รหัสพนักงาน</center>
                                 </th>
@@ -142,13 +140,9 @@
 
                         </tbody>
                         </table>
-
-                                                        
-                                 
-                            </div>
-                            
                     </div>
                 </div>
+            </div>
                 <div class="row box-padding">
                     <div class="box box-default ">
                         <div class="box-header with-border">
