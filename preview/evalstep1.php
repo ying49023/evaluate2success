@@ -95,9 +95,40 @@
                 </center>
             </div>
             <!--/Process bar-->
-            
-            <div class="row box-padding">
-                <div class="box box-success">
+            <script>
+                function sticky_relocate() {
+                    var window_top = $(window).scrollTop();
+                    var div_top = $('#sticky-anchor').offset().top;
+                    if (window_top > div_top) {
+                        $('#sticky').addClass('stick');
+                        $('#sticky-anchor').height($('#sticky').outerHeight());
+                    } else {
+                        $('#sticky').removeClass('stick');
+                        $('#sticky-anchor').height(0);
+                    }
+                }
+
+                $(function() {
+                    $(window).scroll(sticky_relocate);
+                    sticky_relocate();
+                });
+
+
+
+            </script>
+            <style>
+                #sticky.stick {
+                margin-top: 0 !important;
+                position: fixed;
+                top: 0;
+                z-index: 10000;
+                border-radius: 0 0 0.5em 0.5em;
+            }
+            </style>
+            <div id="sticky-anchor"></div>
+            <div class=" row box-padding "  >
+                
+                <div class="box box-success" id="sticky">
                     <div class="box-body">
                         <div class="row"> 
                             <div class="box-padding">
@@ -168,8 +199,6 @@
                     </div>
                 </div>
             </div>
-
-            <!--555555555555555555555555555555555-->
 
             <div class="row box-padding ">
                 <div class="box box-primary">

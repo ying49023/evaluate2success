@@ -138,9 +138,7 @@
                         </tbody>
                         </table>
                     </div>
-
                 </div>
-
             </div>
             <div class="row box-padding">
                 <div class="row">

@@ -126,8 +126,9 @@
                                         <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
                                     </a>
                                 </td>
-                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
-
+                                <td class="text-center"><button class=" btn btn-danger btn-sm glyphicon glyphicon-export ">&nbsp;PDF</button>&nbsp;
+                                    <button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXCEL</button>
+                                </td>
                             </tr>
                             <tr>
 
@@ -137,8 +138,9 @@
                                         <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
                                     </a>
                                 </td>
-                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
-
+                                <td class="text-center"><button class=" btn btn-danger btn-sm glyphicon glyphicon-export ">&nbsp;PDF</button>&nbsp;
+                                    <button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXCEL</button>
+                                </td>
                             </tr>
                             <tr>
 
@@ -148,7 +150,9 @@
                                         <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
                                     </a>
                                 </td>
-                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
+                                <td class="text-center"><button class=" btn btn-danger btn-sm glyphicon glyphicon-export ">&nbsp;PDF</button>&nbsp;
+                                    <button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXCEL</button>
+                                </td>
 
                             </tr>
                             <tr>
@@ -159,8 +163,9 @@
                                         <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
                                     </a>
                                 </td>
-                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
-
+                                <td class="text-center"><button class=" btn btn-danger btn-sm glyphicon glyphicon-export ">&nbsp;PDF</button>&nbsp;
+                                    <button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXCEL</button>
+                                </td>
                             </tr>
                             <tr>
 
@@ -170,8 +175,9 @@
                                         <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
                                     </a>
                                 </td>
-                                <td class="text-center"><button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXPORT</button></td>
-
+                                <td class="text-center"><button class=" btn btn-danger btn-sm glyphicon glyphicon-export ">&nbsp;PDF</button>&nbsp;
+                                    <button class=" btn btn-success btn-sm glyphicon glyphicon-export ">&nbsp;EXCEL</button>
+                                </td>
                             </tr>
 
                         </table>

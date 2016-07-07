@@ -82,7 +82,7 @@
                                             <th align="center" width="120px">รหัส</th>
                                             <th align="center" width="">ตำแหน่ง</th>
                                             <th align="center" width="">แผนก</th>
-                                            <th align="center" width="">ครั้งที่ 1 </th>
+                                            
 
                                         </tr>
                                         <tr>
@@ -90,7 +90,6 @@
                                             <td> 123456</td>
                                             <td>พนักงานฝ่ายบุคคล</td>
                                             <td>ฝ่ายบุคคล</td>
-                                            <td><span class="text-green"><i class="glyphicon glyphicon-ok"></i></span></td>
                                         </tr>
                                     </tbody>
                                 </table><!--/ข้อมูลทั่วไป-->

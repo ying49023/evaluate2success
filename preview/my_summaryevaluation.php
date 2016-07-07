@@ -137,31 +137,36 @@
                                     <tr class="bg-gray-light">
                                         <td class="text-center">ส่วน</td>
                                         <td>หัวข้อการประเมิน</td>
+                                        <td class="text-center">สัดส่วน(%)</td>
                                         <td class="text-center">คะแนน</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">1</td>
-                                        <td>คะแนนวันลา(10%)</td>
+                                        <td>คะแนนวันลา</td>
+                                        <td class="text-center">10%</td>
                                         <td class="text-center">1.5</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">2</td>
-                                        <td>การประเมินประสิทธิภาพส่วนบุคคล(40%)</td>
+                                        <td>การประเมินประสิทธิภาพส่วนบุคคล</td>
+                                        <td class="text-center">40%</td>
                                         <td class="text-center">4</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">3</td>
-                                        <td>คะแนนดัชนีชี้วัดKPIs(50%)</td>
+                                        <td>คะแนนดัชนีชี้วัดKPIs</td>
+                                        <td class="text-center">50%</td>
                                         <td class="text-center">5</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="active">
                                         <td colspan="2">คะแนนรวม</td>
+                                        <td class="text-center">100%</td>
                                         <td class="text-center">4.35</td>
                                     </tr>
-                                    <tr >
+                                    <tr class="bg-green">
 
-                                        <td colspan="2"><strong>ผลการประเมิน</strong></td>
-                                        <td class="bg-green text-center"><strong>A+</strong></td>
+                                        <td colspan="3"><strong>ผลการประเมิน</strong></td>
+                                        <td class=" text-center"><strong>A+</strong></td>
                                     </tr>
                                 </table>
 

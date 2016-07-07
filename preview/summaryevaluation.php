@@ -61,7 +61,6 @@
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">Summary evaluation</li>
                     </ol>
-                    <hr>
                 </section>
                 <!--/Page header -->
 
@@ -113,9 +112,12 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header">
-                            <p class="text-center">
-                                <strong>ผลสรุปคะแนนประเมินเมื่อวันที่  15 ก.ค. 2558</strong>
-                            </p>
+                            <div class="content-header">
+                                <h1 class="text-center">
+                                    ผลสรุปคะแนนประเมินเมื่อวันที่  15 ก.ค. 2558
+                                </h1>
+                            </div>
+
                         </div>  
                         <form method="get" action="compareevaluation.php" >
                             <div class="box-body box-padding-table"> 
@@ -124,33 +126,74 @@
                                     <tr class="bg-gray-light">
                                         <td class="text-center">ส่วน</td>
                                         <td>หัวข้อการประเมิน</td>
+                                        <td class="text-center">สัดส่วน(%)</td>
                                         <td class="text-center">คะแนน</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">1</td>
-                                        <td>คะแนนวันลา(10%)</td>
+                                        <td>คะแนนวันลา</td>
+                                        <td class="text-center">10%</td>
                                         <td class="text-center">1.5</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">2</td>
-                                        <td>การประเมินประสิทธิภาพส่วนบุคคล(40%)</td>
+                                        <td>การประเมินประสิทธิภาพส่วนบุคคล</td>
+                                        <td class="text-center">40%</td>
                                         <td class="text-center">4</td>
                                     </tr>
                                     <tr>
                                         <td class="text-center">3</td>
-                                        <td>คะแนนดัชนีชี้วัดKPIs(50%)</td>
+                                        <td>คะแนนดัชนีชี้วัดKPIs</td>
+                                        <td class="text-center">50%</td>
                                         <td class="text-center">5</td>
                                     </tr>
-                                    <tr>
+                                    <tr class="active">
                                         <td colspan="2">คะแนนรวม</td>
+                                        <td class="text-center">100%</td>
                                         <td class="text-center">4.35</td>
                                     </tr>
-                                    <tr >
+                                    <tr class="bg-green">
 
-                                        <td colspan="2"><strong>ผลการประเมิน</strong></td>
-                                        <td class="bg-green text-center"><strong>A+</strong></td>
+                                        <td colspan="3"><strong>ผลการประเมิน</strong></td>
+                                        <td class=" text-center"><strong>A+</strong></td>
                                     </tr>
                                 </table>
+                                <div class="row box-padding">
+                                    <div class="content-header">
+                                        <h1 class="text-center box-padding-small">
+                                            คำแนะนำของผู้บังคับบัญชา
+                                        </h1>
+                                        <div class="well well-sm">
+                                            <div class="row">
+                                                <div class="col-sm-4" >
+                                                    <ul>
+                                                        <li style="list-style: none;"><strong>จุดเด่นผู้ถูกประเมิน</strong></li>
+                                                        <li>การวางแผน</li>
+                                                        <li>การแก้ไขปัญหาและการตัดสินใจ</li>
+                                                        <li>การดำเนินตามแผนและติดตามผลงาน</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-4" >
+                                                    <ul>
+                                                        <li style="list-style: none;"><strong>จุดที่ควรพัฒนาปรับปรุงผู้ถูกประเมิน</strong></li>
+                                                        <li>การวางแผน</li>
+                                                        <li>การแก้ไขปัญหาและการตัดสินใจ</li>
+                                                        <li>การดำเนินตามแผนและติดตามผลงาน</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-sm-4" >
+                                                    <ul>
+                                                        <li style="list-style: none;"><strong>หลักสูตรการอบรมหรือแนวทางที่ควรพัฒนา</strong></li>
+                                                        <li>การวางแผน</li>
+                                                        <li>การแก้ไขปัญหาและการตัดสินใจ</li>
+                                                        <li>การดำเนินตามแผนและติดตามผลงาน</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="box-footer">
