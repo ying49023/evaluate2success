@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php include ('./classes/connection_mysqli.php'); ?>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -72,24 +74,56 @@
                     <div class="box-body">
                         <div class="row"> 
                             <div class="box-padding">
+                                
+                                <?php
+                                
+                                $get_emp_id = "1"; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
+                                
+                                //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
+                                if(isset($_GET["emp_id"])){
+                                    $get_emp__id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+                                }
+                                
+                                
+                                $sql_emp = "SELECT emp.employee_id as emp_id, emp.first_name as f_name, emp.last_name as l_name, "
+                                        . "emp.hiredate as hiredate, emp.manager_id as manager_id,"
+                                        . "dept.department_name as dept_name, pos.position_description as pos FROM employees emp "
+                                        . "join departments dept on emp.departmant_id = dept.department_id join position_level pos "
+                                        . "on emp.position_level_id = pos.position_level_id where emp.employee_id='".$get_emp__id."' limit 1";
+                                $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+
+                                 ?>
+                                
+                                <?php  while($result = mysqli_fetch_assoc($query)){ 
+                                    $emp_id = $result["emp_id"];
+                                    $name = $result["f_name"]."  ".$result["l_name"];
+                                    $hire = $result["hiredate"];
+                                    $manager_id = $result["manager_id"];
+                                    $dept = $result["dept_name"];
+                                    $pos = $result["pos"];
+                                    
+                                    $sql_manager = "SELECT * from employees where employee_id = '".$manager_id."'" ;
+                                    $query_manager = mysqli_query($conn, $sql_manager);
+                                    $result_manager = mysqli_fetch_array($query_manager);
+                                    $manager_name = $result_manager["first_name"]." ".$result_manager["last_name"];
+                                ?>
                                 <!--ข้อมูลทั่วไป-->
                                 <table class="table table-bordered table-condensed">
-                                    <tbody><tr>
+                                    <tbody>
+                                        <tr>
                                             <th rowspan="4">
                                                 <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg">
                                             </th>
-                                            <th align="center" width="">ชื่อ-นามสกุล</th>
+                                            <th align="center" width="" >ชื่อ-นามสกุล</th>
                                             <th align="center" width="120px">รหัส</th>
-                                            <th align="center" width="">ตำแหน่ง</th>
-                                            <th align="center" width="">แผนก</th>
-                                            
-
+                                            <th align="center" width="" >ตำแหน่ง</th>
+                                            <th align="center" width="" >แผนก</th>
                                         </tr>
                                         <tr>
-                                            <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                            <td> 123456</td>
-                                            <td>พนักงานฝ่ายบุคคล</td>
-                                            <td>ฝ่ายบุคคล</td>
+                                            <td><?php  echo $name ;?></td>
+                                            <td><?php  echo $emp_id ;?></td>
+                                            <td><?php  echo $pos ;?></td>
+                                            <td><?php  echo $dept ;?></td>
                                             
                                         </tr>
                                     </tbody>
@@ -100,15 +134,24 @@
                                 <div class="collapse" id="collapseExample" style="margin-top:10px;">
                                     <table class="table table-responsive table-bordered ">
                                         <thead>
-                                            <tr class="">
-                                                <th colspan="3">วันที่เริ่มงาน</th>
-                                                <th colspan="3">ผู้บังคับบัญชา</th>
+                                            <tr class="text-center">
+                                                <td>วันที่เริ่มงาน</td>
+                                                <td>email</td>
+                                                <td>เบอร์โทรศัพท์</td>
+                                                <td>ผู้บังคับบัญชา</td>
                                             </tr>
                                         </thead>
-                                        <tr>
-                                            <td colspan="3">1 ก.พ. 2556</td>
-                                            <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
+                                        <tr class="text-center">
+                                            <td><?php echo $hire ;?></td>
+                                            <td></td>
+                                            <td>
+                                            <td ><?php echo $manager_name ; ?></td>
                                         </tr>
+                                        <?php 
+//                                            $sql_leave = "SELECT * FROM leaves join employees epm on epm.employee_id = leaves.employee_id "
+//                                                    . "join leaves_types on leaves.leave_type_id = leave_types.leave_type_id"
+//                                                    . " WHERE emp.employee_id='".$emp_id."'";
+                                        ?>
                                         <thead>
                                             <tr class="">
                                                 <th colspan="6">
@@ -134,6 +177,7 @@
                                         </TR>
                                     </table>
                                 </div>
+                                <?php } ?>
                             </div>
                         </div>  
                     </div>
@@ -142,6 +186,18 @@
             <div class="row box-padding" style="margin-top:-20px;">
                 <h3>KPIs ที่รับผิดชอบทั้งหมด</h3>
             </div>
+            <?php  
+                $sql_kpi = "SELECT kpi_resp.kpi_id as kpi_id , kpi.kpi_name as kpi_name , kpi_resp.percent_weight as weight , "
+                    ." kpi_resp.goal as goal , kpi_resp.success as success, eval.term as term , eval.year as year "
+                    ." FROM employees emp " 
+                    ." JOIN evaluation_employee eval_emp on eval_emp.employee_id = emp.employee_id "
+                    ." JOIN evaluation eval on eval_emp.evaluation_code = eval.evaluation_code "
+                    ." JOIN kpi_responsible kpi_resp on eval_emp.evaluate_employee_id = kpi_resp.evaluate_employee_id "
+                    ." JOIN kpi on kpi_resp.kpi_id = kpi.kpi_id "
+                    ." WHERE eval_emp.employee_id = '".$emp_id."' ";
+                $query_kpi = mysqli_query($conn, $sql_kpi);
+            ?>
+            
             <div class="row box-padding">
                 <div class="box box-primary">
                     <div class="box-body">
@@ -154,52 +210,34 @@
                                 <td width="120px" class="text-center">ที่ทำได้จริง</td>
                                 <td width="300px" class="text-center">รอบการประเมิน</td>
                             </tr>
-                            <tr>
-                                <td>1201</td>
-                                <td>ความสามารถในการสรรหาตรงตามเวลาที่กำหนด(60วัน)</td>
-                                <td>20%</td>
-                                <td>10</td>
-                                <td>8</td>
-                                <td class="text-center">
-                               ครึ่งปีแรก /2557
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1202</td>
-                                <td>ความสามารถจัดทำอัตราแผนความสามารถกำลังคน</td>
-                                <td>20%</td>
-                                <td>>=20%</td>
-                                <td><20%</td>
-                                <td class="text-center">
-                                   ครึ่งปีแรก /2557
-                                    
-                                </td>
+                            <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
+                
+                                $kpi_id = $result_kpi["kpi_id"];
+                                $kpi_name = $result_kpi["kpi_name"];
+                                $weight = $result_kpi["weight"];
+                                $goal = $result_kpi["goal"];
+                                $success = $result_kpi["success"];
+                                $term = $result_kpi["term"];
+                                $year = $result_kpi["year"];
 
-                            </tr>
+                             ?>
                             <tr>
-                                <td>1203</td>
-                                <td>อัตราจำนวนชั่วโมงการฝึกอบรม/คน/ครึ่งปี</td>
-                                <td>20%</td>
-                                <td>>=6ชั่วโมง</td>
-                                <td>8ชั่วโมง</td>
+                                <td><?php echo $kpi_id ;?></td>
+                                <td><?php echo $kpi_name ; ?></td>
+                                <td class="text-center"><?php echo $weight."%" ; ?></td>
+                                <td class="text-center"><?php echo $goal ; ?></td>
+                                <td class="text-center"><?php echo $success ; ?></td>
                                 <td class="text-center">
-                                ครึ่งปีแรก /2557
-                            </tr>
-                            <tr>
-                                <td>1204</td>
-                                <td>การจัดปฐมนิเทศให้กับพนักงานใหม่ภายใน 3 วันทำการ</td>
-                                <td>20%</td>
-                                <td>100%</td>
-                                <td>35%</td>
-                                <td class="text-center">
-                                  ครึ่งปีแรก /2557
+                                    <?php echo $term." / ".$year ;?>
                                 </td>
                             </tr>
+                            <?php } ?>
                         </table>
                     </div>
                 </div>
 
             </div>
+            
             
 
             <!-- /.content --> </div>

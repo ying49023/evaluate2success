@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    
+    <?php include ('./classes/connection_mysqli.php'); 
+        
+        
+        
+    ?>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -111,18 +118,36 @@
                                     <center>เทียบกับเป้าหมาย</center>
                                 </th>
                             </tr>
+                            <?php 
+                            
+                            $sql = "SELECT emp.employee_id as emp_id, emp.first_name as f_name, emp.last_name as l_name, "
+                                    . "dept.department_name as dept_name, pos.position_description as pos FROM employees emp "
+                                    . "join departments dept on emp.departmant_id = dept.department_id join position_level pos "
+                                    . "on emp.position_level_id = pos.position_level_id where emp.employee_id='4'";
+                            $query = mysqli_query($conn, $sql); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                            
+                            while($result = mysqli_fetch_assoc($query)){
+                                
+                                $emp_id = $result["emp_id"];
+                                $f_name = $result["f_name"];
+                                $l_name = $result["l_name"];
+                                $dept = $result["dept_name"];
+                                $pos_lv = $result["pos"];
+                                                               
+                                
+                                ?>
                             <tr>
                                 <td>
-                                    <center>111111</center>
+                                    <center><?php echo $emp_id; ?></center>
                                 </td>
                                 <td>
-                                    <center>นาย นภัทร อินทร์ใจเอื้อ</center>
+                                    <center><?php echo $f_name." ".$l_name ; ?></center>
                                 </td>
                                 <td>
-                                    <center>หัวหน้าฝ่ายบุคคล</center>
+                                    <center><?php echo $pos_lv ; ?></center>
                                 </td>
                                 <td>
-                                    <center>ฝ่ายบุคคล</center>
+                                    <center><?php echo $dept ; ?></center>
                                 </td>
                                 <th>
                                     <center>&gt;=80%</center>
@@ -134,7 +159,7 @@
                                     <center></center>
                                 </th>
                             </tr>
-
+                            <?php } ?>
                         </tbody>
                         </table>
                     </div>

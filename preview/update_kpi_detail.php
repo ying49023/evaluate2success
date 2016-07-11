@@ -28,35 +28,65 @@
         <!-- Daterange picker -->
         <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
         <!-- bootstrap wysihtml5 - text editor -->
-        <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-        <script src="dist/js/circleDonutChart.js"></script>
-
-        <script type="text/javascript">
-        window.onload = function () {
-            var chart = new CanvasJS.Chart("chartContainer", {
-                title: {
-                    text: "KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด"
-                },
-                data: [{
-                    type: "column",
-                    dataPoints: [
-                        { y: 1, label: "มกราคม" },
-                        { y: 2, label: "กุมภาพันธ์" },
-                        { y: 4, label: "มีนาคม" },
-                        { y: 5, label: "เมษายน" },
-                        { y: 6, label: "พฤษภาคม" }
-                    ]
-                }]
-            });
-            chart.render();
-        }
-    </script>
-    <script src="canvasjs.min.js"></script>
-
-
-        
+        <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">        
         <!--CSS ปรับแต่งเอง -->    
         <link rel="stylesheet" href="customize.css">   
+        
+        <!--Load JS-->
+        <script type="text/javascript" src="dist/js/googlechart/loader.js"></script>
+        <!-- Google Chart Script-->
+        <script>
+            google.charts.load('current', {'packages':['gauge','corechart']});
+            
+            google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+                
+                var data = google.visualization.arrayToDataTable([
+                    ['Label', 'Value'],
+                    ['Performance', 60],
+                    
+                ]);
+                
+                var options = {
+                    width: 200, height: 200,
+                    redFrom: 90, redTo: 100,
+                    yellowFrom:75, yellowTo: 90,
+                    minorTicks: 5
+                };
+                
+                var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+                
+                chart.draw(data, options);
+                
+            }
+            
+            //Colume Chart
+            google.charts.setOnLoadCallback(columnChart);
+            function columnChart() {
+                var data2 = google.visualization.arrayToDataTable([
+                    ['Month', 'value', { role: 'style' }],
+                    ['มกราคม', 1, '#b87333'],
+                    ['กุมพาพันธ์', 2, 'silver'],            
+                    ['มีนาคม', 4, 'gold'],
+                    ['เมษายน', 5, 'color: #e5e4e2' ], 
+                    ['พฤษภาคม', 6, 'color: orange' ],
+                    ['มิถุนายน', 0, 'black' ],
+                ]);
+                
+                
+                var options2 = {
+                    title: 'KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด',
+                    legend: 'none',
+                    bar: {groupWidth: '70%'},
+                    vAxis: { gridlines: { count: 5 } }
+                };
+                
+                var chart = new google.visualization.ColumnChart(document.getElementById('number_format_chart'));
+                chart.draw(data2, options2);
+            };
+            
+        </script>
 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -83,97 +113,86 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                  <div class="row box-padding">
-                <div class="box box-success">
-                    <div class="box-body">
+                <div class="row box-padding">
+                    <div class="box box-success">
+                        <div class="box-body">
 
-                        <table class="table table-bordered" width="90%" height="100px" align="right">
-                            <tbody>
-                            <tr>
-                                <th rowspan="2">
-                                    <img class="img-circle img-thumbnail circle-thumbnail" src="dist/img/user2-160x160.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px;"></th>
-                                <th>
-                                    <center>รหัสพนักงาน</center>
+                            <table class="table table-bordered" width="90%" height="100px" align="right">
+                                <tbody>
+                                    <tr>
+                                        <th rowspan="2">
+                                            <img class="img-circle img-thumbnail circle-thumbnail" src="dist/img/user2-160x160.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px;"></th>
+                                        <th>
+                                <center>รหัสพนักงาน</center>
                                 </th>
                                 <th>
-                                    <center>ชื่อพนักงาน</center>
+                                <center>ชื่อพนักงาน</center>
                                 </th>
                                 <th>
-                                    <center>ตำแหน่ง</center>
+                                <center>ตำแหน่ง</center>
                                 </th>
                                 <th>
-                                    <center>ฝ่าย/แผนก</center>
+                                <center>ฝ่าย/แผนก</center>
                                 </th>
                                 <th>
-                                    <center>เป้าหมาย</center>
+                                <center>เป้าหมาย</center>
                                 </th>
                                 <th>
-                                    <center>ค่าจริง</center>
+                                <center>ค่าจริง</center>
                                 </th>
                                 <th>
-                                    <center>เทียบกับเป้าหมาย</center>
+                                <center>เทียบกับเป้าหมาย</center>
                                 </th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <center>111111</center>
+                                </tr>
+                                <tr>
+                                    <td>
+                                <center>111111</center>
                                 </td>
                                 <td>
-                                    <center>นาย นภัทร อินทร์ใจเอื้อ</center>
+                                <center>นาย นภัทร อินทร์ใจเอื้อ</center>
                                 </td>
                                 <td>
-                                    <center>หัวหน้าฝ่ายบุคคล</center>
+                                <center>หัวหน้าฝ่ายบุคคล</center>
                                 </td>
                                 <td>
-                                    <center>ฝ่ายบุคคล</center>
+                                <center>ฝ่ายบุคคล</center>
                                 </td>
                                 <th>
-                                    <center>&gt;=80%</center>
+                                <center>&gt;=80%</center>
                                 </th>
                                 <th>
-                                    <center>35.5%</center>
+                                <center>35.5%</center>
                                 </th>
                                 <th>
-                                    <center></center>
+                                <center></center>
                                 </th>
-                            </tr>
+                                </tr>
 
-                        </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <!-- Chart -->
                 <div class="row box-padding">
-                    <div class="box box-default ">
+                    <div class="box box-primary ">
                         <div class="box-header with-border">
-
-                            <b>ข้อมูลความก้าวหน้าของงาน</b>
+                            <strong>KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด</strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
                         </div>
-                        <div class="box-body">    
-                            <div class="row">
-                                <div class="col-md-3" style="margin:50px 0px 0px 0px;">
-                                    <div id="example" >
-                                        
-                                        <script >
-                                            var circle = new circleDonutChart('example');
-                                                    circle.draw({
-                                                    end:60,
-                                                    start:0, 
-                                                    maxValue:100, 
-                                                    titlePosition:"outer-top", 
-                                                    titleText:"สถานะปัจจุบัน", 
-                                                    outerCircleColor:'#0085c8', 
-                                                    innerCircleColor:'#909081'
-                                                    });
-
-                                        </script>
-                                    </div>
-
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="box box-primary">
+                                <div class="box-body">                                    
+                                    <div id="chart_div" style="width: 200px; height: 200px;margin: auto;"></div>     
                                 </div>
-                                <div class="col-md-9">
-                                    <div class="box-padding">
-                                        <div id="chartContainer" style="height: 400px; width: 100%;"></div>
-                                    </div>
+                            </div>
+                        </div>
+                        
+                        <div class=" col-sm-9">
+                            <div class="box box-primary">
+                                <div class="box-body">    
+                                    <div id="number_format_chart" width="100%"></div>
                                 </div>
                             </div>
                         </div>
@@ -216,6 +235,8 @@
                         </form>
                     </div>
                 </div>
+                <!-- /Chart -->
+                
                 <!-- ประวัติการแก้ไข-->
                 <div class="row box-padding">
                     <div class="box box-default">

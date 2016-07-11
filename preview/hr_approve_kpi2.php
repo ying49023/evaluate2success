@@ -229,6 +229,9 @@
                             </tr>
                         </table>
                     </div>
+                    <div class="box-footer">
+                        <button class="btn btn-success pull-right">ยืนยันการอนุมัติ</button>
+                    </div>
                 </div>
 
             </div>
@@ -271,7 +274,6 @@
                                 <div class="col-sm-4">
                                     <button class="btn btn-file">เพิ่ม</button>
                                     <button class="btn btn-microsoft">บันทึก</button>
-                                    <button class="btn btn-success">ยืนยันการอนุมัติ</button>
                                 </div>
                             </div>
                         </form>
