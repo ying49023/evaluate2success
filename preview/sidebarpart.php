@@ -81,7 +81,7 @@
                     <li class="active"><a href="#"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a></li>
                     <li class="active"><a href="#"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a></li>
                     <li class="active"><a href="#"><i class="fa fa-circle-o"></i>จัดการข้อมูลพนักงาน</a></li>
-                    <li class="active"><a href="#"><i class="fa fa-circle-o"></i>ข้อมูลKPIsรายบุคคล</a></li>
+                    <li class="active"><a href="hr_kpi_individual.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsรายบุคคล</a></li>
                     <li class="active"><a href="#"><i class="fa fa-circle-o"></i>ข้อมูลKPIsทั้งหมด</a></li>
                     <li class="active"><a href="hr_approve_kpi.php"><i class="fa fa-circle-o"></i>อนุมัติKPIsครั้งถัดไป</a></li>
                     <li class="active"><a href="hr_report_page.php"><i class="fa fa-circle-o"></i>ออกรายงาน</a></li>

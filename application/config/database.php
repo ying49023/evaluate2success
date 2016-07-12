@@ -75,11 +75,11 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'admin',
-	'password' => '1234',
-	'database' => 'evaluate2successdb',
-	'dbdriver' => 'mysqli',
+	'hostname' => 'https://web.wip.camp/phpmyadmin',
+	'username' => 'prasukrit_alt',
+	'password' => '13579alt',
+	'database' => 'prasukrit_evaluate2success',
+	'dbdriver' => 'mysql',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),
