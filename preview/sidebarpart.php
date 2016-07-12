@@ -86,38 +86,6 @@
                     </li>
                 </ul>
             </li>
-            <!-- เมนู HR-->
-            <li class="<?php if($page == 'hr_kpi_individual.php' || $page =='hr_all_kpi_detail.php' || $page =='hr_approve_kpi.php' || $page =='hr_report_page.php' ){ echo "active" ; } ?>">
-                <a href="">
-                    <i class="glyphicon glyphicon-user"></i>
-                        <span>เมนูสำหรับฝ่ายบุคคล</span>
-                    <i class="fa fa-angle-left pull-right"></i>
-                </a>
-                <ul class="treeview-menu">
-                    <li class="">
-                        <a href="#"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a>
-                    </li>
-                    <li class="">
-                        <a href="#"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
-                    </li>
-                    <li class="">
-                        <a href="#"><i class="fa fa-circle-o"></i>จัดการข้อมูลพนักงาน</a>
-                    </li>
-                    <li class="<?php if($page == 'hr_kpi_individual.php'){ echo "active" ; } ?>">
-                        <a href="hr_kpi_individual.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsรายบุคคล</a>
-                    </li>
-                    <li class="<?php if($page == 'hr_all_kpi_detail.php'){ echo "active" ; } ?>">
-                        <a href="hr_all_kpi_detail.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsทั้งหมด</a>
-                    </li>
-                    <li class="<?php if($page == 'hr_approve_kpi.php'){ echo "active" ; } ?>">
-                        <a href="hr_approve_kpi.php"><i class="fa fa-circle-o"></i>อนุมัติKPIsครั้งถัดไป</a>
-                    </li>
-                    <li class="<?php if($page == 'hr_report_page.php'){ echo "active" ; } ?>">
-                        <a href="hr_report_page.php"><i class="fa fa-circle-o"></i>ออกรายงาน</a>
-                    </li>
-                    
-                </ul>
-            </li>
             <li class="<?php if($page == 'assignkpi.php'){ echo "active" ; } ?>">
                 <a href="assignkpi.php">
                     <i class="glyphicon glyphicon-check"></i> <span>การกำหนดKPIs</span>
