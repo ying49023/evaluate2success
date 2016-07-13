@@ -14,11 +14,11 @@
                     $("#overlay").fadeToggle("",function(){ // แสดงส่วนของ overlay  
                         $(".msg_show").slideToggle("",function(){ // แสดงส่วนของ เนื้อหา popup  
                             if($(this).css("display")=="block"){        // ถ้าเป็นกรณีแสดงข้อมูล   
-                            //  หากต้องการดึงข้อมูลมาแสดง แบบ ajax  
-                            //  สามารถดัดแปลงจากโค้ดนี้ได้        
-                            //  $(".msg_data").load("data.php");      
-                            //      หรือ  
-                            //  $.post("data.php",{},function(data){  
+                                    //  หากต้องการดึงข้อมูลมาแสดง แบบ ajax  
+                                    //  สามารถดัดแปลงจากโค้ดนี้ได้        
+                                    //  $(".msg_data").load("data.php");      
+                                    //      หรือ  
+                                    //  $.post("data.php",{},function(data){  
                                     //      $(".msg_data").html(data);  
                                     //  });  
                                 }
@@ -30,7 +30,7 @@
 
             <style type="text/css">    
     
-            #overlay {     
+/*            #overlay {     
                 background:#000;  
                 width:100%;  
                 height:100%;  
@@ -62,7 +62,7 @@
                 background-color:#fff;  
                 text-align:center;  
                 display:none;  
-            }  
+            }  */
             table.table tr td,th{
                 text-align: center;
             }
@@ -149,47 +149,14 @@
 
                                         <TR>
                                             <th style="text-align:left"  colspan="13" class="bg-success">ความสามารถในการบริหารหรือจัดการงาน (10%)
-                                                <a class="show_box pull-right" href="javascript:void(0);">เพิ่มหัวข้อ</a>  
-                                                <!--เนื้อหาภายในเว็บ-->                                         
 
-                                        <div class="msg_show">  
-
-                                            <div class="msg_data">  
-                                                <div class="col-md-12">
-                                                    <!--เนื้อหาใน popup message--> 
-                                                    <form >
-                                                        <div class="form-group">
-                                                            <label>ชื่อหัวข้อ: </label>
-                                                            <input type="text" class="form-control" 
-                                                                   placeholder="ชื่อหัวข้อ">
-                                                            <label>น้ำหนัก</label>
-                                                            <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
-                                                            </select>
-                                                            <label>ระดับที่คาดหวัง</label>
-                                                            <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
-                                                            </select>
-                                                            <br/>
-                                                            <button href="javascript:void(0);" type="button" class="btn btn-success show_box">บันทึก</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>  
-                                        </div>  
-                                        <div id="overlay"></div>  
-
-                                        </th>
+                                                <a  class="pull-right" data-toggle="modal" data-target="#myModal">
+                                                    <button class="btn btn-warning btn-xs"  >เพิ่มหัวข้อ</button>
+                                                </a>   
+                                                
+                                            </th>
                                         </TR>
+                                        
                                         <TR>
                                             <td style="text-align:left" colspan="4">1. การวางแผนงาน</td>
 
@@ -326,45 +293,10 @@
 
                                         <TR>
                                             <th style="text-align:left" colspan="13" class="bg-success">ความสามารถในงาน (ความรู้ ,ทักษะ ,คุณสมบัติเฉพาะบุคคล) (20%)
-                                                <a class="show_box pull-right" href="javascript:void(0);">เพิ่มหัวข้อ</a>  
-                                                <!--เนื้อหาภายในเว็บ-->                                         
-
-                                        <div class="msg_show">  
-
-                                            <div class="msg_data">  
-                                                <div class="col-md-12">
-                                                    <!--เนื้อหาใน popup message--> 
-                                                    <form >
-                                                        <div class="form-group">
-                                                            <label>ชื่อหัวข้อ: </label>
-                                                            <input type="text" class="form-control" 
-                                                                   placeholder="ชื่อหัวข้อ">
-                                                            <label>น้ำหนัก</label>
-                                                            <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
-                                                            </select>
-                                                            <label>ระดับที่คาดหวัง</label>
-                                                            <select class="form-control">
-                                                                <option>1</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
-                                                            </select>
-                                                            <br/>
-                                                            <button href="javascript:void(0);" type="button" class="btn btn-success show_box">บันทึก</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>  
-                                        </div>  
-                                        <div id="overlay"></div>  </th>
-
+                                                <a  class="pull-right" data-toggle="modal" data-target="#myModal">
+                                                    <button class="btn btn-warning btn-xs"  >เพิ่มหัวข้อ</button>
+                                                </a>  
+                                            </th>
                                         </TR>
                                         <TR>
                                             <td style="text-align:left" colspan="4">6. ความรู้ความเข้าใจในหน้าที่งานที่รับผิดชอบ</td>
@@ -563,7 +495,56 @@
                                 </center>
                             </div>
                         </div>
+                        <!-- Modal POPUP เพิ่มหัวข้อ -->
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <form action="" >
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">เพิ่มหัวข้อ</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div style="width: 75%;margin: auto;">
+                                                        <div class="form-group">
+                                                            <label class="pull-left">ชื่อหัวข้อ: </label>
+                                                            <input type="text" class="form-control" placeholder="ชื่อหัวข้อ">
+                                                        </div>
+                                                        <div class="form-group" >
+                                                            <label class="pull-left">น้ำหนัก</label>
+                                                            <select class="form-control">
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group" >
+                                                            <label class="pull-left">ระดับที่คาดหวัง</label>
+                                                            <select class="form-control">
+                                                                <option>1</option>
+                                                                <option>2</option>
+                                                                <option>3</option>
+                                                                <option>4</option>
+                                                                <option>5</option>
+                                                            </select>
 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                            <button type="button" class="btn btn-success">บันทึก</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- ./box-body -->
                     <!-- /.content -->
@@ -576,23 +557,22 @@
                         </a>
                     </div>
                     <!--/box footer--> 
+                    
                 </div>
             </div>
-            <!-- /.content-wrapper --> 
-            
-            <!-- Control Sidebar -->
-            <?php include './controlsidebar.php'; ?>
-            
-            <!--Footer -->
-            <?php include './footer.php'; ?>
 
-            <!-- Add the sidebar's background. This div must be placed
-                     immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
-        </div><!-- ./wrapper -->
+        </div><!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <?php include './controlsidebar.php'; ?>
 
+        <!--Footer -->
+        <?php include './footer.php'; ?>
+
+        <!-- Add the sidebar's background. This div must be placed
+                 immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
 <!--Finish body content-wrapper-->
-</div></
+</div><!-- ./wrapper -->
 
 </body>
 </html>
