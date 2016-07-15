@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php include ('./classes/connection_mysqli.php'); 
+            
+    if(isset($_GET["position_level_id"])) {
+        $position_level = $_GET["position_level_id"];
+    } else {
+        $position_level = "1";
+    }
+?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -8,65 +16,11 @@
     <?php include ('./css_packs.html'); ?>
     <!-- SCRIPT PACKS -->
     <?php include ('./script_packs.html'); ?>
-    <script type="text/javascript">  
-            $(function(){  
-                $(".show_box").click(function(){  
-                    $("#overlay").fadeToggle("",function(){ // แสดงส่วนของ overlay  
-                        $(".msg_show").slideToggle("",function(){ // แสดงส่วนของ เนื้อหา popup  
-                            if($(this).css("display")=="block"){        // ถ้าเป็นกรณีแสดงข้อมูล   
-                                    //  หากต้องการดึงข้อมูลมาแสดง แบบ ajax  
-                                    //  สามารถดัดแปลงจากโค้ดนี้ได้        
-                                    //  $(".msg_data").load("data.php");      
-                                    //      หรือ  
-                                    //  $.post("data.php",{},function(data){  
-                                    //      $(".msg_data").html(data);  
-                                    //  });  
-                                }
-                            });
-                        });
-                    });
-                });
-            </script>
-
-            <style type="text/css">    
-    
-/*            #overlay {     
-                background:#000;  
-                width:100%;  
-                height:100%;  
-                z-index:80000;  
-                top:0px;  
-                left:0px;  
-                position:fixed;  
-                opacity: .5;     
-                filter: alpha(opacity=50);     
-                -moz-opacity: .5;    
-                display:none;  
-                padding: 15px;
-            }     
-            .msg_show{  
-                position:fixed;  
-                z-index:90000;  
-                margin:auto;  
-                width:600px;  
-                height:350px;  
-                top: 50%;  
-                left: 50%;  
-                margin-top: -100px;  
-                padding-top: 2%;
-                margin-left: -250px;  
-                border-radius: 36px 36px 36px 36px;  
-                -moz-border-radius: 36px 36px 36px 36px;  
-                -webkit-border-radius: 36px 36px 36px 36px;  
-                border: 0px solid #000000;    
-                background-color:#fff;  
-                text-align:center;  
-                display:none;  
-            }  */
-            table.table tr td,th{
-                text-align: center;
-            }
-            </style>  
+    <style type="text/css">    
+        table.table tr td,th{
+            text-align: center;
+        }
+    </style>  
 
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -98,7 +52,13 @@
             <!-- Main content -->
             <div class="row box-padding ">
                 <div class="box box-primary">
-
+                    <script type="text/javascript">
+                        //Script สำหรับ เลือก dropdown menu แบบไม่ต้องกด submit จะเปลี่ยนข้อมูลแบบ " A U T O "
+                        function position_level()
+                        {
+                           document.form_name.submit();
+                        }
+                    </script>
                     <!--box-body-->
                     <div class="box-body">
                         <!-- /.row -->
@@ -109,17 +69,19 @@
                                         <thead>
                                             <TR class="bg-primary">
                                                 <th colspan="13">
-                                        <h3>แบบฟอร์มประเมินผลการปฏิบัติงาน แบบเน้น Competency, KPIs และ Dehvelopment</h3>                                               
-                                        <form class="form-inline">
+                                                    <h3>แบบฟอร์มประเมินผลการปฏิบัติงาน แบบเน้น Competency, KPIs และ Dehvelopment</h3>                                               
+                                                    <form name="form_name" onchange="position_level()" type ="get" class="form-inline" >
                                             <div class="form-group">
-
-                                                <select class="form-control">
-                                                    <option>สำหรับตำแหน่งระดับปฏิบัติการ (พนักงานที่ไม่มีผู้ใต้บังคับบัญชาขึ้นตรง)</option>
-                                                    <option>สำหรับตำแหน่งระดับบังคับบัญชา (หัวหน้างานหรือเทียบเท่าที่มีผู้ใต้บังคับบัญชาขึ้นตรง)</option>
-                                                    <option>สำหรับตำแหน่งผู้ช่วยผู้จัดการฝ่าย ถึงผู้อำนวยการ</option>
-                                                    <option>สำหรับตำแหน่งรองกรรมการผู้อำนวยการ/ รองกรรมการผู้จัดการขึ้นไป</option>
+                                                
+                                                <select name="position_level_id" class="form-control">
+                                                    <option value=" " >---เลือกตำแหน่ง---</option>
+                                                    <option value="1" <?php if($position_level=='1'){ echo "selected"; } ?> >สำหรับตำแหน่งระดับปฏิบัติการ (พนักงานที่ไม่มีผู้ใต้บังคับบัญชาขึ้นตรง)</option>
+                                                    <option value="2" <?php if($position_level=='2'){ echo "selected"; } ?> >สำหรับตำแหน่งระดับบังคับบัญชา (หัวหน้างานหรือเทียบเท่าที่มีผู้ใต้บังคับบัญชาขึ้นตรง)</option>
+                                                    <option value="3" <?php if($position_level=='3'){ echo "selected"; } ?> >สำหรับตำแหน่งผู้ช่วยผู้จัดการฝ่าย ถึงผู้อำนวยการ</option>
+                                                    <option value="4" <?php if($position_level=='4'){ echo "selected"; } ?> >สำหรับตำแหน่งรองกรรมการผู้อำนวยการ/ รองกรรมการผู้จัดการขึ้นไป</option>
 
                                                 </select>
+                                                
                                             </div>
                                         </form>
                                         </th>
@@ -141,6 +103,32 @@
                                             <td> </td>
                                         </tr>
                                         </thead>
+                                        <?php 
+                                        
+                                                                                
+                                        $sql_form_eval_1 = "SELECT c.competency_description as description , c.weight as weight ,"
+                                                        . "c.expected_level as expected_level ,c.weight*c.expected_level as summary ,"
+                                                        . " p.position_level_id as position_level_id "
+                                                        . " from position_level p "
+                                                        . " JOIN competency c ON p.position_level_id=c.position_level_id "
+                                                        . " JOIN title t ON c.title_id = t.title_id "
+                                                        . " WHERE t.title_id = 0 AND p.position_level_id = '".$position_level."'";
+                                        
+                                        $query_form_eval_1 = mysqli_query($conn, $sql_form_eval_1);
+                                        
+                                        $sql_form_eval_2 = "SELECT c.competency_description as description , c.weight as weight ,"
+                                                        . "c.expected_level as expected_level ,c.weight*c.expected_level as summary ,"
+                                                        . " p.position_level_id as position_level_id "
+                                                        . " from position_level p "
+                                                        . " JOIN competency c ON p.position_level_id=c.position_level_id "
+                                                        . " JOIN title t ON c.title_id = t.title_id "
+                                                        . " WHERE t.title_id = 2 AND p.position_level_id = '".$position_level."'";
+                                        
+                                        $query_form_eval_2 = mysqli_query($conn, $sql_form_eval_2);
+                                            
+                                        //echo $sql_form_eval;
+                                        //echo $result_form_eval["description"];
+?>                                      
                                         <TR class="bg-info">
                                             <th colspan="13">
                                                 ความสามารถในการปฏิบัติงาน (Competency) - ผู้บังคับบัญชากรุณาทำความเข้าใจ "คำอธิบายระดับความสามารถ" เพื่อประเมินได้ถูกต้อง
@@ -156,35 +144,38 @@
                                                 
                                             </th>
                                         </TR>
-                                        
+                                        <?php  
+                                        $i = 0;
+                                        while($result_form_eval = mysqli_fetch_assoc($query_form_eval_1)){ 
+                                            $i++; 
+                                        ?>
                                         <TR>
-                                            <td style="text-align:left" colspan="4">1. การวางแผนงาน</td>
-
-                                        <div id="overlay"></div>  
-
-                                        <td >3</td>
-                                        <td >2</td>
-                                        <td >6</td>
-                                        <td >
-                                            <input type="radio" name="optradio"></td>
-                                        <td >
-                                            <input type="radio" name="optradio"></td>
-                                        <td >
-                                            <input type="radio" name="optradio"></td>
-                                        <td >
-                                            <input type="radio" name="optradio"></td>
-                                        <td >
-                                            <input type="radio" name="optradio"></td>
-                                        <td class="text-center">
-                                            <a href="">
-                                                <i class="glyphicon glyphicon-pencil"></i>
-                                            </a>
-                                            |
-                                            <a href="">
-                                                <i class="glyphicon glyphicon-trash"></i>
-                                            </a>
-                                        </td>
-                                        </TR>
+                                                <td style="text-align:left" colspan="4"><?php echo $i.".".$result_form_eval["description"]; ?></td>
+                                                <td ><?php echo $result_form_eval["weight"]; ?></td>
+                                                <td ><?php echo $result_form_eval["expected_level"]; ?></td>
+                                                <td ><?php echo $result_form_eval["summary"]; ?></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="1"></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="2"></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="3"></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="4"></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="5"></td>
+                                                <td class="text-center">
+                                                    <a href="">
+                                                        <i class="glyphicon glyphicon-pencil"></i>
+                                                    </a>
+                                                    |
+                                                    <a href="">
+                                                        <i class="glyphicon glyphicon-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </TR>
+                                        
+                                        <?php  } ?>
 
                                         <TR>
                                             <td style="text-align:left" colspan="4">2. การดำเนินการตามแผนและติดตามผลงาน</td>
@@ -298,6 +289,38 @@
                                                 </a>  
                                             </th>
                                         </TR>
+                                        <?php  
+                                        $j = $i;
+                                        while($result_form_eval_2 = mysqli_fetch_assoc($query_form_eval_2)){ 
+                                            $j++; 
+                                        ?>
+                                        <TR>
+                                                <td style="text-align:left" colspan="4"><?php echo $i.".".$result_form_eval_2["description"]; ?></td>
+                                                <td ><?php echo $result_form_eval_2["weight"]; ?></td>
+                                                <td ><?php echo $result_form_eval_2["expected_level"]; ?></td>
+                                                <td ><?php echo $result_form_eval_2["summary"]; ?></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="1"></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="2"></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="3"></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="4"></td>
+                                                <td >
+                                                    <input type="radio" name="optradio" value="5"></td>
+                                                <td class="text-center">
+                                                    <a href="">
+                                                        <i class="glyphicon glyphicon-pencil"></i>
+                                                    </a>
+                                                    |
+                                                    <a href="">
+                                                        <i class="glyphicon glyphicon-trash"></i>
+                                                    </a>
+                                                </td>
+                                            </TR>
+                                        
+                                        <?php  } ?>
                                         <TR>
                                             <td style="text-align:left" colspan="4">6. ความรู้ความเข้าใจในหน้าที่งานที่รับผิดชอบ</td>
 
