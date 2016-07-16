@@ -12,7 +12,6 @@
         <?php include ('./css_packs.html'); ?>
         <!-- SCRIPT PACKS -->
         <?php include ('./script_packs.html'); ?>
-<<<<<<< HEAD
         <script>
             $.extend(true, $.fn.dataTable.defaults, {
                 "language": {
