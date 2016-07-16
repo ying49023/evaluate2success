@@ -108,11 +108,11 @@
                                                                                 
                                         $sql_form_eval_1 = "SELECT c.competency_description as description , c.weight as weight ,"
                                                         . "c.expected_level as expected_level ,c.weight*c.expected_level as summary ,"
-                                                        . " p.position_level_id as position_level_id "
+                                                        . " p.position_level_id as position_level_id  "
                                                         . " from position_level p "
                                                         . " JOIN competency c ON p.position_level_id=c.position_level_id "
                                                         . " JOIN title t ON c.title_id = t.title_id "
-                                                        . " WHERE t.title_id = 0 AND p.position_level_id = '".$position_level."'";
+                                                        . " WHERE t.title_id = '1' AND p.position_level_id = '".$position_level."'";
                                         
                                         $query_form_eval_1 = mysqli_query($conn, $sql_form_eval_1);
                                         
@@ -122,9 +122,10 @@
                                                         . " from position_level p "
                                                         . " JOIN competency c ON p.position_level_id=c.position_level_id "
                                                         . " JOIN title t ON c.title_id = t.title_id "
-                                                        . " WHERE t.title_id = 2 AND p.position_level_id = '".$position_level."'";
+                                                        . " WHERE t.title_id = '2' AND p.position_level_id = '".$position_level."'";
                                         
                                         $query_form_eval_2 = mysqli_query($conn, $sql_form_eval_2);
+                                        
                                             
                                         //echo $sql_form_eval;
                                         //echo $result_form_eval["description"];
@@ -134,7 +135,7 @@
                                                 ความสามารถในการปฏิบัติงาน (Competency) - ผู้บังคับบัญชากรุณาทำความเข้าใจ "คำอธิบายระดับความสามารถ" เพื่อประเมินได้ถูกต้อง
                                             </th>
                                         </TR>
-
+                                        
                                         <TR>
                                             <th style="text-align:left"  colspan="13" class="bg-success">ความสามารถในการบริหารหรือจัดการงาน (10%)
 
@@ -146,14 +147,14 @@
                                         </TR>
                                         <?php  
                                         $i = 0;
-                                        while($result_form_eval = mysqli_fetch_assoc($query_form_eval_1)){ 
+                                        while($result_form_eval_1 = mysqli_fetch_array($query_form_eval_1,MYSQL_ASSOC)){ 
                                             $i++; 
                                         ?>
                                         <TR>
-                                                <td style="text-align:left" colspan="4"><?php echo $i.".".$result_form_eval["description"]; ?></td>
-                                                <td ><?php echo $result_form_eval["weight"]; ?></td>
-                                                <td ><?php echo $result_form_eval["expected_level"]; ?></td>
-                                                <td ><?php echo $result_form_eval["summary"]; ?></td>
+                                                <td style="text-align:left" colspan="4"><?php echo $i.".".$result_form_eval_1["description"]; ?></td>
+                                                <td ><?php echo $result_form_eval_1["weight"]; ?></td>
+                                                <td ><?php echo $result_form_eval_1["expected_level"]; ?></td>
+                                                <td ><?php echo $result_form_eval_1["summary"]; ?></td>
                                                 <td >
                                                     <input type="radio" name="optradio" value="1"></td>
                                                 <td >
@@ -178,124 +179,19 @@
                                         <?php  } ?>
 
                                         <TR>
-                                            <td style="text-align:left" colspan="4">2. การดำเนินการตามแผนและติดตามผลงาน</td>
-
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >9</td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">3. การแก้ไขปัญหาและการตัดสินใจ</td>
-
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >9</td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">4. การพัฒนาผู้ใต้บังคับบัญชา</td>
-
-                                            <td >2</td>
-                                            <td >2</td>
-                                            <td >4</td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">5. การสร้างทีมงาน</td>
-
-                                            <td >1</td>
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-
-                                        <TR>
                                             <th style="text-align:left" colspan="13" class="bg-success">ความสามารถในงาน (ความรู้ ,ทักษะ ,คุณสมบัติเฉพาะบุคคล) (20%)
-                                                <a  class="pull-right" data-toggle="modal" data-target="#myModal">
+                                                <a href=""  class="pull-right" data-toggle="modal" data-target="#myModal">
                                                     <button class="btn btn-warning btn-xs"  >เพิ่มหัวข้อ</button>
                                                 </a>  
                                             </th>
                                         </TR>
                                         <?php  
                                         $j = $i;
-                                        while($result_form_eval_2 = mysqli_fetch_assoc($query_form_eval_2)){ 
+                                        while($result_form_eval_2 = mysqli_fetch_array($query_form_eval_2,MYSQL_ASSOC)){ 
                                             $j++; 
                                         ?>
                                         <TR>
-                                                <td style="text-align:left" colspan="4"><?php echo $i.".".$result_form_eval_2["description"]; ?></td>
+                                                <td style="text-align:left" colspan="4"><?php echo $j.".".$result_form_eval_2["description"]; ?></td>
                                                 <td ><?php echo $result_form_eval_2["weight"]; ?></td>
                                                 <td ><?php echo $result_form_eval_2["expected_level"]; ?></td>
                                                 <td ><?php echo $result_form_eval_2["summary"]; ?></td>
@@ -321,195 +217,43 @@
                                             </TR>
                                         
                                         <?php  } ?>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">6. ความรู้ความเข้าใจในหน้าที่งานที่รับผิดชอบ</td>
-
-                                            <td >4</td>
-                                            <td >3</td>
-                                            <td >12</td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">7. ความละเอียดรอบคอบ</td>
-
-                                            <td >4</td>
-                                            <td >3</td>
-                                            <td >12</td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">8. ความสามารถในการสื่อสาร</td>
-
-                                            <td >1</td>
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">9. มนุษยสัมพันธ์ในการทำงาน</td>
-
-                                            <td >2</td>
-                                            <td >3</td>
-                                            <td >6</td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">10. การบริหารจัดการรายงานและเอกสารต่างๆ</td>
-
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >9</td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">11. ความรับผิดชอบและไว้วางใจได้</td>
-
-                                            <td >4</td>
-                                            <td >2</td>
-                                            <td >8</td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">12. ความร่วมมือต่อทั้งผู้บังคับบัญชาและบริษัทฯ</td>
-
-                                            <td >2</td>
-                                            <td >3</td>
-                                            <td >6</td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td class="text-center">
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                                </a>
-                                                |
-                                                <a href="">
-                                                    <i class="glyphicon glyphicon-trash"></i>
-                                                </a>
-                                            </td>
-                                        </TR>
+                                        <?php  
+                                        $sql_sum_1 = "SELECT
+                                                SUM(c.expected_level) AS sum_expected_level,
+                                                SUM(c.weight) AS sum_weight,
+                                                sum(c.weight * c.expected_level) AS sum_summary
+                                            FROM
+                                                    competency c
+                                            JOIN position_level p ON p.position_level_id = c.position_level_id
+                                            WHERE
+                                                    c.title_id = 1
+                                            AND p.position_level_id = '".$position_level."'";
+                                        $query_sum_1 = mysqli_query($conn, $sql_sum_1);
+                                        $result_sum_1 = mysqli_fetch_assoc($query_sum_1);
+                                        
+                                        $sql_sum_2 = "SELECT
+                                                SUM(c.expected_level) AS sum_expected_level,
+                                                SUM(c.weight) AS sum_weight,
+                                                sum(c.weight * c.expected_level) AS sum_summary
+                                            FROM
+                                                    competency c
+                                            JOIN position_level p ON p.position_level_id = c.position_level_id
+                                            WHERE
+                                                    c.title_id = 2
+                                            AND p.position_level_id = '".$position_level."'";
+                                        $query_sum_2 = mysqli_query($conn, $sql_sum_2);
+                                        $result_sum_2 = mysqli_fetch_assoc($query_sum_2);
+                                        
+                                        $sum_weight = $result_sum_1["sum_weight"]+$result_sum_2["sum_weight"] ;
+                                        $sum_expected_level = $result_sum_1["sum_expected_level"]+$result_sum_2["sum_expected_level"] ;
+                                        $sum_summary = $result_sum_1["sum_summary"]+$result_sum_2["sum_summary"] ;
+                                        ?>
                                         <TR class="bg-info">
                                             <th colspan="4">รวม</th>
 
-                                            <td >30</td>
-                                            <td ></td>
-                                            <td >83</td>
+                                            <td ><?php echo $sum_weight ; ?></td>
+                                            <td ><?php echo $sum_expected_level ; ?></td>
+                                            <td ><?php echo $sum_summary ; ?></td>
                                             <td colspan="6"></td>
 
                                         </TR>
@@ -519,10 +263,17 @@
                             </div>
                         </div>
                         <!-- Modal POPUP เพิ่มหัวข้อ -->
+                        
+                        <?php 
+                            $title_id = "";
+                            if($_GET["title_id"]){
+                                $title_id = $_GET["title_id"];
+                            } 
+                        ?>
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form action="" >
+                                    <form action="" method="post">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="myModalLabel">เพิ่มหัวข้อ</h4>
@@ -533,11 +284,11 @@
                                                     <div style="width: 75%;margin: auto;">
                                                         <div class="form-group">
                                                             <label class="pull-left">ชื่อหัวข้อ: </label>
-                                                            <input type="text" class="form-control" placeholder="ชื่อหัวข้อ">
+                                                            <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อ">
                                                         </div>
                                                         <div class="form-group" >
                                                             <label class="pull-left">น้ำหนัก</label>
-                                                            <select class="form-control">
+                                                            <select class="form-control" name="weight">
                                                                 <option>1</option>
                                                                 <option>2</option>
                                                                 <option>3</option>
@@ -547,7 +298,7 @@
                                                         </div>
                                                         <div class="form-group" >
                                                             <label class="pull-left">ระดับที่คาดหวัง</label>
-                                                            <select class="form-control">
+                                                            <select class="form-control" name="expected_level">
                                                                 <option>1</option>
                                                                 <option>2</option>
                                                                 <option>3</option>
@@ -562,7 +313,8 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                            <button type="button" class="btn btn-success">บันทึก</button>
+                                            <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>"
+                                            <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
                                         </div>
                                     </form>
                                 </div>
@@ -574,7 +326,7 @@
 
                     <!--box footer-->
                     <div class="box-footer">
-                        <button class="btn btn-success pull-right">บันทึกข้อมูล</button>
+                        <input type="submit" class="btn btn-success pull-right" value="บันทึกข้อมูล" />
                         <a href="#">
                             <button class="btn btn-instagram pull-right">ภาพตัวอย่าง</button>
                         </a>
