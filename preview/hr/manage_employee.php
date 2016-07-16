@@ -12,6 +12,7 @@
         <?php include ('./css_packs.html'); ?>
         <!-- SCRIPT PACKS -->
         <?php include ('./script_packs.html'); ?>
+<<<<<<< HEAD
         <script>
             $.extend(true, $.fn.dataTable.defaults, {
                 "language": {
@@ -93,7 +94,7 @@
                                                         </div>
 
                                                         <div class="row">
-                                                            <div class="col-md-7">                                                
+                                                            <div class="col-md-6">                                                
                                                                 <div class="form-group">
                                                                     <label>วันที่เริ่มงาน</label>
                                                                     <div class="input-group date" data-provide="datepicker">
@@ -105,6 +106,23 @@
                                                                     <script>
                                                                         $('.datepicker').datepicker();
                                                                     </script>
+                                                                </div>                                                
+                                                            </div>
+                                                            <?php
+                                                            $sql_department = "SELECT * FROM departments ";
+                                                            $query_department = mysqli_query($conn, $sql_department);
+                                                            ?>
+                                                            <div class="col-md-6">                                               
+                                                                <div class="form-group">
+                                                                    <label>แผนก</label>
+                                                                    <select class="form-control" name="department_id">
+                                                                        <option value="">--เลือกแผนก--</option>
+                                                                        <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
+                                                                        <option value="<?php echo $result_department["department_id"]; ?>">
+                                                                                <?php echo $result_department["department_id"] . " - " . $result_department["department_name"]; ?>
+                                                                        </option>
+                                                                        <?php } ?>
+                                                                    </select>                                                        
                                                                 </div>                                                
                                                             </div>
                                                         </div>
@@ -148,54 +166,43 @@
                                                         </div>
 
                                                         <div class="row">
-                                                            <?php
-                                                            $sql_department = "SELECT * FROM departments ";
-                                                            $query_department = mysqli_query($conn, $sql_department);
-                                                            ?>
-                                                            <div class="col-md-6">                                               
-                                                                <div class="form-group">
-                                                                    <label>แผนก</label>
-                                                                    <select class="form-control" name="department_id">
-                                                                        <option value="">--เลือกแผนก--</option>
-                                                                        <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
-                                                                        <option value="<?php echo $result_department["department_id"]; ?>">
-                                                                                <?php echo $result_department["department_id"] . " - " . $result_department["department_name"]; ?>
-                                                                        </option>
-                                                                        <?php } ?>
-                                                                    </select>                                                        
-                                                                </div>                                                
-                                                            </div>
+                                                            
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
                                                                     <label>หัวหน้าผู้รับผิดชอบ</label>
                                                                     <input type="text" name="manager" class="form-control" />
                                                                 </div>                                               
-                                                            </div>                                              
-                                                        </div>                                       
-                                                        <div class="row">
-                                                            <div class="col-md-7">
-                                                                <div class="form-group">
-                                                                    <label>ที่อยู่</label>
-                                                                    <textarea name="address" class="form-control" rows="3"></textarea>
-                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="form-group">
-                                                                <div class="col-md-6">
+                                                            <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>เบอร์ติดต่อ</label>
                                                                         <input type="text" name="telephone" class="form-control" />
                                                                     </div>
                                                                 </div>  
+                                                        </div>                                       
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>ที่อยู่</label>
+                                                                    <textarea name="address" class="form-control" rows="3"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group">
+                                                                    <label>email</label>
+                                                                    <input type="email" name="email" class="form-control" />
+                                                                </div>
+                                                            </div>  
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="form-group">
                                                                 <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>email</label>
-                                                                        <input type="email" name="email" class="form-control" />
-                                                                    </div>
-                                                                </div>  
+                                                                    <label>อัพโหลดภาพ</label>
+                                                                    <input name="image_name" type="file" id="image_name" size="40" />
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <br>
 
                                                     </div><!-- /Box body -->
                                                     <div class="box-footer">
@@ -293,8 +300,6 @@
                             </div>
                         </div>
                     </div>
-          
-                
 
                 <!-- /.content -->
             </div>
