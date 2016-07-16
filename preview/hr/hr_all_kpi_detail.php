@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php include('./classes/connection_mysqli.php') ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -44,19 +45,22 @@
                     <div class="box-body">
                         <form>
                             <div class="col-md-offset-1 col-md-4">
-                                <label class="col-sm-4 control-label">ตำแหน่ง</label>
+                                <label class="col-sm-4 control-label">แผนก</label>
                                 <div class="col-sm-8">
+                                    <?php 
+                                        $sql_department = "SELECT * FROM departments ";
+                                        $query_department = mysqli_query($conn, $sql_department);
+                                    ?>
                                     <select class="form-control">
-                                        <option>พนักงานทั่วไป</option>
-                                        <option>ผู้บริหาร</option>
-                                        <option>หัวหน้าแผนก</option>
-                                        <option>ผู้จัดการ</option>
-                                        
+                                        <option value="">เลือก</option>
+                                        <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
+                                        <option><?php echo $result_department["department_name"]; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-sm-4 control-label">แผนก</label>
+                                <label class="col-sm-4 control-label">ตำแหน่ง</label>
                                 <div class="col-sm-8">
                                     <select class="form-control">
                                         <option>ทุกแผนก</option>
@@ -81,107 +85,70 @@
             <div class="row box-padding">
             <div class="box box-primary">
                 <div class="box-body">
-                    <table class="table table-bordered table-hover table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th = >ID</th>
-                            <th>ชื่อKPIs</th>
-                            <th >แผนก</th>
-                            <th>ตำแหน่ง</th>
-                            <th>ดู</th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td>KPI001</td>
-                        <td>จัดอบรมสัมนา</td>
-                        <td>ฝ่ายทรัพยากรบุคคล</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI002</td>
-                        <td>จัดหาคนเข้าสมัครงาน</td>
-                        <td>ฝ่ายทรัพยากรบุคคล</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI003</td>
-                        <td>ออกรายงานครบตามผลประเมินประจำปี</td>
-                        <td>ฝ่ายทรัพยากรบุคคล</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI004</td>
-                        <td>จัดงานประชุมผู้นำองค์กร</td>
-                        <td>ฝ่ายทรัพยากรบุคคล</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI101</td>
-                        <td>ติดตั้งเสา</td>
-                        <td>ฝ่ายติดตั้งโครงข่าย</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI102</td>
-                        <td>จัดหาอุปกรณ์ติดตั้ง</td>
-                        <td>ฝ่ายติดตั้งโครงข่าย</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI103</td>
-                        <td>จัดworkshopรายสัปดาห์</td>
-                        <td>ฝ่ายติดตั้งโครงข่าย</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI201</td>
-                        <td>จำนวนสินค้าที่ขายได้</td>
-                        <td>ฝ่ายขายและการตลาด</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI202</td>
-                        <td>จำนวนลูกค้าใหม่ที่ได้จากสื่อโฆษณา</td>
-                        <td>ฝ่ายขายและการตลาด</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI202</td>
-                        <td>จำนวนรายของลูกค้าใหม่</td>
-                        <td>ฝ่ายขายและการตลาด</td>
-                        <td>พนักงานทั่วไป</td>
-                        <td>
-                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
-                        </td>
-                    </tr>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php 
+                                $sql_kpi = "SELECT
+                                                    k.kpi_id as kpi_id,
+                                                    k.kpi_name as kpi_name,
+                                                    k.kpi_description as kpi_description,
+                                                    d.department_id as department_id,
+                                                    d.department_name as department_name
+                                            FROM
+                                                    kpi k
+                                            JOIN kpi_group g ON k.kpi_id = g.kpi_id
+                                            JOIN departments d ON g.department_id = d.department_id
+
+                                            ORDER BY
+                                                    g.kpi_id " ;
+                                $query_kpi = mysqli_query($conn, $sql_kpi);
+                            ?>
+                            <table class="table table-hover table-responsive">
+                                <?php while($result_kpi = mysqli_fetch_array($query_kpi,MYSQLI_ASSOC)) { ?>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center active" colspan="5">
+                                                <?php echo "แผนก : ".$result_kpi["department_name"] ; ?>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th = >ID</th>
+                                            <th>ชื่อKPIs</th>
+                                            <th>คำอธิบาย</th>
+                                            <th>แผนก</th>
+                                            <th>ดู</th>
+                                        </tr>
+                                    </thead>
+                                    <?php 
+                                    $sql_each_kpi = "SELECT
+                                                            k.kpi_id as kpi_id,
+                                                            k.kpi_name as kpi_name,
+                                                            k.kpi_description as kpi_description
+                                                    FROM
+                                                            kpi_group kg
+                                                    JOIN kpi k ON kg.kpi_id = k.kpi_id
+                                                    WHERE
+                                                            kg.department_id = '".$result_kpi["department_id"]."' ";
+                                    $query_each_kpi = mysqli_query($conn, $sql_each_kpi);
+                                    
+                                    ?>
+                                    <?php while ($result_each_kpi = mysqli_fetch_array($query_each_kpi , MYSQLI_ASSOC)) { ?>
+                                    <tr>
+                                        <td><?php echo $result_each_kpi["kpi_id"] ; ?></td>
+                                        <td><?php echo $result_each_kpi["kpi_name"] ; ?></td>
+                                        <td><?php echo $result_each_kpi["kpi_description"] ; ?></td>
+                                        <td><?php echo $result_kpi["department_name"] ; ?></td>
+                                        <td>
+                                            <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        </td>
+                                    </tr>
+                                    <?php } ?>
+                                <?php } ?>
+
                     </table>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
                 

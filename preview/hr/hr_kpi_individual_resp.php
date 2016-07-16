@@ -57,11 +57,23 @@
                                 }
                                 
                                 
-                                $sql_emp = "SELECT emp.employee_id as emp_id, emp.first_name as f_name, emp.last_name as l_name, "
-                                        . "emp.hiredate as hiredate, emp.manager_id as manager_id,"
-                                        . "dept.department_name as dept_name, pos.position_description as pos FROM employees emp "
-                                        . "join departments dept on emp.departmant_id = dept.department_id join position_level pos "
-                                        . "on emp.position_level_id = pos.position_level_id where emp.employee_id='".$get_emp__id."' limit 1";
+                                $sql_emp = "SELECT
+                                        emp.employee_id AS emp_id,
+                                        emp.first_name AS f_name,
+                                        emp.last_name AS l_name,
+                                        emp.hiredate AS hiredate,
+                                        emp.manager_id AS manager_id,
+                                        emp.email AS email,
+                                        emp.telephone_no AS telephone,
+                                        dept.department_name AS dept_name,
+                                        pos.position_description AS pos
+                                FROM
+                                        employees emp
+                                JOIN departments dept ON emp.department_id = dept.department_id
+                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
+                                WHERE
+                                        emp.employee_id = '".$get_emp__id."'
+                                LIMIT 1";
                                 $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
@@ -73,7 +85,8 @@
                                     $manager_id = $result["manager_id"];
                                     $dept = $result["dept_name"];
                                     $pos = $result["pos"];
-                                    
+                                    $email = $result["email"];
+                                    $tel = $result["telephone"];
                                     $sql_manager = "SELECT * from employees where employee_id = '".$manager_id."'" ;
                                     $query_manager = mysqli_query($conn, $sql_manager);
                                     $result_manager = mysqli_fetch_array($query_manager);
@@ -88,7 +101,7 @@
                                             </th>
                                             <th align="center" width="" >ชื่อ-นามสกุล</th>
                                             <th align="center" width="120px">รหัส</th>
-                                            <th align="center" width="" >ตำแหน่ง</th>
+                                            <th align="center" width="" >ระดับ</th>
                                             <th align="center" width="" >แผนก</th>
                                         </tr>
                                         <tr>
@@ -107,18 +120,20 @@
                                     <table class="table table-responsive table-bordered ">
                                         <thead>
                                             <tr class="text-center">
-                                                <td>วันที่เริ่มงาน</td>
-                                                <td>email</td>
-                                                <td>เบอร์โทรศัพท์</td>
-                                                <td>ผู้บังคับบัญชา</td>
+                                                <td colspan="2">วันที่เริ่มงาน</td>
+                                                <td colspan="2">email</td>
+                                                <td colspan="2">เบอร์โทรศัพท์</td>
+                                                <td colspan="2">ผู้บังคับบัญชา</td>
                                             </tr>
                                         </thead>
                                         <tr class="text-center">
-                                            <td><?php echo $hire ;?></td>
-                                            <td></td>
-                                            <td>
-                                            <td ><?php echo $manager_name ; ?></td>
+                                            <td colspan="2"><?php echo $hire ;?></td>
+                                            <td colspan="2"><?php echo $email ;?></td>
+                                            <td colspan="2"><?php echo $tel ;?></td>
+                                            <td colspan="2"><?php echo $manager_name ; ?></td>
                                         </tr>
+                                    </table>
+                                    <table class="table table-responsive table-bordered ">
                                         <thead>
                                             <tr class="">
                                                 <th colspan="8">
@@ -174,20 +189,19 @@
                                             </TD>
                                             <TD>
                                                 <?php 
-                                                    $sql_leave_type_3 = "SELECT COUNT(L.leave_type_id) as leave_type_3 FROM employees E 
-                                                                        JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                        JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                        WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='3'
-                                                                        GROUP BY T.leave_type_id";
-                                                    $query_leave_type_3 = mysqli_query($conn, $sql_leave_type_3);
-                                                    $result_leave_type_3 = mysqli_fetch_row($query_leave_type_3);
-
-                                                    if ($result_leave_type_3["leave_type_3"] == '') {
-                                                        echo "0 วัน";
-                                                    } else {
-                                                        echo $result_leave_type_3["leave_type_3"] . " วัน";
-                                                    }
-                                                ?>
+                                                $sql_leave_type_3 = "SELECT COUNT(L.leave_type_id) as leave_type_3 FROM employees E 
+                                                                    JOIN leaves L ON E.employee_id = L.employee_id 
+                                                                    JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
+                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='6'
+                                                                    GROUP BY T.leave_type_id";
+                                                $query_leave_type_3 = mysqli_query($conn, $sql_leave_type_3);
+                                                $result_leave_type_3 = mysqli_fetch_row($query_leave_type_3);
+                                                if ($result_leave_type_3["leave_type_3"] == '') {
+                                                    echo "0 วัน";
+                                                } else {
+                                                    echo $result_leave_type_3["leave_type_3"] . " วัน";
+                                                }
+                                            ?>
                                             </TD>
                                             <TD>
                                                 <?php 
@@ -211,11 +225,10 @@
                                                 $sql_leave_type_5 = "SELECT COUNT(L.leave_type_id) as leave_type_5 FROM employees E 
                                                                     JOIN leaves L ON E.employee_id = L.employee_id 
                                                                     JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='5'
+                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='6'
                                                                     GROUP BY T.leave_type_id";
                                                 $query_leave_type_5 = mysqli_query($conn, $sql_leave_type_5);
                                                 $result_leave_type_5 = mysqli_fetch_row($query_leave_type_5);
-                                                
                                                 if ($result_leave_type_5["leave_type_5"] == '') {
                                                     echo "0 วัน";
                                                 } else {
@@ -293,7 +306,7 @@
                     ." JOIN evaluation eval on eval_emp.evaluation_code = eval.evaluation_code "
                     ." JOIN kpi_responsible kpi_resp on eval_emp.evaluate_employee_id = kpi_resp.evaluate_employee_id "
                     ." JOIN kpi on kpi_resp.kpi_id = kpi.kpi_id "
-                    ." WHERE eval_emp.employee_id = '".$emp_id."' ";
+                    ." WHERE eval_emp.employee_id = '".$emp_id."' ORDER BY kpi_id ";
                 $query_kpi = mysqli_query($conn, $sql_kpi);
             ?>
             
@@ -320,16 +333,17 @@
                                 $year = $result_kpi["year"];
 
                              ?>
-                            <tr>
-                                <td><?php echo $kpi_id ;?></td>
-                                <td><?php echo $kpi_name ; ?></td>
-                                <td class="text-center"><?php echo $weight."%" ; ?></td>
-                                <td class="text-center"><?php echo $goal ; ?></td>
-                                <td class="text-center"><?php echo $success ; ?></td>
-                                <td class="text-center">
-                                    <?php echo $term." / ".$year ;?>
-                                </td>
-                            </tr>
+                                    <tr>
+                                        <td><?php echo $kpi_id ;?></td>
+                                        <td><?php echo $kpi_name ; ?></td>
+                                        <td class="text-center"><?php echo $weight."%" ; ?></td>
+                                        <td class="text-center"><?php echo $goal ; ?></td>
+                                        <td class="text-center"><?php echo $success ; ?></td>
+                                        <td class="text-center">
+                                            <?php echo $term." / ".$year ;?>
+                                        </td>
+                                    </tr>
+                                
                             <?php } ?>
                         </table>
                     </div>
