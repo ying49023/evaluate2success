@@ -98,7 +98,6 @@
                                                     kpi k
                                             JOIN kpi_group g ON k.kpi_id = g.kpi_id
                                             JOIN departments d ON g.department_id = d.department_id
-
                                             ORDER BY
                                                     g.kpi_id " ;
                                 $query_kpi = mysqli_query($conn, $sql_kpi);
