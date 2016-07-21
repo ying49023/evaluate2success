@@ -12,8 +12,7 @@
             $year=$_POST['add_year'];
             $open_eval=$_POST['add_open'];
             $close_eval=$_POST['add_close'];
-            $add_query="INSERT INTO evaluation VALUES (5,1,'$period','$year','$open_eval','$close_eval')";
-            
+            $add_query="INSERT INTO evaluation VALUES (5,1,'$period','$year','$open_eval','$close_eval')";            
             $a_query =  mysqli_query($conn,$add_query);
             if($a_query)
                header ("location:manage_evaluate.php");
@@ -23,6 +22,40 @@
                 
                 
             }
+        }
+            //++++++++++++++++++delete record+++++++++++++
+            if($erp=='delete'){            
+            $dterm=$_GET['term']; 
+            $dyear=$_GET['year'];            
+            $delete="DELETE FROM evaluation WHERE term='$dterm' and year='$dyear'";            
+            $d_query =  mysqli_query($conn,$delete);
+            if($d_query)
+               header ("location:manage_evaluate.php");
+            else {
+                $msg='Error :'.mysql_error();
+                echo "Error Save [" . $delete . "]";
+            }   
+                
+            
+        }
+        //++++++++++++++++++delete record+++++++++++++
+            if($erp=='update'){            
+            $strSQL = "UPDATE evaluation SET ";
+            $strSQL .="open_system_date= '" . $_POST["textopen"] . "' ";
+            $strSQL .=",close_system_date = '" . $_POST["textclose"] . "' ";
+            $strSQL .="WHERE company_id = 1 and term= '".$_POST["textterm"]."' and year='".$_POST["textyear"]."'";
+            $objQuery = mysqli_query($conn,$strSQL);
+            if ($objQuery) {
+
+                echo "Record update successfully";
+
+
+            } else {
+
+                echo "Error Save [" . $strSQL . "]";
+            }
+         
+                
             
         }
         ?>
@@ -122,7 +155,7 @@
                                                <a href="" data-toggle="modal" data-target="#<?php echo $result_eval["term"] ; ?>_<?php echo $result_eval["year"] ; ?>">
                                                    <i class="glyphicon glyphicon-pencil"></i>
                                                </a>|
-                                               <a href="manage_evaluate.php?epr=delete" >
+                                               <a href="manage_evaluate.php?erp=delete&term=<?php echo $result_eval["term"] ; ?>&year=<?php echo $result_eval["year"] ; ?>">
                                                    <i class="glyphicon glyphicon-trash"></i>
                                                </a>
                                            </td>
@@ -136,7 +169,7 @@
                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
                                               </div>
                                               <div class="modal-body">
-                                                  <form class="form-horizontal" name="frmMain" method="post" action="EditModal.php" >
+                                                  <form class="form-horizontal" name="frmMain" method="post" action="manage_evaluate.php?erp=update" >
                                                       <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
                                                       <div class="input-group col-sm-12" >
                                                           <label for="รอบการประเมิน" class="col-sm-4 control-label">เทอม:</label>
