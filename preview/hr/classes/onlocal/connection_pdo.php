@@ -2,10 +2,10 @@
 date_default_timezone_set("Asia/Bangkok");
 class DB{
     private static $_instance = null;
-    private $host      = "103.27.202.37";
-    private $user      = "prasukrit_alt";
-    private $pass      = "13579alt";
-    private $dbname    = "prasukrit_evaluate2success";
+    private $host      = "localhost";
+    private $user      = "root";
+    private $pass      = "";
+    private $dbname    = "testdb";
     private $dbh;
     private $error;
     private $stmt;
