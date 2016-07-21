@@ -58,13 +58,15 @@
                                  <div class="col-md-3">
                                  <label class="col-sm-4 control-label">แผนก</label>
                                 <div class="col-sm-8">
+                                    <?php
+                                    $sql_department = "SELECT * FROM departments ";
+                                    $query_department = mysqli_query($conn, $sql_department);
+                                    ?>
                                     <select class="form-control">
-                                        <option>ฝ่ายบัญชี</option>
-                                        <option>การเงิน</option>
-                                        <option>ฝ่ายบุคคล</option>
-                                        <option>ฝ่ายขาย</option>
-                                        <option>ฝ่ายไอที และสารสนเทศ</option>
-                                        <option>ฝ่ายปฏิบัติการ</option>
+                                        <option value="">เลือก</option>
+                                        <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
+                                            <option><?php echo $result_department["department_name"]; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                  </div>
@@ -108,7 +110,7 @@
                                 </thead>
                                 <?php
                     
-                                $sql_emp = "SELECT emp.employee_id as emp_id, emp.first_name as f_name, emp.last_name as l_name, "
+                                $sql_emp = "SELECT emp.employee_id as emp_id, emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
                                                     . "dept.department_name as dept_name, j.job_name as job FROM employees emp "
                                                     . "join departments dept on emp.department_id = dept.department_id join jobs j "
                                                     . "on emp.job_id = j.job_id ORDER BY emp_id ASC";
@@ -117,7 +119,7 @@
                                  ?>
                                 <?php  while($result = mysqli_fetch_assoc($query)){ 
                                     $emp_id = $result["emp_id"];
-                                    $name = $result["f_name"]."  ".$result["l_name"];
+                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
                                     $dept = $result["dept_name"];
                                     $job = $result["job"];
                                     

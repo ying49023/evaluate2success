@@ -264,12 +264,6 @@
                         </div>
                         <!-- Modal POPUP เพิ่มหัวข้อ -->
                         
-                        <?php 
-                            $title_id = "";
-                            if($_GET["title_id"]){
-                                $title_id = $_GET["title_id"];
-                            } 
-                        ?>
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
@@ -282,6 +276,14 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div style="width: 75%;margin: auto;">
+                                                        <div class="form-group">
+                                                            <label class="pull-left">ประเภท</label>
+                                                            <select class="form-control" name="title_id">
+                                                                <option value="">--เลือกประเภท--</option>
+                                                                <option value="1">ความสามารถในการบริหารหรือจัดการงาน (10%)</option>
+                                                                <option value="2">ความสามารถในงาน (ความรู้ ,ทักษะ ,คุณสมบัติเฉพาะบุคคล) (20%)</option>
+                                                            </select>
+                                                        </div>
                                                         <div class="form-group">
                                                             <label class="pull-left">ชื่อหัวข้อ: </label>
                                                             <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อ">

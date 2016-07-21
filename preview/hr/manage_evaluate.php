@@ -248,17 +248,17 @@
                                    <table class="table table-hover">
                                        <tr>
                                            <th>ผู้ประเมิน</th>
-                                           <th>ประเมินแล้ว</th>
-                                           <th>ยังไม่ประเมิน</th>
-                                           <th>ทั้งหมด</th>
-                                           <th>แจ้งเตือน</th>
+                                           <th class="text-center">ประเมินแล้ว</th>
+                                           <th class="text-center">ยังไม่ประเมิน</th>
+                                           <th class="text-center">ทั้งหมด</th>
+                                           <th class="text-center">แจ้งเตือน</th>
                                        </tr>
                                        <tr>
                                            <td>นาย สมศักดิ์ ดวงจันทร์</td>
-                                           <td>8</td>
-                                           <td>12</td>
-                                           <td>20</td>
-                                           <td>
+                                           <td class="text-center">8</td>
+                                           <td class="text-center">12</td>
+                                           <td class="text-center">20</td>
+                                           <td class="text-center">
                                                <a href="">
                                                    <i class="glyphicon glyphicon-envelope"></i>
                                                </a>
