@@ -1,3 +1,4 @@
+<?php $page = basename($_SERVER['SCRIPT_NAME']); ?>
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
@@ -23,49 +24,64 @@
         </form>-->
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
+        
         <ul class="sidebar-menu">
+            <?php  ?>
             <li class="header">เมนูหลัก</li>
-            <li class="active treeview">
+            <li class="<?php if($page == 'index.php' || $page == 'total_personal_dashboard.php' || $page == 'myindex.php'){ echo "active" ; } ?> treeview">
                 <a href="index.php">
                     <i class="glyphicon glyphicon-dashboard"></i> <span>แดชบอร์ด</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="index.php"><i class="fa fa-circle-o"></i> ภาพรวม</a></li>
-                    <li><a href="total_personal_dashboard.php"><i class="fa fa-circle-o"></i> รายบุคคล</a></li>
-                    <li><a href="myindex.php"><i class="fa fa-circle-o"></i>ของตนเอง</a></li>
+                    <li class="<?php if($page == 'index.php'){ echo "active" ; } ?>">
+                        <a href="index.php"><i class="fa fa-circle-o"></i> ภาพรวม</a>
+                    </li>
+                    <li class="<?php if($page == 'total_personal_dashboard.php'){ echo "active" ; } ?>">
+                        <a  href="total_personal_dashboard.php"><i class="fa fa-circle-o"></i> รายบุคคล</a>
+                    </li>
+                    <li class="<?php if($page == 'myindex.php'){ echo "active" ; } ?>">
+                        <a href="myindex.php"><i class="fa fa-circle-o"></i>ของตนเอง</a>
+                    </li>
                 </ul>
             </li>
-            <li class="treeview">
+            <li class="treeview <?php if($page == 'evaluate_sub_list.php' || $page == 'search_summaryeval.php' || $page == 'my_summaryevaluation.php'){ echo "active" ; } ?>" >
                 <a href="#">
                     <i class="glyphicon glyphicon-file"></i>
                     <span>การประเมิน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href="evaluate_sub_list.php"><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a></li>
-                    <li><a href="search_summaryeval.php"><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a></li>
-                    <li><a href="my_summaryevaluation.php"><i class="fa fa-circle-o"></i>ดูผลการประเมินของตนเอง</a></li>
+                    <li class="<?php if($page == 'evaluate_sub_list.php'){ echo "active" ; } ?>">
+                        <a href="evaluate_sub_list.php"><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a>
+                    </li>
+                    <li class="<?php if($page == 'search_summaryeval.php'){ echo "active" ; } ?>">
+                        <a href="search_summaryeval.php"><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a>
+                    </li>
+                    <li class="<?php if($page == 'my_summaryevaluation.php'){ echo "active" ; } ?>">
+                        <a href="my_summaryevaluation.php"><i class="fa fa-circle-o"></i>ดูผลการประเมินของตนเอง</a>
+                    </li>
                 </ul>
             </li>
-            <li >
+            <li class="<?php if($page == 'tracking_sub_list.php'){ echo "active" ; } ?> ">
                 <a href="">
                     <i class="glyphicon glyphicon-screenshot"></i>
                         <span>ติดตามสถานะการทำงาน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
+                    <li class="<?php if($page == 'tracking_sub_list.php'){ echo "active" ; } ?>"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
                     <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
                 </ul>
             </li>
             <!-- เมนูsubordinate-->
-            <li >
+            <li class="<?php if($page == 'update_kpi.php'){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>อัพเดทสถานะการทำงาน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
+<<<<<<< HEAD
                     <li class="active"><a href="update_kpi.php"><i class="fa fa-circle-o"></i>อัพเดทKPIs</a></li>
                     <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
                 </ul>
@@ -86,15 +102,20 @@
                     <li class="active"><a href="hr_approve_kpi.php"><i class="fa fa-circle-o"></i>อนุมัติKPIsครั้งถัดไป</a></li>
                     <li class="active"><a href="hr_report_page.php"><i class="fa fa-circle-o"></i>ออกรายงาน</a></li>
                     
+=======
+                    <li class="<?php if($page == 'update_kpi.php'){ echo "active" ; } ?>">
+                        <a href="update_kpi.php"><i class="fa fa-circle-o"></i>อัพเดทKPIs</a>
+                    </li>
+>>>>>>> 1fa6bbe2e4253b8e3aa2a8ee15e6389cf0417e8f
                 </ul>
             </li>
-            <li>
+            <li class="<?php if($page == 'assignkpi.php'){ echo "active" ; } ?>">
                 <a href="assignkpi.php">
                     <i class="glyphicon glyphicon-check"></i> <span>การกำหนดKPIs</span>
 
                 </a>
             </li>
-            <li>
+            <li class="<?php if($page == 'report.php'){ echo "active" ; } ?>">
                 <a href="report.php">
                     <i class="glyphicon glyphicon-envelope"></i> <span>แจ้งปัญหา/รายงานข้อผิดพลาด</span>
 

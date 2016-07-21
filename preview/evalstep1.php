@@ -6,47 +6,19 @@
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-                 folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-    <!-- iCheck -->
-    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
-    <!-- Morris chart -->
-    <link rel="stylesheet" href="plugins/morris/morris.css">
-    <!-- jvectormap -->
-    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!--CSS ปรับแต่งเอง -->
-    <link rel="stylesheet" href="customize.css">
-
+    <!-- CSS PACKS -->
+    <?php include ('./css_packs.html'); ?>
+    
+    <!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
+    
     <style>
-
+        
             table.table tr td,th{
                 text-align: center;
             }
-
-        </style>
+                
+    </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -61,10 +33,9 @@
             <!-- Content Header (Page header)  -->
 
             <section class="content-header">
-                <center>
-                    <h1>แบบฟอร์มประเมินผลการปฏิบัติงาน</h1>
-                    <h3>แบบเน้น Competency, KPIs และ Development</h3>
-                </center>
+
+                <h1>แบบฟอร์มประเมินผลการปฏิบัติงาน<small>แบบเน้น Competency, KPIs และ Development</small></h1>
+                
                 <ol class="breadcrumb">
                     <li>
                         <a href="#"> <i class="fa fa-dashboard"></i>
@@ -73,11 +44,12 @@
                     </li>
                     <li class="active">Evaluation</li>
                 </ol>
-                <hr></section>
+                <hr>
+            </section>
             <!--/Page header -->
 
             <!-- Main content -->
-
+            
             <div id="menu_status">
                 <center>
                     <ul class="nav nav-pills">
@@ -94,131 +66,103 @@
 
                 </center>
             </div>
+            <!--/Process bar-->
+            <script>
+                $(document).ready(function() {
+                    var s = $("#sticker");
+                    var pos = s.position();                    
+                    $(window).scroll(function() {
+                        var windowpos = $(window).scrollTop();
+                        
+                        if (windowpos >= pos.top) {
+                            s.addClass("stick");
+                        } else {
+                            s.removeClass("stick"); 
+                        }
+                    });
+                });
 
-            <div class="row box-padding">
 
-                <div class="box box-success">
-                    <div class="box-header with-border">
-                        <h4 class="box-title" style="text-indent: 10px"> <b>ข้อมูลทั่วไปเกี่ยวกับผู้ถูกประเมิน</b>
-                        </h4>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                            </button>
+            </script>
+            <style>
+                .clear { 
+                    clear:both; 
+                }
+                div#sticker {
+                    padding:20px;
+                    margin:20px 0;
+                    width: 200px;
+                }
+                .stick {
+                    position:fixed;
+                    top:0px;
+                }
+                div#sideBar {
+                    width:130px;
+                    padding:20px;
+                    margin-left:30px;
+                    float:left;
+                }
+            </style>
+            <div class=" row box-padding "  >
+                <div id="">
 
-                            <button type="button" class="btn btn-box-tool" data-widget="remove">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-
+                <div id="" class="box box-success" >
                     <div class="box-body">
+                        <div class="row"> 
+                            <div class="box-padding">
+                                <!--ข้อมูลทั่วไป-->
+                                <table class="table table-bordered table-condensed">
+                                    <tbody><tr>
+                                            <th rowspan="4">
+                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg">
+                                            </th>
+                                            <th align="center" width="">ชื่อ-นามสกุล</th>
+                                            <th align="center" width="120px">รหัส</th>
+                                            <th align="center" width="">ตำแหน่ง</th>
+                                            <th align="center" width="">แผนก</th>
+                                            <th align="center" width="">ครั้งที่ 1 </th>
 
-                        <!--ข้อมูลทั่วไป-->
-                        <div id="">
-
-                            <TABLE class="table table-bordered " HEIGHT="120" WIDTH="90%"  >
-                                <TR >
-                                    <td rowspan="4">
-                                        <div id="img-box">
-                                            <img class="img-circle img-thumbnail" src="img/emp1.jpg" alt="Smiley face"></div>
-                                    </td>
-                                    <TD > <b>ชื่อ</b>
-                                    </TD>
-                                    <TD colspan="2">นาย ศตวรรษ วินวิวัฒน์</TD>
-                                    <TD>
-                                        <b>รหัสพนักงาน</b>
-                                    </TD>
-                                    <TD colspan="2">123456</TD>
-                                </TR>
-
-                                <TR>
-                                    <TD>
-                                        <b>ตำแหน่ง</b>
-                                    </TD>
-                                    <TD colspan="2">พนักงานฝ่ายบุคคล</TD>
-                                    <TD>
-                                        <b>วันที่เริ่มงาน</b>
-                                    </TD>
-                                    <TD colspan="2">1 ก.พ. 2556</TD>
-                                </TR>
-                                <TR>
-                                    <TD>
-                                        <b>ฝ่าย/แผนก</b>
-                                    </TD>
-                                    <TD colspan="2">ฝ่ายบุคคล</TD>
-                                    <TD>
-                                        <b>ผู้บังคับบัญชาขั้นต้น</b>
-                                    </TD>
-                                    <TD colspan="2">นาย นภัทร อินทร์ใจเอื้อ</TD>
-                                </TR>
-                                <TR>
-                                    <TD>
-                                        <b>ครึ่งปีแรก(ม.ค.-มิ.ย.)</b>
-                                    </TD>
-                                    <TD colspan="2">
-                                        <span class="text-green">ประเมินแล้ว</span>
-                                    </TD>
-                                    <TD>
-                                        <b>ครึ่งปีหลัง(ก.ค.-ธ.ค.)</b>
-                                    </TD>
-                                    <TD colspan="2">-</TD>
-                                </TR>
-                            </TABLE>
-                        </div>
-                        <!--/ข้อมูลทั่วไป--> </div>
-                </div>
-            </div>
-
-            <!--Leave day -->
-            <div class="row box-padding">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">
-                            <b>สถิติการมาปฏิบัติงาน</b>
-                        </h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-box-tool" data-widget="remove">
-                                <i class="fa fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- /.box-header -->
-
-                    <div class="box-body">
-                        <!-- /.row -->
-                        <div class="row box-padding-small">
-                            <div class="col-md-12">
-                                <center>
-
-                                    <TABLE class="table table-bordered" border="1" WIDTH="100%" >
+                                        </tr>
+                                        <tr>
+                                            <td>นาย ศตวรรษ วินวิวัฒน์</td>
+                                            <td> 123456</td>
+                                            <td>พนักงานฝ่ายบุคคล</td>
+                                            <td>ฝ่ายบุคคล</td>
+                                            <td><span class="text-green"><i class="glyphicon glyphicon-ok"></i></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table><!--/ข้อมูลทั่วไป-->
+                                <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                    <i class="glyphicon glyphicon-triangle-bottom"></i>รายละเอียดบุคคลเพิ่มเติม
+                                </a>
+                                <div class="collapse" id="collapseExample" style="margin-top:10px;">
+                                    <table class="table table-responsive table-bordered ">
                                         <thead>
-                                            <TR>
-                                                <TD>
-                                                    <b>ลาป่วย</b>
-                                                </TD>
-                                                <TD>
-                                                    <b>ลากิจ</b>
-                                                </TD>
-                                                <TD>
-                                                    <b>ลาอื่นๆ</b>
-                                                </TD>
-                                                <TD>
-                                                    <b>ขาดงาน</b>
-                                                </TD>
-                                                <TD>
-                                                    <b>ลางาน</b>
-                                                </TD>
-                                                <TD>
-                                                    <b>ลงโทษทางวินัย</b>
-                                                </TD>
-                                            </TR>
+                                            <tr class="">
+                                                <th colspan="3">วันที่เริ่มงาน</th>
+                                                <th colspan="3">ผู้บังคับบัญชา</th>
+                                            </tr>
                                         </thead>
-
+                                        <tr>
+                                            <td colspan="3">1 ก.พ. 2556</td>
+                                            <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
+                                        </tr>
+                                        <thead>
+                                            <tr class="">
+                                                <th colspan="6">
+                                                    สถิติการมาปฏิบัติงาน
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th>ลาป่วย</th>
+                                                <th>ลากิจ</th>
+                                                <th>ลาอื่นๆ</th>
+                                                <th>ขาดงาน</th>
+                                                <th>ลางาน</th>
+                                                <th width="16%">ลงโทษทางวินัย</th>
+                                            </tr>
+                                        </thead>
                                         <TR>
                                             <TD>1วัน</TD>
                                             <TD>1วัน</TD>
@@ -227,19 +171,15 @@
                                             <TD>2วัน</TD>
                                             <TD>-</TD>
                                         </TR>
-
-                                    </TABLE>
-                                </center>
-
+                                    </table>
+                                </div>
                             </div>
-
-                        </div>
+                        </div>  
                     </div>
                 </div>
+                </div>
+                <div class="clear"></div>
             </div>
-            <!--/Leave day-->
-
-            <!--555555555555555555555555555555555-->
 
             <div class="row box-padding ">
                 <div class="box box-primary">
@@ -560,40 +500,5 @@
 <?php include './controlsidebar.php'; ?></div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.0 -->
-<script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<script>$.widget.bridge('uibutton', $.ui.button);</script>
-<!-- Bootstrap 3.3.6 -->
-<script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- Morris.js charts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="plugins/morris/morris.min.js"></script>
-<!-- Sparkline -->
-<script src="plugins/sparkline/jquery.sparkline.min.js"></script>
-<!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-<!-- jQuery Knob Chart -->
-<script src="plugins/knob/jquery.knob.js"></script>
-<!-- daterangepicker -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-<script src="plugins/daterangepicker/daterangepicker.js"></script>
-<!-- datepicker -->
-<script src="plugins/datepicker/bootstrap-datepicker.js"></script>
-<!-- Bootstrap WYSIHTML5 -->
-<script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-<!-- Slimscroll -->
-<script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/app.min.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
 </body>
 </html>

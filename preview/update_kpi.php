@@ -1,50 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
+    
+    <?php include ('./classes/connection_mysqli.php'); ?>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-             folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-    <!--JustGage-->
-    <script src="plugins/justGage/justgage.js"></script>
-    <!-- iCheck -->
-    <link rel="stylesheet" href="plugins/iCheck/flat/blue.css">
-    <!-- Morris chart -->
-    <link rel="stylesheet" href="plugins/morris/morris.css">
-    <!-- jvectormap -->
-    <link rel="stylesheet" href="plugins/jvectormap/jquery-jvectormap-1.2.2.css">
-    <!-- Date Picker -->
-    <link rel="stylesheet" href="plugins/datepicker/datepicker3.css">
-    <!-- Daterange picker -->
-    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker-bs3.css">
-    <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!--CSS ปรับแต่งเอง -->
-    <link rel="stylesheet" href="customize.css">
-
+    <!-- CSS PACKS -->
+    <?php include ('./css_packs.html'); ?>
+    
+    <!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
+    
     <style>
             .myDiv{
                 height: 100%;
@@ -76,26 +46,19 @@
                     </li>
                     <li class="active">KPIs</li>
                 </ol>
-                <hr></section>
+                </section>
             <!--/Page header -->
 
             <!-- Main content -->
             <div class="row box-padding">
                 <div class="box box-success">
-                    <div class="box-header">
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                            </button>
-
-                        </div>
-                    </div>
                     <div class="box-body">
 
-                        <table class="table table-bordered" width="90%" height="100px" align="right" style="margin: 18px 5px 0px 0px;">
+                        <table class="table table-bordered" width="90%" height="100px" align="right">
                             <tbody>
                             <tr>
                                 <th rowspan="2">
-                                    <img class="img-circle img-thumbnail" src="dist/img/user2-160x160.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px; width:100px;"></th>
+                                    <img class="img-circle img-thumbnail circle-thumbnail" src="dist/img/user2-160x160.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px;"></th>
                                 <th>
                                     <center>รหัสพนักงาน</center>
                                 </th>
@@ -118,18 +81,36 @@
                                     <center>เทียบกับเป้าหมาย</center>
                                 </th>
                             </tr>
+                            <?php 
+                            
+                            $sql = "SELECT emp.employee_id as emp_id, emp.first_name as f_name, emp.last_name as l_name, "
+                                    . "dept.department_name as dept_name, pos.position_description as pos FROM employees emp "
+                                    . "join departments dept on emp.departmant_id = dept.department_id join position_level pos "
+                                    . "on emp.position_level_id = pos.position_level_id where emp.employee_id='4'";
+                            $query = mysqli_query($conn, $sql); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                            
+                            while($result = mysqli_fetch_assoc($query)){
+                                
+                                $emp_id = $result["emp_id"];
+                                $f_name = $result["f_name"];
+                                $l_name = $result["l_name"];
+                                $dept = $result["dept_name"];
+                                $pos_lv = $result["pos"];
+                                                               
+                                
+                                ?>
                             <tr>
                                 <td>
-                                    <center>111111</center>
+                                    <center><?php echo $emp_id; ?></center>
                                 </td>
                                 <td>
-                                    <center>นาย นภัทร อินทร์ใจเอื้อ</center>
+                                    <center><?php echo $f_name." ".$l_name ; ?></center>
                                 </td>
                                 <td>
-                                    <center>หัวหน้าฝ่ายบุคคล</center>
+                                    <center><?php echo $pos_lv ; ?></center>
                                 </td>
                                 <td>
-                                    <center>ฝ่ายบุคคล</center>
+                                    <center><?php echo $dept ; ?></center>
                                 </td>
                                 <th>
                                     <center>&gt;=80%</center>
@@ -141,13 +122,11 @@
                                     <center></center>
                                 </th>
                             </tr>
-
+                            <?php } ?>
                         </tbody>
                         </table>
                     </div>
-
                 </div>
-
             </div>
             <div class="row box-padding">
                 <div class="row">
@@ -335,40 +314,6 @@
         </div>
         <!-- ./wrapper -->
 
-        <!-- jQuery 2.2.0 -->
-        <script src="plugins/jQuery/jQuery-2.2.0.min.js"></script>
-        <!-- jQuery UI 1.11.4 -->
-        <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-        <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-        <script>$.widget.bridge('uibutton', $.ui.button);</script>
-        <!-- Bootstrap 3.3.6 -->
-        <script src="bootstrap/js/bootstrap.min.js"></script>
-        <!-- Morris.js charts -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-        <script src="plugins/morris/morris.min.js"></script>
-        <!-- Sparkline -->
-        <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
-        <!-- jvectormap -->
-        <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-        <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-        <!-- jQuery Knob Chart -->
-        <script src="plugins/knob/jquery.knob.js"></script>
-        <!-- daterangepicker -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
-        <script src="plugins/daterangepicker/daterangepicker.js"></script>
-        <!-- datepicker -->
-        <script src="plugins/datepicker/bootstrap-datepicker.js"></script>
-        <!-- Bootstrap WYSIHTML5 -->
-        <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-        <!-- Slimscroll -->
-        <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-        <!-- FastClick -->
-        <script src="plugins/fastclick/fastclick.js"></script>
-        <!-- AdminLTE App -->
-        <script src="dist/js/app.min.js"></script>
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="dist/js/pages/dashboard.js"></script>
-        <!-- AdminLTE for demo purposes -->
-        <script src="dist/js/demo.js"></script>
+        
 </body>
     </html>
