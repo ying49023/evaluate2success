@@ -1,6 +1,67 @@
 <!DOCTYPE html>
+<?php include('./classes/connection_mysqli.php');
+        
+        $erp='';
+        $msg='';
+        if(isset($_GET['erp']))
+            $erp=$_GET['erp'];
+        //++++++++++++++++++save record+++++++++++++
+        if($erp=='save'){
+            
+            $period=$_POST['add_period'];
+            $year=$_POST['add_year'];
+            $open_eval=$_POST['add_open'];
+            $close_eval=$_POST['add_close'];
+            $add_query="INSERT INTO evaluation VALUES (5,1,'$period','$year','$open_eval','$close_eval')";            
+            $a_query =  mysqli_query($conn,$add_query);
+            if($a_query)
+               header ("location:manage_evaluate.php");
+            else {
+                $msg='Error :'.mysql_error();
+                echo "Error Save [" . $add_query . "]";
+                
+                
+            }
+        }
+            //++++++++++++++++++delete record+++++++++++++
+            if($erp=='delete'){            
+            $dterm=$_GET['term']; 
+            $dyear=$_GET['year'];            
+            $delete="DELETE FROM evaluation WHERE term='$dterm' and year='$dyear'";            
+            $d_query =  mysqli_query($conn,$delete);
+            if($d_query)
+               header ("location:manage_evaluate.php");
+            else {
+                $msg='Error :'.mysql_error();
+                echo "Error Save [" . $delete . "]";
+            }   
+                
+            
+        }
+        //++++++++++++++++++delete record+++++++++++++
+            if($erp=='update'){            
+            $strSQL = "UPDATE evaluation SET ";
+            $strSQL .="open_system_date= '" . $_POST["textopen"] . "' ";
+            $strSQL .=",close_system_date = '" . $_POST["textclose"] . "' ";
+            $strSQL .="WHERE company_id = 1 and term= '".$_POST["textterm"]."' and year='".$_POST["textyear"]."'";
+            $objQuery = mysqli_query($conn,$strSQL);
+            if ($objQuery) {
+
+                echo "Record update successfully";
+
+
+            } else {
+
+                echo "Error Save [" . $strSQL . "]";
+            }
+         
+                
+            
+        }
+        ?>
 <html>
     <head>
+        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -70,39 +131,37 @@
                                 </div>
                                 <div class="box-body">
                                   <div class="col-md-offset-1 col-md-10 ">
+                                    <?php 
+                                        $sql_eval = "SELECT term,year,DATE_FORMAT(open_system_date,'%d/%m/%Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/%m/%Y') as close_system_date from evaluation where company_id=1  ";
+                                        $query_eval= mysqli_query($conn, $sql_eval);
+                                    ?>
+                                     
                                    <table class="table table-hover">
+                                       
                                        <tr>
                                            
                                            <th>รอบการประเมิน</th>
                                            <th>วันเปิด</th>
                                            <th>วันปิด</th>
-                                           <th>แก้ไข</th>
+                                           <th align="center">จัดการ</th>
                                        </tr>
+                                       <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
                                        <tr>
                                            
-                                           <td>1/2559</td>
-                                           <td>15/07/2559</td>
-                                           <td>15/07/2559</td>
-                                           <td>
-                                               <a href="" data-toggle="modal" data-target="#myModalEdit">
+                                           <td><?php echo $result_eval["term"] ; ?> / <?php echo $result_eval["year"] ; ?></td>
+                                           <td><?php echo $result_eval["open_system_date"] ; ?></td>
+                                           <td><?php echo $result_eval["close_system_date"] ; ?></td>
+                                           <td >
+                                               <a href="" data-toggle="modal" data-target="#<?php echo $result_eval["term"] ; ?>_<?php echo $result_eval["year"] ; ?>">
                                                    <i class="glyphicon glyphicon-pencil"></i>
+                                               </a>|
+                                               <a href="manage_evaluate.php?erp=delete&term=<?php echo $result_eval["term"] ; ?>&year=<?php echo $result_eval["year"] ; ?>">
+                                                   <i class="glyphicon glyphicon-trash"></i>
                                                </a>
                                            </td>
                                        </tr>
-                                       <tr>
-                                           
-                                           <td>2/2559</td>
-                                           <td>15/01/2560</td>
-                                           <td>15/02/2560</td>
-                                           <td>
-                                               <a href="">
-                                                   <i class="glyphicon glyphicon-pencil"></i>
-                                               </a>
-                                           </td>
-                                       </tr>
-                                   </table>
-                                      <!--Edit Modal -->
-                                        <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                       <!--Edit Modal -->
+                                        <div class="modal fade" id="<?php echo $result_eval["term"] ; ?>_<?php echo $result_eval["year"] ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                           <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                               <div class="modal-header">
@@ -110,36 +169,50 @@
                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
                                               </div>
                                               <div class="modal-body">
-                                                  <form class="form-horizontal">
+                                                  <form class="form-horizontal" name="frmMain" method="post" action="manage_evaluate.php?erp=update" >
+                                                      <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
                                                       <div class="input-group col-sm-12" >
-                                                          <label for="รอบการประเมิน" class="col-sm-4 control-label">รอบการประเมิน:</label>
+                                                          <label for="รอบการประเมิน" class="col-sm-4 control-label">เทอม:</label>
                                                           <div class="col-sm-8">               
-                                                              <input type="text" class="form-control" value="1/2559" disabled="true" >
+                                                              <input type="text" class="form-control" value="<?php echo $result_eval["term"] ; ?>" name='textterm'   >
+                                                          </div>
+                                                      </div>
+                                                      <div class="input-group col-sm-12" >
+                                                          <label for="รอบการประเมิน" class="col-sm-4 control-label">ปี:</label>
+                                                          <div class="col-sm-8">               
+                                                              <input type="text" class="form-control" value="<?php echo $result_eval["year"] ; ?>" name='textyear'    >
                                                           </div>
                                                       </div>
                                                       <div class="input-group col-sm-12">
-                                                          <label class="col-sm-4 control-label">วันเปิด: </label>
+                                                          <label class="col-sm-4 control-label" >วันเปิด: </label>
                                                           <div class="col-sm-8"> 
-                                                              <input type="date" class="form-control" >
+                                                              <input type="date" class="form-control" name="textopen"  >
                                                           </div>
                                                       </div>
                                                       <div class="input-group col-sm-12">
                                                           <label class="col-sm-4 control-label">วันปิด: </label>
                                                           <div class="col-sm-8"> 
-                                                              <input type="date" class="form-control"  >
+                                                              <input type="date" class="form-control" name="textclose" >
                                                           </div>
                                                       </div>
+                                                      <button type="submit" class="btn btn-primary">Save changes</button>
                                                   </form>
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
                                               </div>
                                             </div>
                                           </div>
                                         </div>
                                       <!-- Edit Modal -->
+                                       
+                                       <?php } mysqli_close($conn); ?>
                                       
+                                      
+                                   </table>
+                                      
+                                     <?php echo $msg;?> 
                                       <!--Add Modal -->
                                         <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                           <div class="modal-dialog" role="document">
@@ -149,30 +222,35 @@
                                                 <h4 class="modal-title" id="myModalLabel">เพิ่มข้อมูล</h4>
                                               </div>
                                               <div class="modal-body">
-                                                  <form class="form-horizontal">
+                                                  <form class="form-horizontal" action='manage_evaluate.php?erp=save' method="post">
                                                       <div class="input-group col-sm-12" >
                                                           <label for="รอบการประเมิน" class="col-sm-4 control-label">รอบการประเมิน:</label>
                                                           <div class="col-sm-8">               
-                                                              <input type="text" class="form-control" placeholder="รอบ/ปีการประเมิน"  >
+                                                              <input type="text" class="form-control" placeholder="รอบการประเมิน" name="add_period"  >
+                                                          </div>
+                                                          <label for="ปีการประเมิน" class="col-sm-4 control-label">ปีการประเมิน:</label>
+                                                          <div class="col-sm-8">               
+                                                              <input type="text" class="form-control" placeholder="ปีการประเมิน" name="add_year"  >
                                                           </div>
                                                       </div>
                                                       <div class="input-group col-sm-12">
                                                           <label class="col-sm-4 control-label">วันเปิด: </label>
                                                           <div class="col-sm-8"> 
-                                                              <input type="date" class="form-control" >
+                                                              <input type="date" class="form-control" name="add_open">
                                                           </div>
                                                       </div>
                                                       <div class="input-group col-sm-12">
                                                           <label class="col-sm-4 control-label">วันปิด: </label>
                                                           <div class="col-sm-8"> 
-                                                              <input type="date" class="form-control"  >
+                                                              <input type="date" class="form-control" name="add_close" >
                                                           </div>
+                                                          <button type="submit" class="btn btn-primary">Save changes</button>
                                                       </div>
                                                   </form>
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                                
                                               </div>
                                             </div>
                                           </div>
