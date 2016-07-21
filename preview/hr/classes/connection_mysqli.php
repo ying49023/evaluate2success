@@ -13,6 +13,7 @@
 	$userName = "prasukrit_alt";
 	$userPassword = "13579alt";
 	$dbName = "prasukrit_evaluate2success";
+        
 	//$myTable = "project";
 
 	// Check connection
