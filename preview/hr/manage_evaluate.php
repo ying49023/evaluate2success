@@ -310,7 +310,7 @@
                         <div class="row box-padding">                  
                             <div class="box box-primary">
                                 <div class="box-header with-border">
-                                    <p>สถานะการอัพเดทและแจ้งเตื่อนอีเมลล์</p>
+                                    <p>สถานะการอัพเดทและแจ้งเตือนอีเมลล์</p>
                                     <div class="box-tools pull-right">
                                         <button type="button" class="btn btn-box-tool" data-widget="collapse"> 
                                             <i class="fa fa-minus"></i>
@@ -319,7 +319,55 @@
                                     </div>
                                 </div>
                                 <div class="box-body">
-
+                                    <div class="col-md-offset-1 col-md-10 ">
+                                        
+                                        <form class="form-inline">
+                                            <div class="form-group col-md-3">
+                                                <label>เดือน</label>
+                                                <select class="form-control" name="mont">
+                                                <option>ก.ค.</option>
+                                                 </select>
+                                            </div>
+                                            <div class="form-group col-md-4">
+                                                <label>รอบการอัพเดท</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="25-29 ก.ค. 2016"disabled="true">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label>แผนก</label>
+                                                <select class="form-control">
+                                                <option>บุคคล</option>
+                                                 </select>
+                                            </div>
+                                            
+                                        </form>
+                                        <br><br><br>
+                                    </div> 
+                                    <div class="col-md-offset-1 col-md-10 bg-faded ">
+                                        <h4>การอัพเดทความคืบหน้า เดือน กรกฎาคม (วันที่25-29)</h4>
+                                    </div>
+                                    <div class="col-md-offset-1 col-md-10  ">
+                                        <table class="table table-hover">
+                                            <tr class="bg-blue">
+                                           <th>ชื่อพนักงาน</th>
+                                           <th class="text-center">สถานะ</th>
+                                           <th class="text-center">ดูรายละเอียด</th>
+                                           <th class="text-center">แจ้งเตือนถึงพนักงาน</th>
+                                           <th class="text-center">แจ้งเตือนถึงผู้บังคับบัญชา</th>
+                                       </tr>
+                                       <tr>
+                                           <td>นาย สมศักดิ์ ดวงจันทร์</td>
+                                           <td class="text-center" style="color: red">uncomplete</td>
+                                           <td class="text-center"><a href="#" class="glyphicon glyphicon-eye-open"></a></td>
+                                           <td class="text-center"><a href="#" class="glyphicon glyphicon-envelope"></a></td>
+                                           <td class="text-center">
+                                               <a href="#">
+                                                   <i class="glyphicon glyphicon-envelope"></i>
+                                               </a>
+                                           </td>
+                                       </tr>
+                                       
+                                   </table>
+                                    </div>
                                 </div>
                             </div>                                                             
                         </div>
