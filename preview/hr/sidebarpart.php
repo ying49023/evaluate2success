@@ -28,15 +28,15 @@
         <ul class="sidebar-menu">
             <li class="header" >เมนูสำหรับฝ่ายบุคคล</li>
             <!-- เมนูsubordinate-->
-            <li class="<?php if($page == 'edit_weight_eval.php' || $page == 'index.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'edit_weight_eval.php' || $page == 'index.php' || $page == 'manage_evaluate.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>แบบประเมิน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?php if($page == ''){ echo "active" ; } ?>">
-                        <a href="#"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a>
+                    <li class="<?php if($page == 'manage_evaluate.php' || $page == '' ){ echo "active" ; } ?>">
+                        <a href="manage_evaluate.php"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a>
                     </li>
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
                         <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>

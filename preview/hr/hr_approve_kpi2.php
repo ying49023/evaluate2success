@@ -58,6 +58,7 @@
                                 
                                 $sql_emp = "SELECT
                                         emp.employee_id AS emp_id,
+                                        emp.prefix As prefix,
                                         emp.first_name AS f_name,
                                         emp.last_name AS l_name,
                                         emp.hiredate AS hiredate,
@@ -78,7 +79,7 @@
                                 
                                 <?php  while($result = mysqli_fetch_assoc($query)){ 
                                     $emp_id = $result["emp_id"];
-                                    $name = $result["f_name"]."  ".$result["l_name"];
+                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
                                     $hire = $result["hiredate"];
                                     $manager_id = $result["manager_id"];
                                     $dept = $result["dept_name"];
@@ -88,7 +89,7 @@
                                     $sql_manager = "SELECT * from employees where employee_id = '".$manager_id."'" ;
                                     $query_manager = mysqli_query($conn, $sql_manager);
                                     $result_manager = mysqli_fetch_array($query_manager);
-                                    $manager_name = $result_manager["first_name"]." ".$result_manager["last_name"];
+                                    $manager_name = $result_manager["prefix"].$result_manager["first_name"]." ".$result_manager["last_name"];
                                 ?>
                                 <!--ข้อมูลทั่วไป-->
                                 <table class="table table-bordered table-condensed">
