@@ -207,7 +207,7 @@
                                         </div>
                                       <!-- Edit Modal -->
                                        
-                                       <?php } mysqli_close($conn); ?>
+                                       <?php }  ?>
                                       
                                       
                                    </table>
@@ -278,6 +278,41 @@
                                 </div>
                                 <div class="box-body">
                                   <div class="col-md-offset-1 col-md-10 ">
+                                        <?php   $sql_mail = "SELECT
+                                                    m.prefix As prefix,
+                                                    m.first_name As first_name,
+                                                    m.last_name As last_name,
+                                                    (
+                                                          SELECT
+                                                                  COUNT(e.employee_id)
+                                                          FROM
+                                                                  evaluation_employee v
+                                                          JOIN employees e ON v.employee_id = e.employee_id
+                                                          JOIN employees m ON e.manager_id = m.employee_id
+                                                          WHERE
+                                                                  e.manager_id = 1
+                                                        AND sum_point <> 0
+                                                    ) AS completed_evaluate,
+                                                    COUNT(e.employee_id) - (
+                                                        SELECT
+                                                                COUNT(e.employee_id)
+                                                        FROM
+                                                                evaluation_employee v
+                                                        JOIN employees e ON v.employee_id = e.employee_id
+                                                        JOIN employees m ON e.manager_id = m.employee_id
+                                                            WHERE
+                                                                e.manager_id = 1
+                                                        AND sum_point <> 0
+                                                    ) AS uncompleted_evaluate,
+                                                    COUNT(e.employee_id) AS all_subordinate
+                                                FROM
+                                                    employees e
+                                            JOIN employees m ON e.manager_id = m.employee_id
+                                            WHERE
+                                                e.manager_id = 1"; 
+                                        $query_mail = mysqli_query($conn, $sql_mail);
+                                        
+                                        ?>
                                    <table class="table table-hover">
                                        <tr>
                                            <th>ผู้ประเมิน</th>
@@ -286,17 +321,19 @@
                                            <th class="text-center">ทั้งหมด</th>
                                            <th class="text-center">แจ้งเตือน</th>
                                        </tr>
+                                       <?php while($result_mail = mysqli_fetch_array($query_mail,MYSQLI_ASSOC)) { ?>
                                        <tr>
-                                           <td>นาย สมศักดิ์ ดวงจันทร์</td>
-                                           <td class="text-center">8</td>
-                                           <td class="text-center">12</td>
-                                           <td class="text-center">20</td>
+                                           <td><?php echo $result_mail["prefix"].$result_mail["first_name"]."  ".$result_mail["last_name"]; ?></td>
+                                           <td class="text-center"><?php echo $result_mail["completed_evaluate"]; ?></td>
+                                           <td class="text-center"><?php echo $result_mail["uncompleted_evaluate"]; ?></td>
+                                           <td class="text-center"><?php echo $result_mail["all_subordinate"]; ?></td>
                                            <td class="text-center">
                                                <a href="">
                                                    <i class="glyphicon glyphicon-envelope"></i>
                                                </a>
                                            </td>
                                        </tr>
+                                       <?php } ?>
                                        
                                    </table>
                                    </div>
