@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <?php include('./classes/connection_mysqli.php'); ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -92,34 +93,31 @@
                                         
                                     </tr>
                                 </thead>
+                                <?php
+                    
+                                $sql_emp = "SELECT emp.employee_id as emp_id, emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
+                                                    . "dept.department_name as dept_name, j.job_name as job FROM employees emp "
+                                                    . "join departments dept on emp.department_id = dept.department_id join jobs j "
+                                                    . "on emp.job_id = j.job_id ORDER BY emp_id ASC";
+                                $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+
+                                 ?>
+                                <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
+                                    $emp_id = $result["emp_id"];
+                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
+                                    $dept = $result["dept_name"];
+                                    $job = $result["job"];
+                                    
+                                ?>
+                                
                                 <tr>
-                                    <td class="text-center">123456</td>
-                                    <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
+                                    <td class="text-center"><?php echo $emp_id; ?></td>
+                                    <td><?php echo $name; ?></td>
+                                    <td class="text-center"><?php echo $job; ?></td>
+                                    <td class="text-center"><?php echo $dept; ?></td>
+                                    <td class="text-center"><a href="hr_manage_kpi.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-folder-open"></i></a></td>
                                 </tr>
-                                <tr>
-                                    <td class="text-center">130911</td>
-                                    <td>น.ส. สมสวย เห็นงาม</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">130912</td>
-                                    <td>นาย ชัยเดช พ่วงเพชร</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">130913</td>
-                                    <td>นาย ศักดิ์ดา เกียรติกมล</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
+                                <?php } ?>
                             </table>
 
                         </div>

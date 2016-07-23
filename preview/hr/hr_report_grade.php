@@ -10,10 +10,6 @@
     if(isset($_GET['emp_name'])){
         $name=$_GET['emp_name'];
     }
-    
-
-
-
 ?>
 <html>
 <head>

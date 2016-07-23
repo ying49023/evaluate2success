@@ -34,14 +34,14 @@
 
                 </a>
             </li>
-            <li class="<?php if($page == 'edit_weight_eval.php'  || $page == 'manage_evaluate.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'edit_weight_eval.php'  || $page == 'manage_evaluate.php' ){ echo "" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>แบบประเมิน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?php if($page == 'manage_evaluate.php' || $page == '' ){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'manage_evaluate.php' ){ echo "active" ; } ?>">
                         <a href="manage_evaluate.php"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a>
                     </li>
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
@@ -79,8 +79,8 @@
 
                 </a>
             </li>
-            <li class="<?php if($page == 'assignkpi.php'){ echo "active" ; } ?>">
-                <a href="assignkpi.php">
+            <li class="<?php if($page == 'hr_assign_kpi.php'){ echo "active" ; } ?>">
+                <a href="hr_assign_kpi.php">
                     <i class="glyphicon glyphicon-check"></i> <span>การกำหนดKPIs</span>
 
                 </a>

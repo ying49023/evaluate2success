@@ -64,7 +64,7 @@
                         <!-- /.row -->
                         <div class="row">
                             <div class="box-padding-small">
-                                <center>
+                                
                                     <TABLE class="table table-bordered table-hover" HEIGHT="100" WIDTH="100%" border="1" >
                                         <thead>
                                             <TR class="bg-primary">
@@ -165,16 +165,74 @@
                                                     <input type="radio" name="optradio" value="4"></td>
                                                 <td >
                                                     <input type="radio" name="optradio" value="5"></td>
-                                                <td class="text-center">
-                                                    <a href="">
-                                                        <i class="glyphicon glyphicon-pencil"></i>
-                                                    </a>
+                                                <td class="text-center" style="width: 100px">
+                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#title_one<?php echo $i; ?>">
+                                                        <i class="glyphicon glyphicon-pencil" ></i>
+                                                    </button>                                                   
                                                     |
-                                                    <a href="">
-                                                        <i class="glyphicon glyphicon-trash"></i>
-                                                    </a>
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                        <i class="glyphicon glyphicon-remove" ></i>
+                                                    </button>
                                                 </td>
                                             </TR>
+                                            
+                                            <!-- Modal -->
+                                                
+                                            <div class="modal animated fade " id="title_one<?php echo $i; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <form action="" method="post">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div style="width: 75%;margin: auto;">
+                                                                            <h4>ความสามารถในการบริหารหรือจัดการงาน (10%)</h4>
+                                                                            
+                                                                            <div class="form-group">
+                                                                                <label class="pull-left">ชื่อหัวข้อ: </label>
+                                                                                <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อ" value="<?php echo $i.' - '.$result_form_eval_1["description"]; ?>" readonly>
+                                                                            </div>
+                                                                            <div class="form-group" >
+                                                                                <label class="pull-left">น้ำหนัก</label>
+                                                                                <select class="form-control" name="weight">
+                                                                                    <option value="1" <?php if($result_form_eval_1["weight"] == '1' ){ echo "selected" ; } ?> >1</option>
+                                                                                    <option value="2" <?php if($result_form_eval_1["weight"] == '2' ){ echo "selected" ; } ?>>2</option>
+                                                                                    <option value="3" <?php if($result_form_eval_1["weight"] == '3' ){ echo "selected" ; } ?>>3</option>
+                                                                                    <option value="4" <?php if($result_form_eval_1["weight"] == '4' ){ echo "selected" ; } ?>>4</option>
+                                                                                    <option value="5" <?php if($result_form_eval_1["weight"] == '5' ){ echo "selected" ; } ?>>5</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group" >
+                                                                                <label class="pull-left">ระดับที่คาดหวัง</label>
+                                                                                <select class="form-control" name="expected_level">
+                                                                                    <option value="1" <?php if($result_form_eval_1["expected_level"] == '1' ){ echo "selected" ; } ?> >1</option>
+                                                                                    <option value="2" <?php if($result_form_eval_1["expected_level"] == '2' ){ echo "selected" ; } ?>>2</option>
+                                                                                    <option value="3" <?php if($result_form_eval_1["expected_level"] == '3' ){ echo "selected" ; } ?>>3</option>
+                                                                                    <option value="4" <?php if($result_form_eval_1["expected_level"] == '4' ){ echo "selected" ; } ?>>4</option>
+                                                                                    <option value="5" <?php if($result_form_eval_1["expected_level"] == '5' ){ echo "selected" ; } ?>>5</option>
+                                                                                </select>
+                                                                                    
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>"
+                                                                
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                
+                                            <!--Modal-->
                                         
                                         <?php  } ?>
 
@@ -205,17 +263,73 @@
                                                     <input type="radio" name="optradio" value="4"></td>
                                                 <td >
                                                     <input type="radio" name="optradio" value="5"></td>
-                                                <td class="text-center">
-                                                    <a href="">
-                                                        <i class="glyphicon glyphicon-pencil"></i>
-                                                    </a>
+                                                <td class="text-center" style="width: 100px">
+                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#title_two<?php echo $j; ?>">
+                                                        <i class="glyphicon glyphicon-pencil" ></i>
+                                                    </button>                                                   
                                                     |
-                                                    <a href="">
-                                                        <i class="glyphicon glyphicon-trash"></i>
-                                                    </a>
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                        <i class="glyphicon glyphicon-remove" ></i>
+                                                    </button>
                                                 </td>
                                             </TR>
-                                        
+                                            <!-- Modal -->
+                                                
+                                            <div class="modal animated fade " id="title_two<?php echo $j; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog modal-lg" role="document">
+                                                    <div class="modal-content">
+                                                        <form action="" method="post">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div style="width: 75%;margin: auto;">
+                                                                            <h4>ความสามารถในการบริหารหรือจัดการงาน (10%)</h4>
+                                                                            
+                                                                            <div class="form-group">
+                                                                                <label class="pull-left">ชื่อหัวข้อ: </label>
+                                                                                <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อ" value="<?php echo $j.' - '.$result_form_eval_2["description"]; ?>" readonly>
+                                                                            </div>
+                                                                            <div class="form-group" >
+                                                                                <label class="pull-left">น้ำหนัก</label>
+                                                                                <select class="form-control" name="weight">
+                                                                                    <option value="1" <?php if($result_form_eval_2["weight"] == '1' ){ echo "selected" ; } ?> >1</option>
+                                                                                    <option value="2" <?php if($result_form_eval_2["weight"] == '2' ){ echo "selected" ; } ?>>2</option>
+                                                                                    <option value="3" <?php if($result_form_eval_2["weight"] == '3' ){ echo "selected" ; } ?>>3</option>
+                                                                                    <option value="4" <?php if($result_form_eval_2["weight"] == '4' ){ echo "selected" ; } ?>>4</option>
+                                                                                    <option value="5" <?php if($result_form_eval_2["weight"] == '5' ){ echo "selected" ; } ?>>5</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group" >
+                                                                                <label class="pull-left">ระดับที่คาดหวัง</label>
+                                                                                <select class="form-control" name="expected_level">
+                                                                                    <option value="1" <?php if($result_form_eval_2["expected_level"] == '1' ){ echo "selected" ; } ?> >1</option>
+                                                                                    <option value="2" <?php if($result_form_eval_2["expected_level"] == '2' ){ echo "selected" ; } ?>>2</option>
+                                                                                    <option value="3" <?php if($result_form_eval_2["expected_level"] == '3' ){ echo "selected" ; } ?>>3</option>
+                                                                                    <option value="4" <?php if($result_form_eval_2["expected_level"] == '4' ){ echo "selected" ; } ?>>4</option>
+                                                                                    <option value="5" <?php if($result_form_eval_2["expected_level"] == '5' ){ echo "selected" ; } ?>>5</option>
+                                                                                </select>
+                                                                                    
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>"
+                                                                       
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                                
+                                            <!--Modal-->
                                         <?php  } ?>
                                         <?php  
                                         $sql_sum_1 = "SELECT
@@ -259,7 +373,7 @@
                                         </TR>
                                     </TABLE>
 
-                                </center>
+                                
                             </div>
                         </div>
                         <!-- Modal POPUP เพิ่มหัวข้อ -->

@@ -94,7 +94,7 @@
 
                                 <td>รายงานการพัฒนา ฝึกอบรมประจำปี</td>
                                 <td>
-                                    <a href="">    
+                                    <a href="hr_report_grade.php">    
                                         <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
                                     </a>
                                 </td>
@@ -106,7 +106,7 @@
 
                                 <td>รายงานด้านเงินเดือนค่าจ้าง โบนัส ประจำปี</td>
                                 <td>
-                                    <a href="">    
+                                    <a href="hr_report_grade.php">    
                                         <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
                                     </a>
                                 </td>
@@ -118,7 +118,7 @@
 
                                 <td>รายงานสถิติพนักงานจำแนกตามหน่วยงาน การขาด ลา มาสาย การหยุดงาน ประจำปี</td>
                                 <td>
-                                    <a href="">    
+                                    <a href="hr_report_grade.php">    
                                         <center><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></center>
                                     </a>
                                 </td>
