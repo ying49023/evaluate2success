@@ -34,7 +34,7 @@
 
                 </a>
             </li>
-            <li class="<?php if($page == 'edit_weight_eval.php'  || $page == 'manage_evaluate.php' ){ echo "" ; } ?>">
+            <li class="<?php if($page == 'edit_weight_eval.php'  || $page == 'manage_evaluate.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>แบบประเมิน</span>

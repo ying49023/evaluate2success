@@ -179,7 +179,7 @@
                                             <!-- Modal -->
                                                 
                                             <div class="modal animated fade " id="title_one<?php echo $i; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <form action="" method="post">
                                                             <div class="modal-header">
@@ -276,7 +276,7 @@
                                             <!-- Modal -->
                                                 
                                             <div class="modal animated fade " id="title_two<?php echo $j; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-dialog " role="document">
                                                     <div class="modal-content">
                                                         <form action="" method="post">
                                                             <div class="modal-header">
@@ -287,7 +287,7 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-12">
                                                                         <div style="width: 75%;margin: auto;">
-                                                                            <h4>ความสามารถในการบริหารหรือจัดการงาน (10%)</h4>
+                                                                            <h4>ความสามารถในงาน (ความรู้ ,ทักษะ ,คุณสมบัติเฉพาะบุคคล) (20%)</h4>
                                                                             
                                                                             <div class="form-group">
                                                                                 <label class="pull-left">ชื่อหัวข้อ: </label>
@@ -428,9 +428,10 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                            <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>"
                                             <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                            <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>" />
+                                            
                                         </div>
                                     </form>
                                 </div>
