@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php include ('./classes/connection_mysqli.php'); ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -61,13 +62,15 @@
                             <div class="col-md-3">
                                 <label class="col-sm-4 control-label">แผนก</label>
                                 <div class="col-sm-8">
+                                    <?php
+                                    $sql_department = "SELECT * FROM departments ";
+                                    $query_department = mysqli_query($conn, $sql_department);
+                                    ?>
                                     <select class="form-control">
-                                        <option>ฝ่ายบัญชี</option>
-                                        <option>การเงิน</option>
-                                        <option>ฝ่ายบุคคล</option>
-                                        <option>ฝ่ายขาย</option>
-                                        <option>ฝ่ายไอที และสารสนเทศ</option>
-                                        <option>ฝ่ายปฏิบัติการ</option>
+                                        <option value="">เลือก</option>
+                                        <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
+                                            <option><?php echo $result_department["department_name"]; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
@@ -182,6 +185,21 @@
             <div class="box box-primary">
                 <div class="box-body">
                     <table class="table table-bordered">
+                    <?php
+                        $sql_kpi_goal = "SELECT
+                                                k.kpi_id As kpi_id,
+                                                k.kpi_name As kpi_name,
+                                                k.kpi_description As kpi_description,
+                                                k.unit As unit ,
+                                                sum(r.goal) AS goal_kpi,
+                                                SUM(success) AS completed_kpi
+                                        FROM
+                                                kpi k
+                                        JOIN kpi_responsible r ON k.kpi_id = r.kpi_id
+                                        GROUP BY
+                                                kpi_id";
+                        $query_kpi_goal = mysqli_query($conn, $sql_kpi_goal);
+                    ?>
                     <thead>
                         <tr>
                             <th width="80px" >ID</th>
@@ -192,62 +210,24 @@
                             <th width="60" style="text-align:center">%</th>
                         </tr>
                     </thead>
+                    <?php while($result_kpi_goal = mysqli_fetch_array($query_kpi_goal, MYSQLI_ASSOC)) { 
+                            $percent_completed = ($result_kpi_goal["completed_kpi"]/$result_kpi_goal["goal_kpi"])*100 ;
+                        ?>
                     <tr>
-                        <td>KPI001</td>
-                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
-                        <td>10</td>
-                        <td>9</td>
+                        <td><?php echo $result_kpi_goal["kpi_id"]; ?></td>
+                        <td><?php echo $result_kpi_goal["kpi_name"]; ?></td>
+                        <td><?php echo $result_kpi_goal["goal_kpi"]." ".$result_kpi_goal["unit"]; ?></td>
+                        <td><?php echo $result_kpi_goal["completed_kpi"]." ".$result_kpi_goal["unit"] ; ?></td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-success" style="width: 90%"></div>
+                              <div class="progress-bar <?php if($percent_completed <= 40){ echo 'progress-bar-danger' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'progress-bar-warining' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'progress-bar-info' ;}else if($percent_completed > 75){ echo 'progress-bar-success' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>%"></div>
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-green">90%</span>
+                            <span class="badge bg-green"><?php echo (int)$percent_completed."%" ; ?></span>
                         </td>
                     </tr>
-                    <tr>
-                        <td>KPI002</td>
-                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
-                        <td>8</td>
-                        <td>2</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-primary" style="width: 25%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-blue">20%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI003</td>
-                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
-                        <td>20</td>
-                        <td>14</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-warning" style="width: 70%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-orange">70%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI004</td>
-                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
-                        <td>30</td>
-                        <td>10</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-success" style="width: 80%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-green">80%</span>
-                        </td>
-                    </tr>
+                    <?php } ?>
                         
                     </table>
                 </div>

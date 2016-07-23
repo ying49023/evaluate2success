@@ -54,7 +54,7 @@
                                     <select class="form-control">
                                         <option value="">เลือก</option>
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
-                                        <option><?php echo $result_department["department_name"]; ?></option>
+                                        <option value="department_id"><?php echo $result_department["department_name"]; ?></option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -62,19 +62,20 @@
                             <div class="col-md-4">
                                 <label class="col-sm-4 control-label">ตำแหน่ง</label>
                                 <div class="col-sm-8">
+                                    <?php 
+                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
+                                        $query_job = mysqli_query($conn, $sql_job);
+                                    ?>
                                     <select class="form-control">
-                                        <option>ทุกแผนก</option>
-                                        <option>ฝ่ายทรัพยากรบุคคล</option>
-                                        <option>ฝ่ายขายและการตลาด</option>
-                                        <option>การเงิน</option>
-                                        <option>ฝ่ายขาย</option>
-                                        <option>ฝ่ายไอที และสารสนเทศ</option>
-                                        <option>ฝ่ายปฏิบัติการ</option>
+                                        <option value="">เลือก</option>
+                                        <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
+                                        <option value="job_id"><?php echo $result_job["job_name"]; ?></option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
                             <div class=" col-md-2">
-                                <button class="btn btn-primary search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                                <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
                             </div>
 
                         </form>
@@ -92,59 +93,42 @@
                                                     k.kpi_id as kpi_id,
                                                     k.kpi_name as kpi_name,
                                                     k.kpi_description as kpi_description,
-                                                    d.department_id as department_id,
+                                                    j.job_name as job_name,
                                                     d.department_name as department_name
                                             FROM
                                                     kpi k
                                             JOIN kpi_group g ON k.kpi_id = g.kpi_id
                                             JOIN departments d ON g.department_id = d.department_id
+                                            JOIN jobs j ON j.job_id = g.job_id
                                             ORDER BY
-                                                    g.kpi_id " ;
+                                                    k.kpi_id,j.job_name" ;
                                 $query_kpi = mysqli_query($conn, $sql_kpi);
                             ?>
-                            <table class="table table-hover table-responsive">
-                                <?php while($result_kpi = mysqli_fetch_array($query_kpi,MYSQLI_ASSOC)) { ?>
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center active" colspan="5">
-                                                <?php echo "แผนก : ".$result_kpi["department_name"] ; ?>
-                                            </th>
-                                        </tr>
-                                        <tr>
-                                            <th = >ID</th>
-                                            <th>ชื่อKPIs</th>
-                                            <th>คำอธิบาย</th>
-                                            <th>แผนก</th>
-                                            <th>ดู</th>
-                                        </tr>
-                                    </thead>
-                                    <?php 
-                                    $sql_each_kpi = "SELECT
-                                                            k.kpi_id as kpi_id,
-                                                            k.kpi_name as kpi_name,
-                                                            k.kpi_description as kpi_description
-                                                    FROM
-                                                            kpi_group kg
-                                                    JOIN kpi k ON kg.kpi_id = k.kpi_id
-                                                    WHERE
-                                                            kg.department_id = '".$result_kpi["department_id"]."' ";
-                                    $query_each_kpi = mysqli_query($conn, $sql_each_kpi);
-                                    
-                                    ?>
-                                    <?php while ($result_each_kpi = mysqli_fetch_array($query_each_kpi , MYSQLI_ASSOC)) { ?>
+                            <table class="table table-hover table-responsive table-striped">                               
+                                <thead>
                                     <tr>
-                                        <td><?php echo $result_each_kpi["kpi_id"] ; ?></td>
-                                        <td><?php echo $result_each_kpi["kpi_name"] ; ?></td>
-                                        <td><?php echo $result_each_kpi["kpi_description"] ; ?></td>
-                                        <td><?php echo $result_kpi["department_name"] ; ?></td>
+                                        <th = >ID</th>
+                                        <th>ชื่อKPIs</th>
+                                        <th>คำอธิบาย</th>
+                                        <th>ตำแหน่ง</th>
+                                        <th>แผนก</th>
+                                        <th>ดู</th>
+                                    </tr>
+                                </thead>
+                                <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
+                                    <tr>
+                                        <td><b><?php echo $result_kpi["kpi_id"]; ?></b></td>
+                                        <td><?php echo $result_kpi["kpi_name"]; ?></td>
+                                        <td><?php echo $result_kpi["kpi_description"]; ?></td>
+                                        <td><?php echo $result_kpi["job_name"]; ?></td>
+                                        <td><?php echo $result_kpi["department_name"]; ?></td>
                                         <td>
                                             <a href=""><i class="glyphicon glyphicon-eye-open"></i></a>
                                         </td>
                                     </tr>
-                                    <?php } ?>
                                 <?php } ?>
 
-                    </table>
+                            </table>
                         </div>
                     </div>
                     
