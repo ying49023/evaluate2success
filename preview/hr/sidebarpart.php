@@ -79,12 +79,21 @@
 
                 </a>
             </li>
+            <li class="<?php if($page == 'threshold.php'){ echo "active" ; } ?>">
+                <a href="threshold.php">
+                    <i class="glyphicon glyphicon-sort-by-attributes-alt"></i> <span>การจัดการการวัดระดับ</span>
+
+                </a>
+            </li>
+
             <li class="<?php if($page == 'report.php'){ echo "active" ; } ?>">
                 <a href="report.php">
                     <i class="glyphicon glyphicon-envelope"></i> <span>แจ้งปัญหา/รายงานข้อผิดพลาด</span>
 
                 </a>
             </li>
+           
+
         </ul>
     </section>
     <!-- /.sidebar -->
