@@ -149,7 +149,7 @@
                     <div class="col-md-4">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <strong>KPIภาพรวมล่าสุด ประจำเดือน : พฤษภาคม</strong>
+                                <strong>KPIภาพรวมล่าสุด ประจำเดือน : กรกฎาคม</strong>
                                 <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
@@ -166,7 +166,7 @@
                                         value : 65,
                                         min: 0,
                                         max: 100,
-                                        title: "เดือนพฤษภาคม",
+                                        title: "กรกฎาคม",
                                         label: "%",
                                         levelColorsGradient: false
                                       });
