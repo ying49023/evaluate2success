@@ -45,13 +45,18 @@
                 <div class="row box-padding">
                     <!--edit employee-->
                     <?php 
-                        $sql = "SELECT * FROM employees where employee_id = '".$get_emp_id."' limit 1";
+                        $sql = "SELECT * FROM employees WHERE employee_id = '".$get_emp_id."' limit 1";                        
                         $query = mysqli_query($conn, $sql);
                         while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
                             $prefix = $result["prefix"]; 
                             $f_name = $result["first_name"];
                             $l_name = $result["last_name"];
                             $name = $result["prefix"].$result["first_name"]."  ".$result["last_name"];
+                            $address = $result["address"];
+                            $hiredate =$result["hiredate"];
+                            $telno =$result["telephone_no"];
+                            $email =$result["email"];
+                                 
                             
                             
                     ?>
@@ -108,7 +113,7 @@
                                         <div class="form-group">
                                             <label>วันที่เริ่มงาน</label>
                                             <div class="input-group date" data-provide="datepicker">
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" value="<?php echo $hiredate; ?>">
                                                 <div class="input-group-addon">
                                                     <span class="glyphicon glyphicon-th"></span>
                                                 </div>
@@ -179,14 +184,34 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
+                                            <?php 
+                                            
+                                                $msql = " select m.first_name as fname from employees m 
+                                                        join employees e on m.employee_id = e.manager_id 
+                                                        where e.employee_id  = '".$get_emp_id."' limit 1";
+                                                $mname='';
+                                                
+                                                 
+                                                 $mquery = mysqli_query($conn, $msql);
+                                                 
+                                                 ?>
+                                                <?php
+                                                
+                                                while($mresult = mysqli_fetch_array($mquery, MYSQLI_ASSOC)) {
+                                                     
+                                                    $mname =$mresult['fname'];
+                                                 
+                                                  
+                                             ?>
                                             <label>หัวหน้าผู้รับผิดชอบ</label>
-                                            <input type="text" name="manager" class="form-control" />
+                                                <input type="text" name="manager" class="form-control" value="<?php echo $mname ?>" />
                                         </div>                                               
                                     </div>
+                                                <?php }  ?>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>เบอร์ติดต่อ</label>
-                                            <input type="text" name="telephone" class="form-control" />
+                                            <input type="text" name="telephone" class="form-control" value="<?php echo $telno ?>" />
                                         </div>
                                     </div>  
                                 </div>                                       
@@ -194,13 +219,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>ที่อยู่</label>
-                                            <textarea name="address" class="form-control" rows="3"></textarea>
+                                            <textarea name="address" class="form-control" rows="3" ><?php echo $address; ?></textarea>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>email</label>
-                                            <input type="email" name="email" class="form-control" />
+                                            <input type="email" name="email" class="form-control" value="<?php echo $email; ?>" />
                                         </div>
                                     </div>  
                                 </div>
