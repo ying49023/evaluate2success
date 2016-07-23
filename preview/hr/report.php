@@ -55,27 +55,7 @@
                                 <div class="container">
                                     <div class="col-md-offset-1 col-md-8">
 
-                                        <div class="row box-padding-small">
-                                            <div class="form-group">
-                                                <div class="col-md-2">ชื่อ</div>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row box-padding-small">
-                                            <div class="form-group">
-                                                <div class="col-md-2">แผนก</div>
-                                                <div class="col-md-8">
-                                                    <select class="form-control" name="" id="">
-                                                        <option value="">บัญชี</option>
-                                                        <option value="">การเงิน</option>
-                                                        <option value="">การตลาด</option>
-                                                        <option value="">ไอที</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="row box-padding-small">
                                             <div class="form-group">
                                                 <div class="col-md-2">หัวข้อ</div>

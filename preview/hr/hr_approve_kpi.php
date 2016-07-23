@@ -127,14 +127,49 @@
                     <!--/Style1-->
                     
                     <!--Style2 don't delete อย่าเพิ่งลบ-->
-                    
+                    <?php
+                    $sql_mail = "SELECT
+                                                    m.prefix As prefix,
+                                                    m.first_name As first_name,
+                                                    m.last_name As last_name,
+                                                    (
+                                                          SELECT
+                                                                  COUNT(e.employee_id)
+                                                          FROM
+                                                                  evaluation_employee v
+                                                          JOIN employees e ON v.employee_id = e.employee_id
+                                                          JOIN employees m ON e.manager_id = m.employee_id
+                                                          WHERE
+                                                                  e.manager_id = 1
+                                                        AND sum_point <> 0
+                                                    ) AS completed_evaluate,
+                                                    COUNT(e.employee_id) - (
+                                                        SELECT
+                                                                COUNT(e.employee_id)
+                                                        FROM
+                                                                evaluation_employee v
+                                                        JOIN employees e ON v.employee_id = e.employee_id
+                                                        JOIN employees m ON e.manager_id = m.employee_id
+                                                            WHERE
+                                                                e.manager_id = 1
+                                                        AND sum_point <> 0
+                                                    ) AS uncompleted_evaluate,
+                                                    COUNT(e.employee_id) AS all_subordinate
+                                                FROM
+                                                    employees e
+                                            JOIN employees m ON e.manager_id = m.employee_id
+                                            WHERE
+                                                e.manager_id = 1";
+                    $query_mail = mysqli_query($conn, $sql_mail);
+                    while($result_mail = mysqli_fetch_array($query_mail,MYSQLI_ASSOC)) {
+                    ?>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                       <div class="info-box">
                         <span class="info-box-icon bg-green"><i class="glyphicon glyphicon-ok"></i></span>
 
                         <div class="info-box-content">
                           <span class="info-box-text">อนุมัติแล้ว</span>
-                          <span class="info-box-number">50 คน</span>
+                          <span class="info-box-number"><?php echo $result_mail["completed_evaluate"]." คน"; ?></span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
@@ -147,7 +182,7 @@
 
                         <div class="info-box-content">
                           <span class="info-box-text">ยังไม่อนุมัติ</span>
-                          <span class="info-box-number">7 คน</span>
+                          <span class="info-box-number"><?php echo $result_mail["uncompleted_evaluate"]." คน"; ?></span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
@@ -160,12 +195,13 @@
 
                         <div class="info-box-content">
                           <span class="info-box-text">สมาชิกทั้งหมด</span>
-                          <span class="info-box-number">57 คน</span>
+                          <span class="info-box-number"><?php echo $result_mail["all_subordinate"]." คน"; ?></span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
                       <!-- /.info-box -->
                     </div>
+                    <?php } ?>
                     <!--/Style2-->
                 </div>
 

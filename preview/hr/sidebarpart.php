@@ -28,7 +28,13 @@
         <ul class="sidebar-menu">
             <li class="header" >เมนูสำหรับฝ่ายบุคคล</li>
             <!-- เมนูsubordinate-->
-            <li class="<?php if($page == 'edit_weight_eval.php' || $page == 'index.php' || $page == 'manage_evaluate.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == '' || $page == 'index.php'){ echo "active" ; } ?>">
+                <a href="index.php">
+                    <i class="glyphicon glyphicon-user"></i> <span>Dashboard</span>
+
+                </a>
+            </li>
+            <li class="<?php if($page == 'edit_weight_eval.php'  || $page == 'manage_evaluate.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>แบบประเมิน</span>
