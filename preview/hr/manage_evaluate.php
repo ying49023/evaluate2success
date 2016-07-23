@@ -161,6 +161,7 @@
                                            </td>
                                        </tr>
                                        <!--Edit Modal -->
+                                       <form class="form-horizontal" name="frmMain" method="post" action="manage_evaluate.php?erp=update" >
                                         <div class="modal fade" id="<?php echo $result_eval["term"] ; ?>_<?php echo $result_eval["year"] ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                           <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -169,7 +170,7 @@
                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
                                               </div>
                                               <div class="modal-body">
-                                                  <form class="form-horizontal" name="frmMain" method="post" action="manage_evaluate.php?erp=update" >
+                                                  
                                                       <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
                                                       <div class="input-group col-sm-12" >
                                                           <label for="รอบการประเมิน" class="col-sm-4 control-label">เทอม:</label>
@@ -194,9 +195,8 @@
                                                           <div class="col-sm-8"> 
                                                               <input type="date" class="form-control" name="textclose" >
                                                           </div>
-                                                      </div>
-                                                      <button type="submit" class="btn btn-primary">Save changes</button>
-                                                  </form>
+                                                      </div>                                              
+         
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -205,15 +205,17 @@
                                             </div>
                                           </div>
                                         </div>
+                                        </form>
                                       <!-- Edit Modal -->
                                        
-                                       <?php } mysqli_close($conn); ?>
+                                       <?php } ?>
                                       
                                       
                                    </table>
                                       
                                      <?php echo $msg;?> 
                                       <!--Add Modal -->
+                                      <form class="form-horizontal" action='manage_evaluate.php?erp=save' method="post">
                                         <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                           <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -221,8 +223,7 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 class="modal-title" id="myModalLabel">เพิ่มข้อมูล</h4>
                                               </div>
-                                              <div class="modal-body">
-                                                  <form class="form-horizontal" action='manage_evaluate.php?erp=save' method="post">
+                                              <div class="modal-body">                                                  
                                                       <div class="input-group col-sm-12" >
                                                           <label for="รอบการประเมิน" class="col-sm-4 control-label">รอบการประเมิน:</label>
                                                           <div class="col-sm-8">               
@@ -244,17 +245,18 @@
                                                           <div class="col-sm-8"> 
                                                               <input type="date" class="form-control" name="add_close" >
                                                           </div>
-                                                          <button type="submit" class="btn btn-primary">Save changes</button>
+                                                          
                                                       </div>
-                                                  </form>
+                                                  
                                               </div>
                                               <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
                                               </div>
                                             </div>
                                           </div>
                                         </div>
+                                       </form>
                                       <!-- Add Modal -->
                                       
                                       <br>
@@ -286,18 +288,30 @@
                                            <th class="text-center">ทั้งหมด</th>
                                            <th class="text-center">แจ้งเตือน</th>
                                        </tr>
+                                       <?php 
+                                        $sql_meval = "SELECT  CONCAT(m.prefix,m.first_name,' ',m.last_name) as name, ( SELECT  COUNT(e.employee_id)
+                                                        FROM evaluation_employee v JOIN employees e ON v.employee_id = e.employee_id JOIN employees m ON e.manager_id = m.employee_id
+                                                        WHERE e.manager_id = 1 AND sum_point <> 0) AS 'Completed_evaluate' , COUNT(e.employee_id)-( SELECT  COUNT(e.employee_id)
+                                                        FROM evaluation_employee v JOIN employees e ON v.employee_id = e.employee_id JOIN employees m ON e.manager_id = m.employee_id
+                                                        WHERE e.manager_id = 1 AND sum_point <> 0) AS 'Uncompleted_evaluate',
+                                                        COUNT(e.employee_id) AS 'All_subordinate' 
+                                                        FROM employees e JOIN employees m ON e.manager_id = m.employee_id
+                                                        WHERE e.manager_id = 1  ";
+                                        $query_meval= mysqli_query($conn, $sql_meval);
+                                    ?>
+                                    <?php while($result_meval = mysqli_fetch_array($query_meval,MYSQLI_ASSOC)) { ?>
                                        <tr>
-                                           <td>นาย สมศักดิ์ ดวงจันทร์</td>
-                                           <td class="text-center">8</td>
-                                           <td class="text-center">12</td>
-                                           <td class="text-center">20</td>
+                                           <td><?php echo $result_meval['name']; ?></td>
+                                           <td class="text-center"><?php echo $result_meval['Completed_evaluate']; ?></td>
+                                           <td class="text-center"><?php echo $result_meval['Uncompleted_evaluate']; ?></td>
+                                           <td class="text-center"><?php echo $result_meval['All_subordinate']; ?></td>
                                            <td class="text-center">
                                                <a href="">
                                                    <i class="glyphicon glyphicon-envelope"></i>
                                                </a>
                                            </td>
                                        </tr>
-                                       
+                                       <?php }?>
                                    </table>
                                    </div>
                                 </div>
@@ -320,30 +334,47 @@
                                 </div>
                                 <div class="box-body">
                                     <div class="col-md-offset-1 col-md-10 ">
-                                        
+                                        <br>
                                         <form class="form-inline">
-                                            <div class="form-group col-md-3">
-                                                <label>เดือน</label>
+                                            <div class="form-group col-md-2">
+                                                <label class="control-label">เดือน </label>
                                                 <select class="form-control" name="mont">
-                                                <option>ก.ค.</option>
+                                                    <option>ม.ค.</option>
+                                                    <option>ก.พ.</option>
+                                                    <option>มี.ค.</option>
+                                                    <option>เม.ย.</option>
+                                                    <option>พ.ค.</option>
+                                                    <option>มิ.ย.</option>
+                                                    <option selected="true">ก.ค.</option>
+                                                    <option>ส.ค.</option>
+                                                    <option>ก.ย.</option>
+                                                    <option>ต.ค.</option>
+                                                    <option>พ.ย.</option>
+                                                    <option>ธ.ค.</option>
                                                  </select>
                                             </div>
                                             <div class="form-group col-md-4">
-                                                <label>รอบการอัพเดท</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="25-29 ก.ค. 2016"disabled="true">
+                                                <label class="control-label">รอบการอัพเดท </label>
+                                                <input type="email" class="form-control" id="exampleInputEmail2" placeholder="1-29 ก.ค. 2016"disabled="true">
                                             </div>
-                                            <div class="form-group col-md-3">
-                                                <label>แผนก</label>
+                                            <div class="form-group col-md-4">
+                                                 <?php
+                                                    $sql_department = "SELECT * FROM departments ";
+                                                    $query_department = mysqli_query($conn, $sql_department);
+                                                 ?>
+                                                <label class="control-label">แผนก </label>
                                                 <select class="form-control">
-                                                <option>บุคคล</option>
+                                                <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
+                                                <option><?php echo $result_department["department_name"]; ?></option>
+                                                <?php }  mysqli_close($conn); ?>
                                                  </select>
                                             </div>
                                             
                                         </form>
-                                        <br><br><br>
+                                        <br><br><br><br><br>
                                     </div> 
                                     <div class="col-md-offset-1 col-md-10 bg-faded ">
-                                        <h4>การอัพเดทความคืบหน้า เดือน กรกฎาคม (วันที่25-29)</h4>
+                                        <h4>การอัพเดทความคืบหน้า เดือน กรกฎาคม (วันที่1-29)</h4>
                                     </div>
                                     <div class="col-md-offset-1 col-md-10  ">
                                         <table class="table table-hover">
