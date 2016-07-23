@@ -61,12 +61,16 @@
                                 <label class="col-sm-4 control-label">แผนก</label>
                                 <div class="col-sm-8">
                                     <select class="form-control">
-                                        <option>ฝ่ายบัญชี</option>
-                                        <option>การเงิน</option>
-                                        <option>ฝ่ายบุคคล</option>
-                                        <option>ฝ่ายขาย</option>
-                                        <option>ฝ่ายไอที และสารสนเทศ</option>
-                                        <option>ฝ่ายปฏิบัติการ</option>
+                                       <?php
+                                    $sql_department = "SELECT * FROM departments ";
+                                    $query_department = mysqli_query($conn, $sql_department);
+                                    ?>
+                                    <select class="form-control">
+                                        <option value="">เลือก</option>
+                                        <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
+                                            <option><?php echo $result_department["department_name"]; ?></option>
+                                        <?php } ?>
+                                    </select>
                                     </select>
                                 </div>
                             </div>
