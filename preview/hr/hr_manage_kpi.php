@@ -18,11 +18,8 @@
     <?php include ('./css_packs.html'); ?>
     
     <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
-     <?php include ('./classes/connection_mysqli.php'); ?>
-    
+    <?php include('./script_packs.html') ?>    
 </head>
-
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <!--Header part-->
@@ -434,7 +431,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <button class="btn btn-file">เพิ่ม</button>
-                                    <button class="btn btn-microsoft">บันทึก</button>
+                                    <input type="submit" class="btn btn-microsoft" value="บันทึก" />
                                 </div>
                             </div>
                         </form>

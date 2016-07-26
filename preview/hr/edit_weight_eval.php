@@ -57,7 +57,7 @@
                         function position_level()
                         {
                            document.form_name.submit();
-                        }
+                        };
                     </script>
                     <!--box-body-->
                     <div class="box-body">
@@ -69,43 +69,51 @@
                                         <thead>
                                             <TR class="bg-primary">
                                                 <th colspan="13">
-                                                    <h3>แบบฟอร์มประเมินผลการปฏิบัติงาน แบบเน้น Competency, KPIs และ Dehvelopment</h3>                                               
-                                                    <form name="form_name" onchange="position_level()" type ="get" class="form-inline" >
+                                        <h3>แบบฟอร์มประเมินผลการปฏิบัติงาน แบบเน้น Competency, KPIs และ Dehvelopment</h3>                                               
+                                        <form name="form_name" onchange="position_level()" method="get" class="form-inline" >
                                             <div class="form-group">
-                                                
+
                                                 <select name="position_level_id" class="form-control">
                                                     <option value=" " >---เลือกตำแหน่ง---</option>
-                                                    <option value="1" <?php if($position_level=='1'){ echo "selected"; } ?> >สำหรับตำแหน่งระดับปฏิบัติการ (พนักงานที่ไม่มีผู้ใต้บังคับบัญชาขึ้นตรง)</option>
-                                                    <option value="2" <?php if($position_level=='2'){ echo "selected"; } ?> >สำหรับตำแหน่งระดับบังคับบัญชา (หัวหน้างานหรือเทียบเท่าที่มีผู้ใต้บังคับบัญชาขึ้นตรง)</option>
-                                                    <option value="3" <?php if($position_level=='3'){ echo "selected"; } ?> >สำหรับตำแหน่งผู้ช่วยผู้จัดการฝ่าย ถึงผู้อำนวยการ</option>
-                                                    <option value="4" <?php if($position_level=='4'){ echo "selected"; } ?> >สำหรับตำแหน่งรองกรรมการผู้อำนวยการ/ รองกรรมการผู้จัดการขึ้นไป</option>
+                                                    <option value="1" <?php if ($position_level == '1') {echo "selected";} ?> >
+                                                        สำหรับตำแหน่งระดับปฏิบัติการ (พนักงานที่ไม่มีผู้ใต้บังคับบัญชาขึ้นตรง)
+                                                    </option>
+                                                    <option value="2" <?php if ($position_level == '2') { echo "selected";} ?> >
+                                                        สำหรับตำแหน่งระดับบังคับบัญชา (หัวหน้างานหรือเทียบเท่าที่มีผู้ใต้บังคับบัญชาขึ้นตรง)
+                                                    </option>
+                                                    <option value="3" <?php if ($position_level == '3') { echo "selected"; } ?> >
+                                                        สำหรับตำแหน่งผู้ช่วยผู้จัดการฝ่าย ถึงผู้อำนวยการ
+                                                    </option>
+                                                    <option value="4" <?php if ($position_level == '4') { echo "selected"; } ?> >
+                                                        สำหรับตำแหน่งรองกรรมการผู้อำนวยการ/ รองกรรมการผู้จัดการขึ้นไป
+                                                    </option>
 
                                                 </select>
-                                                
+
                                             </div>
                                         </form>
-                                        </th>
-                                        </TR>
-                                        <TR class="bg-info">
-                                            <th style="padding-top:25px;" rowspan="2" colspan="4">ความสามารถ(Competency)</th>
-                                            <th style="padding-top:25px;" rowspan="2" >%น้ำหนัก(W)</th>
-                                            <th colspan="2">ระดับที่คาดหวัง (E)</th>
-                                            <th colspan="6">ระดับที่ทำจริง (A)</th>
-                                        </TR>
-                                        <tr class="bg-info">
-                                            <td>ระดับ</td>
-                                            <td>รวม</td>
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>3</td>
-                                            <td>4</td>
-                                            <td>5</td>
-                                            <td> </td>
-                                        </tr>
-                                        </thead>
+                                    </th>
+                                    </TR>
+                                    <TR class="bg-info">
+                                        <th style="padding-top:25px;" rowspan="2" colspan="4">ความสามารถ(Competency)</th>
+                                        <th style="padding-top:25px;" rowspan="2" >%น้ำหนัก(W)</th>
+                                        <th colspan="2">ระดับที่คาดหวัง (E)</th>
+                                        <th colspan="6">ระดับที่ทำจริง (A)</th>
+                                    </TR>
+                                    <tr class="bg-info">
+                                        <td>ระดับ</td>
+                                        <td>รวม</td>
+                                        <td>1</td>
+                                        <td>2</td>
+                                        <td>3</td>
+                                        <td>4</td>
+                                        <td>5</td>
+                                        <td> </td>
+                                    </tr>
+                                    </thead>
                                         <?php 
                                                                              
-                                        $sql_form_eval_1 = "SELECT c.competency_description as description , c.weight as weight ,"
+                                        $sql_form_eval_1 = "SELECT c.competency_id as competency_id, c.competency_description as description , c.weight as weight ,"
                                                         . "c.expected_level as expected_level ,c.weight*c.expected_level as summary ,"
                                                         . " p.position_level_id as position_level_id  "
                                                         . " from position_level p "
@@ -115,7 +123,7 @@
                                         
                                         $query_form_eval_1 = mysqli_query($conn, $sql_form_eval_1);
                                         
-                                        $sql_form_eval_2 = "SELECT c.competency_description as description , c.weight as weight ,"
+                                        $sql_form_eval_2 = "SELECT c.competency_id as competency_id, c.competency_description as description , c.weight as weight ,"
                                                         . "c.expected_level as expected_level ,c.weight*c.expected_level as summary ,"
                                                         . " p.position_level_id as position_level_id "
                                                         . " from position_level p "
@@ -173,66 +181,64 @@
                                                         <i class="glyphicon glyphicon-remove" ></i>
                                                     </button>
                                                 </td>
-                                            </TR>
-                                            
-                                            <!-- Modal -->   
-                                            <div class="modal animated fade " id="title_one<?php echo $i; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        <form action="" method="post">
-                                                            <div class="modal-header">
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <div class="row">
-                                                                    <div class="col-sm-12">
-                                                                        <div style="width: 75%;margin: auto;">
-                                                                            <h4>ความสามารถในการบริหารหรือจัดการงาน (10%)</h4>
-                                                                            
-                                                                            <div class="form-group">
-                                                                                <label class="pull-left">ชื่อหัวข้อ: </label>
-                                                                                <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อ" value="<?php echo $i.' - '.$result_form_eval_1["description"]; ?>" readonly>
-                                                                            </div>
-                                                                            <div class="form-group" >
-                                                                                <label class="pull-left">น้ำหนัก</label>
-                                                                                <select class="form-control" name="weight">
-                                                                                    <option value="1" <?php if($result_form_eval_1["weight"] == '1' ){ echo "selected" ; } ?> >1</option>
-                                                                                    <option value="2" <?php if($result_form_eval_1["weight"] == '2' ){ echo "selected" ; } ?>>2</option>
-                                                                                    <option value="3" <?php if($result_form_eval_1["weight"] == '3' ){ echo "selected" ; } ?>>3</option>
-                                                                                    <option value="4" <?php if($result_form_eval_1["weight"] == '4' ){ echo "selected" ; } ?>>4</option>
-                                                                                    <option value="5" <?php if($result_form_eval_1["weight"] == '5' ){ echo "selected" ; } ?>>5</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <div class="form-group" >
-                                                                                <label class="pull-left">ระดับที่คาดหวัง</label>
-                                                                                <select class="form-control" name="expected_level">
-                                                                                    <option value="1" <?php if($result_form_eval_1["expected_level"] == '1' ){ echo "selected" ; } ?> >1</option>
-                                                                                    <option value="2" <?php if($result_form_eval_1["expected_level"] == '2' ){ echo "selected" ; } ?>>2</option>
-                                                                                    <option value="3" <?php if($result_form_eval_1["expected_level"] == '3' ){ echo "selected" ; } ?>>3</option>
-                                                                                    <option value="4" <?php if($result_form_eval_1["expected_level"] == '4' ){ echo "selected" ; } ?>>4</option>
-                                                                                    <option value="5" <?php if($result_form_eval_1["expected_level"] == '5' ){ echo "selected" ; } ?>>5</option>
-                                                                                </select>
-                                                                                    
+                                                <!-- Modal -->  
+                                                
+                                                <div class="modal animated fade " id="title_one<?php echo $i; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+                                                    <div class="modal-dialog" role="document">
+                                                        
+                                                            <div class="modal-content">
+                                                            
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <div style="width: 75%;margin: auto;">
+                                                                                <h4>ความสามารถในการบริหารหรือจัดการงาน (10%)</h4>
+
+                                                                                <div class="form-group">
+                                                                                    <label class="pull-left">ชื่อหัวข้อ: </label>
+                                                                                    <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อ" value="<?php echo $i . ' - ' . $result_form_eval_1["description"]; ?>" readonly >
+                                                                                </div>
+                                                                                <div class="form-group" >
+                                                                                    <label class="pull-left">น้ำหนัก</label>
+                                                                                    <select class="form-control" name="weight">
+                                                                                        <option value="1" <?php if ($result_form_eval_1["weight"] == '1') { echo "selected"; } ?> >1</option>
+                                                                                        <option value="2" <?php if ($result_form_eval_1["weight"] == '2') { echo "selected"; } ?>>2</option>
+                                                                                        <option value="3" <?php if ($result_form_eval_1["weight"] == '3') { echo "selected"; } ?>>3</option>
+                                                                                        <option value="4" <?php if ($result_form_eval_1["weight"] == '4') { echo "selected"; } ?>>4</option>
+                                                                                        <option value="5" <?php if ($result_form_eval_1["weight"] == '5') { echo "selected"; } ?>>5</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <div class="form-group" >
+                                                                                    <label class="pull-left">ระดับที่คาดหวัง</label>
+                                                                                    <select class="form-control" name="expected_level">
+                                                                                        <option value="1" <?php if ($result_form_eval_1["expected_level"] == '1') { echo "selected"; } ?> >1</option>
+                                                                                        <option value="2" <?php if ($result_form_eval_1["expected_level"] == '2') { echo "selected"; } ?>>2</option>
+                                                                                        <option value="3" <?php if ($result_form_eval_1["expected_level"] == '3') { echo "selected"; } ?>>3</option>
+                                                                                        <option value="4" <?php if ($result_form_eval_1["expected_level"] == '4') { echo "selected"; } ?>>4</option>
+                                                                                        <option value="5" <?php if ($result_form_eval_1["expected_level"] == '5') { echo "selected"; } ?>>5</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                                <input type="hidden" name="competency_id" value="<?php echo $result_form_eval_1["competency_id"]; ?>" >
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
-                                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                                <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>"
+                                                                <div class="modal-footer">
+                                                                    <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" >
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                </div>
                                                                 
                                                             </div>
-                                                        </form>
                                                     </div>
-                                                </div>
-                                            </div>   
-                                            <!--Modal-->
-                                        
-                                        <?php  } ?>
+                                                </div>   
 
+                                            <!--Modal-->
+                                            </TR>
+                                        <?php  } ?>
                                         <TR>
                                             <th style="text-align:left" colspan="13" class="bg-success">ความสามารถในงาน (ความรู้ ,ทักษะ ,คุณสมบัติเฉพาะบุคคล) (20%)
                                                 <a href=""  class="pull-right" data-toggle="modal" data-target="#myModal">
@@ -245,7 +251,8 @@
                                         while($result_form_eval_2 = mysqli_fetch_array($query_form_eval_2,MYSQL_ASSOC)){ 
                                             $j++; 
                                         ?>
-                                        <TR>
+                                        
+                                            <TR>
                                                 <td style="text-align:left" colspan="4"><?php echo $j.".".$result_form_eval_2["description"]; ?></td>
                                                 <td ><?php echo $result_form_eval_2["weight"]; ?></td>
                                                 <td ><?php echo $result_form_eval_2["expected_level"]; ?></td>
@@ -275,7 +282,6 @@
                                             <div class="modal animated fade " id="title_two<?php echo $j; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog " role="document">
                                                     <div class="modal-content">
-                                                        <form action="" method="post">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
@@ -288,7 +294,7 @@
                                                                             
                                                                             <div class="form-group">
                                                                                 <label class="pull-left">ชื่อหัวข้อ: </label>
-                                                                                <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อ" value="<?php echo $j.' - '.$result_form_eval_2["description"]; ?>" readonly>
+                                                                                <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อ" value="<?php echo $j.' - '.$result_form_eval_2["description"]; ?>" readonly >
                                                                             </div>
                                                                             <div class="form-group" >
                                                                                 <label class="pull-left">น้ำหนัก</label>
@@ -316,12 +322,12 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
+                                                                <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" >
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                                <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>"
+                                                                <input type="hidden" name="position_level_id" value="<?php echo $result_form_eval_2["posiiton_level_id"] ; ?>" >
+                                                                <input type="hidden" name="competency_id" value="<?php echo $result_form_eval_2["competency_id"] ; ?>" >
                                                                        
                                                             </div>
-                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -361,7 +367,6 @@
                                         ?>
                                         <TR class="bg-info">
                                             <th colspan="4">รวม</th>
-
                                             <td ><?php echo $sum_weight ; ?></td>
                                             <td ><?php echo $sum_expected_level ; ?></td>
                                             <td ><?php echo $sum_summary ; ?></td>
@@ -369,8 +374,6 @@
 
                                         </TR>
                                     </TABLE>
-
-                                
                             </div>
                         </div>
                         <!-- Modal POPUP เพิ่มหัวข้อ -->
@@ -378,7 +381,7 @@
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form action="" method="post">
+                                    <form action="new_topic_eval.php" method="post">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="myModalLabel">เพิ่มหัวข้อ</h4>
@@ -425,9 +428,9 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
+                                            <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" >
                                             <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                            <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>" />
+                                            <input type="hidden" name="title_id" value="<?php echo $title_id ; ?>" >
                                             
                                         </div>
                                     </form>
@@ -440,7 +443,7 @@
 
                     <!--box footer-->
                     <div class="box-footer">
-                        <input type="submit" class="btn btn-success pull-right" value="บันทึกข้อมูล" />
+                        <input type="submit" class="btn btn-success pull-right" value="บันทึกข้อมูล" >
                         <a href="#">
                             <button class="btn btn-instagram pull-right">ภาพตัวอย่าง</button>
                         </a>
