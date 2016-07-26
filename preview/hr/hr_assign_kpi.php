@@ -1,7 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include('./classes/connection_mysqli.php'); ?>
+        <?php include ('./classes/connection_mysqli.php');?>
+        <?php
+        $get_department_id = '';
+        if (isset($_GET["department_id"])) {
+            $get_department_id = $_GET["department_id"];
+        }
+
+        $condition_search = '';
+
+        if ($get_department_id != '') {
+            $condition_search = " WHERE dept.department_id = '" . $get_department_id . "'";
+        }
+        ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -40,29 +52,44 @@
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body ">
-                            <form >
-                                <div class="col-md-4">
-                                    <label class="col-sm-5 control-label">รหัสพนักงาน</label>
-                                    <div class="col-sm-7">
+                            <form method="get">
+                                <div class=" col-md-3">
+                                    <label class="col-sm-4 control-label">รหัสพนักงาน</label>
+                                    <div class="col-sm-8">
                                         <input class="form-control" type="text"  name="emp_id" >
                                     </div>
                                 </div>
                                 
                                 <div class="col-md-4">
-                                    <label class="col-sm-5 control-label">ชื่อนามสกุล</label>
-                                    <div class="col-sm-7">
+                                    <label class="col-sm-4 control-label">ชื่อ-นามสกุล</label>
+                                    <div class="col-sm-8">
                                         <input class="form-control" type="text"  name="emp_name" >
                                     </div>
                                 </div>
-
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-2 ">
-                                    <button  class="btn btn-primary search-button" type="submit">ค้นหา</button>
+                                 <div class="col-md-4">
+                                 <label class="col-sm-4 control-label">แผนก</label>
+                                <div class="col-sm-8">
+                                    <?php
+                                    $sql_department = "SELECT * FROM departments ";
+                                    $query_department = mysqli_query($conn, $sql_department);
+                                    ?>
+                                    <select class="form-control" name="department_id">
+                                        <option value="">เลือกทั้งหมด</option>
+                                        <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
+                                        <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                            <?php echo $result_department["department_name"]; ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
+                                 </div>
+
+                           <div class="col-md-1">
+                                <button class="btn btn-primary search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
+                            </div>
 
                             </form>
                         </div>
-
                     </div>
                 </div>
 
@@ -98,7 +125,7 @@
                                 $sql_emp = "SELECT emp.employee_id as emp_id, emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
                                                     . "dept.department_name as dept_name, j.job_name as job FROM employees emp "
                                                     . "join departments dept on emp.department_id = dept.department_id join jobs j "
-                                                    . "on emp.job_id = j.job_id ORDER BY emp_id ASC";
+                                                    . "on emp.job_id = j.job_id ".$condition_search." ORDER BY emp_id ASC";
                                 $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>

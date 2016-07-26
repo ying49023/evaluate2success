@@ -104,8 +104,7 @@
                                         </tr>
                                         </thead>
                                         <?php 
-                                        
-                                                                                
+                                                                             
                                         $sql_form_eval_1 = "SELECT c.competency_description as description , c.weight as weight ,"
                                                         . "c.expected_level as expected_level ,c.weight*c.expected_level as summary ,"
                                                         . " p.position_level_id as position_level_id  "
@@ -176,8 +175,7 @@
                                                 </td>
                                             </TR>
                                             
-                                            <!-- Modal -->
-                                                
+                                            <!-- Modal -->   
                                             <div class="modal animated fade " id="title_one<?php echo $i; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
@@ -230,8 +228,7 @@
                                                         </form>
                                                     </div>
                                                 </div>
-                                            </div>
-                                                
+                                            </div>   
                                             <!--Modal-->
                                         
                                         <?php  } ?>

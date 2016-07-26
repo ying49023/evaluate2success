@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php include ('./classes/connection_mysqli.php'); ?>
+    <?php
+    include ('./classes/connection_mysqli.php');
+    $get_emp_id = "1"; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
+    //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
+    if (isset($_GET["emp_id"])) {
+        $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+    }
+    ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -47,15 +54,7 @@
                             <div class="box-padding">
                                 
                                 <?php
-                                
-                                $get_emp_id = "1"; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
-                                
-                                //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
-                                if(isset($_GET["emp_id"])){
-                                    $get_emp__id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
-                                }
-                                
-                                
+                                                                                   
                                 $sql_emp = "SELECT
                                         emp.employee_id AS emp_id,
                                         emp.prefix As prefix,
