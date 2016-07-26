@@ -1,4 +1,51 @@
 <!DOCTYPE html>
+<?php include('./classes/connection_mysqli.php');
+        
+        $fn='';
+        $msg='';
+        if(isset($_GET['fn']))
+            $fn=$_GET['fn'];
+        //++++++++++++++++++save record+++++++++++++        
+                               
+        if($fn=='add'){
+            $prefix =$_POST['prefix'];
+            $first_name=$_POST['first_name'];
+            $last_name=$_POST['last_name'];
+            $department_id=$_POST['department'];
+            $job_id=$_POST['job_id'];
+            $position_level_id=$_POST['position_level_id'];
+            $manager=$_POST['manager'];
+            $telephone=$_POST['telephone'];
+            $address=$_POST['address'];
+            $email=$_POST['email'];
+            $hiredate =$_POST['startdate'];
+            $mng ='1'; 
+            $sql = "SELECT employee_id,concat(first_name,' ',last_name) as name from employees where concat(first_name,' ',last_name) like '$manager'  ";
+            $query= mysqli_query($conn, $sql);
+             while($mresult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+             $mng =$mresult['employee_id'];                                           
+             $name =$mresult['name'];
+             echo $mng;
+             echo $name;
+             
+             }   
+            $add_query="INSERT INTO employees(prefix,first_name,last_name,department_id,job_id,position_level_id,manager_id,telephone_no,address,email,company_id,hiredate) VALUES ('$prefix','$first_name','$last_name',$department_id,$job_id,$position_level_id,$mng,'$telephone','$address','$email',1,'$hiredate')";            
+            $a_query =  mysqli_query($conn,$add_query);
+            
+            if($a_query)
+               header ("location:manage_employee.php");
+            else {
+                $msg='Error :'.mysql_error();
+                echo "Error Save [" . $add_query . "]";
+                
+                
+                
+            }
+        }
+           
+            
+       
+        ?>
 <html>
     <head>
         <?php include ('./classes/connection_mysqli.php'); ?>
@@ -25,7 +72,7 @@
                     "sSearch": "ค้นหา:",
                     "sUrl": "",
                     "oPaginate": {
-                        "sFirst": "เิริ่มต้น",
+                        "sFirst": "เริ่มต้น",
                         "sPrevious": "ก่อนหน้า",
                         "sNext": "ถัดไป",
                         "sLast": "สุดท้าย"
@@ -74,7 +121,7 @@
                                         <!--add employee-->
                                         <div class="row ">
                                             <div class="col-md-offset-1 col-md-10 box-padding">
-                                                <form action="" type="post" >
+                                                <form action='manage_employee.php?fn=add' method='POST' >
                                                     <div class="box-body">
 
                                                         <div class="row">
@@ -107,15 +154,11 @@
                                                             <div class="col-md-6">                                                
                                                                 <div class="form-group">
                                                                     <label>วันที่เริ่มงาน</label>
-                                                                    <div class="input-group date" data-provide="datepicker">
-                                                                        <input type="text" class="form-control">
-                                                                        <div class="input-group-addon">
-                                                                            <span class="glyphicon glyphicon-th"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <script>
-                                                                        $('.datepicker').datepicker();
-                                                                    </script>
+                                                                    
+                                                                        <input type="date" class="form-control" name="startdate">
+                                                                        
+                                                                    
+                                                                    
                                                                 </div>                                                
                                                             </div>
                                                             <?php
@@ -125,7 +168,7 @@
                                                             <div class="col-md-6">                                               
                                                                 <div class="form-group">
                                                                     <label>แผนก</label>
-                                                                    <select class="form-control" name="department_id">
+                                                                    <select class="form-control" name="department">
                                                                         <option value="">--เลือกแผนก--</option>
                                                                         <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
                                                                         <option value="<?php echo $result_department["department_id"]; ?>">
@@ -218,7 +261,7 @@
                                                     <div class="box-footer">
                                                         <center>
                                                             <input  class="btn btn-danger search-button" type="reset" name="Reset">
-                                                            <input  class="btn btn-success search-button" type="submit" name="Send" value="เพิ่ม">
+                                                            <button type="submit" class="btn btn-primary search-button">เพิ่ม</button>
                                                         </center>
 
                                                     </div>
@@ -226,6 +269,7 @@
                                             </div>
                                         </div>
                                         <!--/add employee-->
+                                         <?php echo $msg;?> 
                                     </div>
                                     <div class="tab-pane" id="edit_delete_employee">
                                         <!--edit/remove -->
