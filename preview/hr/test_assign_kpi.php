@@ -234,6 +234,8 @@
                                     </div>
                                 </div>
                             </div>
+                                    <?php 
+                                      $sql_unit = "SELECT * FROM kpi WHERE kpi_id=1
                             <div class="row">
                                 <div class="form-group col-sm-2">
                                     <label class="control-label pull-left">น้ำหนัก(%)</label>
