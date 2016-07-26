@@ -19,8 +19,10 @@
     
     <!-- SCRIPT PACKS -->
     <?php include('./script_packs.html') ?>
+     <?php include ('./classes/connection_mysqli.php'); ?>
     
 </head>
+
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
         <!--Header part-->
@@ -398,13 +400,19 @@
                                 <div class="form-group col-sm-7">
                                     <label class="control-label pull-left">ชื่อ KPI</label>
                                     <div class="">
+                                    <?php 
+                                      $sql_kpi = "SELECT * FROM kpi"; 
+                                      $query_kpi = mysqli_query($conn, $sql_kpi);
+
+                                    ?>
+
                                         <select class="form-control">
-                                            <option>KPI1-</option>
-                                            <option>KPI2-</option>
-                                            <option>KPI3-</option>
-                                            <option>KPI4-</option>
-                                            <option>KPI5-</option>
-                                            <option>KPI6-</option>
+
+                                            <option>เลือกkpi </option>
+                                             <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
+                                            <option><?php echo $result_kpi["kpi_name"]; ?></option>
+                                        <?php } ?>
+                                          
                                         </select>
                                     </div>
                                 </div>
