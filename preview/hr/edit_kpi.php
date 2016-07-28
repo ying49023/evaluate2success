@@ -10,7 +10,7 @@ include ('./classes/connection_mysqli.php');
 //        k.unit = '".$_POST["unit"]."', g.department_id = '".$_POST["job_id"]."', g.job_id = '".$_POST["job_id"]."' 
 //        WHERE k.kpi_id ='".$_POST["kpi_id"]."' ";
 
-$sql_update_kpi = " UPDATE kpi k SET kpi_name='".$_POST["kpi_name"]."' , kpi_description='".$_POST["kpi_description"]."', unit = '".$_POST["unit"]."' "
+$sql_update_kpi = " UPDATE kpi k SET kpi_name='".$_POST["kpi_name"]."' , kpi_description='".$_POST["kpi_description"]."', unit = '".$_POST["unit"]."', time_period = '".$_POST["time_period"]."' "
                 . " WHERE kpi_id = '".$_POST["kpi_id"]."' ";
 
     if (mysqli_query($conn, $sql_update_kpi)) {

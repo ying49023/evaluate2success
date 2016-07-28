@@ -146,6 +146,10 @@
                                                             <label class="pull-left">หน่วย</label>
                                                             <input type="text" class="form-control" name="unit" placeholder="ระบุหน่วย" />
                                                         </div>
+                                                        <div class="form-group">
+                                                            <label class="pull-left">ระยะเวลา(เดือน)</label>
+                                                            <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" />
+                                                        </div>
                                                         <?php
                                                         $sql_department = "SELECT * FROM departments ";
                                                             $query_department = mysqli_query($conn, $sql_department);
@@ -199,6 +203,7 @@
                                                     k.kpi_name as kpi_name,
                                                     k.kpi_description as kpi_description,
                                                     k.unit as unit,
+                                                    k.time_period as time_period,
                                                     j.job_name as job_name,
                                                     d.department_name as department_name
                                             FROM
@@ -270,6 +275,10 @@
                                                                             <div class="form-group">
                                                                                 <label class="pull-left">หน่วย </label>
                                                                                 <input type="text" class="form-control" name="unit" placeholder="ระบุหน่วย" value="<?php echo $result_kpi["unit"]; ?>" />
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="pull-left">ระยะเวลา(เดือน)</label>
+                                                                                <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" value="<?php echo $result_kpi["time_period"]; ?>" />
                                                                             </div>
                                                                             <?php
                                                                             $sql_department = "SELECT * FROM departments ";

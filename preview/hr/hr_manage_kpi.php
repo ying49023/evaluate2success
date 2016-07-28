@@ -309,79 +309,40 @@
                                 <td width="70px">เป้าหมาย</td>
                                 <td width="80px">การจัดการ</td>
                             </tr>
+                            <?php
+                            $sql_next_kpi = "SELECT k.kpi_id as kpi_id, k.kpi_name as kpi_name,k.kpi_description as kpi_description, nrk.weight as weight, nrk.goal as goal
+                                            FROM evaluation_next_kpi enk 
+                                            JOIN next_responsible_kpi nrk ON enk.evaluate_next_kpi_id = nrk.evaluate_next_kpi_id 
+                                            JOIN kpi k ON nrk.kpi_id = k.kpi_id
+                                            WHERE nrk.evaluate_next_kpi_id = (SELECT enk.evaluate_next_kpi_id 
+                                                                              FROM evaluation_next_kpi enk 
+                                                                              JOIN evaluation_employee ee ON enk.evaluate_employee_id = ee.evaluate_employee_id 
+                                                                              WHERE ee.employee_id = '".$get_emp_id."')";
+                            $query_next_kpi = mysqli_query($conn, $sql_next_kpi);
+                            while ($result_next_kpi = mysqli_fetch_array($query_next_kpi,MYSQLI_ASSOC)) {
+                                $sql_unit = "SELECT unit FROM kpi WHERE kpi_id = '".$result_next_kpi["kpi_id"]."'" ;
+                                $query_unit = mysqli_query($conn, $sql_unit);
+                                $result_unit = mysqli_fetch_array($query_unit);
+                            ?>
                             <tr>
-                                <td>1201</td>
-                                <td>ความสามารถในการสรรหาตรงตามเวลาที่กำหนด(60วัน)</td>
+                                <td><?php echo $result_next_kpi["kpi_id"]; ?></td>
+                                <td><?php echo $result_next_kpi["kpi_name"]; ?></td>
                                 <td>
-                                    ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
+                                    <?php echo $result_next_kpi["kpi_description"]; ?>
                                 </td>
-                                <td>20%</td>
-                                <td>>=80%</td>
+                                <td><?php echo $result_next_kpi["weight"]."%"; ?></td>
+                                <td><?php echo $result_next_kpi["goal"]." ".$result_unit["unit"] ; ?></td>
                                 <td class="text-center">
                                     <a href="">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                     |
-                                    <a href="">
+                                    <a href="delete_next_kpi.php?kpi_id=<?php echo $result_next_kpi["k.kpi_id"]."&emp_id=". $get_emp_id; ?>" >
                                         <i class="glyphicon glyphicon-trash"></i>
                                     </a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>1202</td>
-                                <td>เความสามารถจัดทำอัตราแผนความสามารถกำลังคน</td>
-                                <td>
-                                    ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
-                                </td>
-                                <td>20%</td>
-                                <td><20%</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <i class="glyphicon glyphicon-pencil"></i>
-                                    </a>
-                                    |
-                                    <a href="">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </a>
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>1203</td>
-                                <td>อัตราจำนวนชั่วโมงการฝึกอบรม/คน/ครึ่งปี</td>
-                                <td>
-                                    ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
-                                </td>
-                                <td>20%</td>
-                                <td>>=6ชั่วโมง</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <i class="glyphicon glyphicon-pencil"></i>
-                                    </a>
-                                    |
-                                    <a href="">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1204</td>
-                                <td>การจัดปฐมนิเทศให้กับพนักงานใหม่ภายใน 3 วันทำการ</td>
-                                <td>
-                                    ภายในหนึ่งสัปดาห์ต้องมีความคืบหน้าและ อัพเดตงานอย่างต่อเนื่อง
-                                </td>
-                                <td>20%</td>
-                                <td>35%</td>
-                                <td class="text-center">
-                                    <a href="">
-                                        <i class="glyphicon glyphicon-pencil"></i>
-                                    </a>
-                                    |
-                                    <a href="">
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                            <?php } ?>
                         </table>
                     </div>
                 </div>

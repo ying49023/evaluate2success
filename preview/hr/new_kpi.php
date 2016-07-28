@@ -10,7 +10,7 @@ header("Location: hr_all_kpi_detail.php");
 //INSERT INTO kpi_group (kpi_id, department_id, job_id) 
 //  VALUES(LAST_INSERT_ID(),'".$_POST["department_id"]."', '".$_POST["job_id"]."');
 //COMMIT;";
-$sql_insert= " INSERT INTO kpi (kpi_name, kpi_description, unit) VALUES('".$_POST["kpi_name"]."', '".$_POST["kpi_description"]."', '".$_POST["unit"]."') ";
+$sql_insert= " INSERT INTO kpi (kpi_name, kpi_description, unit,time_period) VALUES('".$_POST["kpi_name"]."', '".$_POST["kpi_description"]."', '".$_POST["unit"]."','".$_POST["time_period"]."') ";
 mysqli_query($conn, $sql_insert);
 $kpi_id= mysqli_insert_id($conn);
 
