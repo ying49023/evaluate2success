@@ -228,15 +228,16 @@
                                             <option>เลือกkpi </option>
                                              <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
                                             <option><?php echo $result_kpi["kpi_name"]; ?></option>
-                                        <?php } ?>
+                                         <?php } ?>
                                           
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                                    <?php 
-                                      $sql_unit = "SELECT * FROM kpi WHERE kpi_id=1
+                                  
+
                             <div class="row">
+                             
                                 <div class="form-group col-sm-2">
                                     <label class="control-label pull-left">น้ำหนัก(%)</label>
                                         <input class="form-control" type="text">
@@ -246,8 +247,13 @@
                                         <input class="form-control" type="text">
                                 </div>
                                 <div class="form-group col-sm-2">
+                                    <?php
+                                    
+                                      $sql_unit = "SELECT unit FROM kpi WHERE kpi_id= $sql_kpi["kpi_id"]";
+                                      $query_unit = mysqli_query($conn, $sql_unit);
+                                    ?>
                                     <label class="control-label pull-left">หน่วย</label>
-                                    <input class="form-control" type="text" placeholder="(เปลี่ยนตามหัวข้อKPI)" readonly="">
+                                    <input class="form-control" type="text" placeholder= "<?php echo $sql_unit; ?>" readonly="">
                                 </div>
                             </div>
                             <div class="row">
