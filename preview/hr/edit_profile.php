@@ -3,6 +3,7 @@
     <head>
         <?php 
         include ('./classes/connection_mysqli.php');
+        
         if(isset($_GET["emp_id"])){
             $get_emp_id = $_GET["emp_id"];
         }
@@ -56,9 +57,7 @@
                             $hiredate =$result["hiredate"];
                             $telno =$result["telephone_no"];
                             $email =$result["email"];
-                                 
-                            
-                            
+                                   
                     ?>
                     <div class="box box-primary">
                         <div class="box-header">
@@ -70,7 +69,7 @@
                                 <div class="row with-border">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <img class="thumbnail img-circle" src="img/" alt="รูปโปรไฟล์" />
+                                            <img class="thumbnail img-circle" src="" alt="รูปโปรไฟล์" />
                                         </div>
                                     </div>
                                     <div class="col-md-4">                                                
@@ -87,7 +86,6 @@
                                             <label>คำนำหน้า</label>
                                             <select class="form-control" name="prefix">
                                                 <option value="">เลือก</option>
-                                                
                                                 <option value="นาย" <?php if($prefix == 'นาย'){ echo "selected";} ?>>นาย</option>
                                                 <option value="นางสาว" <?php if($prefix == 'นางสาว'){ echo "selected";} ?> >นางสาว</option>
                                                 <option value="นาง" <?php if($prefix == 'นาง'){ echo "selected";} ?> >นาง</option>
@@ -113,7 +111,7 @@
                                         <div class="form-group">
                                             <label>วันที่เริ่มงาน</label>
                                             <div class="input-group date" data-provide="datepicker">
-                                                <input type="text" class="form-control" value="<?php echo $hiredate; ?>">
+                                                <input type="text" class="form-control" value="<?php echo $hiredate; ?>" readonly >
                                                 <div class="input-group-addon">
                                                     <span class="glyphicon glyphicon-th"></span>
                                                 </div>
@@ -181,33 +179,24 @@
                                 </div>
 
                                 <div class="row">
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <?php 
                                             
                                                 $msql = " select m.first_name as fname from employees m 
                                                         join employees e on m.employee_id = e.manager_id 
-                                                        where e.employee_id  = '".$get_emp_id."' limit 1";
-                                                $mname='';
-                                                
-                                                 
-                                                 $mquery = mysqli_query($conn, $msql);
-                                                 
-                                                 ?>
-                                                <?php
-                                                
-                                                while($mresult = mysqli_fetch_array($mquery, MYSQLI_ASSOC)) {
-                                                     
-                                                    $mname =$mresult['fname'];
+                                                        where e.employee_id  = '".$get_emp_id."' limit 1";                                        
+                                                $mquery = mysqli_query($conn, $msql);
+                                                $mresult = mysqli_fetch_array($mquery, MYSQLI_ASSOC);
+                                                $mname =$mresult['fname'];
                                                  
                                                   
                                              ?>
                                             <label>หัวหน้าผู้รับผิดชอบ</label>
-                                                <input type="text" name="manager" class="form-control" value="<?php echo $mname ?>" />
+                                            <input type="text" name="manager" class="form-control" value="<?php echo $mname ?>" readonly />
                                         </div>                                               
                                     </div>
-                                                <?php }  ?>
+                                                
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>เบอร์ติดต่อ</label>
@@ -245,7 +234,7 @@
                             <div class="box-footer">
                                 <center>
                                     <input  class="btn btn-danger search-button" type="reset" name="Reset">
-                                    <input  class="btn btn-success search-button" type="submit" name="Send" value="เพิ่ม">
+                                    <input  class="btn btn-success search-button" type="submit" name="Send" value="บันทึก">
                                 </center>
 
                             </div>

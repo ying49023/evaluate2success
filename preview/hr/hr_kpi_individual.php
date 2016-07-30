@@ -2,6 +2,17 @@
 <html>
     <head>
         <?php include ('./classes/connection_mysqli.php');?>
+        <?php
+        $get_department_id = '';
+        if (isset($_GET["department_id"])) {
+            $get_department_id = $_GET["department_id"];
+        }
+
+        $condition_search = '';
+        if ($get_department_id != '') {
+            $condition_search = " WHERE dept.department_id = '" . $get_department_id . "'";
+        }
+        ?>
         
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -40,8 +51,7 @@
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body ">
-                            
-                            <form >
+                            <form method="get">
                                 <div class=" col-md-3">
                                     <label class="col-sm-4 control-label">รหัสพนักงาน</label>
                                     <div class="col-sm-8">
@@ -62,10 +72,12 @@
                                     $sql_department = "SELECT * FROM departments ";
                                     $query_department = mysqli_query($conn, $sql_department);
                                     ?>
-                                    <select class="form-control">
-                                        <option value="">เลือก</option>
+                                    <select class="form-control" name="department_id">
+                                        <option value="">เลือกทั้งหมด</option>
                                         <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
-                                            <option><?php echo $result_department["department_name"]; ?></option>
+                                        <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                            <?php echo $result_department["department_name"]; ?>
+                                        </option>
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -80,6 +92,7 @@
 
                     </div>
                 </div>
+                
                 
                 <div class="row box-padding">
                     <div class="box box-primary">
@@ -113,9 +126,8 @@
                                 $sql_emp = "SELECT emp.employee_id as emp_id, emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
                                                     . "dept.department_name as dept_name, j.job_name as job FROM employees emp "
                                                     . "join departments dept on emp.department_id = dept.department_id join jobs j "
-                                                    . "on emp.job_id = j.job_id ORDER BY emp_id ASC";
+                                                    . "on emp.job_id = j.job_id ".$condition_search." ORDER BY emp_id ASC";
                                 $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-
                                  ?>
                                 <?php  while($result = mysqli_fetch_assoc($query)){ 
                                     $emp_id = $result["emp_id"];
