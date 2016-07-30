@@ -49,17 +49,6 @@
 <html>
     <head>
         <?php include ('./classes/connection_mysqli.php'); ?>
-        <?php
-        $get_department_id = '';
-        if (isset($_GET["department"])) {
-            $get_department_id = $_GET["department"];
-        }
-
-        $condition_search = '';
-        if ($get_department_id != '') {
-            $condition_search = " WHERE dept.department_id = '" . $get_department_id . "'";
-        }
-        ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>เพิ่มข้อมูลพนักงาน : ALT Evaluation</title>
@@ -109,7 +98,7 @@
                 <section class="content-header">
                     <h1>
                         จัดการข้อมูลพนักงาน
-                        <small></small>
+                        <small>เพิ่มข้อมูลพนักงาน</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -120,15 +109,13 @@
 
                 <!-- Main content -->
                     <div class="row box-padding">
-                        <div class="col-md-12">
-                            <div class="nav-tabs-custom">
-                                <ul class=" nav nav-tabs nav-justified">
-                                    <li class="active" ><a href="#add_employee" data-toggle="tab" aria-expanded="true">เพิ่มข้อมูลพนักงาน</a></li>
-                                    <li class=""><a href="#edit_delete_employee" data-toggle="tab" aria-expanded="false">แก้ไข/ลบ ข้อมูพนักงาน</a></li>
-                                </ul>
+                        <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h4>เพิ่มข้อมูลพนักงาน</h4>                           
+                        </div>
+                                                
 
-                                <div class="tab-content">
-                                    <div class="tab-pane active" id="add_employee">
+                                                                   
                                         <!--add employee-->
                                         <div class="row ">
                                             <div class="col-md-offset-1 col-md-10 box-padding">
@@ -164,12 +151,8 @@
                                                         <div class="row">
                                                             <div class="col-md-6">                                                
                                                                 <div class="form-group">
-                                                                    <label>วันที่เริ่มงาน</label>
-                                                                    
-                                                                        <input type="date" class="form-control" name="startdate">
-                                                                        
-                                                                    
-                                                                    
+                                                                    <label>วันที่เริ่มงาน</label>                                                                    
+                                                                        <input type="date" class="form-control" name="startdate">                                                                    
                                                                 </div>                                                
                                                             </div>
                                                             <?php
@@ -282,94 +265,12 @@
                                         </div>
                                         <!--/add employee-->
                                          <?php echo $msg;?> 
-                                    </div>
-                                    <div class="tab-pane" id="edit_delete_employee">
-                                        <!--edit/remove -->
-                                        <div class="row">
-                                            <div class="box-padding">
-                                                <div class="row-border with-border">
-                                                    <div class="col-md-offset-1 col-md-10">
-                                                        <div class="box-body ">
-                                                        <form method="get">    
-                                                            <div class="col-sm-3">
-                                                                <label>รหัสพนักงาน</label>
-                                                                <input class="form-control" type="text" name="emp_id" />
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <label>ชื่อพนักงาน</label>
-                                                                <input class="form-control" type="text" name="full_name" />
-                                                            </div>
-                                                            <?php
-                                                            $sql_dept = "SELECT * FROM departments";
-                                                            $query_department = mysqli_query($conn, $sql_dept);
-                                                            
-                                                            ?>
-                                                            <div class="col-sm-4">
-                                                                <label>แผนก</label>
-                                                                 <select class="form-control" name="department">
-                                                                    <option value="">เลือกทั้งหมด</option>
-                                                                    <?php while ($result_department2 = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
-                                                                    <option value="<?php echo $result_department2["department_id"]; ?>" <?php if($get_department_id == $result_department2["department_id"]) { echo "selected"; }  ?> >
-                                                                        <?php echo $result_department2["department_name"]; ?>
-                                                                    </option>
-                                                                    <?php } ?>
-                                                                </select>                                                          
-                                                                
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <input style="margin-top: 25px;" type="submit" class="btn btn-primary btn-md" name="submit_2" />
-                                                            </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                    
+                                    
+                                
 
-                                                <table id="example" class="table table-hover table-striped disabled"  >
-                                                    <thead>
-                                                        <tr>
-                                                            <th><b>รหัสพนักงาน</b></th>
-                                                            <th><b>ชื่อ-นามสกุล</b></th>
-                                                            <th class="text-center"><b>ตำแหน่ง</b></th>
-                                                            <th class="text-center"><b>แผนก</b></th>
-                                                            <th class="text-center"><b>แก้ไข/ลบ</b></th>
-                                                        </tr>
-                                                    </thead>
-                                                    <?php
-                                                        $sql_emp = "SELECT emp.employee_id as emp_id,emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
-                                                                . "dept.department_name as dept_name, j.job_name as job FROM employees emp "
-                                                                . "join departments dept on emp.department_id = dept.department_id join jobs j "
-                                                                . "on emp.job_id = j.job_id ".$condition_search." ORDER BY emp_id ASC";
-                                                        $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                                    ?>
-                                                    <tbody>
-                                                        <?php
-                                                        while ($result = mysqli_fetch_assoc($query)) {
-                                                            $emp_id = $result["emp_id"];
-                                                            $name = $result["prefix"].$result["f_name"] . "  " . $result["l_name"];
-                                                            $dept = $result["dept_name"];
-                                                            $job = $result["job"];
-                                                            ?>
-                                                            <tr>
-                                                                <td><?php echo $emp_id; ?></td>
-                                                                <td><?php echo $name; ?></td>
-                                                                <td class="text-center"><?php echo $job; ?></td>
-                                                                <td class="text-center"><?php echo $dept; ?></td>
-                                                                <td class="text-center">
-                                                                    <a href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                                                                    | <a href="delete_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-trash"></i></a>
-                                                                </td>
-                                                            </tr>
-                                                        <?php } ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                        <!--/edit/remove -->
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                            
+                        </div>   
                     </div>
 
                 <!-- /.content -->

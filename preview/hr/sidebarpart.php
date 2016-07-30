@@ -67,11 +67,23 @@
                     </li>
                 </ul>
             </li>
-            <li class="<?php if($page == 'manage_employee.php'){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'manage_employee.php'|| $page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php'){ echo "active" ; } ?>">
                 <a href="manage_employee.php">
                     <i class="glyphicon glyphicon-user"></i> <span>จัดการข้อมูลพนักงาน</span>
+                    <i class="fa fa-angle-left pull-right"></i>
 
                 </a>
+                <ul class="treeview-menu">
+                    <li class="<?php if($page == 'manage_employee.php'){ echo "active" ; } ?>">
+                        <a href="manage_employee.php"><i class="fa fa-circle-o"></i>จัดการข้อมูลพนักงาน</a>
+                    </li>
+                    <li class="<?php if($page == 'manage_employee_insert.php'){ echo "active" ; } ?>">
+                        <a href="manage_employee_insert.php"><i class="fa fa-circle-o"></i>เพิ่มข้อมูลพนักงาน</a>
+                    </li>
+                    <li class="<?php if($page == 'manage_employee_list.php'){ echo "active" ; } ?>">
+                        <a href="manage_employee_list.php"><i class="fa fa-circle-o"></i>ลบ/แก้ไขข้อมูลพนักงาน</a>
+                    </li>
+                </ul>
             </li>
             <li class="<?php if($page == 'hr_report_page.php'){ echo "active" ; } ?>">
                 <a href="hr_report_page.php" >
