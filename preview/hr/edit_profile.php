@@ -3,10 +3,11 @@
     <head>
         <?php 
         include ('./classes/connection_mysqli.php');
+        if (isset($_GET["emp_id"])) {
+                $get_emp_id = $_GET["emp_id"];
+            }
+       
         
-        if(isset($_GET["emp_id"])){
-            $get_emp_id = $_GET["emp_id"];
-        }
         ?>
         
         <meta charset="utf-8">
@@ -46,7 +47,7 @@
                 <div class="row box-padding">
                     <!--edit employee-->
                     <?php 
-                        $sql = "SELECT * FROM employees WHERE employee_id = '".$get_emp_id."' limit 1";                        
+                        $sql = "SELECT * FROM employees  WHERE employee_id = " .$_GET["emp_id"]. " limit 1";                        
                         $query = mysqli_query($conn, $sql);
                         while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
                             $prefix = $result["prefix"]; 
@@ -60,13 +61,14 @@
                             $department_id = $result["department_id"];
                             $job_id = $result["job_id"];
                             $position_level_id = $result["position_level_id"];
+                            $id = $result["employee_id"];
                                    
                     ?>
                     <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">ข้อมูลของ : <?php echo $name; ?></h3>
                         </div>
-                        <form action="" type="post" >
+                        <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' >
                             <div class="col-md-offset-1 col-md-10">
                             <div class="box-body">
                                 <div class="row with-border">
@@ -79,6 +81,12 @@
                                         <div class="form-group">
                                             <label>อัพโหลดรูปภาพ</label>
                                             <input class="form-control" name="first_name" type="file" value="<?php echo $f_name; ?>">
+                                        </div>                                                
+                                    </div>
+                                    <div class="col-md-2">                                                
+                                        <div class="form-group">
+                                            <label>ID</label>
+                                            <input class="form-control" name="empid" type="text" value="<?php echo $id; ?>" disabled="true">
                                         </div>                                                
                                     </div>
                                     
@@ -113,8 +121,8 @@
                                     <div class="col-md-6">                                                
                                         <div class="form-group">
                                             <label>วันที่เริ่มงาน</label>
-                                            <div class="input-group date" data-provide="datepicker">
-                                                <input type="text" class="form-control" value="<?php echo $hiredate; ?>" readonly >
+                                            <div class="input-group date" data-provide="datepicker" name="startdate">
+                                                <input type="text" class="form-control" value="<?php echo $hiredate; ?>" disabled="true" >
                                                 <div class="input-group-addon">
                                                     <span class="glyphicon glyphicon-th"></span>
                                                 </div>
@@ -131,7 +139,7 @@
                                     <div class="col-md-6">                                               
                                         <div class="form-group">
                                             <label>แผนก</label>
-                                            <select class="form-control" name="department_id">
+                                            <select class="form-control" name="department">
                                                 <option value="">--เลือกแผนก--</option>
                                                 <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
                                                     <option <?php if($department_id == $result_department["department_id"]){ echo "selected";} ?> value="<?php echo $result_department["department_id"]; ?>"  >
@@ -196,7 +204,7 @@
                                                   
                                              ?>
                                             <label>หัวหน้าผู้รับผิดชอบ</label>
-                                            <input type="text" name="manager" class="form-control" value="<?php echo $mname ?>" readonly />
+                                            <input type="text" name="manager" class="form-control" value="<?php echo $mname ?>"  />
                                         </div>                                               
                                     </div>
                                                 
@@ -243,7 +251,7 @@
                             </div>
                         </form>
                     </div>
-                    <?php } ?>
+                        <?php } ?>
                     <!--/edit employee-->
                 </div>
 

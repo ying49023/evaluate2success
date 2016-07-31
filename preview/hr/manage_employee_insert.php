@@ -19,8 +19,8 @@
             $address=$_POST['address'];
             $email=$_POST['email'];
             $hiredate =$_POST['startdate'];
-            $mng ='1'; 
-            $sql = "SELECT employee_id,concat(first_name,' ',last_name) as name from employees where concat(first_name,' ',last_name) like '$manager'  ";
+            $mng =''; 
+            $sql = "SELECT employee_id,concat(first_name,' ',last_name) as name from employees where concat(first_name,' ',last_name) like '%$manager%'  ";
             $query= mysqli_query($conn, $sql);
              while($mresult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
              $mng =$mresult['employee_id'];                                           
@@ -33,11 +33,11 @@
             $a_query =  mysqli_query($conn,$add_query);
             
             if($a_query)
-               header ("location:manage_employee.php");
+               header ("location:manage_employee_list.php");
             else {
                 $msg='Error :'.mysql_error();
                 echo "Error Save [" . $add_query . "]";
-                
+                echo $sql;
                 
                 
             }
@@ -119,7 +119,7 @@
                                         <!--add employee-->
                                         <div class="row ">
                                             <div class="col-md-offset-1 col-md-10 box-padding">
-                                                <form action='manage_employee.php?fn=add' method='POST' >
+                                                <form action='manage_employee_insert.php?fn=add' method='POST' >
                                                     <div class="box-body">
 
                                                         <div class="row">

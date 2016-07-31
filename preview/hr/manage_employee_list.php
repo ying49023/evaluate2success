@@ -162,9 +162,24 @@
                                                                 <td class="text-center"><?php echo $dept; ?></td>
                                                                 <td class="text-center">
                                                                     <a href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                                                                    | <a href="delete_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-trash"></i></a>
+                                                                    | <a onclick="myFunction()" ><i class="glyphicon glyphicon-trash"></i></a>
                                                                 </td>
                                                             </tr>
+                                                            
+
+                                                            <script>
+                                                            function myFunction() {
+                                                                var x;
+                                                                if (confirm("ยืนยันการลบ!") == true) {
+                                                                    x = "You pressed OK!";
+                                                                    window.location.href="delete_profile.php?emp_id=<?php echo $emp_id; ?>"
+                                                                } else {
+                                                                    x = "You pressed Cancel!";
+                                                                }
+                                                                document.getElementById("demo").innerHTML = x;
+                                                            }
+                                                            </script>
+
                                                         <?php } ?>
                                                     </tbody>
                                                 </table>
