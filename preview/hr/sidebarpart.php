@@ -47,6 +47,9 @@
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
                         <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
+                    <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
+                        <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a>
+                    </li>
                 </ul>
             </li>
             <li class="<?php if($page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_approve_kpi.php' ){ echo "active" ; } ?>">
@@ -67,7 +70,28 @@
                     </li>
                 </ul>
             </li>
+<<<<<<< HEAD
             <li class="<?php if($page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php'){ echo "active" ; } ?>">
+=======
+
+            <li class="<?php if($page == 'manage_leave_type.php'|| $page == 'manage_leave_type.php'){ echo "active" ; } ?>">
+                 <a href="">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                        <span>จัดการข้อมูลวันลา</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                 <ul class="treeview-menu">
+                    <li class="<?php if($page == 'manage_leave_type.php'){ echo "active" ; } ?>">
+                        <a href="manage_leave_type.php"><i class="fa fa-circle-o"></i>จัดการวันลาของพนักงาน</a>
+                    </li>
+                    <li class="<?php if($page == 'manage_leave_type.php'){ echo "active" ; } ?>">
+                        <a href="manage_leave_type.php"><i class="fa fa-circle-o"></i>ประเภทข้อมูลวันลา</a>
+                    </li>
+                    </ul>
+            </li>
+
+            <li class="<?php if($page == 'manage_employee.php'){ echo "active" ; } ?>">
+>>>>>>> b67919c402db67be08fcb75bb144ba4f65f41a36
                 <a href="manage_employee.php">
                     <i class="glyphicon glyphicon-user"></i> <span>จัดการข้อมูลพนักงาน</span>
                     <i class="fa fa-angle-left pull-right"></i>
