@@ -47,8 +47,8 @@
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
                         <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
-                    <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
-                        <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a>
+                    <li class="<?php if($page == 'manage_grade.php'){ echo "active" ; } ?>">
+                        <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a>
                     </li>
                 </ul>
             </li>

@@ -28,12 +28,12 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        ประเภทการลา
+                        เกณฑ์การตัดเกรด
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Manage Leave Day</li>
+                        <li class="active">Manage Grade</li>
                     </ol>
                 </section>
                 <!--/Page header -->
@@ -43,8 +43,8 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
                          <div class="box-header with-border">
-                <h3 class="box-title">ตารางแสดงประเภทวันลา</h3>
-                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-primary">เพิ่มประเภทวันลา
+                <h3 class="box-title">ตารางแสดงเกณฑ์การตัดเกรด</h3>
+                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-primary">เพิ่มเกรด
                 </button></a>
            
                            
@@ -55,15 +55,19 @@
                     <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
                         <form>
                         <div class="row">
-                            <div class="col-sm-4">
-                                ชื่อประเภทวันลา
-                                <input class="form-control" type="text" name="leave_name" placeholder="----- กรุณากรอกประเภทวันลา -----">
-                            </div>
-                            <div  class="col-sm-offset-1 col-sm-3">
-                                คะแนน(ต่อครั้ง)
-                                <input class="form-control" style="margin-left:10px;" type="text" name="leave_point" placeholder="----- กรุณากรอกคะแนนวันลา -----">
-                            </div>
                             <div class="col-sm-2">
+                                เกรด
+                                <input class="form-control" type="text" name="เgrade" placeholder="-- กรุณากรอกเกรด --">
+                            </div>
+                            <div  class="col-sm-offset-1 col-sm-2">
+                                เกณฑ์ต่ำสุด
+                                <input class="form-control" style="margin-left:10px;" type="text" name="min_point" placeholder="-- เกณฑ์ต่ำสุด(คะแนน)--">
+                            </div>
+                            <div  class="col-sm-offset-1 col-sm-2">
+                                เกณฑ์สูงสุด
+                                <input class="form-control" style="margin-left:10px;" type="text" name="max_point" placeholder="--เกณฑ์สูงสุด(คะแนน)--">
+                            </div>
+                            <div class="col-sm-1">
                                 <div class="form-group">
                                   <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
                                 </div>
@@ -78,29 +82,33 @@
                                 <thead>
                                
                                     <tr class="bg-gray-light">
-                                        <th class="text-center">ชื่อประเภทวันลา</th>
-                                        <th class="text-center">คะแนน(ต่อครั้ง)</th>
+                                        <th class="text-center">เกรด</th>
+                                        <th class="text-center">เกณฑ์ต่ำสุด</th>
+                                        <th class="text-center">เกณฑ์สูงสุด</th>
                                         <th class="text-center">จัดการ</th>
                                         
                                     </tr>
                                 </thead>
                                 <?php
                     
-                                $sql_leave_type = "SELECT * FROM leaves_type";
+                                $sql_grade = "SELECT * FROM grade";
                                                  
-                                $query = mysqli_query($conn, $sql_leave_type); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
                                 <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
-                                    $name = $result["leave_type_description"];
-                                    $point = $result["point"];
+                                    $name = $result["grade_description"];
+                                    $maxpoint = $result["standard_max_point"];
+                                    $minpoint = $result["standard_min_point"];
+
                                    
                                 ?>
                                 
                             
                                 <tr>
                                     <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                    <td class="text-center" style="width: 200px"><?php echo $point; ?></td>
+                                    <td class="text-center" style="width: 200px"><?php echo $minpoint; ?></td>
+                                    <td class="text-center" style="width: 200px"><?php echo $maxpoint; ?></td>
                                      <td class="text-center" style="width: 200px">
                                                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal">
                                                         <i class="glyphicon glyphicon-pencil" ></i>
@@ -118,7 +126,7 @@
                          
                         </div>
 
-                         <!--Edit Modal !!!!!!!!!!!!!!!!! NOT COMPLETE -->
+                         <!--Edit Modal   !!!!!!!!!!!!!!!!! NOT COMPLETE-->
                         <form class="form-horizontal" name="frmMain" method="post" action="" >
                                         <div class="modal fade" id="<?php echo $result["point"] ; ?>_<?php echo $result["leave_type_description"] ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                           <div class="modal-dialog" role="document">

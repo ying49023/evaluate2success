@@ -43,14 +43,10 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
                          <div class="box-header with-border">
-                <h3 class="box-title">ตารางแสดงประเภทวันลา</h3>
-                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-primary">เพิ่มประเภทวันลา
-                </button></a>
-           
-                           
-                          
-
-                            </div>
+                <h3 class="box-title">การจัดการวันลาพนักงาน</h3>
+            
+                </div>
+                
                    <div class="box-body">
                     <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
                         <form>
