@@ -2,7 +2,6 @@
 
 include ('./classes/connection_mysqli.php');
 
-header("Location: hr_all_kpi_detail.php");
 
 //$sql_insert = "BEGIN;
 //INSERT INTO kpi (kpi_name, kpi_description, unit)
@@ -27,5 +26,5 @@ if (mysqli_query($conn, $sql_insert)) {
        echo "Error updating record: " . mysqli_error($conn);
    }
 
-
+header("Location: hr_all_kpi_detail.php");
 ?>

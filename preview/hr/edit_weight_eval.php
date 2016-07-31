@@ -196,7 +196,7 @@
                                                 <td >
                                                     <input type="radio" name="optradio" value="5"></td>
                                                 <td class="text-center" style="width: 100px">
-                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#title_one<?php echo $i; ?>">
+                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#title_one<?php echo $result_form_eval_1["competency_id"] ?>">
                                                         <i class="glyphicon glyphicon-pencil" ></i>
                                                     </button>                                                   
                                                     |
@@ -205,7 +205,7 @@
                                             </TR>
                                             <tr>
                                                 <!-- Modal -->    
-                                                <div class="modal animated fade " id="title_one<?php echo $i; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+                                                <div class="modal animated fade " id="title_one<?php echo $result_form_eval_1["competency_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
                                                     <div class="modal-dialog" role="document">
                                                         <form action="update_topic_eval.php" method="post">
                                                             <div class="modal-content">
