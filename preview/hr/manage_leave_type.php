@@ -2,6 +2,7 @@
 <html>
     <head>
         <?php include('./classes/connection_mysqli.php'); ?>
+       
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -12,6 +13,7 @@
 
         <!-- SCRIPT PACKS -->
         <?php include('./script_packs.html') ?>
+        <?php include ('./classes/connection_mysqli.php'); ?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -37,87 +39,125 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body ">
-                            <form >
-                                <div class="col-md-4">
-                                   
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    
-                                </div>
-
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-2 ">
-                                    <button  class="btn btn-success" type="submit">เพิ่มประเภทวันลา</button>
-                                </div>
-
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-
+             
                 <div class="row box-padding">
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h4>ตารางรายชื่อพนักงาน</h4>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                                </button>
+                         <div class="box-header with-border">
+                <h3 class="box-title">ตารางแสดงประเภทวันลา</h3>
+                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-primary">เพิ่มประเภทวันลา
+                </button></a>
+           
+                           
+                          
+
+                            </div>
+                   <div class="box-body">
+                    <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
+                        <form>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                ชื่อประเภทวันลา
+                                <input class="form-control" type="text" name="leave_name" placeholder="----- กรุณากรอกประเภทวันลา -----">
+                            </div>
+                            <div  class="col-sm-offset-1 col-sm-3">
+                                คะแนน(ต่อครั้ง)
+                                <input class="form-control" style="margin-left:10px;" type="text" name="leave_point" placeholder="----- กรุณากรอกคะแนนวันลา -----">
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                  <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
+                                </div>
                                 
-                                <button type="button" class="btn btn-box-tool" data-widget="remove">
-                                    <i class="fa fa-times"></i>
-                                </button>
                             </div>
                         </div>
-     
+                        </form>
+                      </div>
+                        
                         <div class="box-body ">    
-                            <table class="table table-bordered table-hover">
+                            <table  class="table table-bordered table-condensed" >
                                 <thead>
                                
                                     <tr class="bg-gray-light">
-                                        <th class="text-center">ID</th>
-                                        <th>ชื่อ-นามสกุล</th>
-                                        <th class="text-center">ตำแหน่ง</th>
-                                        <th class="text-center">แผนก</th>
-                                        <th class="text-center">กำหนดKPI</th>
+                                        <th class="text-center">ชื่อประเภทวันลา</th>
+                                        <th class="text-center">คะแนน(ต่อครั้ง)</th>
+                                        <th class="text-center">จัดการ</th>
                                         
                                     </tr>
                                 </thead>
                                 <?php
                     
-                                $sql_emp = "SELECT emp.employee_id as emp_id, emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
-                                                    . "dept.department_name as dept_name, j.job_name as job FROM employees emp "
-                                                    . "join departments dept on emp.department_id = dept.department_id join jobs j "
-                                                    . "on emp.job_id = j.job_id ORDER BY emp_id ASC";
-                                $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                $sql_leave_type = "SELECT * FROM leaves_type";
+                                                 
+                                $query = mysqli_query($conn, $sql_leave_type); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
                                 <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
-                                    $emp_id = $result["emp_id"];
-                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
-                                    $dept = $result["dept_name"];
-                                    $job = $result["job"];
-                                    
+                                    $name = $result["leave_type_description"];
+                                    $point = $result["point"];
+                                   
                                 ?>
                                 
+                            
                                 <tr>
-                                    <td class="text-center"><?php echo $emp_id; ?></td>
-                                    <td><?php echo $name; ?></td>
-                                    <td class="text-center"><?php echo $job; ?></td>
-                                    <td class="text-center"><?php echo $dept; ?></td>
-                                    <td class="text-center"><a href="hr_manage_kpi.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-folder-open"></i></a></td>
+                                    <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                    <td class="text-center" style="width: 200px"><?php echo $point; ?></td>
+                                     <td class="text-center" style="width: 200px">
+                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal">
+                                                        <i class="glyphicon glyphicon-pencil" ></i>
+                                                    </button>                                                   
+                                                    |
+                                                    <button type="button" class="btn btn-danger btn-sm">
+                                                   
+                                                        <i class="glyphicon glyphicon-remove" ></i>
+                                                    </button>
+                                                </td>
                                 </tr>
-                                <?php } ?>
-                            </table>
+                               <?php } ?>
 
+                            </table>
+                         
+                        </div>
+
+                         <!--Edit Modal -->
+                        <form class="form-horizontal" name="frmMain" method="post" action="" >
+                                        <div class="modal fade" id="<?php echo $result["point"] ; ?>_<?php echo $result["leave_type_description"] ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                          <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                  
+                                                      <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
+                                                      <div class="input-group col-sm-12" >
+                                                          <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อประเภทการลา:</label>
+                                                          <div class="col-sm-8">               
+                                                              <input type="text" class="form-control" value="<?php echo $result["leave_type_description"] ; ?>" name='texttype'   >
+                                                          </div>
+                                                      </div>
+                                                      <div class="input-group col-sm-12" >
+                                                          <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
+                                                          <div class="col-sm-8">               
+                                                              <input type="text" class="form-control" value="<?php echo $result["point"] ; ?>" name='textpoint'    >
+                                                          </div>
+                                                      </div>
+                                                                      
+         
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        </form>
+     
                         </div>
 
                     </div>
-                </div>
+                </div> 
 
                 <!-- /.content -->
             </div>

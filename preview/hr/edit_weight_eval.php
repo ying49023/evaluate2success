@@ -217,7 +217,7 @@
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
                                                                             <div style="width: 75%;margin: auto;">
-                                                                                <h4>ความสามารถในการบริหารหรือจัดการงาน (10%)</h4>
+                                                                                <h4><?php echo $result_title["title_name"]."(".$result_title["weight"]."%)"; ?></h4>
 
                                                                                 <div class="form-group">
                                                                                     <label class="pull-left">ชื่อหัวข้อ: </label>
