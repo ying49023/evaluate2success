@@ -57,6 +57,9 @@
                             $hiredate =$result["hiredate"];
                             $telno =$result["telephone_no"];
                             $email =$result["email"];
+                            $department_id = $result["department_id"];
+                            $job_id = $result["job_id"];
+                            $position_level_id = $result["position_level_id"];
                                    
                     ?>
                     <div class="box box-primary">
@@ -131,7 +134,7 @@
                                             <select class="form-control" name="department_id">
                                                 <option value="">--เลือกแผนก--</option>
                                                 <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
-                                                    <option value="<?php echo $result_department["department_id"]; ?>">
+                                                    <option <?php if($department_id == $result_department["department_id"]){ echo "selected";} ?> value="<?php echo $result_department["department_id"]; ?>"  >
                                                         <?php echo $result_department["department_id"] . " - " . $result_department["department_name"]; ?>
                                                     </option>
                                                 <?php } ?>
@@ -151,7 +154,7 @@
                                             <select class="form-control" name="job_id">
                                                 <option value="">--เลือกตำแหน่ง--</option>
                                                 <?php while ($result_job = mysqli_fetch_array($query_job)) { ?>
-                                                    <option value="<?php echo $result_job["job_id"]; ?>">
+                                                    <option value="<?php echo $result_job["job_id"]; ?>" <?php if($job_id == $result_job["job_id"]){ echo "selected";} ?>>
                                                         <?php echo $result_job["job_id"] . " - " . $result_job["job_name"]; ?>
                                                     </option>
                                                 <?php } ?>
@@ -168,7 +171,7 @@
                                             <select class="form-control" name="position_level_id">
                                                 <option value="">--เลือกระดับ--</option>
                                                 <?php while ($result_position_level = mysqli_fetch_array($query_position_level)) { ?>
-                                                    <option value="<?php echo $result_position_level["position_level_id"]; ?>">
+                                                    <option value="<?php echo $result_position_level["position_level_id"]; ?>"  <?php if($position_level_id == $result_position_level["position_level_id"]){ echo "selected";} ?>>
                                                         <?php echo $result_position_level["position_level_id"] . " - " . $result_position_level["position_description"]; ?>
                                                     </option>
                                                 <?php } ?>
