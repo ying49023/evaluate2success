@@ -52,7 +52,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="<?php if($page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php' || $page == 'hr_kpi_individual_resp.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>KPIs</span>
@@ -62,7 +62,7 @@
                     <li class="<?php if($page == 'hr_all_kpi_detail.php'){ echo "active" ; } ?>">
                         <a href="hr_all_kpi_detail.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsทั้งหมด</a>
                     </li>
-                    <li class="<?php if($page == 'hr_kpi_individual.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'hr_kpi_individual.php' || $page == 'hr_kpi_individual_resp.php'){ echo "active" ; } ?>">
                         <a href="hr_kpi_individual.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsรายบุคคล</a>
                     </li>
                     <li class="<?php if($page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php'){ echo "active" ; } ?>">
@@ -88,7 +88,7 @@
             
             
             
-            <li class="<?php if($page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php'){ echo "active" ; } ?>">    
+            <li class="<?php if($page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php' || $page == 'edit_profile.php'){ echo "active" ; } ?>">    
                 <a href="manage_employee.php">
                     <i class="glyphicon glyphicon-user"></i> <span>จัดการข้อมูลพนักงาน</span>
                     <i class="fa fa-angle-left pull-right"></i>
@@ -99,7 +99,7 @@
                     <li class="<?php if($page == 'manage_employee_insert.php'){ echo "active" ; } ?>">
                         <a href="manage_employee_insert.php"><i class="fa fa-circle-o"></i>เพิ่มข้อมูลพนักงาน</a>
                     </li>
-                    <li class="<?php if($page == 'manage_employee_list.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'manage_employee_list.php' || $page=='edit_profile.php'){ echo "active" ; } ?>">
                         <a href="manage_employee_list.php"><i class="fa fa-circle-o"></i>ลบ/แก้ไขข้อมูลพนักงาน</a>
                     </li>
                 </ul>

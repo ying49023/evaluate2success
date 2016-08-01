@@ -112,10 +112,7 @@
                         <div class="box box-primary">
                         <div class="box-header with-border">
                             <h4>เพิ่มข้อมูลพนักงาน</h4>                           
-                        </div>
-                                                
-
-                                                                   
+                        </div>                           
                                         <!--add employee-->
                                         <div class="row ">
                                             <div class="col-md-offset-1 col-md-10 box-padding">
@@ -125,8 +122,8 @@
                                                         <div class="row">
                                                             <div class="col-md-2">
                                                                 <div class="form-group">
-                                                                    <label>คำนำหน้า</label>
-                                                                    <select class="form-control" name="prefix">
+                                                                    <label>คำนำหน้า<span style="color: red;">*</span></label>
+                                                                    <select class="form-control" name="prefix" required>
                                                                         <option value="">เลือก</option>
                                                                         <option value="นาย">นาย</option>
                                                                         <option value="นางสาว">นางสาว</option>
@@ -136,14 +133,14 @@
                                                             </div>
                                                             <div class="col-md-4">                                                
                                                                 <div class="form-group">
-                                                                    <label>ชื่อ</label>
-                                                                    <input class="form-control" name="first_name" type="text">
+                                                                    <label>ชื่อ<span style="color: red;">*</span></span></label>
+                                                                    <input class="form-control" name="first_name" type="text" required>
                                                                 </div>                                                
                                                             </div>
                                                             <div class="col-md-6">                                                
                                                                 <div class="form-group">
-                                                                    <label>นามสกุล</label>
-                                                                    <input class="form-control" name="last_name" type="text">
+                                                                    <label>นามสกุล<span style="color: red;">*</span></label>
+                                                                    <input class="form-control" name="last_name" type="text" required >
                                                                 </div>                                               
                                                             </div>
                                                         </div>
@@ -151,8 +148,8 @@
                                                         <div class="row">
                                                             <div class="col-md-6">                                                
                                                                 <div class="form-group">
-                                                                    <label>วันที่เริ่มงาน</label>                                                                    
-                                                                        <input type="date" class="form-control" name="startdate">                                                                    
+                                                                    <label>วันที่เริ่มงาน<span style="color: red;">*</span></label>                                                                    
+                                                                    <input type="date" class="form-control"  name="startdate" required>                                                                    
                                                                 </div>                                                
                                                             </div>
                                                             <?php
@@ -161,8 +158,8 @@
                                                             ?>
                                                             <div class="col-md-6">                                               
                                                                 <div class="form-group">
-                                                                    <label>แผนก</label>
-                                                                    <select class="form-control" name="department">
+                                                                    <label>แผนก<span style="color: red;">*</span></label>
+                                                                    <select class="form-control" name="department" required>
                                                                         <option value="">--เลือกแผนก--</option>
                                                                         <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
                                                                         <option value="<?php echo $result_department["department_id"]; ?>">
@@ -182,8 +179,8 @@
                                                             ?>
                                                             <div class="col-md-6">                                                
                                                                 <div class="form-group">
-                                                                    <label>ตำแหน่ง</label>
-                                                                    <select class="form-control" name="job_id">
+                                                                    <label>ตำแหน่ง<span style="color: red;">*</span></label>
+                                                                    <select class="form-control" name="job_id" required>
                                                                         <option value="">--เลือกตำแหน่ง--</option>
                                                                         <?php while ($result_job = mysqli_fetch_array($query_job)) { ?>
                                                                         <option value="<?php echo $result_job["job_id"]; ?>">
@@ -199,8 +196,8 @@
                                                             ?>
                                                             <div class="col-md-6">                                                
                                                                 <div class="form-group">
-                                                                    <label>ระดับ </label>
-                                                                    <select class="form-control" name="position_level_id">
+                                                                    <label>ระดับ<span style="color: red;">*</span></label>
+                                                                    <select class="form-control" name="position_level_id" required>
                                                                         <option value="">--เลือกระดับ--</option>
                                                                         <?php while ($result_position_level = mysqli_fetch_array($query_position_level)) { ?>
                                                                         <option value="<?php echo $result_position_level["position_level_id"]; ?>">

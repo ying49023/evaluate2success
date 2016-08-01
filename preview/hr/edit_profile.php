@@ -6,8 +6,6 @@
         if (isset($_GET["emp_id"])) {
                 $get_emp_id = $_GET["emp_id"];
             }
-       
-        
         ?>
         
         <meta charset="utf-8">
@@ -64,13 +62,14 @@
                             $id = $result["employee_id"];
                                    
                     ?>
+                    <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' >
                     <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">ข้อมูลของ : <?php echo $name; ?></h3>
                         </div>
-                        <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' >
+                        <div class="box-body">
                             <div class="col-md-offset-1 col-md-10">
-                            <div class="box-body">
+                            
                                 <div class="row with-border">
                                     <div class="col-md-2">
                                         <div class="form-group">
@@ -242,15 +241,13 @@
                             </div>
                     </div>
                             <!-- /Box body -->
-                            <div class="box-footer">
-                                <center>
-                                    
-                                    <input  class="btn btn-success search-button" type="submit" name="Send" value="บันทึก">
-                                </center>
-
+                            <div class="box-footer text-center">
+                                <button class="btn btn-danger search-button" onclick="goBack()">ย้อนกลับ</button>
+                                <input  class="btn btn-success search-button" type="submit" name="Send" value="บันทึก">     
                             </div>
-                        </form>
+                        
                     </div>
+                    </form>
                         <?php } ?>
                     <!--/edit employee-->
                 </div>

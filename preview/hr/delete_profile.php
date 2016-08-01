@@ -32,16 +32,6 @@ and open the template in the editor.
                 
             }
         }
-        ?>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        <?php echo $msg ?>
-        <br>
-        <a href="manage_employee_list.php">ย้อนกลับ</a>
         
-    </body>
-</html>
+        header("Location: manage_employee_list.php");
+?>

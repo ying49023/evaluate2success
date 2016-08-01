@@ -131,7 +131,7 @@
                                                     <div class="col-sm-4">
                                                         <div class="form-inline">
                                                             <label>ใส่ค่าน้ำหนัก(%)</label>
-                                                            <input class="form-control" type="number" step="5" value="10" name="weight" placeholder="น้ำหนัก" required="true" />
+                                                            <input class="form-control" type="number" step="5" name="weight" placeholder="น้ำหนัก" required="true" />
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-2">
