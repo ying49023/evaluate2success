@@ -51,7 +51,7 @@
                         <div class="box-body">
                             <form action="" method="GET">
                                 <div class="col-sm-offset-1 col-sm-8">
-                                    <label class="col-sm-2 control-label">ประเภท</label>
+                                    <label class="col-sm-2 control-label">กลุ่ม</label>
                                     <div class="col-sm-10">
                                         <?php
                                         $sql_kpi_group = "SELECT * FROM kpi_group";
@@ -124,13 +124,13 @@
                                                             <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" />
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="pull-left">ประเภท</label>
+                                                            <label class="pull-left">กลุ่ม</label>
                                                             <?php
                                                             $sql_kpi_group = "SELECT * FROM kpi_group" ;
                                                             $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
                                                             ?>
                                                             <select class="form-control" name="kpi_group_id" required>
-                                                                <option value="" >--เลือกประเภท--</option>
+                                                                <option value="" >--เลือกกลุ่ม--</option>
                                                                 <?php while($result_kpi_group = mysqli_fetch_array($query_kpi_group,MYSQLI_ASSOC)) { ?>
                                                                 <option value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" ><?php echo $result_kpi_group["kpi_group_id"]." - ".$result_kpi_group["kpi_group_name"]; ?></option>
                                                                 <?php } ?>
@@ -178,7 +178,7 @@
                                                 <th>คำอธิบาย</th>
                                                 <th style="width: 80px;text-align: center;">หน่วย</th>
                                                 <th style="width: 80px;text-align: center;">ระยะเวลา(เดือน)</th> 
-                                                <th style="width: 150px;">ประเภทหมวดหมู่</th>
+                                                <th style="width: 150px;">กลุ่มหมวดหมู่</th>
                                                 <th style="width: 80px;">แก้ไข/ลบ</th>
                                             </tr>
                                         </thead>
@@ -271,13 +271,13 @@
                                                                             <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" value="<?php echo $result_kpi["time_period"]; ?>" >
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <label class="pull-left">ประเภท</label>
+                                                                            <label class="pull-left">กลุ่ม</label>
                                                                                 <?php
                                                                                 $sql_kpi_group = "SELECT * FROM kpi_group";
                                                                                 $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
                                                                                 ?>
                                                                             <select class="form-control" name="kpi_group_id" required>
-                                                                                <option value="" >--เลือกประเภท--</option>
+                                                                                <option value="" >--เลือกกลุ่ม--</option>
                                                                                     <?php while ($result_kpi_group = mysqli_fetch_array($query_kpi_group, MYSQLI_ASSOC)) { ?>
                                                                                 <option value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" <?php if ($result_kpi["kpi_group_id"] == $result_kpi_group["kpi_group_id"]) {
                                                                                     echo "selected";
