@@ -246,45 +246,8 @@
                          
                         </div>
 
-<<<<<<< HEAD
-                         <!--Edit Modal !!!!!!!!!!!!!!!!! NOT COMPLETE -->
-                        <form class="form-horizontal" name="frmMain" method="post" action="" >
-                                        <div class="modal fade" id="<?php echo $result["point"] ; ?>_<?php echo $result["leave_type_description"] ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                          <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
-                                              </div>
-                                              <div class="modal-body">
-                                                  
-                                                      <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
-                                                      <div class="input-group col-sm-12" >
-                                                          <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อประเภทการลา:</label>
-                                                          <div class="col-sm-8">               
-                                                              <input type="text" class="form-control" value="<?php echo $result["leave_type_description"] ; ?>" name='texttype'   >
-                                                          </div>
-                                                      </div>
-                                                      <div class="input-group col-sm-12" >
-                                                          <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
-                                                          <div class="col-sm-8">               
-                                                              <input type="text" class="form-control" value="<?php echo $result["point"] ; ?>" name='textpoint'    >
-                                                          </div>
-                                                      </div>
-                                                                      
-         
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        </form>
-=======
-                       
->>>>>>> 1354649260a55aaed5250f25eb1e2ebdd7985264
+
+                         
      
                         </div>
 

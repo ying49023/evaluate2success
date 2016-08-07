@@ -6,15 +6,13 @@
             $erp=$_GET['erp'];
             //++++++++++++++++++insert record+++++++++++++
            if($erp=='insert'){          
-               $name =$_POST['grade_description'];
-               $maxpoint  =$_POST['standard_max_point'];
-               $minpoint = $_POST['standard_min_point'];
+               $name =$_POST['department_name'];
 
-       $strSQL =" INSERT INTO grade(grade_description,standard_max_point,standard_min_point) VALUES('$name',$maxpoint,$minpoint) ";
+               $strSQL =" INSERT INTO departments(department_name) VALUES('$name') ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
-                   header ("location:manage_grade.php");
+                   header ("location:departments_table.php");
 
                } else {
 
@@ -24,15 +22,13 @@
            }
             //++++++++++++++++++update record+++++++++++++
            if($erp=='update'){          
-               $name =$_POST['textgrade'];
-               $maxpoint =$_POST['textmaxpoint'];
-               $minpoint =$_POST['textminpoint'];
+               $name =$_POST['textdepartment'];
                $id=$_GET['id'];
-               $strSQL =" UPDATE grade SET grade_description ='$name', standard_min_point=$minpoint, standard_max_point = $maxpoint WHERE grade_id=$id ";
+               $strSQL =" UPDATE departments SET department_name ='$name' WHERE department_id=$id ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
-                   header ("location:manage_grade.php");
+                   header ("location:departments_table.php");
 
 
                } else {
@@ -45,11 +41,11 @@
            if($erp=='delete'){        
 
                $id=$_GET['id'];
-               $strSQL =" DELETE FROM grade WHERE grade_id=$id ";
+               $strSQL =" DELETE FROM departments WHERE department_id=$id ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
-                   header ("location:manage_grade.php");
+                   header ("location:departments_table.php");
 
 
                } else {
@@ -74,6 +70,7 @@
 
         <!-- SCRIPT PACKS -->
         <?php include('./script_packs.html') ?>
+        
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -88,12 +85,12 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        เกณฑ์การตัดเกรด
+                        แผนก/ฝ่าย
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Manage Grade</li>
+                        <li class="active">Departments</li>
                     </ol>
                 </section>
                 <!--/Page header -->
@@ -102,33 +99,25 @@
              
                 <div class="row box-padding">
                     <div class="box box-primary">
-                         <div class="box-header with-border">
-                <h3 class="box-title">ตารางแสดงเกณฑ์การตัดเกรด</h3>
-                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-primary">เพิ่มเกรด
-                </button></a>
-             </div>
-
+                        <div class="box-header with-border">
+                            <h3 class="box-title">ตารางแสดงแผนก/ฝ่าย</h3>
+                            <a class="pull-right " data-toggle="collapse" href="#strenghtPoint">
+                                <button type="button" class="btn btn-primary">เพิ่มแผนก</button>
+                            </a>
+                        </div>
                    <div class="box-body">
                     <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
-                        <form action="manage_grade.php?erp=insert" method="POST">
+                        <form action="departments_table.php?erp=insert" method="POST">
                         <div class="row">
+                            <div class="col-sm-7">
+                                ชื่อแผนก/ฝ่าย
+                                <input class="form-control" type="text" name="department_name" placeholder="----- กรุณากรอกชื่อแผนก/ฝ่าย -----">
+                            </div>
+                            
                             <div class="col-sm-2">
-                                เกรด
-                                <input class="form-control" type="text" name="เgrade_description" placeholder="-- กรุณากรอกเกรด --">
-                            </div>
-                            <div  class="col-sm-offset-1 col-sm-2">
-                                เกณฑ์ต่ำสุด
-                                <input class="form-control" style="margin-left:10px;" type="text" name="standard_min_point" placeholder="-- เกณฑ์ต่ำสุด(คะแนน)--">
-                            </div>
-                            <div  class="col-sm-offset-1 col-sm-2">
-                                เกณฑ์สูงสุด
-                                <input class="form-control" style="margin-left:10px;" type="text" name="standard_max_point" placeholder="--เกณฑ์สูงสุด(คะแนน)--">
-                            </div>
-                            <div class="col-sm-1">
                                 <div class="form-group">
                                   <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
                                 </div>
-                                
                             </div>
                         </div>
                         </form>
@@ -137,52 +126,43 @@
                         <div class="box-body ">    
                             <table  class="table table-bordered table-condensed" >
                                 <thead>
-                               
                                     <tr class="bg-gray-light">
-                                        <th class="text-center">เกรด</th>
-                                        <th class="text-center">เกณฑ์ต่ำสุด</th>
-                                        <th class="text-center">เกณฑ์สูงสุด</th>
+                                        <th class="text-center">ชื่อแผนก/ฝ่าย</th>
                                         <th class="text-center">จัดการ</th>
-                                        
                                     </tr>
                                 </thead>
                                 <?php
                     
-                                $sql_grade = "SELECT * FROM grade";
+                                $sql_dept = "SELECT * FROM departments";
                                                  
-                                $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                $query = mysqli_query($conn, $sql_dept); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
                                 <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
-                                    $name = $result["grade_description"];
-                                    $maxpoint = $result["standard_max_point"];
-                                    $minpoint = $result["standard_min_point"];
-                                    $id = $result["grade_id"];
-
+                                    $name = $result["department_name"];
+                                    $id = $result["department_id"];
                                    
                                 ?>
                                 
                             
                                 <tr>
-                                    <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                    <td class="text-center" style="width: 200px"><?php echo $minpoint; ?></td>
-                                    <td class="text-center" style="width: 200px"><?php echo $maxpoint; ?></td>
-                                     <td class="text-center" style="width: 200px">
-                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
-                                                        <i class="glyphicon glyphicon-pencil" ></i>
-                                                    </button>                                                   
-                                                    |
-                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>_delete">
-                                                   
-                                                        <i class="glyphicon glyphicon-remove" ></i>
-                                                    </button>
-                                                </td>
-                                </tr>
-                              
+                                        <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                        
+                                        <td class="text-center" style="width: 200px">
+                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
+                                                <i class="glyphicon glyphicon-pencil" ></i>
+                                            </button>                                                   
+                                            |
 
-                       <!--Edit Modal -->
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
+                                                <i class="glyphicon glyphicon-remove" ></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                
+                                <!--Edit Modal -->
 
-                                <form class="form-horizontal" name="frmMain" method="post" action="manage_grade.php?erp=update&id=<?php echo $id; ?>" >
+                                <form class="form-horizontal" name="frmMain" method="post" action="departments_table.php?erp=update&id=<?php echo $id; ?>" >
                                         <div class="modal fade" id="<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -194,23 +174,12 @@
 
                                                         <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
                                                         <div class="input-group col-sm-12" >
-                                                            <label for="ชื่อเกรด" class="col-sm-4 control-label">ชื่อเกรด:</label>
+                                                            <label for="ชื่อแผนก/ฝ่าย" class="col-sm-4 control-label">ชื่อแผนก/ฝ่าย:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["grade_description"]; ?>" name='textgrade'   >
+                                                                <input type="text" class="form-control" value="<?php echo $result["department_name"]; ?>" name='textdepartment'   >
                                                             </div>
                                                         </div>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="เกณฑ์คะแนนต่ำสุด" class="col-sm-4 control-label">เกณฑ์คะแนนต่ำสุด:</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["standard_min_point"]; ?>" name='textminpoint'    >
-                                                            </div>
-                                                        </div>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="เกณฑ์คะแนนสูงสุด" class="col-sm-4 control-label">เกณฑ์คะแนนสูงสุด:</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["standard_max_point"]; ?>" name='textmaxpoint'    >
-                                                            </div>
-                                                        </div>
+                                                     
 
                                                     </div>
                                                     <div class="modal-footer">
@@ -225,7 +194,7 @@
                                 
                                 <!--Delete Modal -->
 
-                                <form class="form-horizontal" name="frmMain" method="post" action="manage_grade.php?erp=delete&id=<?php echo $id; ?>" >
+                                <form class="form-horizontal" name="frmMain" method="post" action="departments_table.php?erp=delete&id=<?php echo $id; ?>" >
                                         <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -235,35 +204,24 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
-                                                          <div class="input-group col-sm-12" >
-                                                            <label for="ชื่อเกรด" class="col-sm-4 control-label">ชื่อเกรด:</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["grade_description"]; ?>" name='textgrade'   >
-                                                            </div>
-                                                        </div>
                                                         <div class="input-group col-sm-12" >
-                                                            <label for="เกณฑ์คะแนนต่ำสุด" class="col-sm-4 control-label">เกณฑ์คะแนนต่ำสุด:</label>
+                                                            <label for="ชื่อแผนก/ฝ่าย" class="col-sm-4 control-label">ชื่อแผนก/ฝ่าย:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["standard_min_point"]; ?>" name='textminpoint'    >
+                                                                <input type="text" class="form-control" value="<?php echo $result["department_name"]; ?>" name='textdepartment' disabled="true"  >
                                                             </div>
                                                         </div>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="เกณฑ์คะแนนสูงสุด" class="col-sm-4 control-label">เกณฑ์คะแนนสูงสุด:</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["standard_max_point"]; ?>" name='textmaxpoint'    >
-                                                            </div>
-                                                        </div>
+                                                        
+
 
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                        <button type="submit" class="btn btn-primary">ยืนยันการลบ</button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-
                                 <!--Delete Modal -->
                                <?php } ?>
 

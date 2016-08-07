@@ -47,14 +47,10 @@
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
                         <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
-<<<<<<< HEAD
+
                     <li class="<?php if($page == 'manage_grade.php'){ echo "active" ; } ?>">
                         <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a>
-=======
-                    <li class="<?php if($page == 'grade_management.php'){ echo "active" ; } ?>">
-                        <a href="grade_management.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด(coming..)</a>
->>>>>>> 1354649260a55aaed5250f25eb1e2ebdd7985264
-                    </li>
+
                 </ul>
             </li>
             <li class="<?php if($page == 'hr_kpi_group.php' || $page == 'all_kpi.php' || $page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php' || $page == 'hr_kpi_individual_resp.php' ){ echo "active" ; } ?>">
@@ -112,6 +108,12 @@
                     </li>
                     <li class="<?php if($page == 'manage_employee_list.php' || $page=='edit_profile.php'){ echo "active" ; } ?>">
                         <a href="manage_employee_list.php"><i class="fa fa-circle-o"></i>ลบ/แก้ไขข้อมูลพนักงาน</a>
+                    </li>
+					 <li class="<?php if($page == 'jobs_table.php'){ echo "active" ; } ?>">
+                        <a href="jobs_table.php"><i class="fa fa-circle-o"></i>ข้อมูลตำแหน่งงาน</a>
+                    </li>
+					<li class="<?php if($page == 'departments_table.php'){ echo "active" ; } ?>">
+                        <a href="departments_table.php"><i class="fa fa-circle-o"></i>ข้อมูลแผนก/ฝ่าย</a>
                     </li>
                 </ul>
             </li>
