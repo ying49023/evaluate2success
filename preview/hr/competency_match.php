@@ -2,12 +2,22 @@
 <html>
     <head>
         <?php include('./classes/connection_mysqli.php') ?>
-        <?php
+        <?php 
+            if(isset($_GET['level']))
+            $level=$_GET['level'];
+            if(isset($_GET['level_name']))
+            $level_name=$_GET['level_name'];
+        ?>
+                <?php
         //Insert
         if(isset($_GET["submit_insert"])){
-            $name=$_GET["t_name"];
-            $weight= $_GET["t_weight"];            
-            $sql_insert_group = "INSERT INTO competency_title (title_name,weight) VALUES ('$name','$weight')";
+            $level_name=$_GET['name'];
+            $detail=$_GET["competency_detail"];
+            $title= $_GET["competency_title"];
+            $status=1;
+            $position=$level; 
+            $weight=$_GET["t_weight"];
+            $sql_insert_group = "INSERT INTO match_competency(competency_id,title_id,status,position_level_id,weight) VALUES($detail,$title,$status,$position,$weight)";
             if (mysqli_query($conn, $sql_insert_group)) {
                     echo "Record new successfully";
                     echo $sql_insert_group;
@@ -16,7 +26,7 @@
                     echo $sql_insert_group;
                 }
                     
-                header("Location: competency_title.php");
+                //header("Location: competency_match.php");
             }
         //Edit
         if(isset($_GET["submit_edit"])){
@@ -74,7 +84,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        Competency
+                        Competency 
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -83,7 +93,7 @@
                                 Home
                             </a>
                         </li>
-                        <li class="active">Competency Title Added</li>
+                        <li class="active">Competency</li>
                     </ol>
                 </section>
                 <!--/Page header -->
@@ -92,50 +102,90 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <b>หัวข้อพฤติกรรมในการทำงานของพนักงาน (Competency Title) </b>
+                            <b>การจัดการแบบประเมินระดับ<?php echo $level_name;?></b>
                             <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่ม</button>
+                            
                         </div>
                         <div id="newKPIGroup" class="collapse">
                             <form action="" method="get">
                                 <div class="box-padding row">
-                                    <div class="form-group col-sm-5">
-                                        <label>เพิ่มหัวข้อใหม่<span style="color: red;">*</span></label>
-                                        <input class="form-control" type="text"  step="5" name="t_name" required >
+                                    <div class="form-group col-sm-4">
+                                    <?php
+                                    //INSERT INTO match_competency(competency_id,title_id,status,position_level_id,weight) VALUES(19,17,0,1,10)
+                                    $sql_competency_title = "SELECT * FROM competency_title  ";
+                                    $query_competency_title  = mysqli_query($conn, $sql_competency_title );
+                                    ?>
+                                        <label>Title<span style="color: red;">*</span></label>
+                                        <select class="form-control" name="competency_title">
+                                                <option value="">--เลือก--</option>
+                                                <?php while ($result_competency_title = mysqli_fetch_array($query_competency_title)) { ?>
+                                                    <option <?php if($result_competency_title["title_id"]){ echo "selected";} ?> value="<?php echo $result_competency_title["title_id"]; ?>"  >
+                                                        <?php echo $result_competency_title["title_id"] . " - " . $result_competency_title["title_name"]; ?>
+                                                    </option>
+                                                <?php } ?>
+                                        </select>  
                                     </div>
-                                    <div class="form-group col-sm-5">                                        
-                                        <label>น้ำหนัก<span style="color: red;">*</span></label>
+                                    <div class="form-group col-sm-4">
+                                    <?php
+                                    $sql_competency = "SELECT * FROM competency ";
+                                    $query_competency = mysqli_query($conn, $sql_competency);
+                                    ?>
+                                        <label>Detail<span style="color: red;">*</span></label>
+                                        <select class="form-control" name="competency_detail">
+                                                <option value="">--เลือก--</option>
+                                                <?php while ($result_competency = mysqli_fetch_array($query_competency)) { ?>
+                                                    <option <?php if($result_competency["competency_id"]){ echo "selected";} ?> value="<?php echo $result_competency["competency_id"]; ?>"  >
+                                                        <?php echo $result_competency["competency_id"] . " - " . $result_competency["competency_description"]; ?>
+                                                    </option>
+                                                <?php } ?>
+                                        </select>    
+                                    </div>
+                                    <div class="form-group col-sm-2">                                        
+                                        <label>Weight<span style="color: red;">*</span></label>
                                         <input class="form-control" type="text"  step="5" name="t_weight" required > 
                                     </div>
                                     <div class="form-group col-sm-1">
                                         <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
-                                        <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
+                                        <input  type="hidden" name="level" value="<?php echo $level; ?>" >
+                                        <input  type="hidden" name="name" value="<?php echo $level_name; ?>" >
                                     </div>
                                 </div>
                             </form>
                         </div>
+                        
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                <?php
-                                $sql_com = "SELECT title_id,title_name,weight FROM competency_title ORDER BY title_id ASC";
-                                $query_com = mysqli_query($conn, $sql_com);
+                                    <?php
+                                $sql_mng = "SELECT m.match_comp_id as match_comp,c.competency_description as detail,t.title_name as title,p.position_description as position,m.weight as weight FROM match_competency m JOIN competency c ON m.competency_id=c.competency_id JOIN competency_title t ON m.title_id=t.title_id JOIN position_level p ON p.position_level_id=m.position_level_id WHERE m.position_level_id='$level'";
+                                $query_mng= mysqli_query($conn, $sql_mng);
                                 
                                 ?>
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th style="width: 120px;">Title ID</th>
-                                                <th>Title Name</th>
-                                                <th>Title Weight</th>
+                                                <th style="width: 120px;">Match Comp ID</th>
+                                                <th>Title</th>
+                                                <th>Detail</th>
+                                                
+                                                <th style="text-align: center;">Weight</th>
                                                 <th style="width: 150px;text-align: center;">Management</th>
 
                                             </tr>
                                         </thead>
-                                    <?php while ($result_com = mysqli_fetch_array($query_com, MYSQLI_ASSOC)) { ?>
+                                    <?php while ($result_mng = mysqli_fetch_array($query_mng, MYSQLI_ASSOC))  {
+                                        $m_id = $result_mng["match_comp"];
+                                        $m_title = $result_mng["title"];
+                                        $m_detail = $result_mng["detail"];
+                                        $m_position = $result_mng["position"];
+                                        $m_weight = $result_mng["weight"];
+                                        ?>
                                         <tr>
-                                            <td><b><?php echo $result_com["title_id"]; ?></b></td>
-                                            <td><?php echo $result_com["title_name"]; ?></td>
-                                            <td><?php echo $result_com["weight"]; ?></td>
+                                            <td><b><?php echo $m_id; ?></b></td>
+                                            <td><?php echo $m_title; ?></td>
+                                            <td><?php echo $m_detail; ?></td>
+                                            
+                                            <td><?php echo $m_weight; ?></td>
                                             <td style="text-align: center;">
 
                                                 <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["title_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
@@ -215,6 +265,8 @@
                                             </form>
                                          <?php } ?>
                                     </table>
+                                    
+                                    
                                 </div>
                             </div>
                             

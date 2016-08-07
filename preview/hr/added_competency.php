@@ -1,279 +1,227 @@
-<?php include('./classes/connection_mysqli.php'); 
-        $erp='';
-        $msg='';
-        if(isset($_GET['erp']))
-            $erp=$_GET['erp'];
-         //++++++++++++++++++insert record+++++++++++++
-        if($erp=='insert'){          
-            $name =$_POST['leave_name'];
-            $point =$_POST['leave_point'];
-            
-            $strSQL =" INSERT INTO leaves_type(leave_type_description,point) VALUES('$name',$point) ";
-            $objQuery = mysqli_query($conn,$strSQL);
-            if ($objQuery) {
-
-                header ("location:manage_leave_type.php");
-
-
-            } else {
-
-                echo "Error Save [" . $strSQL . "]";
-            }
-            
-        }
-         //++++++++++++++++++update record+++++++++++++
-        if($erp=='update'){          
-            $name =$_POST['texttype'];
-            $point =$_POST['textpoint'];
-            $id=$_GET['id'];
-            $strSQL =" UPDATE leaves_type SET leave_type_description ='$name', point=$point WHERE leave_type_id=$id ";
-            $objQuery = mysqli_query($conn,$strSQL);
-            if ($objQuery) {
-
-                header ("location:manage_leave_type.php");
-
-
-            } else {
-
-                echo "Error Save [" . $strSQL . "]";
-            }
-            
-        }
-         //++++++++++++++++++delete record+++++++++++++
-        if($erp=='delete'){        
-            
-            $id=$_GET['id'];
-            $strSQL =" DELETE FROM leaves_type WHERE leave_type_id=$id ";
-            $objQuery = mysqli_query($conn,$strSQL);
-            if ($objQuery) {
-
-                header ("location:manage_leave_type.php");
-
-
-            } else {
-
-                echo "Error Save [" . $strSQL . "]";
-            }
-            
-        }
-            
-?>
 <!DOCTYPE html>
 <html>
     <head>
-        
-       
+        <?php include('./classes/connection_mysqli.php') ?>
+        <?php
+        //Insert
+        if(isset($_GET["submit_insert"])){
+            
+            $sql_insert_group = "INSERT INTO competency (competency_description) VALUES ('".$_GET["com_desc"]."')";
+            if (mysqli_query($conn, $sql_insert_group)) {
+                    echo "Record new successfully";
+                    echo $sql_insert_group;
+                } else {
+                    echo "Error new record: " . mysqli_error($conn);
+                    echo $sql_insert_group;
+                }
+                    
+                header("Location: added_competency.php");
+            }
+        //Edit
+        if(isset($_GET["submit_edit"])){
+            
+            $sql_edit_group = "UPDATE competency SET competency_description='".$_GET["competency_desc"]."' WHERE competency_id='".$_GET["competency_id"]."'";
+            if (mysqli_query($conn, $sql_edit_group)) {
+                    echo "Record edit successfully";
+                    echo $sql_edit_group;
+                } else {
+                    echo "Error edit record: " . mysqli_error($conn);
+                    echo $sql_edit_group;
+                }
+                    
+                header("Location: added_competency.php");
+            }
+        //Delete  
+        if(isset($_GET["delete_group"])){
+            
+            $sql_delete_group = "DELETE FROM competency WHERE competency_id='".$_GET["comp_id"]."'";
+            if (mysqli_query($conn, $sql_delete_group)) {
+                    echo "Record new successfully";
+                    echo $sql_delete_group;
+                } else {
+                    echo "Error new record: " . mysqli_error($conn);
+                    echo $sql_delete_group;
+                }
+                    
+                header("Location: added_competency.php");
+            }
+                
+        ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <!-- CSS PACKS -->
+        <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-
         <!-- SCRIPT PACKS -->
-        <?php include('./script_packs.html') ?>
-        <?php include ('./classes/connection_mysqli.php'); ?>
+        <?php include ('./script_packs.html'); ?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
             <!--Header part-->
-            <?php include './headerpart.php'; ?>
+        <?php include './headerpart.php'; ?>
             <!-- Left side column. contains the logo and sidebar -->
-            <?php include './sidebarpart.php'; ?>
-
+        <?php include './sidebarpart.php'; ?>
+            
             <!-- Content Wrapper. Contains page content แก้เนื้อหาแต่ละหน้าตรงนี้นะ -->
             <div class="content-wrapper">
-
+            
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        ประเภทการลา
+                        Competency 
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Manage Leave Day</li>
+                        <li>
+                            <a href="#"> <i class="fa fa-dashboard"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li class="active">Competency Added</li>
                     </ol>
                 </section>
                 <!--/Page header -->
-
+                
                 <!-- Main content -->
-             
                 <div class="row box-padding">
                     <div class="box box-primary">
-                         <div class="box-header with-border">
-                <h3 class="box-title">ตารางแสดงประเภทวันลา</h3>
-                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-primary">เพิ่มประเภทวันลา
-                </button></a>
-           
-                           
-                          
-
-                            </div>
-                   <div class="box-body">
-                    <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
-                        <form action="manage_leave_type.php?erp=insert" method="POST">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                ชื่อประเภทวันลา
-                                <input class="form-control" type="text" name="leave_name" placeholder="----- กรุณากรอกประเภทวันลา -----">
-                            </div>
-                            <div  class="col-sm-offset-1 col-sm-3">
-                                คะแนน(ต่อครั้ง)
-                                <input class="form-control" style="margin-left:10px;" type="text" name="leave_point" placeholder="----- กรุณากรอกคะแนนวันลา -----">
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                  <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
+                        <div class="box-header with-border">
+                            <b>หัวข้อพฤติกรรมที่ทำการประเมิน และ ปัจจัยการพิจารณา </b>
+                            <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่ม</button>
+                        </div>
+                        <div id="newKPIGroup" class="collapse">
+                            <form action="" method="get">
+                                <div class="box-padding row">
+                                    <div class="form-group col-sm-5">
+                                        <label>เพิ่มหัวข้อใหม่<span style="color: red;">*</span></label>
+                                        <input class="form-control" type="text"  step="5" name="com_desc" required > 
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
+                                        <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
+                                    </div>
                                 </div>
-                                
-                            </div>
+                            </form>
                         </div>
-                        </form>
-                      </div>
-                        
-                        <div class="box-body ">    
-                            <table  class="table table-bordered table-condensed" >
-                                <thead>
-                               
-                                    <tr class="bg-gray-light">
-                                        <th class="text-center">ชื่อประเภทวันลา</th>
-                                        <th class="text-center">คะแนน(ต่อครั้ง)</th>
-                                        <th class="text-center">จัดการ</th>
-                                        
-                                    </tr>
-                                </thead>
+                        <div class="box-body">
+                            <div class="row">
+                                <div class="col-md-12">
                                 <?php
-                    
-                                $sql_leave_type = "SELECT * FROM leaves_type";
-                                                 
-                                $query = mysqli_query($conn, $sql_leave_type); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-
-                                 ?>
-                                <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
-                                    $name = $result["leave_type_description"];
-                                    $point = $result["point"];
-                                    $id = $result["leave_type_id"];
-                                   
+                                $sql_com = "SELECT competency_id,competency_description FROM competency ORDER BY competency_id ASC";
+                                $query_com = mysqli_query($conn, $sql_com);
+                                
                                 ?>
-                                
+                                    <table class="table table-hover table-responsive table-striped table-bordered">                               
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 120px;">Competency ID</th>
+                                                <th>Competency Name</th>
+                                                <th style="width: 150px;text-align: center;">Management</th>
+
+                                            </tr>
+                                        </thead>
+                                    <?php while ($result_com = mysqli_fetch_array($query_com, MYSQLI_ASSOC)) { ?>
+                                        <tr>
+                                            <td><b><?php echo $result_com["competency_id"]; ?></b></td>
+                                            <td><?php echo $result_com["competency_description"]; ?></td>
+                                            <td style="text-align: center;">
+
+                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+
+                                                  <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="added_competency.php?comp_id=<?php echo $result_com["competency_id"]; ?>&delete_group=1">
+                                                          <i class="glyphicon glyphicon-remove"></i>ลบ</a>
+
+
+                                                <!--Modal delete-->
+                                                      <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                          <div class="modal-dialog">
+                                                              <div class="modal-content">
+
+                                                                  <div class="modal-header">
+                                                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                      <h4 class="modal-title" id="myModalLabel">ยืนยันการลบ</h4>
+                                                                  </div>
+
+                                                                  <div class="modal-body">
+                                                                      <p></p>
+                                                                      
+                                                                      <p class="debug-url"></p>
+                                                                  </div>
+
+                                                                  <div class="modal-footer">
+                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                                      <a class="btn btn-danger btn-ok">ลบ</a>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <!--/Modal delete-->
+                                                        <script>
+                                                            $('#confirm-delete').on('show.bs.modal', function(e) {
+                                                                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+//                                                                $('.debug-url').html('Delete URL: <b style="color:red;">' + $(this).find('.btn-ok').attr('href') + '</b>');
+                                                            });
+                                                        </script>
+                                            </td>
+                                        </tr>
+                                        <form action="" method="get" >
+                                        <!-- Modal Edit -->   
+                                            <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                            <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-12">
+                                                                    <div style="width: 75%;margin: auto;">
+                                                                        <div class="form-group">
+                                                                            <label class="pull-left">แก้ไขหัวข้อ</label>
+                                                                            <input type="text" class="form-control" name="competency_desc" placeholder="ชื่อหัวข้อCompetency" value="<?php echo $result_com["competency_description"]; ?>" required >
+                                                                                    
+                                                                        </div>
+                                                                                                            
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
+                                                            <input type="hidden" name="competency_id" value="<?php echo $result_com["competency_id"]; ?>" >
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                        </div>                 
+                                                    </div>
+                                                </div>  
+                                            </div>
+                                            <!--/Modal Edit-->
+                                            </form>
+                                         <?php } ?>
+                                    </table>
+                                </div>
+                            </div>
                             
-                                <tr>
-                                    <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                    <td class="text-center" style="width: 200px"><?php echo $point; ?></td>
-                                     <td class="text-center" style="width: 200px">
-                                         <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
-                                                        <i class="glyphicon glyphicon-pencil" ></i>
-                                                    </button>                                                   
-                                                    |
-                                                    
-                                                    <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
-                                                   
-                                                        <i class="glyphicon glyphicon-remove" ></i>
-                                                    </button>
-                                                </td>
-                                </tr>
-                                <!--Edit Modal -->
-
-                                <form class="form-horizontal" name="frmMain" method="post" action="manage_leave_type.php?erp=update&id=<?php echo $id; ?>" >
-                                        <div class="modal fade" id="<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อประเภทการลา:</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["leave_type_description"]; ?>" name='texttype'   >
-                                                            </div>
-                                                        </div>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["point"]; ?>" name='textpoint'    >
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Save changes</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                <!--Edit Modal -->
-                                
-                                <!--Delete Modal -->
-
-                                <form class="form-horizontal" name="frmMain" method="post" action="manage_leave_type.php?erp=delete&id=<?php echo $id; ?>" >
-                                        <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อประเภทการลา:</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["leave_type_description"]; ?>" name='texttype' disabled="true"  >
-                                                            </div>
-                                                        </div>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["point"]; ?>" name='textpoint' disabled="true"   >
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary">Confirm delete</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                <!--Delete Modal -->
-                               <?php } ?>
-
-                            </table>
-                         
                         </div>
-
-                       
-     
-                        </div>
-
                     </div>
-                </div> 
-
-                <!-- /.content -->
-            </div>
+                    
+                </div>
+                
+                <!-- /.content --> </div>
             <!-- /.content-wrapper -->
-
+            
             <!--Footer -->
-            <?php include './footer.php'; ?>
-
+        <?php include './footer.php'; ?>
+            
             <!-- Control Sidebar -->
-            <?php include './controlsidebar.php'; ?>
-
+        <?php include './controlsidebar.php'; ?>
+            
             <!-- Add the sidebar's background. This div must be placed
-                 immediately after the control sidebar -->
+                     immediately after the control sidebar -->
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
