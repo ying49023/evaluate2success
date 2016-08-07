@@ -6,14 +6,13 @@
             $erp=$_GET['erp'];
             //++++++++++++++++++insert record+++++++++++++
            if($erp=='insert'){          
-               $name =$_POST['leave_name'];
-               $point =$_POST['leave_point'];
+               $name =$_POST['department_name'];
 
-               $strSQL =" INSERT INTO leaves_type(leave_type_description,point) VALUES('$name',$point) ";
+               $strSQL =" INSERT INTO departments(department_name) VALUES('$name') ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
-                   header ("location:manage_leave_type.php");
+                   header ("location:departments_table.php");
 
                } else {
 
@@ -23,14 +22,13 @@
            }
             //++++++++++++++++++update record+++++++++++++
            if($erp=='update'){          
-               $name =$_POST['texttype'];
-               $point =$_POST['textpoint'];
+               $name =$_POST['textdepartment'];
                $id=$_GET['id'];
-               $strSQL =" UPDATE leaves_type SET leave_type_description ='$name', point=$point WHERE leave_type_id=$id ";
+               $strSQL =" UPDATE departments SET department_name ='$name' WHERE department_id=$id ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
-                   header ("location:manage_leave_type.php");
+                   header ("location:departments_table.php");
 
 
                } else {
@@ -43,11 +41,11 @@
            if($erp=='delete'){        
 
                $id=$_GET['id'];
-               $strSQL =" DELETE FROM leaves_type WHERE leave_type_id=$id ";
+               $strSQL =" DELETE FROM departments WHERE department_id=$id ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
-                   header ("location:manage_leave_type.php");
+                   header ("location:departments_table.php");
 
 
                } else {
@@ -87,12 +85,12 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        ประเภทการลา
+                        แผนก/ฝ่าย
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Manage Leave Day</li>
+                        <li class="active">Departments</li>
                     </ol>
                 </section>
                 <!--/Page header -->
@@ -102,23 +100,20 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">ตารางแสดงประเภทวันลา</h3>
+                            <h3 class="box-title">ตารางแสดงแผนก/ฝ่าย</h3>
                             <a class="pull-right " data-toggle="collapse" href="#strenghtPoint">
-                                <button type="button" class="btn btn-primary">เพิ่มประเภทวันลา</button>
+                                <button type="button" class="btn btn-primary">เพิ่มแผนก</button>
                             </a>
                         </div>
                    <div class="box-body">
                     <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
-                        <form action="manage_leave_type.php?erp=insert" method="POST">
+                        <form action="departments_table.php?erp=insert" method="POST">
                         <div class="row">
-                            <div class="col-sm-4">
-                                ชื่อประเภทวันลา
-                                <input class="form-control" type="text" name="leave_name" placeholder="----- กรุณากรอกประเภทวันลา -----">
+                            <div class="col-sm-7">
+                                ชื่อแผนก/ฝ่าย
+                                <input class="form-control" type="text" name="department_name" placeholder="----- กรุณากรอกชื่อแผนก/ฝ่าย -----">
                             </div>
-                            <div  class="col-sm-offset-1 col-sm-3">
-                                คะแนน(ต่อครั้ง)
-                                <input class="form-control" style="margin-left:10px;" type="text" name="leave_point" placeholder="----- กรุณากรอกคะแนนวันลา -----">
-                            </div>
+                            
                             <div class="col-sm-2">
                                 <div class="form-group">
                                   <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
@@ -132,29 +127,27 @@
                             <table  class="table table-bordered table-condensed" >
                                 <thead>
                                     <tr class="bg-gray-light">
-                                        <th class="text-center">ชื่อประเภทวันลา</th>
-                                        <th class="text-center">คะแนน(ต่อครั้ง)</th>
+                                        <th class="text-center">ชื่อแผนก/ฝ่าย</th>
                                         <th class="text-center">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <?php
                     
-                                $sql_leave_type = "SELECT * FROM leaves_type";
+                                $sql_dept = "SELECT * FROM departments";
                                                  
-                                $query = mysqli_query($conn, $sql_leave_type); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                $query = mysqli_query($conn, $sql_dept); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
                                 <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
-                                    $name = $result["leave_type_description"];
-                                    $point = $result["point"];
-                                    $id = $result["leave_type_id"];
+                                    $name = $result["department_name"];
+                                    $id = $result["department_id"];
                                    
                                 ?>
                                 
                             
                                 <tr>
                                         <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                        <td class="text-center" style="width: 200px"><?php echo $point; ?></td>
+                                        
                                         <td class="text-center" style="width: 200px">
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                                 <i class="glyphicon glyphicon-pencil" ></i>
@@ -169,7 +162,7 @@
                                 
                                 <!--Edit Modal -->
 
-                                <form class="form-horizontal" name="frmMain" method="post" action="manage_leave_type.php?erp=update&id=<?php echo $id; ?>" >
+                                <form class="form-horizontal" name="frmMain" method="post" action="departments_table.php?erp=update&id=<?php echo $id; ?>" >
                                         <div class="modal fade" id="<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -181,17 +174,12 @@
 
                                                         <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
                                                         <div class="input-group col-sm-12" >
-                                                            <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อประเภทการลา:</label>
+                                                            <label for="ชื่อแผนก/ฝ่าย" class="col-sm-4 control-label">ชื่อแผนก/ฝ่าย:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["leave_type_description"]; ?>" name='texttype'   >
+                                                                <input type="text" class="form-control" value="<?php echo $result["department_name"]; ?>" name='textdepartment'   >
                                                             </div>
                                                         </div>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["point"]; ?>" name='textpoint'    >
-                                                            </div>
-                                                        </div>
+                                                     
 
                                                     </div>
                                                     <div class="modal-footer">
@@ -206,7 +194,7 @@
                                 
                                 <!--Delete Modal -->
 
-                                <form class="form-horizontal" name="frmMain" method="post" action="manage_leave_type.php?erp=delete&id=<?php echo $id; ?>" >
+                                <form class="form-horizontal" name="frmMain" method="post" action="departments_table.php?erp=delete&id=<?php echo $id; ?>" >
                                         <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
@@ -217,17 +205,12 @@
                                                     <div class="modal-body">
                                                         <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
                                                         <div class="input-group col-sm-12" >
-                                                            <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อประเภทการลา:</label>
+                                                            <label for="ชื่อแผนก/ฝ่าย" class="col-sm-4 control-label">ชื่อแผนก/ฝ่าย:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["leave_type_description"]; ?>" name='texttype' disabled="true"  >
+                                                                <input type="text" class="form-control" value="<?php echo $result["department_name"]; ?>" name='textdepartment' disabled="true"  >
                                                             </div>
                                                         </div>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["point"]; ?>" name='textpoint' disabled="true"   >
-                                                            </div>
-                                                        </div>
+                                                        
 
 
                                                     </div>
