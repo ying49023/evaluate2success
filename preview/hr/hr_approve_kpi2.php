@@ -298,29 +298,72 @@
             </div>
             <div class="row box-padding">
                 <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <b>เพิ่ม และ แก้ไขข้อ KPI</b>
+                        <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newNextKPI">+ เพิ่ม</button>
+                    </div>
+                    <div id="newNextKPI" class="collapse">
+                        <form action="new_next_kpi.php" method="post">
+                        <div class="box-padding row">
+                            <div class="form-group col-sm-5">
+                                <label>ชื่อ KPI</label>
+                                <?php
+                                $sql_kpi = "SELECT * FROM kpi";
+                                $query_kpi = mysqli_query($conn, $sql_kpi);
+                                ?>
+
+                                <select class="form-control " name="kpi_id" required >
+
+                                    <option>เลือกkpi </option>
+                                    <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
+                                    <option value="<?php echo $result_kpi["kpi_id"]; ?>"><?php echo $result_kpi["kpi_id"]." - ".$result_kpi["kpi_name"]; ?></option>
+                                    <?php } ?>
+
+                                </select>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>น้ำหนัก(%)</label>
+                                <input class="form-control" type="number"  step="5" name="weight" required > 
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label>เป้าหมาย</label>
+                                <input class="form-control" type="text"  name="goal" required> 
+                            </div>
+                            
+                            <div class="form-group col-sm-1">
+                                <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit" value="บันทึก" > 
+                                <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
+                            </div>
+                        </div>
+                        </form>
+                    </div>
                     <div class="box-body">
                         <?php
-                        $sql_next_kpi = "SELECT
-                                                emp.employee_id AS employee_id,
-                                                emp.prefix AS prefix,
-                                                emp.first_name AS first_name,
-                                                emp.manager_id AS manager_id,
-                                                d.department_name,
-                                                nk.approval AS approval,
-                                                k.kpi_id As kpi_id,
-                                                k.kpi_name AS kpi_name,
-                                                k.kpi_description As kpi_description,
-                                                nk.weight AS weight,
-                                                nk.goal AS goal,
-                                                k.unit As unit
-                                        FROM
-                                                evaluation_next_kpi enk
-                                        JOIN next_responsible_kpi nk ON enk.evaluate_next_kpi_id = nk.evaluate_next_kpi_id
-                                        JOIN kpi k ON k.kpi_id = nk.kpi_id
-                                        JOIN evaluation_employee eemp ON eemp.evaluate_employee_id = enk.evaluate_employee_id
-                                        JOIN employees emp ON eemp.employee_id = emp.employee_id
-                                        JOIN departments d ON d.department_id = emp.department_id";
-                        $query_next_kpi = mysqli_query($conn, $sql_next_kpi);
+                            $sql_next_kpi = "SELECT
+                                    nrk.next_responsible_kpi_id as next_responsible_kpi_id ,
+                                    k.kpi_id as kpi_id,
+                                    k.kpi_name as kpi_name,
+                                    k.kpi_description as kpi_description,
+                                    k.unit as unit,
+                                    nrk.weight as weight,
+                                    nrk.goal as goal,
+                                    nrk.evaluate_next_kpi_id 
+                            FROM
+                                    evaluation_next_kpi enk
+                            JOIN next_responsible_kpi nrk ON enk.evaluate_next_kpi_id = nrk.evaluate_next_kpi_id
+                            JOIN kpi k ON nrk.kpi_id = k.kpi_id
+                            WHERE
+                                    nrk.evaluate_next_kpi_id = (
+                                            SELECT
+                                                    enk.evaluate_next_kpi_id
+                                            FROM
+                                                    evaluation_next_kpi enk
+                                            JOIN evaluation_employee ee ON enk.evaluate_employee_id = ee.evaluate_employee_id
+                                            WHERE
+                                                    ee.employee_id = '".$get_emp_id."'
+                                            AND ee.evaluation_code = 1
+                                    )";
+                            $query_next_kpi = mysqli_query($conn, $sql_next_kpi);
                         
                         ?>
                         <table class="table table-bordered">
@@ -330,7 +373,7 @@
                                 <td>คำอธิบาย</td>
                                 <td width="60px">น้ำหนัก</td>
                                 <td width="70px">เป้าหมาย</td>
-                                <td width="80px">การจัดการ</td>
+                                <td width="120px">การจัดการ</td>
                             </tr>
                             <?php while($result_next_kpi = mysqli_fetch_array($query_next_kpi, MYSQLI_ASSOC)) { ?>
                             <tr>
@@ -340,18 +383,69 @@
                                     <?php echo $result_next_kpi["kpi_description"];?>
                                 </td>
                                 <td><?php echo $result_next_kpi["weight"]."%";?></td>
-                                <td>><?php echo $result_next_kpi["goal"].$result_next_kpi["unit"];?></td>
+                                <td><?php echo $result_next_kpi["goal"].$result_next_kpi["unit"];?></td>
                                 <td class="text-center">
-                                    <a href="edit_next_kpi.php?kpi_id=<?php echo $result_next_kpi["kpi_id"];?>">
-                                        <i class="glyphicon glyphicon-pencil"></i>
-                                    </a>
+                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit_<?php echo $result_next_kpi["kpi_id"]; ?>">
+                                        <i class="glyphicon glyphicon-pencil" ></i>
+                                    </button> 
                                     |
-                                    <a href="delete_next_kpi.php?kpi_id=<?php echo $result_next_kpi["kpi_id"];?>">
+                                    <a class="btn btn-danger btn-sm" href="delete_next_kpi.php?emp_id=<?php echo $emp_id; ?>&next_responsible_kpi_id=<?php echo $result_next_kpi["next_responsible_kpi_id"];?>">
                                         <i class="glyphicon glyphicon-trash"></i>
                                     </a>
                                 </td>
                             </tr>
+                            <tr>
+                            <!-- Modal -->    
+                            <div class="modal animated fade " id="edit_<?php echo $result_next_kpi["kpi_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+                                <div class="modal-dialog" role="document">
+                                    <form action="update_next_kpi.php" method="post" >
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row box-padding">
+                                                    <div class="row">
+                                                        <div class="col-sm-12">
+                                                            <div class="form-group">
+                                                                
+                                                                <label>ชื่อตัวชี้วัด</label>
+                                                                <input class="form-control" type="text" name="kpi_name" value="<?php echo $result_next_kpi["kpi_name"]; ?>" readonly>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <div class="form-group">
+                                                                <label>น้ำหนัก(%)</label>
+                                                                <input class="form-control" type="number" name="weight" step="5" value="<?php echo $result_next_kpi["weight"]; ?>" >
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-6" >
+                                                            <div class="form-group">
+                                                                <label>เป้าหมาย</label>
+                                                                <input class="form-control" type="text" name="goal" value="<?php echo $result_next_kpi["goal"]; ?>" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" >
+                                                <input type="hidden" name="emp_id" value="<?php echo $emp_id; ?>" >
+                                                <input type="hidden" name="next_responsible_kpi_id" value="<?php echo $result_next_kpi["next_responsible_kpi_id"]; ?>" >
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                            </div>
+                                                                    
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>   
+                            <!--Modal-->
+                        </tr>
                             <?php } ?>
+                        
                         </table>
                         
                     </div>
@@ -362,7 +456,7 @@
 
             </div>
             
-            <div class="row box-padding">
+<!--            <div class="row box-padding">
                 <div class="box box-primary">
                     <div class="box-header with-border"> <b>เพิ่มเติม/แก้ไขKPI</b>
                     </div>
@@ -424,7 +518,7 @@
                     </div>
                 </div>
 
-            </div>
+            </div>-->
 
             <!-- /.content --> </div>
         <!-- /.content-wrapper -->

@@ -38,7 +38,7 @@
                 
             
         }
-        //++++++++++++++++++delete record+++++++++++++
+        //++++++++++++++++++update record+++++++++++++
             if($erp=='update'){            
             $strSQL = "UPDATE evaluation SET ";
             $strSQL .="open_system_date= '" . $_POST["textopen"] . "' ";

@@ -6,14 +6,13 @@
             $erp=$_GET['erp'];
             //++++++++++++++++++insert record+++++++++++++
            if($erp=='insert'){          
-               $name =$_POST['leave_name'];
-               $point =$_POST['leave_point'];
+               $name =$_POST['kpi_group_name'];
 
-               $strSQL =" INSERT INTO leaves_type(leave_type_description,point) VALUES('$name',$point) ";
+               $strSQL =" INSERT INTO kpi_group(kpi_group_name) VALUES('$name') ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
-                   header ("location:manage_leave_type.php");
+                   header ("location:kpi_group.php");
 
                } else {
 
@@ -87,12 +86,12 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        ประเภทการลา
+                        การจัดกลุ่มKPIs
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Manage Leave Day</li>
+                        <li class="active">KPIs Group</li>
                     </ol>
                 </section>
                 <!--/Page header -->
@@ -102,9 +101,9 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">ตารางแสดงประเภทวันลา</h3>
+                            <h3 class="box-title">ตารางแสดงชื่อหัวข้อกลุ่มKPIs</h3>
                             <a class="pull-right " data-toggle="collapse" href="#strenghtPoint">
-                                <button type="button" class="btn btn-primary">เพิ่มประเภทวันลา</button>
+                                <button type="button" class="btn btn-primary">เพิ่มหัวข้อ</button>
                             </a>
                         </div>
                    <div class="box-body">
@@ -112,13 +111,10 @@
                         <form action="manage_leave_type.php?erp=insert" method="POST">
                         <div class="row">
                             <div class="col-sm-4">
-                                ชื่อประเภทวันลา
-                                <input class="form-control" type="text" name="leave_name" placeholder="----- กรุณากรอกประเภทวันลา -----">
+                                ชื่อกลุ่มKPIs
+                                <input class="form-control" type="text" name="group_name" placeholder="----- กรุณากรอกชื่อหัวข้อกลุ่มKPIs -----">
                             </div>
-                            <div  class="col-sm-offset-1 col-sm-3">
-                                คะแนน(ต่อครั้ง)
-                                <input class="form-control" style="margin-left:10px;" type="text" name="leave_point" placeholder="----- กรุณากรอกคะแนนวันลา -----">
-                            </div>
+
                             <div class="col-sm-2">
                                 <div class="form-group">
                                   <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
@@ -132,29 +128,26 @@
                             <table  class="table table-bordered table-condensed" >
                                 <thead>
                                     <tr class="bg-gray-light">
-                                        <th class="text-center">ชื่อประเภทวันลา</th>
-                                        <th class="text-center">คะแนน(ต่อครั้ง)</th>
+                                        <th class="text-center">ชื่อหัวข้อกลุ่มKPIs</th>
                                         <th class="text-center">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <?php
                     
-                                $sql_leave_type = "SELECT * FROM leaves_type";
+                                $sql_kpi_group = "SELECT * FROM kpi_group";
                                                  
-                                $query = mysqli_query($conn, $sql_leave_type); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                $query = mysqli_query($conn, $sql_kpi_group); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
                                 <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
-                                    $name = $result["leave_type_description"];
-                                    $point = $result["point"];
-                                    $id = $result["leave_type_id"];
+                                    $name = $result["kpi_group_name"];
+                                    $id = $result["kpi_group_id"];
                                    
                                 ?>
                                 
                             
                                 <tr>
                                         <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                        <td class="text-center" style="width: 200px"><?php echo $point; ?></td>
                                         <td class="text-center" style="width: 200px">
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                                 <i class="glyphicon glyphicon-pencil" ></i>
@@ -181,17 +174,12 @@
 
                                                         <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
                                                         <div class="input-group col-sm-12" >
-                                                            <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อประเภทการลา:</label>
+                                                            <label for="หัวข้อKPIs" class="col-sm-4 control-label">ชื่อหัวข้อกลุ่มKPIs:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["leave_type_description"]; ?>" name='texttype'   >
+                                                                <input type="text" class="form-control" value="<?php echo $result["kpi_group_name"]; ?>" name='texttype'   >
                                                             </div>
                                                         </div>
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["point"]; ?>" name='textpoint'    >
-                                                            </div>
-                                                        </div>
+                                                       
 
                                                     </div>
                                                     <div class="modal-footer">

@@ -34,7 +34,7 @@
 
                 </a>
             </li>
-            <li class="<?php if($page == 'edit_weight_eval.php'  || $page == 'manage_evaluate.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'edit_weight_eval.php'  || $page == 'manage_evaluate.php' || $page == 'grade_management.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>แบบประเมิน</span>
@@ -47,12 +47,17 @@
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
                         <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
+<<<<<<< HEAD
                     <li class="<?php if($page == 'manage_grade.php'){ echo "active" ; } ?>">
                         <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a>
+=======
+                    <li class="<?php if($page == 'grade_management.php'){ echo "active" ; } ?>">
+                        <a href="grade_management.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด(coming..)</a>
+>>>>>>> 1354649260a55aaed5250f25eb1e2ebdd7985264
                     </li>
                 </ul>
             </li>
-            <li class="<?php if($page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_approve_kpi.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php' || $page == 'hr_kpi_individual_resp.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>KPIs</span>
@@ -62,44 +67,55 @@
                     <li class="<?php if($page == 'hr_all_kpi_detail.php'){ echo "active" ; } ?>">
                         <a href="hr_all_kpi_detail.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsทั้งหมด</a>
                     </li>
-                    <li class="<?php if($page == 'hr_kpi_individual.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'hr_kpi_individual.php' || $page == 'hr_kpi_individual_resp.php'){ echo "active" ; } ?>">
                         <a href="hr_kpi_individual.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsรายบุคคล</a>
                     </li>
-                    <li class="<?php if($page == 'hr_approve_kpi.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php'){ echo "active" ; } ?>">
                         <a href="hr_approve_kpi.php"><i class="fa fa-circle-o"></i>อนุมัติKPIsครั้งถัดไป</a>
                     </li>
                 </ul>
             </li>
-
-            <li class="<?php if($page == 'manage_leave_type.php'|| $page == 'manage_leave_type.php'){ echo "active" ; } ?>">
+             <li class="<?php if($page == 'manage_employee_leave.php'|| $page == 'manage_leave_type.php'){ echo "active" ; } ?>">
                  <a href="">
                     <i class="glyphicon glyphicon-calendar"></i>
                         <span>จัดการข้อมูลวันลา</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                  <ul class="treeview-menu">
-                    <li class="<?php if($page == 'manage_leave_type.php'){ echo "active" ; } ?>">
-                        <a href="manage_leave_type.php"><i class="fa fa-circle-o"></i>จัดการวันลาของพนักงาน</a>
+                    <li class="<?php if($page == 'manage_employee_leave.php'){ echo "active" ; } ?>">
+                        <a href="manage_employee_leave.php"><i class="fa fa-circle-o"></i>จัดการวันลาของพนักงาน(coming..)</a>
                     </li>
                     <li class="<?php if($page == 'manage_leave_type.php'){ echo "active" ; } ?>">
                         <a href="manage_leave_type.php"><i class="fa fa-circle-o"></i>ประเภทข้อมูลวันลา</a>
                     </li>
                     </ul>
             </li>
-
-            <li class="<?php if($page == 'manage_employee.php'){ echo "active" ; } ?>">
+            
+            
+            
+            <li class="<?php if($page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php' || $page == 'edit_profile.php'){ echo "active" ; } ?>">    
                 <a href="manage_employee.php">
                     <i class="glyphicon glyphicon-user"></i> <span>จัดการข้อมูลพนักงาน</span>
+                    <i class="fa fa-angle-left pull-right"></i>
 
                 </a>
+                <ul class="treeview-menu">
+                    
+                    <li class="<?php if($page == 'manage_employee_insert.php'){ echo "active" ; } ?>">
+                        <a href="manage_employee_insert.php"><i class="fa fa-circle-o"></i>เพิ่มข้อมูลพนักงาน</a>
+                    </li>
+                    <li class="<?php if($page == 'manage_employee_list.php' || $page=='edit_profile.php'){ echo "active" ; } ?>">
+                        <a href="manage_employee_list.php"><i class="fa fa-circle-o"></i>ลบ/แก้ไขข้อมูลพนักงาน</a>
+                    </li>
+                </ul>
             </li>
-            <li class="<?php if($page == 'hr_report_page.php'){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'hr_report_page.php' || $page == 'hr_report_grade.php'){ echo "active" ; } ?>">
                 <a href="hr_report_page.php" >
                     <i class="glyphicon glyphicon-book"></i> <span>ออกรายงาน</span>
 
                 </a>
             </li>
-            <li class="<?php if($page == 'hr_assign_kpi.php'){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'hr_assign_kpi.php' || $page == 'hr_manage_kpi.php'){ echo "active" ; } ?>">
                 <a href="hr_assign_kpi.php">
                     <i class="glyphicon glyphicon-check"></i> <span>การกำหนดKPIs</span>
 
