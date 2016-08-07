@@ -102,12 +102,12 @@
                 $condition_search = '';
                 
                 if($get_department_id != '' && $get_job_id != ''){
-                    $condition_search = " WHERE g.department_id = '".$get_department_id."' AND g.job_id = '".$get_job_id."' ";
+                    $condition_search = " WHERE mk.department_id = '".$get_department_id."' AND mk.job_id = '".$get_job_id."' ";
                 }else if($get_department_id != '' || $get_job_id != ''){
                     if($get_department_id != ''){
-                        $condition_search = " WHERE g.department_id = '".$get_department_id."' ";
+                        $condition_search = " WHERE mk.department_id = '".$get_department_id."' ";
                     }else if($get_job_id != ''){
-                        $condition_search = " WHERE g.job_id = '".$get_job_id."' ";
+                        $condition_search = " WHERE mk.job_id = '".$get_job_id."' ";
                     }
                 }
                 
@@ -120,11 +120,11 @@
                                 <i class="glyphicon glyphicon-plus" ></i> &nbsp;เพิ่ม
                             </button>  
                         </div>
-                        <!-- Modal -->   
+                        <!-- Modal New-->   
                         <div class="modal animated fade " id="new_kpi" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
-                                    <form action="new_kpi.php" method="post">
+                                    <form action="new_kpi_group.php" method="post">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="myModalLabel">เพิ่มหัวข้อ KPI</h4>
@@ -133,23 +133,23 @@
                                             <div class="row">
                                                 <div class="col-sm-12">
                                                     <div style="width: 75%;margin: auto;">
+                                                        <?php
+                                                        $sql_kpi_list = "SELECT * FROM kpi ";
+                                                            $query_kpi_list = mysqli_query($conn, $sql_kpi_list);
+                                                        ?>
+                                             
                                                         <div class="form-group">
-                                                            <label class="pull-left">ชื่อหัวข้อKPI<span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="kpi_name" placeholder="ชื่อหัวข้อKPI" required />
+                                                            <label>ชื่อหัวข้อKPI<span style="color: red;">*</span></label>
+                                                            <select class="form-control" name="kpi_id" required>
+                                                                <option value="">--เลือกชื่อหัวข้อKPI--</option>
+                                                                        <?php while ($result_kpi_list = mysqli_fetch_array($query_kpi_list)) { ?>
+                                                                <option value="<?php echo $result_kpi_list["kpi_id"]; ?>">
+                                                                                <?php echo $result_kpi_list["kpi_id"] . " - " . $result_kpi_list["kpi_name"]; ?>
+                                                                </option>
+                                                                        <?php } ?>
+                                                            </select>                                                        
                                                         </div>
                                                         
-                                                        <div class="form-group">
-                                                            <label class="pull-left">คำอธิบาย </label>
-                                                            <input type="text" class="form-control" name="kpi_description" placeholder="คำอธิบายKPI" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="pull-left">หน่วย</label>
-                                                            <input type="text" class="form-control" name="unit" placeholder="ระบุหน่วย" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="pull-left">ระยะเวลา(เดือน)</label>
-                                                            <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" />
-                                                        </div>
                                                         <?php
                                                         $sql_department = "SELECT * FROM departments ";
                                                             $query_department = mysqli_query($conn, $sql_department);
@@ -193,33 +193,34 @@
                                 </div>
                             </div>  
                         </div>
-                        <!--Modal-->
+                        <!--/Modal New-->
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
                                 <?php
                                 $sql_kpi = "SELECT
-                                                    k.kpi_id as kpi_id,
-                                                    k.kpi_name as kpi_name,
-                                                    k.kpi_description as kpi_description,
-                                                    k.unit as unit,
-                                                    k.time_period as time_period,
-                                                    j.job_name as job_name,
-                                                    d.department_name as department_name
+                                                    mk.manage_kpi_id AS manage_kpi_id,
+                                                    k.kpi_id AS kpi_id,
+                                                    k.kpi_name AS kpi_name,
+                                                    k.kpi_description AS kpi_description,
+                                                    k.unit As unit,
+                                                    mk.department_id As department_id,
+                                                    d.department_name AS department_name,
+                                                    mk.job_id As job_id,
+                                                    j.job_name AS job_name
                                             FROM
-                                                    kpi k
-                                            JOIN kpi_group g ON k.kpi_id = g.kpi_id
-                                            JOIN departments d ON g.department_id = d.department_id
-                                            JOIN jobs j ON j.job_id = g.job_id ".$condition_search." 
-                                            ORDER BY
-                                                    k.kpi_id,j.job_name";
+                                                    manage_kpi mk
+                                            JOIN kpi k ON mk.kpi_id = k.kpi_id
+                                            JOIN departments d ON d.department_id = mk.department_id
+                                            JOIN jobs j ON j.job_id = mk.job_id ".$condition_search."
+                                            ORDER BY mk.manage_kpi_id";
                                 $query_kpi = mysqli_query($conn, $sql_kpi);
                                 
                                 ?>
                                     <table class="table table-hover table-responsive table-striped">                               
                                         <thead>
                                             <tr>
-                                                <th = >ID</th>
+                                                <th>No</th>
                                                 <th>ชื่อKPIs</th>
                                                 <th>คำอธิบาย</th>
                                                 <th>หน่วย</th>
@@ -230,13 +231,14 @@
                                         </thead>
                                     <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
                                         <tr>
-                                            <td><b><?php echo $result_kpi["kpi_id"]; ?></b></td>
+                                            <td><b><?php echo $result_kpi["manage_kpi_id"]; ?></b></td>
                                             <td style="width: 250px"><?php echo $result_kpi["kpi_name"]; ?></td>
                                             <td style="width: 250px"><?php echo $result_kpi["kpi_description"]; ?></td>
                                             <td><?php echo $result_kpi["unit"]; ?></td>
                                             <td><?php echo $result_kpi["job_name"]; ?></td>
                                             <td><?php echo $result_kpi["department_name"]; ?></td>
-                                            <td><div class="dropdown">
+                                            <td>
+                                                <div class="dropdown">
                                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                                     <i class="glyphicon glyphicon-cog"></i>
                                                   <span class="caret"></span>
@@ -244,16 +246,50 @@
                                                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                                   <li><a data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a></li>
                                                   <li role="separator" class="divider"></li>
-                                                  <li><a href="delete_kpi.php?kpi_id=<?php echo $result_kpi["kpi_id"]; ?>"><i class="glyphicon glyphicon-remove"></i>ลบ</a></li>
+                                                  <li>
+                                                      <a href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi_group.php?manage_kpi_id=<?php echo $result_kpi["manage_kpi_id"]; ?>&department_id=<?php echo $get_department_id; ?>&job_id=<?php echo $get_job_id; ?>" >
+                                                          <i class="glyphicon glyphicon-remove"></i>ลบ</a>
+                                                  </li>
                                                 </ul>
                                               </div>
+                                                <!--Modal delete-->
+                                                      <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                          <div class="modal-dialog">
+                                                              <div class="modal-content">
+
+                                                                  <div class="modal-header">
+                                                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                      <h4 class="modal-title" id="myModalLabel">ยืนยันการลบ</h4>
+                                                                  </div>
+
+                                                                  <div class="modal-body">
+                                                                      <p></p>
+                                                                      
+                                                                      <p class="debug-url"></p>
+                                                                  </div>
+
+                                                                  <div class="modal-footer">
+                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                                      <a class="btn btn-danger btn-ok">ลบ</a>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                      <!--/Modal delete-->
+                                                        <script>
+                                                            $('#confirm-delete').on('show.bs.modal', function(e) {
+                                                                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+
+                                                                $('.debug-url').html('Delete URL: <b style="color:red;">' + $(this).find('.btn-ok').attr('href') + '</b>');
+                                                            });
+                                                        </script>
                                             </td>
                                         </tr>
-                                        <!-- Modal -->   
+                                        <!-- Modal Edit-->   
                                             <div class="modal animated fade " id="edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
-                                                        <form action="edit_kpi.php" method="post">
+                                                        <form action="edit_kpi_group.php" method="post">
                                                             <div class="modal-header">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ KPI</h4>
@@ -262,23 +298,21 @@
                                                                 <div class="row">
                                                                     <div class="col-sm-12">
                                                                         <div style="width: 75%;margin: auto;">
+                                                                            <?php
+                                                                            $sql_kpi_list = "SELECT * FROM kpi ";
+                                                                                $query_kpi_list = mysqli_query($conn, $sql_kpi_list);
+                                                                            ?>
+
                                                                             <div class="form-group">
-                                                                                <label class="pull-left">ชื่อหัวข้อKPI </label>
-                                                                                <input type="text" class="form-control" name="kpi_name" placeholder="ชื่อหัวข้อKPI" value="<?php echo $result_kpi["kpi_name"]; ?>" />
-                                                                                <input type="hidden" name="kpi_id" value="<?php echo $result_kpi["kpi_id"]; ?>" />
-                                                                            </div>
-                                                                            
-                                                                            <div class="form-group">
-                                                                                <label class="pull-left">คำอธิบาย </label>
-                                                                                <input type="text" class="form-control" name="kpi_description" placeholder="คำอธิบายKPI" value="<?php echo $result_kpi["kpi_description"]; ?>" />
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="pull-left">หน่วย </label>
-                                                                                <input type="text" class="form-control" name="unit" placeholder="ระบุหน่วย" value="<?php echo $result_kpi["unit"]; ?>" />
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label class="pull-left">ระยะเวลา(เดือน)</label>
-                                                                                <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" value="<?php echo $result_kpi["time_period"]; ?>" />
+                                                                                <label>ชื่อหัวข้อKPI<span style="color: red;">*</span></label>
+                                                                                <select class="form-control" name="kpi_id" required>
+                                                                                    <option value="">--เลือกชื่อหัวข้อKPI--</option>
+                                                                                            <?php while ($result_kpi_list = mysqli_fetch_array($query_kpi_list)) { ?>
+                                                                                    <option value="<?php echo $result_kpi_list["kpi_id"]; ?>" <?php if($result_kpi_list["kpi_id"] == $result_kpi["kpi_id"]) { echo "selected"; } ?> >
+                                                                                                    <?php echo $result_kpi_list["kpi_id"] . " - " . $result_kpi_list["kpi_name"]; ?>
+                                                                                    </option>
+                                                                                            <?php } ?>
+                                                                                </select>                                                        
                                                                             </div>
                                                                             <?php
                                                                             $sql_department = "SELECT * FROM departments ";
@@ -317,13 +351,16 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
+                                                                <input type="hidden" name="manage_kpi_id" value="<?php echo $result_kpi["manage_kpi_id"]; ?>" >
+                                                                <input type="hidden" name="post_department_id" value="<?php echo $get_department_id; ?>" >
+                                                                <input type="hidden" name="post_job_id" value="<?php echo $get_job_id; ?>" >
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>  
                                             </div>
-                                            <!--Modal-->
+                                            <!--/Modal Edit-->
                                     <?php } ?>
                                         
                                     </table>
