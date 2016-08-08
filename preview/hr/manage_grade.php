@@ -15,9 +15,8 @@
                if ($objQuery) {
 
                    header ("location:manage_grade.php");
-
+                   echo $strSQL;
                } else {
-
                    echo "Error Save [" . $strSQL . "]";
                }
 
@@ -107,14 +106,13 @@
                 <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-primary">เพิ่มเกรด
                 </button></a>
              </div>
-
                    <div class="box-body">
                     <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
                         <form action="manage_grade.php?erp=insert" method="POST">
                         <div class="row">
                             <div class="col-sm-2">
                                 เกรด
-                                <input class="form-control" type="text" name="เgrade_description" placeholder="-- กรุณากรอกเกรด --">
+                                <input class="form-control" type="text" name="grade_description" placeholder="-- กรุณากรอกเกรด --">
                             </div>
                             <div  class="col-sm-offset-1 col-sm-2">
                                 เกณฑ์ต่ำสุด
@@ -238,26 +236,26 @@
                                                           <div class="input-group col-sm-12" >
                                                             <label for="ชื่อเกรด" class="col-sm-4 control-label">ชื่อเกรด:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["grade_description"]; ?>" name='textgrade'   >
+                                                                <input type="text" class="form-control" value="<?php echo $result["grade_description"]; ?>" name='textgrade' readonly  >
                                                             </div>
                                                         </div>
                                                         <div class="input-group col-sm-12" >
                                                             <label for="เกณฑ์คะแนนต่ำสุด" class="col-sm-4 control-label">เกณฑ์คะแนนต่ำสุด:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["standard_min_point"]; ?>" name='textminpoint'    >
+                                                                <input type="text" class="form-control" value="<?php echo $result["standard_min_point"]; ?>" name='textminpoint' readonly   >
                                                             </div>
                                                         </div>
                                                         <div class="input-group col-sm-12" >
                                                             <label for="เกณฑ์คะแนนสูงสุด" class="col-sm-4 control-label">เกณฑ์คะแนนสูงสุด:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["standard_max_point"]; ?>" name='textmaxpoint'    >
+                                                                <input type="text" class="form-control" value="<?php echo $result["standard_max_point"]; ?>" name='textmaxpoint'  readonly  >
                                                             </div>
                                                         </div>
 
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                        <button type="submit" class="btn btn-danger">ลบ</button>
                                                     </div>
                                                 </div>
                                             </div>

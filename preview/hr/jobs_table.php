@@ -106,6 +106,7 @@
                             </a>
                         </div>
                    <div class="box-body">
+                       <!-- Modal New -->
                     <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
                         <form action="jobs_table.php?erp=insert" method="POST">
                         <div class="row">
@@ -122,13 +123,14 @@
                         </div>
                         </form>
                       </div>
+                       <!--/Modal New -->
                         
                         <div class="box-body ">    
                             <table  class="table table-bordered table-condensed" >
                                 <thead>
                                     <tr class="bg-gray-light">
                                         <th class="text-center">ชื่อตำแหน่งงาน</th>
-                                        <th class="text-center">จัดการ</th>
+                                        <th class="text-center" style="width: 150px;">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -146,9 +148,9 @@
                                 
                             
                                 <tr>
-                                        <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                        <td >&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
                                         
-                                        <td class="text-center" style="width: 200px">
+                                        <td class="text-center">
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                                 <i class="glyphicon glyphicon-pencil" ></i>
                                             </button>                                                   
@@ -176,7 +178,7 @@
                                                         <div class="input-group col-sm-12" >
                                                             <label for="ชื่อตำแหน่งงาน" class="col-sm-4 control-label">ชื่อตำแหน่งงาน:</label>
                                                             <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["job_name"]; ?>" name='texttype'   >
+                                                                <input type="text" class="form-control" value="<?php echo $result["job_name"]; ?>" name='textjob'   >
                                                             </div>
                                                         </div>
                                                      
@@ -216,7 +218,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                        <button type="submit" class="btn btn-primary">ยืนยันการลบ</button>
+                                                        <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
                                                     </div>
                                                 </div>
                                             </div>

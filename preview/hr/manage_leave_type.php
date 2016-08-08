@@ -134,7 +134,7 @@
                                     <tr class="bg-gray-light">
                                         <th class="text-center">ชื่อประเภทวันลา</th>
                                         <th class="text-center">คะแนน(ต่อครั้ง)</th>
-                                        <th class="text-center">จัดการ</th>
+                                        <th class="text-center"  style="width: 150px">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -153,9 +153,9 @@
                                 
                             
                                 <tr>
-                                        <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                        <td class="text-center" style="width: 200px"><?php echo $point; ?></td>
-                                        <td class="text-center" style="width: 200px">
+                                        <td >&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                        <td class="text-center"><?php echo $point; ?></td>
+                                        <td class="text-center">
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                                 <i class="glyphicon glyphicon-pencil" ></i>
                                             </button>                                                   
