@@ -26,15 +26,22 @@
                     echo $sql_insert_group;
                 }
                     
-                //header("Location: competency_match.php");
+                header("Location: competency_match.php?level=$position&level_name=$level_name");
             }
         //Edit
+         
+        
         if(isset($_GET["submit_edit"])){
-            $name=$_GET["title_name"];
-            $weight= $_GET["weight"];
-            $id=$_GET["title_id"];
+            $e_title=$_GET["edit_title"];
+            $e_weight= $_GET["edit_weight"];
+            $e_id=$_GET["edit_id"];
+            $e_detail=$_GET["edit_detail"];
+            $level_name=$_GET['name'];
+            $level=$_GET['level'];
             
-            $sql_edit_group = "UPDATE competency_title SET title_name='$name', weight='$weight' WHERE title_id='$id'";
+            
+             
+            $sql_edit_group = "UPDATE match_competency SET competency_id='$e_detail',title_id='$e_title', weight='$e_weight' WHERE match_comp_id='$e_id'";
             if (mysqli_query($conn, $sql_edit_group)) {
                     echo "Record edit successfully";
                     echo $sql_edit_group;
@@ -43,12 +50,14 @@
                     echo $sql_edit_group;
                 }
                     
-                header("Location: competency_title.php");
+                header("Location: competency_match.php?level=$level&level_name=$level_name");
             }
         //Delete  
         if(isset($_GET["delete_group"])){
-            
-            $sql_delete_group = "DELETE FROM competency_title WHERE title_id='".$_GET["titleid"]."'";
+            $d_id=$_GET["match_id"];
+            $level_name=$_GET['level_name'];
+            $level=$_GET['level'];
+            $sql_delete_group = "UPDATE match_competency SET status=0 WHERE match_comp_id='$d_id'";
             if (mysqli_query($conn, $sql_delete_group)) {
                     echo "Record new successfully";
                     echo $sql_delete_group;
@@ -57,7 +66,7 @@
                     echo $sql_delete_group;
                 }
                     
-                header("Location: competency_title.php");
+               header("Location: competency_match.php?level=$level&level_name=$level_name");
             }
                 
         ?>
@@ -154,18 +163,35 @@
                         </div>
                         
                         <div class="box-body">
-                            <div class="row">
+                            <div class="row"> 
+                                <?php
+                                $sql_title_name = "SELECT t.title_name as title FROM  competency_title t LEFT JOIN match_competency m ON m.title_id=t.title_id WHERE m.position_level_id='$level' GROUP BY t.title_name";
+                                $query_title_name= mysqli_query($conn, $sql_title_name);
+                                
+                                while ($result_title_name = mysqli_fetch_array($query_title_name, MYSQLI_ASSOC))  {
+                                        
+                                        $result_title_name = $result_title_name["title"];
+                                    
+                                 ?> 
+                                <div class="col-md-12">
+                                    <div class="col-md-12 bg-blue-active" style=" height:35px;" >                                        
+                                                                                           
+                                        <h4><?php echo $result_title_name?></h4>
+                                            
+                                    </div>
+                                </div>
+                            
+                            
                                 <div class="col-md-12">
                                     <?php
-                                $sql_mng = "SELECT m.match_comp_id as match_comp,c.competency_description as detail,t.title_name as title,p.position_description as position,m.weight as weight FROM match_competency m JOIN competency c ON m.competency_id=c.competency_id JOIN competency_title t ON m.title_id=t.title_id JOIN position_level p ON p.position_level_id=m.position_level_id WHERE m.position_level_id='$level'";
+                                $sql_mng = "SELECT m.match_comp_id as match_comp,c.competency_description as detail,t.title_name as title,p.position_description as position,m.weight as weight FROM match_competency m JOIN competency c ON m.competency_id=c.competency_id JOIN competency_title t ON m.title_id=t.title_id JOIN position_level p ON p.position_level_id=m.position_level_id WHERE m.position_level_id='$level' and t.title_name = '$result_title_name' and m.status=1";
                                 $query_mng= mysqli_query($conn, $sql_mng);
                                 
                                 ?>
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th style="width: 120px;">Match Comp ID</th>
-                                                <th>Title</th>
+                                                
                                                 <th>Detail</th>
                                                 
                                                 <th style="text-align: center;">Weight</th>
@@ -181,19 +207,18 @@
                                         $m_weight = $result_mng["weight"];
                                         ?>
                                         <tr>
-                                            <td><b><?php echo $m_id; ?></b></td>
-                                            <td><?php echo $m_title; ?></td>
+                                            
                                             <td><?php echo $m_detail; ?></td>
                                             
                                             <td><?php echo $m_weight; ?></td>
                                             <td style="text-align: center;">
 
-                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["title_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $m_id; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
 
-                                                  <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="competency_title.php?titleid=<?php echo $result_com["title_id"]; ?>&delete_group=1">
+                                                  <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="competency_match.php?match_id=<?php  echo $m_id; ; ?>&delete_group=1&level=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ; ?>">
                                                           <i class="glyphicon glyphicon-remove"></i>ลบ</a>
 
-
+                                                          
                                                 <!--Modal delete-->
                                                       <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                           <div class="modal-dialog">
@@ -205,7 +230,7 @@
                                                                   </div>
 
                                                                   <div class="modal-body">
-                                                                      <p></p>
+                                                                      
                                                                       
                                                                       <p class="debug-url"></p>
                                                                   </div>
@@ -217,6 +242,7 @@
                                                               </div>
                                                           </div>
                                                       </div>
+                                                
                                                       <!--/Modal delete-->
                                                         <script>
                                                             $('#confirm-delete').on('show.bs.modal', function(e) {
@@ -229,7 +255,7 @@
                                         </tr>
                                         <form action="" method="get" >
                                         <!-- Modal Edit -->   
-                                            <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["title_id"];; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <div class="modal animated fade " id="edit_kpi_group_<?php echo $m_id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         
@@ -242,11 +268,44 @@
                                                                 <div class="col-sm-12">
                                                                     <div style="width: 75%;margin: auto;">
                                                                         <div class="form-group">
-                                                                            <label class="pull-left">หัวข้อ</label>
-                                                                            <input type="text" class="form-control" name="title_name"  value="<?php echo $result_com["title_name"]; ?>" required >
-                                                                            <br>
-                                                                            <label class="pull-left">น้ำหนัก</label>
-                                                                            <input type="text" class="form-control" name="weight"  value="<?php echo $result_com["weight"]; ?>" required >        
+                                                                            
+                                                                            <div class="form-group col-sm-12">
+                                                                                <?php
+                                                                                //INSERT INTO match_competency(competency_id,title_id,status,position_level_id,weight) VALUES(19,17,0,1,10)
+                                                                                $sql_competency_title = "SELECT * FROM competency_title  ";
+                                                                                $query_competency_title  = mysqli_query($conn, $sql_competency_title );
+                                                                                ?>
+                                                                                    <label>Title<span style="color: red;">*</span></label>
+                                                                                    <select class="form-control" name="edit_title">
+                                                                                            <option value="">--เลือก--</option>
+                                                                                            <?php while ($result_competency_title = mysqli_fetch_array($query_competency_title)) { ?>
+                                                                                                <option <?php if($m_title==$result_competency_title["title_name"]){ echo "selected";} ?> value="<?php echo $result_competency_title["title_id"]; ?>"  >
+                                                                                                    <?php echo $result_competency_title["title_id"] . " - " . $result_competency_title["title_name"]; ?>
+                                                                                                </option>
+                                                                                            <?php } ?>
+                                                                                    </select>  
+                                                                                </div>
+                                                                                <div class="form-group col-sm-12">
+                                                                                <?php
+                                                                                $sql_competency = "SELECT * FROM competency ";
+                                                                                $query_competency = mysqli_query($conn, $sql_competency);
+                                                                                ?>
+                                                                                    <label>Detail<span style="color: red;">*</span></label>
+                                                                                    <select class="form-control" name="edit_detail">
+                                                                                            <option value="">--เลือก--</option>
+                                                                                            <?php while ($result_competency = mysqli_fetch_array($query_competency)) { ?>
+                                                                                                <option <?php if($m_detail==$result_competency["competency_description"]){ echo "selected";} ?> value="<?php echo $result_competency["competency_id"]; ?>"  >
+                                                                                                    <?php echo $result_competency["competency_id"] . " - " . $result_competency["competency_description"]; ?>
+                                                                                                </option>
+                                                                                            <?php } ?>
+                                                                                    </select>    
+                                                                                </div>
+                                                                                <div class="form-group col-sm-6">                                        
+                                                                                    <label>Weight<span style="color: red;">*</span></label>
+                                                                                    <input class="form-control" type="text"  step="5" name="edit_weight" value="<?php echo $m_weight; ?>" required > 
+                                                                                    <input  type="hidden" name="level" value="<?php echo $level; ?>" >
+                                                                                    <input  type="hidden" name="name" value="<?php echo $level_name; ?>" >
+                                                                                </div>     
                                                                         </div>
                                                                                                             
                                                                     </div>
@@ -255,7 +314,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
-                                                            <input type="hidden" name="title_id" value="<?php echo $result_com["title_id"]; ?>" >
+                                                            <input type="hidden" name="edit_id" value="<?php echo $m_id; ?>" >
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         </div>                 
                                                     </div>
@@ -263,12 +322,16 @@
                                             </div>
                                             <!--/Modal Edit-->
                                             </form>
-                                         <?php } ?>
+                                <?php } ?>
+                               
                                     </table>
-                                    
-                                    
                                 </div>
-                            </div>
+                                <?php } ?> 
+                                    
+                                    </div>
+                                   
+                                    
+                                
                             
                         </div>
                     </div>
