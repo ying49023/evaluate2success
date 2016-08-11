@@ -29,8 +29,6 @@
                 header("Location: competency_match.php?level=$position&level_name=$level_name");
             }
         //Edit
-         
-        
         if(isset($_GET["submit_edit"])){
             $e_title=$_GET["edit_title"];
             $e_weight= $_GET["edit_weight"];
@@ -67,7 +65,12 @@
                 }
                     
                header("Location: competency_match.php?level=$level&level_name=$level_name");
-            }
+        }
+        
+        //Delete title competency
+        if(isset($_GET["title_competency"])){
+            $del_comp = "DELETE FROM match_competency where ";
+        }
                 
         ?>
         <meta charset="utf-8">
@@ -112,7 +115,7 @@
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <b>การจัดการแบบประเมินระดับ<?php echo $level_name;?></b>
-                            <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่ม</button>
+                            <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่มหัวข้อ</button>
                             
                         </div>
                         <div id="newKPIGroup" class="collapse">
@@ -236,8 +239,9 @@
                                                                   </div>
 
                                                                   <div class="modal-footer">
-                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                                                                       <a class="btn btn-danger btn-ok">ลบ</a>
+                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                                      
                                                                   </div>
                                                               </div>
                                                           </div>

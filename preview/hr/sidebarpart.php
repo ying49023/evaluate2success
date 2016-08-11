@@ -47,16 +47,25 @@
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
                         <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
-                    <li class="<?php if($page == 'competency_title.php' || $page == 'manage_competency.php' || $page == 'added_competency.php' || $page == 'competency_match.php' || $page == 'competency.php'){ echo "active" ; } ?>">
-                        <a href="competency.php"><i class="fa fa-circle-o"></i>Competency</a>
+                    <li class="<?php if($page == 'competency_title.php'){ echo "active" ; } ?>">
+                        <a href="competency_title.php"><i class="fa fa-circle-o"></i>เพิ่ม/แก้ไขหัวข้อCompetency</a>
                     </li>
+                    <li class="<?php if($page == 'added_competency.php'){ echo "active" ; } ?>">
+                        <a href="added_competency.php"><i class="fa fa-circle-o"></i>เพิ่ม/แก้ไขข้อมูลCompetency</a>
+                    </li>
+                    <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">
+                        <a href="manage_competency.php"><i class="fa fa-circle-o"></i>จัดการแบบประเมินCompetency</a>
+                    </li>
+<!--                    <li class="<?php if($page == 'competency_title.php' || $page == 'manage_competency.php' || $page == 'added_competency.php' || $page == 'competency_match.php' || $page == 'competency.php'){ echo "active" ; } ?>">
+                        <a href="competency.php"><i class="fa fa-circle-o"></i>Competency</a>
+                    </li>-->
                     <li class="<?php if($page == 'manage_grade.php'){ echo "active" ; } ?>">
                         <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a>
 
 
                 </ul>
             </li>
-            <li class="<?php if($page == 'hr_kpi_group.php' || $page == 'all_kpi.php' || $page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php' || $page == 'hr_kpi_individual_resp.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'hr_kpi_group.php' || $page == 'all_kpi.php' || $page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_kpi_individual_resp.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>KPIs</span>
@@ -73,11 +82,9 @@
                         <a href="hr_all_kpi_detail.php"><i class="fa fa-circle-o"></i>จัดการข้อมูลKPIs</a>
                     </li>
                     <li class="<?php if($page == 'hr_kpi_individual.php' || $page == 'hr_kpi_individual_resp.php'){ echo "active" ; } ?>">
-                        <a href="hr_kpi_individual.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsรายบุคคล</a>
+                        <a href="hr_kpi_individual.php"><i class="fa fa-circle-o"></i>ดูข้อมูลKPIsรายบุคคล</a>
                     </li>
-                    <li class="<?php if($page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php'){ echo "active" ; } ?>">
-                        <a href="hr_approve_kpi.php"><i class="fa fa-circle-o"></i>อนุมัติKPIsครั้งถัดไป</a>
-                    </li>
+                    
                 </ul>
             </li>
              <li class="<?php if($page == 'manage_employee_leave.php'|| $page == 'manage_leave_type.php'){ echo "active" ; } ?>">
@@ -119,6 +126,11 @@
                         <a href="departments_table.php"><i class="fa fa-circle-o"></i>ข้อมูลแผนก/ฝ่าย</a>
                     </li>
                 </ul>
+            </li>
+            <li class="<?php if($page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php'){ echo "active" ; } ?>">
+                <a href="hr_approve_kpi.php">
+                    <i class="glyphicon glyphicon glyphicon-forward"></i>อนุมัติKPIsครั้งถัดไป
+                </a>
             </li>
             <li class="<?php if($page == 'hr_report_page.php' || $page == 'hr_report_grade.php'){ echo "active" ; } ?>">
                 <a href="hr_report_page.php" >

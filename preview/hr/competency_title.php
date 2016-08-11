@@ -161,8 +161,9 @@
                                                                   </div>
 
                                                                   <div class="modal-footer">
-                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                                                                       <a class="btn btn-danger btn-ok">ลบ</a>
+                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                                      
                                                                   </div>
                                                               </div>
                                                           </div>

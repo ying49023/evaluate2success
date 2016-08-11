@@ -199,8 +199,9 @@
          
                                               </div>
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                
                                               </div>
                                             </div>
                                           </div>
@@ -210,9 +211,6 @@
                                        
 
                                        <?php } ?>
-
-                                      
-                                      
                                    </table>
                                       
                                      <?php echo $msg;?> 
@@ -252,8 +250,9 @@
                                                   
                                               </div>
                                               <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="submit" class="btn btn-primary">Save changes</button>
+                                                <button type="submit" class="btn btn-primary">เพิ่ม</button>
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                
                                               </div>
                                             </div>
                                           </div>

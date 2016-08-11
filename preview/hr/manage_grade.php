@@ -146,7 +146,7 @@
                                 </thead>
                                 <?php
                     
-                                $sql_grade = "SELECT * FROM grade";
+                                $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
                                                  
                                 $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
@@ -212,8 +212,9 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -254,8 +255,9 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         <button type="submit" class="btn btn-danger">ลบ</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>

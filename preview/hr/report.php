@@ -79,8 +79,9 @@
                             </div>
                             <div class="box-footer">
                                 <center>
-                                    <input  class="btn btn-danger search-button" type="reset" name="Reset">
                                     <input  class="btn btn-success search-button" type="submit" name="Send">
+                                    <input  class="btn btn-danger search-button" type="reset" name="Reset">
+                                    
                                 </center>
 
                             </div>

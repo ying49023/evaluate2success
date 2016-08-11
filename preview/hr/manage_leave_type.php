@@ -195,8 +195,9 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
@@ -232,8 +233,9 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         <button type="submit" class="btn btn-primary">ยืนยันการลบ</button>
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                        
                                                     </div>
                                                 </div>
                                             </div>
