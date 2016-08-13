@@ -193,7 +193,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <?php
-                                                            $sql_mng = "SELECT first_name, last_name,employee_id FROM employees WHERE position_level_id IN (2,3,4) and department_id = 1";
+                                                            $sql_mng = "SELECT first_name, last_name,employee_id FROM employees WHERE position_level_id IN (2,3,4) ";
                                                             $query_mng = mysqli_query($conn, $sql_mng);
                                             ?>
                                             <label>หัวหน้าผู้รับผิดชอบ</label>
