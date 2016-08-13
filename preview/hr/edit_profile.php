@@ -60,6 +60,7 @@
                             $job_id = $result["job_id"];
                             $position_level_id = $result["position_level_id"];
                             $id = $result["employee_id"];
+                            $mng_id =$result["manager_id"];
                                    
                     ?>
                     <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' >
@@ -191,19 +192,21 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <?php 
-                                            
-                                                $msql = " select m.first_name as fname from employees m 
-                                                        join employees e on m.employee_id = e.manager_id 
-                                                        where e.employee_id  = '".$get_emp_id."' limit 1";                                        
-                                                $mquery = mysqli_query($conn, $msql);
-                                                $mresult = mysqli_fetch_array($mquery, MYSQLI_ASSOC);
-                                                $mname =$mresult['fname'];
-                                                 
-                                                  
-                                             ?>
+                                            <?php
+                                                            $sql_mng = "SELECT first_name, last_name,employee_id FROM employees WHERE position_level_id IN (2,3,4) and department_id = 1";
+                                                            $query_mng = mysqli_query($conn, $sql_mng);
+                                            ?>
                                             <label>หัวหน้าผู้รับผิดชอบ</label>
-                                            <input type="text" name="manager" class="form-control" value="<?php echo $mname ?>"  />
+                                            <select class="form-control" name="manager" required>
+                                                                        <option value="">--เลือกหัวหน้า--</option>
+                                                                        <?php while ($result_mng = mysqli_fetch_array($query_mng)) { 
+                                                                            $mng_name = $result_mng["first_name"].' '.$result_mng["last_name"];
+                                                                        ?>
+                                                                        <option value="<?php echo $mng_name; ?>" <?php if($mng_id == $result_mng["employee_id"]){ echo "selected";} ?>>
+                                                                                <?php echo $mng_name ?>
+                                                                        </option>
+                                                                        <?php } ?>
+                                            </select>
                                         </div>                                               
                                     </div>
                                                 
