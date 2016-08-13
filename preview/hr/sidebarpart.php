@@ -34,7 +34,7 @@
 
                 </a>
             </li>
-            <li class="<?php if( $page == 'manage_grade.php' || $page == 'edit_weight_eval.php'  || $page == 'competency.php'|| $page == 'manage_evaluate.php' || $page == 'grade_management.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'company_table.php'||$page == 'position_level.php'|| $page == 'manage_grade.php' || $page == 'edit_weight_eval.php'  || $page == 'competency.php'|| $page == 'manage_evaluate.php' || $page == 'grade_management.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-list-alt"></i>
                         <span>แบบประเมิน</span>
@@ -52,7 +52,15 @@
                         <a href="competency.php"><i class="fa fa-circle-o"></i>Competency</a>
                     </li>-->
                     <li class="<?php if($page == 'manage_grade.php'){ echo "active" ; } ?>">
-                        <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a>
+                        <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a></li>
+					
+					<li class="<?php if($page == 'company_table.php'){ echo "active" ; } ?>">
+                        <a href="company_table.php"><i class="fa fa-circle-o"></i>บริษัทที่ใช้แบบประเมิน</a>
+                    </li>
+					<li class="<?php if($page == 'position_level.php'){ echo "active" ; } ?>">
+                        <a href="position_level.php"><i class="fa fa-circle-o"></i>ระดับที่ใช้ในแบบประเมิน</a>
+                    </li>
+
 
 
                 </ul>
@@ -73,7 +81,7 @@
                     <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">
                         <a href="manage_competency.php"><i class="fa fa-circle-o"></i>จัดการแบบประเมินCompetency</a>
                     </li>
-                    
+
                 </ul>
             </li>
             
