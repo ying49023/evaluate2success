@@ -34,9 +34,9 @@
 
                 </a>
             </li>
-            <li class="<?php if($page == 'competency_title.php' || $page == 'manage_competency.php' || $page == 'added_competency.php' || $page == 'competency_match.php' || $page == 'manage_grade.php' || $page == 'edit_weight_eval.php'  || $page == 'competency.php'|| $page == 'manage_evaluate.php' || $page == 'grade_management.php' ){ echo "active" ; } ?>">
+            <li class="<?php if( $page == 'manage_grade.php' || $page == 'edit_weight_eval.php'  || $page == 'competency.php'|| $page == 'manage_evaluate.php' || $page == 'grade_management.php' ){ echo "active" ; } ?>">
                 <a href="">
-                    <i class="glyphicon glyphicon-level-up"></i>
+                    <i class="glyphicon glyphicon-list-alt"></i>
                         <span>แบบประเมิน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -47,15 +47,7 @@
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
                         <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
-                    <li class="<?php if($page == 'competency_title.php'){ echo "active" ; } ?>">
-                        <a href="competency_title.php"><i class="fa fa-circle-o"></i>เพิ่ม/แก้ไขหัวข้อCompetency</a>
-                    </li>
-                    <li class="<?php if($page == 'added_competency.php'){ echo "active" ; } ?>">
-                        <a href="added_competency.php"><i class="fa fa-circle-o"></i>เพิ่ม/แก้ไขข้อมูลCompetency</a>
-                    </li>
-                    <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">
-                        <a href="manage_competency.php"><i class="fa fa-circle-o"></i>จัดการแบบประเมินCompetency</a>
-                    </li>
+                   
 <!--                    <li class="<?php if($page == 'competency_title.php' || $page == 'manage_competency.php' || $page == 'added_competency.php' || $page == 'competency_match.php' || $page == 'competency.php'){ echo "active" ; } ?>">
                         <a href="competency.php"><i class="fa fa-circle-o"></i>Competency</a>
                     </li>-->
@@ -65,6 +57,26 @@
 
                 </ul>
             </li>
+            <li class="<?php if($page == 'competency_title.php' || $page == 'manage_competency.php' || $page == 'added_competency.php' || $page == 'competency_match.php'  ){ echo "active" ; } ?>">
+                <a href="">
+                    <i class="glyphicon glyphicon-copyright-mark"></i>
+                        <span>Competency</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                     <li class="<?php if($page == 'competency_title.php'){ echo "active" ; } ?>">
+                        <a href="competency_title.php"><i class="fa fa-circle-o"></i>เพิ่ม/แก้ไขหัวข้อCompetency</a>
+                    </li>
+                    <li class="<?php if($page == 'added_competency.php'){ echo "active" ; } ?>">
+                        <a href="added_competency.php"><i class="fa fa-circle-o"></i>เพิ่ม/แก้ไขข้อมูลCompetency</a>
+                    </li>
+                    <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">
+                        <a href="manage_competency.php"><i class="fa fa-circle-o"></i>จัดการแบบประเมินCompetency</a>
+                    </li>
+                    
+                </ul>
+            </li>
+            
             <li class="<?php if($page == 'hr_kpi_group.php' || $page == 'all_kpi.php' || $page == 'hr_all_kpi_detail.php' || $page == 'hr_kpi_individual.php' || $page == 'hr_kpi_individual_resp.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
