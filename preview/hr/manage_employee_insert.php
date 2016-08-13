@@ -154,7 +154,7 @@
                                                             </div>
                                                             <?php
                                                             $sql_department = "SELECT * FROM departments ";
-                                                            $query_department = mysqli_query($conn, $sql_department);
+                                                            $query_department = mysqli_query($conn, $sql_department);                                                            
                                                             ?>
                                                             <div class="col-md-6">                                               
                                                                 <div class="form-group">
@@ -211,11 +211,23 @@
                                                         </div>
 
                                                         <div class="row">
-                                                            
+                                                            <?php
+                                                            $sql_mng = "SELECT first_name, last_name FROM employees WHERE position_level_id IN (2,3,4) and department_id = 1";
+                                                            $query_mng = mysqli_query($conn, $sql_mng);
+                                                            ?>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label>หัวหน้าผู้รับผิดชอบ</label>
-                                                                    <input type="text" name="manager" class="form-control" />
+                                                                    <label>หัวหน้าผู้รับผิดชอบ</label>                                                                    
+                                                                    <select class="form-control" name="manager" required>
+                                                                        <option value="">--เลือกหัวหน้า--</option>
+                                                                        <?php while ($result_mng = mysqli_fetch_array($query_mng)) { 
+                                                                            $mng_name = $result_mng["first_name"].' '.$result_mng["last_name"];
+                                                                        ?>
+                                                                        <option value="<?php echo $mng_name; ?>">
+                                                                                <?php echo $mng_name ?>
+                                                                        </option>
+                                                                        <?php } ?>
+                                                                    </select>
                                                                 </div>                                               
                                                             </div>
                                                             <div class="col-md-6">
