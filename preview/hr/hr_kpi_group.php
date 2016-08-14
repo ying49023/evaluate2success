@@ -56,6 +56,42 @@
         <?php include ('./css_packs.html'); ?>
         <!-- SCRIPT PACKS -->
         <?php include ('./script_packs.html'); ?>
+        <script>
+            $(document).ready(function(){
+                $.extend(true, $.fn.dataTable.defaults, {
+                    "language": {
+                        "sProcessing": "กำลังดำเนินการ...",
+                        "sLengthMenu": "แสดง_MENU_ แถว",
+                        "sZeroRecords": "ไม่พบข้อมูล",
+                        "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+                        "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
+                        "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
+                        "sInfoPostFix": "",
+                        "sSearch": "ค้นหา:",
+                        "sUrl": "",
+                        "oPaginate": {
+                            "sFirst": "เิริ่มต้น",
+                            "sPrevious": "ก่อนหน้า",
+                            "sNext": "ถัดไป",
+                            "sLast": "สุดท้าย"
+                        }
+                    }
+                });
+
+                // Datatable Function
+                var table = $('#example').DataTable({
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                    paging: false,
+                    "stateSave": true,
+                    'columnDefs': [{
+                                'targets': 2,
+                                'searchable': false,
+                            'orderable': false,
+                        }],
+                    'order': [[0, 'asc']]
+                });
+            });
+        </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -113,15 +149,15 @@
                                 $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
                                 
                                 ?>
-                                    <table class="table table-hover table-responsive table-striped table-bordered">                               
+                                    <table id="example"  class="display table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
                                                 <th style="width: 120px;">Group ID</th>
                                                 <th>ชื่อกลุ่ม</th>
                                                 <th style="width: 150px;text-align: center;">แก้ไข/ลบ</th>
-
                                             </tr>
                                         </thead>
+                                        <tbody>
                                     <?php while ($result_kpi_group = mysqli_fetch_array($query_kpi_group, MYSQLI_ASSOC)) { ?>
                                         <tr>
                                             <td><b><?php echo $result_kpi_group["kpi_group_id"]; ?></b></td>
@@ -203,6 +239,7 @@
                                             <!--/Modal Edit-->
                                             </form>
                                          <?php } ?>
+                                    </tbody>
                                     </table>
                                 </div>
                             </div>

@@ -38,6 +38,6 @@
 .content-wrapper{
     overflow-x: hidden;
     overflow-y: no-display;
-    height: 350px;
-    
+    height: 100%;
+    min-height: 450px;
 }

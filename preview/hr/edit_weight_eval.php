@@ -68,35 +68,29 @@
                                     <TABLE class="table table-bordered table-hover" HEIGHT="100" WIDTH="100%" border="1" >
                                         <thead>
                                             <TR class="bg-primary">
-                                                <th colspan="13">
-                                                    <h3>แบบฟอร์มประเมินผลการปฏิบัติงาน แบบเน้น Competency, KPIs และ Dehvelopment</h3>                                               
+                                                <th colspan="13">                                             
                                                     <form name="form_name" onchange="position_level()" method="get" class="form-inline" >
+                                                        <span style="font-size: 20px;;">แบบฟอร์มประเมินผลการปฏิบัติงาน แบบเน้น Competency, KPIs และ Dehvelopment</span> 
                                                         <div class="form-group">
-
-                                                            <select name="position_level_id" class="form-control">
-                                                                <option value=" " >---เลือกตำแหน่ง---</option>
-                                                                <option value="1" <?php if ($position_level == '1') { echo "selected";} ?> >
-                                                                    สำหรับตำแหน่งระดับปฏิบัติการ (พนักงานที่ไม่มีผู้ใต้บังคับบัญชาขึ้นตรง)
+                                                            <?php
+                                                            $sql_position_level = "SELECT * FROM position_level ";
+                                                            $query_position_level = mysqli_query($conn, $sql_position_level);
+                                                            ?>
+                                                            <select class="form-control input-sm" name="position_level_id" style="width: 150px;">
+                                                                <option value="">--เลือกระดับ--</option>
+                                                                        <?php while ($result_position_level = mysqli_fetch_array($query_position_level)) { ?>
+                                                                <option value="<?php echo $result_position_level["position_level_id"]; ?>">
+                                                                                <?php echo $result_position_level["position_level_id"] . " - " . $result_position_level["position_description"]; ?>
                                                                 </option>
-                                                                <option value="2" <?php if ($position_level == '2') { echo "selected";} ?> >
-                                                                    สำหรับตำแหน่งระดับบังคับบัญชา (หัวหน้างานหรือเทียบเท่าที่มีผู้ใต้บังคับบัญชาขึ้นตรง)
-                                                                </option>
-                                                                <option value="3" <?php if ($position_level == '3') { echo "selected";} ?> >
-                                                                    สำหรับตำแหน่งผู้ช่วยผู้จัดการฝ่าย ถึงผู้อำนวยการ
-                                                                </option>
-                                                                <option value="4" <?php if ($position_level == '4') { echo "selected";} ?> >
-                                                                    สำหรับตำแหน่งรองกรรมการผู้อำนวยการ/ รองกรรมการผู้จัดการขึ้นไป
-                                                                </option>
-
+                                                                        <?php } ?>
                                                             </select>
-
                                                         </div>
                                                     </form>
                                                 </th>
                                             </TR>
                                             <TR class="bg-info">
-                                                <th style="padding-top:25px;" rowspan="2" colspan="4">ความสามารถ(Competency)</th>
-                                                <th style="padding-top:25px;" rowspan="2" >%น้ำหนัก(W)</th>
+                                                <th style="padding-bottom: 25px;" rowspan="2" colspan="4">ความสามารถ(Competency)</th>
+                                                <th style="padding-bottom:25px;" rowspan="2" >%น้ำหนัก(W)</th>
                                                 <th colspan="2">ระดับที่คาดหวัง (E)</th>
                                                 <th colspan="6">ระดับที่ทำจริง (A)</th>
                                             </TR>
