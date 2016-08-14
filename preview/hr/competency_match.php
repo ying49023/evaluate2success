@@ -168,7 +168,7 @@
                         <div class="box-body">
                             <div class="row"> 
                                 <?php
-                                $sql_title_name = "SELECT t.title_name as title FROM  competency_title t LEFT JOIN match_competency m ON m.title_id=t.title_id WHERE m.position_level_id='$level' GROUP BY t.title_name";
+                                $sql_title_name = "SELECT t.title_name as title FROM  competency_title t LEFT JOIN match_competency m ON m.title_id=t.title_id WHERE m.position_level_id='$level'and m.status=1 GROUP BY t.title_name";
                                 $query_title_name= mysqli_query($conn, $sql_title_name);
                                 
                                 while ($result_title_name = mysqli_fetch_array($query_title_name, MYSQLI_ASSOC))  {
@@ -178,10 +178,49 @@
                                  ?> 
                                 <div class="col-md-12">
                                     <div class="col-md-12 bg-blue-active" style=" height:35px;" >                                        
-                                                                                           
+                                        <button class="btn btn-default pull-right"  data-toggle="collapse" data-target="#add_<?php echo $result_title_name?>">เพิ่ม</button>                                                   
                                         <h4><?php echo $result_title_name?></h4>
                                             
                                     </div>
+                                                            
+                            
+                            
+                        
+                        <div id="add_<?php echo $result_title_name;?>" class="collapse">
+                            <form action="" method="get">
+                                <div class="box-padding row">
+                                    <div class="form-group col-sm-4">
+                                    
+                                        <label>Title<span style="color: red;">*</span></label>
+                                        <input class="form-control" type="text" value="<?php echo $result_title_name;?>" disabled="true" name="competency_title"> 
+                                    </div>
+                                    <div class="form-group col-sm-4">
+                                    <?php
+                                    $sql_competency = "SELECT * FROM competency ";
+                                    $query_competency = mysqli_query($conn, $sql_competency);
+                                    ?>
+                                        <label>Detail<span style="color: red;">*</span></label>
+                                        <select class="form-control" name="competency_detail">
+                                                <option value="">--เลือก--</option>
+                                                <?php while ($result_competency = mysqli_fetch_array($query_competency)) { ?>
+                                                    <option <?php if($result_competency["competency_id"]){ echo "selected";} ?> value="<?php echo $result_competency["competency_id"]; ?>"  >
+                                                        <?php echo $result_competency["competency_id"] . " - " . $result_competency["competency_description"]; ?>
+                                                    </option>
+                                                <?php } ?>
+                                        </select>    
+                                    </div>
+                                    <div class="form-group col-sm-2">                                        
+                                        <label>Weight<span style="color: red;">*</span></label>
+                                        <input class="form-control" type="text"  step="5" name="t_weight" required > 
+                                    </div>
+                                    <div class="form-group col-sm-1">
+                                        <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
+                                        <input  type="hidden" name="level" value="<?php echo $level; ?>" >
+                                        <input  type="hidden" name="name" value="<?php echo $level_name; ?>" >
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                                 </div>
                             
                             
