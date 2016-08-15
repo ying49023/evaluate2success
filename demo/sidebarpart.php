@@ -114,9 +114,9 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                  <ul class="treeview-menu">
-                    <li class="<?php if($page == 'manage_employee_leave.php'){ echo "active" ; } ?>">
+<!--                    <li class="<?php if($page == 'manage_employee_leave.php'){ echo "active" ; } ?>">
                         <a href="manage_employee_leave.php"><i class="fa fa-circle-o"></i>จัดการวันลาของพนักงาน(coming..)</a>
-                    </li>
+                    </li>-->
                     <li class="<?php if($page == 'manage_leave_type.php'){ echo "active" ; } ?>">
                         <a href="manage_leave_type.php"><i class="fa fa-circle-o"></i>ประเภทข้อมูลวันลา</a>
                     </li>

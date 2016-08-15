@@ -13,7 +13,7 @@
         if(isset($_GET["submit_insert"])){
             $level_name=$_GET['name'];
             $detail=$_GET["competency_detail"];
-            $title= $_GET["competency_title"];
+            $title = $_GET["competency_title"];
             $status=1;
             $position=$level; 
             $weight=$_GET["t_weight"];
@@ -204,7 +204,7 @@
                                                 <div class="form-group col-sm-4">
                                             
                                                     <label>Title<span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" value="<?php echo $result_title_name;?>" disabled="true" name="competency_title"> 
+                                                    <input class="form-control" type="text" value="<?php echo $result_title_name;?>" disabled="true" > 
                                                 </div>
                                                 <div class="form-group col-sm-4">
                                         <?php
@@ -226,6 +226,7 @@
                                                     <input class="form-control" type="text"  step="5" name="t_weight" required > 
                                                 </div>
                                                 <div class="form-group col-sm-1">
+                                                    <input type="hidden" name="competency_title" value="<?php echo $result_title_id ?>" >
                                                     <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
                                                     <input  type="hidden" name="level" value="<?php echo $level; ?>" >
                                                     <input  type="hidden" name="name" value="<?php echo $level_name; ?>" >
