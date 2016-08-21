@@ -6,8 +6,8 @@
         //Insert
         if(isset($_GET["submit_insert"])){
             $name=$_GET["t_name"];
-            $weight= $_GET["t_weight"];            
-            $sql_insert_group = "INSERT INTO competency_title (title_name,weight) VALUES ('$name','$weight')";
+                       
+            $sql_insert_group = "INSERT INTO competency_title (title_name) VALUES ('$name')";
             if (mysqli_query($conn, $sql_insert_group)) {
                     echo "Record new successfully";
                     echo $sql_insert_group;
@@ -21,10 +21,10 @@
         //Edit
         if(isset($_GET["submit_edit"])){
             $name=$_GET["title_name"];
-            $weight= $_GET["weight"];
+            
             $id=$_GET["title_id"];
             
-            $sql_edit_group = "UPDATE competency_title SET title_name='$name', weight='$weight' WHERE title_id='$id'";
+            $sql_edit_group = "UPDATE competency_title SET title_name='$name' WHERE title_id='$id'";
             if (mysqli_query($conn, $sql_edit_group)) {
                     echo "Record edit successfully";
                     echo $sql_edit_group;
@@ -102,10 +102,7 @@
                                         <label>เพิ่มหัวข้อใหม่<span style="color: red;">*</span></label>
                                         <input class="form-control" type="text"  step="5" name="t_name" required >
                                     </div>
-                                    <div class="form-group col-sm-5">                                        
-                                        <label>น้ำหนัก<span style="color: red;">*</span></label>
-                                        <input class="form-control" type="text"  step="5" name="t_weight" required > 
-                                    </div>
+                                    
                                     <div class="form-group col-sm-1">
                                         <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
                                         <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
@@ -117,7 +114,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                 <?php
-                                $sql_com = "SELECT title_id,title_name,weight FROM competency_title ORDER BY title_id ASC";
+                                $sql_com = "SELECT title_id,title_name FROM competency_title ORDER BY title_id ASC";
                                 $query_com = mysqli_query($conn, $sql_com);
                                 
                                 ?>
@@ -126,7 +123,7 @@
                                             <tr>
                                                 <th style="width: 120px;">Title ID</th>
                                                 <th>Title Name</th>
-                                                <th>Title Weight</th>
+                                                
                                                 <th style="width: 150px;text-align: center;">Management</th>
 
                                             </tr>
@@ -135,7 +132,7 @@
                                         <tr>
                                             <td><b><?php echo $result_com["title_id"]; ?></b></td>
                                             <td><?php echo $result_com["title_name"]; ?></td>
-                                            <td><?php echo $result_com["weight"]; ?></td>
+                                            
                                             <td style="text-align: center;">
 
                                                 <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["title_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
@@ -196,8 +193,7 @@
                                                                             <label class="pull-left">หัวข้อ</label>
                                                                             <input type="text" class="form-control" name="title_name"  value="<?php echo $result_com["title_name"]; ?>" required >
                                                                             <br>
-                                                                            <label class="pull-left">น้ำหนัก</label>
-                                                                            <input type="text" class="form-control" name="weight"  value="<?php echo $result_com["weight"]; ?>" required >        
+                                                                                    
                                                                         </div>
                                                                                                             
                                                                     </div>
