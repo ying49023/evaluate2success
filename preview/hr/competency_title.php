@@ -165,7 +165,7 @@
                                                               </div>
                                                           </div>
                                                       </div>
-                                                      <!--/Modal delete-->
+                                                      
                                                         <script>
                                                             $('#confirm-delete').on('show.bs.modal', function(e) {
                                                                 $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
@@ -173,6 +173,7 @@
 //                                                                $('.debug-url').html('Delete URL: <b style="color:red;">' + $(this).find('.btn-ok').attr('href') + '</b>');
                                                             });
                                                         </script>
+                                                        <!--/Modal delete-->
                                             </td>
                                         </tr>
                                         <form action="" method="get" >
