@@ -85,7 +85,7 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                    <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                         <div class="box box-primary">
                         <div class="box-header with-border">
                             <h4>ลบแก้ไขข้อมูลพนักงาน</h4>                           
@@ -93,7 +93,7 @@
                                          <!--edit/remove -->
                                         <div class="row">
                                             <div class="box-padding">
-                                                <div class="row-border with-border">
+<!--                                                <div class="row-border with-border">
                                                     <div class="col-md-offset-1 col-md-10">
                                                         <div class="box-body ">
                                                         <form method="get">    
@@ -128,8 +128,9 @@
                                                             </form>
                                                         </div>
                                                     </div>
-                                                </div>
-
+                                                </div>-->
+                                                <!-- ช่องค้นหา by listJS -->
+                                                <input class="search " placeholder="ค้นหา" />
                                                 <table id="example" class="table table-hover table-striped disabled"  >
                                                     <thead>
                                                         <tr>
@@ -147,7 +148,7 @@
                                                                 . "on emp.job_id = j.job_id ".$condition_search." ORDER BY emp_id ASC";
                                                         $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
                                                     ?>
-                                                    <tbody>
+                                                    <tbody class="list">
                                                         <?php
                                                         while ($result = mysqli_fetch_assoc($query)) {
                                                             $emp_id = $result["emp_id"];
@@ -156,10 +157,10 @@
                                                             $job = $result["job"];
                                                             ?>
                                                             <tr>
-                                                                <td><?php echo $emp_id; ?></td>
-                                                                <td><?php echo $name; ?></td>
-                                                                <td class="text-center"><?php echo $job; ?></td>
-                                                                <td class="text-center"><?php echo $dept; ?></td>
+                                                                <td class="emp_id"><?php echo $emp_id; ?></td>
+                                                                <td class="name"><?php echo $name; ?></td>
+                                                                <td class="job text-center"><?php echo $job; ?></td>
+                                                                <td class="dept text-center"><?php echo $dept; ?></td>
                                                                 <td class="text-center">
                                                                     <a href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
                                                                     | <a onclick="myFunction()" ><i class="glyphicon glyphicon-trash"></i></a>
@@ -182,6 +183,13 @@
 
                                                         <?php } ?>
                                                     </tbody>
+                                                    <script>
+                                                        var options = {
+                                                            valueNames: [ 'emp_id', 'name' , 'job' , 'dept' ]
+                                                        };
+                                                        
+                                                        var userList = new List('filter', options);
+                                                    </script>
                                                 </table>
                                             </div>
                                         </div>

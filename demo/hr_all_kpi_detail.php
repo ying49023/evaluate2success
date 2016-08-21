@@ -112,7 +112,7 @@
                 }
                 
                 ?>
-                <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <b>รายชื่อ KPIs ทั้งหมด</b>
@@ -217,26 +217,30 @@
                                 $query_kpi = mysqli_query($conn, $sql_kpi);
                                 
                                 ?>
+                                    <!-- ช่องค้นหา by listJS -->
+                                    <input class="search " placeholder="ค้นหา" />
+                                    
                                     <table class="table table-hover table-responsive table-striped">                               
                                         <thead>
                                             <tr>
-                                                <th>No</th>
-                                                <th>ชื่อKPIs</th>
-                                                <th>คำอธิบาย</th>
+                                                <th ><a href="#" class="sort" data-sort="no">No</a></th>
+                                                <th style="width: 250px">ชื่อKPIs</th>
+                                                <th style="width: 250px">คำอธิบาย</th>
                                                 <th>หน่วย</th>
                                                 <th>ตำแหน่ง</th>
                                                 <th>แผนก</th>
                                                 <th>แก้ไข/ลบ</th>
                                             </tr>
                                         </thead>
+                                        <tbody class="list" >
                                     <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
                                         <tr>
-                                            <td><b><?php echo $result_kpi["manage_kpi_id"]; ?></b></td>
-                                            <td style="width: 250px"><?php echo $result_kpi["kpi_name"]; ?></td>
-                                            <td style="width: 250px"><?php echo $result_kpi["kpi_description"]; ?></td>
-                                            <td><?php echo $result_kpi["unit"]; ?></td>
-                                            <td><?php echo $result_kpi["job_name"]; ?></td>
-                                            <td><?php echo $result_kpi["department_name"]; ?></td>
+                                            <td class="man_kpi_id"><b><?php echo $result_kpi["manage_kpi_id"]; ?></b></td>
+                                            <td class="kpi_name" ><?php echo $result_kpi["kpi_name"]; ?></td>
+                                            <td class="kpi_desc"><?php echo $result_kpi["kpi_description"]; ?></td>
+                                            <td class="unit"><?php echo $result_kpi["unit"]; ?></td>
+                                            <td class="job_name"><?php echo $result_kpi["job_name"]; ?></td>
+                                            <td class="dept_name"><?php echo $result_kpi["department_name"]; ?></td>
                                             <td>
                                                 <div class="dropdown">
                                                 <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -253,36 +257,9 @@
                                                 </ul>
                                               </div>
                                                 <!--Modal delete-->
-                                                      <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                          <div class="modal-dialog">
-                                                              <div class="modal-content">
-
-                                                                  <div class="modal-header">
-                                                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                      <h4 class="modal-title" id="myModalLabel">ยืนยันการลบ</h4>
-                                                                  </div>
-
-                                                                  <div class="modal-body">
-                                                                      <p></p>
-                                                                      
-                                                                      <p class="debug-url"></p>
-                                                                  </div>
-
-                                                                  <div class="modal-footer">
-                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                                                      <a class="btn btn-danger btn-ok">ลบ</a>
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                      </div>
+                                                <?php include('./modal_delete.php'); ?>
                                                       <!--/Modal delete-->
-                                                        <script>
-                                                            $('#confirm-delete').on('show.bs.modal', function(e) {
-                                                                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
 
-                                                                $('.debug-url').html('Delete URL: <b style="color:red;">' + $(this).find('.btn-ok').attr('href') + '</b>');
-                                                            });
-                                                        </script>
                                             </td>
                                         </tr>
                                         <!-- Modal Edit-->   
@@ -362,7 +339,14 @@
                                             </div>
                                             <!--/Modal Edit-->
                                     <?php } ?>
-                                        
+                                        </tbody>
+                                        <script>
+                                            var options = {
+                                                valueNames: [ 'man_kpi_id', 'kpi_name' , 'kpi_desc' , 'job_name' , 'dept_name' ]
+                                            };
+                                            
+                                            var userList = new List('filter', options);
+                                        </script>
                                     </table>
                                 </div>
                             </div>
@@ -371,7 +355,13 @@
                     </div>
                     
                 </div>
-                
+                <script>
+                    var options = {
+                        valueNames: [ 'no', 'kpi_name' , 'kpi_desc' , 'unit' , 'period' , 'group' ]
+                    };
+                    
+                    var userList = new List('filter', options);
+                </script>
                 <!-- /.content --> </div>
             <!-- /.content-wrapper -->
             

@@ -121,7 +121,8 @@
                 <!--/Page header -->
                 
                 <!-- Main content -->
-                <div class="row box-padding">
+                
+                <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <b>กลุ่มทั้งหมด</b>
@@ -144,25 +145,33 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
+                                    <!-- ช่องค้นหา by listJS -->
+                                    <input class="search" placeholder="ค้นหา" />
                                 <?php
                                 $sql_kpi_group = "SELECT kpi_group_id,	kpi_group_name FROM kpi_group ORDER BY	kpi_group_id ASC";
                                 $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
                                 
                                 ?>
-                                    <table id="example"  class="display table table-hover table-responsive table-striped table-bordered">                               
+                                    <table class="display table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th style="width: 120px;">Group ID</th>
-                                                <th>ชื่อกลุ่ม</th>
+                                                <th  style="width: 120px;">
+                                                    <a href="#" class="sort" data-sort="group_id">Group ID</a>
+                                                </th>
+                                                <th>
+                                                    <a href="#" class="sort" data-sort="kpi_group_name">
+                                                        ชื่อกลุ่ม
+                                                    </a>
+                                                </th>
                                                 <th style="width: 150px;text-align: center;">แก้ไข/ลบ</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="list">
                                     <?php while ($result_kpi_group = mysqli_fetch_array($query_kpi_group, MYSQLI_ASSOC)) { ?>
                                         <tr>
-                                            <td><b><?php echo $result_kpi_group["kpi_group_id"]; ?></b></td>
-                                            <td><?php echo $result_kpi_group["kpi_group_name"]; ?></td>
-                                            <td style="text-align: center;">
+                                            <td class="group_id"><b><?php echo $result_kpi_group["kpi_group_id"]; ?></b></td>
+                                            <td class="kpi_group_name"><?php echo $result_kpi_group["kpi_group_name"]; ?></td>
+                                            <td class="edit_delete" style="text-align: center;">
 
                                                 <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
 
@@ -171,37 +180,9 @@
 
 
                                                 <!--Modal delete-->
-                                                      <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                          <div class="modal-dialog">
-                                                              <div class="modal-content">
-
-                                                                  <div class="modal-header">
-                                                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                      <h4 class="modal-title" id="myModalLabel">ยืนยันการลบ</h4>
-                                                                  </div>
-
-                                                                  <div class="modal-body">
-                                                                      <p></p>
-                                                                      
-                                                                      <p class="debug-url"></p>
-                                                                  </div>
-
-                                                                  <div class="modal-footer">
-                                                                      <a class="btn btn-danger btn-ok">ลบ</a>
-                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                                                      
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                      <!--/Modal delete-->
-                                                        <script>
-                                                            $('#confirm-delete').on('show.bs.modal', function(e) {
-                                                                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-
-//                                                                $('.debug-url').html('Delete URL: <b style="color:red;">' + $(this).find('.btn-ok').attr('href') + '</b>');
-                                                            });
-                                                        </script>
+                                                      <?php include ('./modal_delete.php'); ?>
+                                                <!--/Modal delete-->
+                                                      
                                             </td>
                                         </tr>
                                         <form action="" method="get" >
@@ -240,6 +221,13 @@
                                             </form>
                                          <?php } ?>
                                     </tbody>
+                                    <script>
+                                        var options = {
+                                            valueNames: [ 'group_id', 'kpi_group_name' ]
+                                        };
+                                        
+                                        var userList = new List('filter', options);
+                                </script>
                                     </table>
                                 </div>
                             </div>

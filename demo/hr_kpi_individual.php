@@ -94,7 +94,7 @@
                 </div>
                 
                 
-                <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h4>ตารางรายชื่อพนักงาน</h4>
@@ -109,16 +109,17 @@
                         </div>
      
                         <div class="box-body ">    
+                            <!-- ช่องค้นหา by listJS -->
+                            <input class="search " placeholder="ค้นหา" />
                             <table class="table table-bordered table-hover">
                                 <thead>
                                
                                     <tr class="bg-gray-light">
                                         <th class="text-center">ID</th>
-                                        <th>ชื่อ-นามสกุล</th>
+                                        <th >ชื่อ-นามสกุล</th>
                                         <th class="text-center">ตำแหน่ง</th>
                                         <th class="text-center">แผนก</th>
                                         <th class="text-center">KPI ที่รับผิดชอบ</th>
-                                        
                                     </tr>
                                 </thead>
                                 <?php
@@ -129,6 +130,7 @@
                                                     . "on emp.job_id = j.job_id ".$condition_search." ORDER BY emp_id ASC";
                                 $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
                                  ?>
+                                <tbody class="list">
                                 <?php  while($result = mysqli_fetch_assoc($query)){ 
                                     $emp_id = $result["emp_id"];
                                     $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
@@ -136,14 +138,23 @@
                                     $job = $result["job"];
                                     
                                 ?>
+                                
                                 <tr>
-                                    <td class="text-center"><?php  echo $emp_id; ?></td>
-                                    <td><?php echo $name; ?></td>
-                                    <td class="text-center"><?php echo $job; ?></td>
-                                    <td class="text-center"><?php echo $dept; ?></td>
+                                    <td class="id text-center"><?php  echo $emp_id; ?></td>
+                                    <td class="name"><?php echo $name; ?></td>
+                                    <td class="job text-center"><?php echo $job; ?></td>
+                                    <td class="dept text-center"><?php echo $dept; ?></td>
                                     <td class="text-center"><a href="hr_kpi_individual_resp.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-folder-open"></i></a></td>
                                 </tr>
                                 <?php } ?>
+                                </tbody>
+                                <script>
+                                        var options = {
+                                            valueNames: [ 'id', 'name' , 'job' , 'dept' ]
+                                        };
+                                        
+                                        var userList = new List('filter', options);
+                                </script>
                             </table>
 
                         </div>

@@ -97,7 +97,7 @@
 
                 <!-- Main content -->
              
-                <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">ตารางแสดงตำแหน่งงาน</h3>
@@ -125,7 +125,9 @@
                       </div>
                        <!--/Modal New -->
                         
-                        <div class="box-body ">    
+                        <div class="box-body ">   
+                            <!-- ช่องค้นหา by listJS -->
+                            <input class="search " placeholder="ค้นหา" />
                             <table  class="table table-bordered table-condensed" >
                                 <thead>
                                     <tr class="bg-gray-light">
@@ -140,6 +142,7 @@
                                 $query = mysqli_query($conn, $sql_jobs); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
+                                <tbody class="list">
                                 <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
                                     $name = $result["job_name"];
                                     $id = $result["job_id"];
@@ -148,7 +151,7 @@
                                 
                             
                                 <tr>
-                                        <td >&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                    <td class="name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
                                         
                                         <td class="text-center">
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
@@ -228,7 +231,14 @@
                                     </form>
                                 <!--Delete Modal -->
                                <?php } ?>
-
+                            </tbody>
+                            <script>
+                                var options = {
+                                    valueNames: [ 'name']
+                                };
+                                
+                                var userList = new List('filter', options);
+                            </script>
                             </table>
                          
                         </div>

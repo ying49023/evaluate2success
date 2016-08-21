@@ -87,20 +87,20 @@ and open the template in the editor.
 
             <div class="row ">
                 <div class="container">
-                        <form class="form-horizontal form-signin">
+                    <form action="check_login.php" method="post" class="form-horizontal form-signin">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="username" class=" control-label">รหัสพนักงาน</label>
+                                    <label for="username" class=" control-label">Username</label>
 
                                     <div class="">
-                                        <input type="text" class="form-control" id="username" placeholder="12345678">
+                                        <input type="text" class="form-control" name="username" placeholder="username">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="inputPassword3" class=" control-label">รหัสผ่าน</label>
+                                    <label for="password" class=" control-label">Password</label>
 
                                     <div class=" ">
-                                        <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                                        <input type="password" class="form-control" name="password" placeholder="********">
                                     </div>
                                 </div>
 
@@ -108,11 +108,9 @@ and open the template in the editor.
                             <!-- /.box-body -->
                             <div class=" box-footer">
                                 <div class="">
-                                    <button type="submit" class="btn btn-info pull-left " >เข้าสู่ระบบ</button>
-
+                                    <input class="btn btn-info pull-left " name="submit_login" type="submit" value=" เข้าสู่ระบบ ">
                                 </div>
                                 <div class="">
-
                                     <button type="submit" class="btn btn-default pull-right">ลืมรหัสผ่าน?</button>
                                 </div>
                             </div>

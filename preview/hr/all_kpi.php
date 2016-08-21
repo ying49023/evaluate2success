@@ -84,7 +84,7 @@
                 <!--/Page header -->
                 
                 <!-- Main content -->
-                <div class="row box-padding">
+                <div  class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body">
                             <form action="" method="GET">
@@ -123,7 +123,7 @@
                     $condition_search = " WHERE kg.kpi_group_id = '".$get_kpi_group_id."'";
                 }                
                 ?>
-                <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <b>รายชื่อ KPIs ทั้งหมด</b>
@@ -190,6 +190,8 @@
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
+                                <!-- ช่องค้นหา by listJS -->
+                                <input class="search" placeholder="ค้นหา" />
                                 <?php
                                 $sql_kpi = "SELECT
                                                     k.kpi_id AS kpi_id,
@@ -208,27 +210,27 @@
                                 $query_kpi = mysqli_query($conn, $sql_kpi);
                                 
                                 ?>
-                                    <table id="example" class="display table table-hover table-responsive table-striped">                               
+                                    <table class="display table table-hover table-responsive table-striped">                               
                                         <thead>
                                             <tr>
-                                                <th style="width: 50px;">ID</th>
-                                                <th style="width: 200px;">ชื่อKPIs</th>
-                                                <th>คำอธิบาย</th>
-                                                <th style="width: 100px;text-align: center;">หน่วย</th>
-                                                <th style="width: 120px;text-align: center;">ระยะเวลา(เดือน)</th> 
-                                                <th style="width: 150px;">กลุ่มหมวดหมู่</th>
+                                                <th class="id" style="width: 50px;"><a href="#" class="sort" data-sort="id">ID</a></th>
+                                                <th class="kpi_name" style="width: 200px;">ชื่อKPIs</th>
+                                                <th class="kpidesc">คำอธิบาย</th>
+                                                <th class="unit" style="width: 100px;text-align: center;">หน่วย</th>
+                                                <th class="period" style="width: 120px;text-align: center;">ระยะเวลา(เดือน)</th> 
+                                                <th class="group" style="width: 150px;">กลุ่มหมวดหมู่</th>
                                                 <th style="width: 80px;">แก้ไข/ลบ</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody class="list">
                                     <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
                                         <tr>
-                                            <td><b><?php echo $result_kpi["kpi_id"]; ?></b></td>
-                                            <td><?php echo $result_kpi["kpi_name"]; ?></td>
-                                            <td><?php echo $result_kpi["kpi_description"]; ?></td>
-                                            <td class="text-center"><?php echo $result_kpi["unit"]; ?></td>
-                                            <td class="text-center"><?php echo $result_kpi["time_period"]; ?></td>
-                                            <td><?php echo $result_kpi["kpi_group_name"]; ?></td>
+                                            <td class="id"><b><?php echo $result_kpi["kpi_id"]; ?></b></td>
+                                            <td class="kpi_name"><?php echo $result_kpi["kpi_name"]; ?></td>
+                                            <td class="kpi_desc"><?php echo $result_kpi["kpi_description"]; ?></td>
+                                            <td class="unit text-center"><?php echo $result_kpi["unit"]; ?></td>
+                                            <td class="period text-center"><?php echo $result_kpi["time_period"]; ?></td>
+                                            <td class="group"><?php echo $result_kpi["kpi_group_name"]; ?></td>
                                             <td>
                                                 <div class="dropdown">
                                                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -255,7 +257,15 @@
                                         <!--/Modal Edit-->
                                     <?php } ?>
                                         </tbody>
+                                        <script>
+                                            var options = {
+                                                valueNames: [ 'id', 'kpi_name' , 'kpi_desc' , 'unit' , 'period' , 'group' ]
+                                            };
+                                            
+                                            var userList = new List('filter', options);
+                                        </script>
                                     </table>
+                                
                                 </div>
                             </div>
                             
