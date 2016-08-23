@@ -146,7 +146,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <!-- ช่องค้นหา by listJS -->
-                                    <input class="search" placeholder="ค้นหา" />
+                                    <div class="form-inline padding-small">
+                                        <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                        <input class="search form-control" placeholder="ค้นหา" />
+                                    </div>
                                 <?php
                                 $sql_kpi_group = "SELECT kpi_group_id,	kpi_group_name FROM kpi_group ORDER BY	kpi_group_id ASC";
                                 $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
@@ -156,12 +159,12 @@
                                         <thead>
                                             <tr>
                                                 <th  style="width: 120px;">
-                                                    <a href="#" class="sort" data-sort="group_id">Group ID</a>
+                                                    <button class="sort" data-sort="group_id">Group ID</button>
                                                 </th>
                                                 <th>
-                                                    <a href="#" class="sort" data-sort="kpi_group_name">
+                                                    <button class="sort" data-sort="kpi_group_name">
                                                         ชื่อกลุ่ม
-                                                    </a>
+                                                    </button>
                                                 </th>
                                                 <th style="width: 150px;text-align: center;">แก้ไข/ลบ</th>
                                             </tr>

@@ -191,7 +191,11 @@
                             <div class="row">
                                 <div class="col-md-12">
                                 <!-- ช่องค้นหา by listJS -->
-                                <input class="search" placeholder="ค้นหา" />
+                                <div class="form-inline padding-small">
+                                    <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                    <input class="search form-control" placeholder="ค้นหา" />
+                                </div>
+                                
                                 <?php
                                 $sql_kpi = "SELECT
                                                     k.kpi_id AS kpi_id,
@@ -213,7 +217,7 @@
                                     <table class="display table table-hover table-responsive table-striped">                               
                                         <thead>
                                             <tr>
-                                                <th class="id" style="width: 50px;"><a href="#" class="sort" data-sort="id">ID</a></th>
+                                                <th class="id" style="width: 65px;"><button class="sort" data-sort="id">ID</button></th>
                                                 <th class="kpi_name" style="width: 200px;">ชื่อKPIs</th>
                                                 <th class="kpidesc">คำอธิบาย</th>
                                                 <th class="unit" style="width: 100px;text-align: center;">หน่วย</th>

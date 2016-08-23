@@ -127,7 +127,10 @@
                         
                         <div class="box-body ">   
                             <!-- ช่องค้นหา by listJS -->
-                            <input class="search " placeholder="ค้นหา" />
+                            <div class="form-inline padding-small">
+                                <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                <input class="search form-control" placeholder="ค้นหา" />
+                            </div>
                             <table  class="table table-bordered table-condensed" >
                                 <thead>
                                     <tr class="bg-gray-light">

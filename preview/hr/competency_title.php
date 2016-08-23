@@ -89,7 +89,7 @@
                 <!--/Page header -->
                 
                 <!-- Main content -->
-                <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <b>หัวข้อพฤติกรรมในการทำงานของพนักงาน (Competency Title) </b>
@@ -118,6 +118,11 @@
                                 $query_com = mysqli_query($conn, $sql_com);
                                 
                                 ?>
+                                    <!-- ช่องค้นหา by listJS -->
+                                    <div class="form-inline padding-small">
+                                        <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                        <input class="search form-control" placeholder="ค้นหา" />
+                                    </div>
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
@@ -128,10 +133,11 @@
 
                                             </tr>
                                         </thead>
+                                        <tbody class="list">
                                     <?php while ($result_com = mysqli_fetch_array($query_com, MYSQLI_ASSOC)) { ?>
                                         <tr>
-                                            <td><b><?php echo $result_com["title_id"]; ?></b></td>
-                                            <td><?php echo $result_com["title_name"]; ?></td>
+                                            <td class="title_id"><b><?php echo $result_com["title_id"]; ?></b></td>
+                                            <td class="title_name"><?php echo $result_com["title_name"]; ?></td>
                                             
                                             <td style="text-align: center;">
 
@@ -212,6 +218,14 @@
                                             <!--/Modal Edit-->
                                             </form>
                                          <?php } ?>
+                                    </tbody>
+                                    <script>
+                                        var options = {
+                                            valueNames: [ 'title_id' , 'title_name']
+                                        };
+                                        
+                                        var userList = new List('filter', options);
+                                    </script>
                                     </table>
                                 </div>
                             </div>

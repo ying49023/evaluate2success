@@ -85,7 +85,7 @@
                 <!--/Page header -->
                 
                 <!-- Main content -->
-                <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <b>หัวข้อพฤติกรรมที่ทำการประเมิน และ ปัจจัยการพิจารณา </b>
@@ -113,6 +113,11 @@
                                 $query_com = mysqli_query($conn, $sql_com);
                                 
                                 ?>
+                                    <!-- ช่องค้นหา by listJS -->
+                                    <div class="form-inline padding-small">
+                                        <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                        <input class="search form-control" placeholder="ค้นหา" />
+                                    </div>
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
@@ -122,10 +127,12 @@
 
                                             </tr>
                                         </thead>
+                                        <tbody class="list">
                                     <?php while ($result_com = mysqli_fetch_array($query_com, MYSQLI_ASSOC)) { ?>
+                                        
                                         <tr>
-                                            <td><b><?php echo $result_com["competency_id"]; ?></b></td>
-                                            <td><?php echo $result_com["competency_description"]; ?></td>
+                                            <td class="competency_id"><b><?php echo $result_com["competency_id"]; ?></b></td>
+                                            <td class="competency_name"><?php echo $result_com["competency_description"]; ?></td>
                                             <td style="text-align: center;">
 
                                                 <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
@@ -135,39 +142,11 @@
 
 
                                                 <!--Modal delete-->
-                                                      <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                          <div class="modal-dialog">
-                                                              <div class="modal-content">
-
-                                                                  <div class="modal-header">
-                                                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                      <h4 class="modal-title" id="myModalLabel">ยืนยันการลบ</h4>
-                                                                  </div>
-
-                                                                  <div class="modal-body">
-                                                                      <p></p>
-                                                                      
-                                                                      <p class="debug-url"></p>
-                                                                  </div>
-
-                                                                  <div class="modal-footer">
-                                                                      <a class="btn btn-danger btn-ok">ลบ</a>
-                                                                      <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                                                      
-                                                                  </div>
-                                                              </div>
-                                                          </div>
-                                                      </div>
-                                                      <!--/Modal delete-->
-                                                        <script>
-                                                            $('#confirm-delete').on('show.bs.modal', function(e) {
-                                                                $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
-
-//                                                                $('.debug-url').html('Delete URL: <b style="color:red;">' + $(this).find('.btn-ok').attr('href') + '</b>');
-                                                            });
-                                                        </script>
+                                                <?php  include('./modal_delete.php');?>
+                                                <!--/Modal delete-->
                                             </td>
                                         </tr>
+                                        
                                         <form action="" method="get" >
                                         <!-- Modal Edit -->   
                                             <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -203,6 +182,14 @@
                                             <!--/Modal Edit-->
                                             </form>
                                          <?php } ?>
+                                    </tbody>
+                                    <script>
+                                        var options = {
+                                            valueNames: [ 'competency_id' , 'competency_name']
+                                        };
+                                        
+                                        var userList = new List('filter', options);
+                                    </script>
                                     </table>
                                 </div>
                             </div>

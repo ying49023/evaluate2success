@@ -3,16 +3,27 @@
     <head>
         <?php include ('./classes/connection_mysqli.php');?>
         <?php
+        
         $get_department_id = '';
         if (isset($_GET["department_id"])) {
             $get_department_id = $_GET["department_id"];
         }
+        $get_job_id = '';
+        if (isset($_GET["job_id"])) {
+            $get_job_id = $_GET["job_id"];
+        }
 
         $condition_search = '';
-        if ($get_department_id != '') {
-            $condition_search = " WHERE dept.department_id = '" . $get_department_id . "'";
+        if ($get_department_id != '' && $get_job_id != '') {
+            $condition_search = " WHERE emp.department_id = '" . $get_department_id . "' AND emp.job_id = '" . $get_job_id . "' ";
+        } else if ($get_department_id != '' || $get_job_id != '') {
+            if ($get_department_id != '') {
+                $condition_search = " WHERE emp.department_id = '" . $get_department_id . "' ";
+            } else if ($get_job_id != '') {
+                $condition_search = " WHERE emp.job_id = '" . $get_job_id . "' ";
+            }
         }
-        ?>
+?>
         
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,40 +63,43 @@
                     <div class="box box-success">
                         <div class="box-body ">
                             <form method="get">
-                                <div class=" col-md-3">
-                                    <label class="col-sm-4 control-label">รหัสพนักงาน</label>
+                                <div class="col-md-offset-1 col-md-4">
+                                    <label class="col-sm-4 control-label">แผนก</label>
                                     <div class="col-sm-8">
-                                        <input class="form-control" type="text"  name="emp_id" >
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    <label class="col-sm-4 control-label">ชื่อ-นามสกุล</label>
-                                    <div class="col-sm-8">
-                                        <input class="form-control" type="text"  name="emp_name" >
-                                    </div>
-                                </div>
-                                 <div class="col-md-4">
-                                 <label class="col-sm-4 control-label">แผนก</label>
-                                <div class="col-sm-8">
-                                    <?php
-                                    $sql_department = "SELECT * FROM departments ";
-                                    $query_department = mysqli_query($conn, $sql_department);
+                                    <?php 
+                                        $sql_department = "SELECT * FROM departments ";
+                                        $query_department = mysqli_query($conn, $sql_department);
                                     ?>
-                                    <select class="form-control" name="department_id">
-                                        <option value="">เลือกทั้งหมด</option>
-                                        <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
-                                        <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
-                                            <?php echo $result_department["department_name"]; ?>
-                                        </option>
+                                        <select class="form-control" name="department_id">
+                                            <option value="">เลือกทั้งหมด</option>
+                                        <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                                <?php echo $result_department["department_name"]; ?>
+                                            </option>
                                         <?php } ?>
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
-                                 </div>
-
-                           <div class="col-md-1">
-                                <button class="btn btn-primary search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
+                                <div class="col-md-4">
+                                    <label class="col-sm-4 control-label">ตำแหน่ง</label>
+                                    <div class="col-sm-8">
+                                    <?php 
+                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
+                                        $query_job = mysqli_query($conn, $sql_job);
+                                    ?>
+                                        <select class="form-control" name="job_id">
+                                            <option value="">เลือกทั้งหมด</option>
+                                        <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
+                                                <?php echo $result_job["job_name"]; ?>
+                                            </option>
+                                        <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class=" col-md-2">
+                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
+                                </div>
 
                             </form>
                         </div>
@@ -110,7 +124,10 @@
      
                         <div class="box-body ">    
                             <!-- ช่องค้นหา by listJS -->
-                            <input class="search " placeholder="ค้นหา" />
+                            <div class="form-inline padding-small">
+                                <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                <input class="search form-control" placeholder="ค้นหา" />
+                            </div>
                             <table class="table table-bordered table-hover">
                                 <thead>
                                

@@ -1,21 +1,20 @@
 .sort {
   /*padding:10px;*/
-  /*border-radius: 6px;*/
+  border-radius: 6px;
   border:none;
   display:inline-block;
   color:black;
   text-decoration: none;
-  
   height:100%;
   width: 100%;
 }
 .sort button{
-    background-color: #dddddd; 
+    /*background-color: #dddddd;*/ 
 }
 .sort:hover {
   text-decoration: none;
-  /*background-color:#1b8aba;*/
-  background-color: #dddddd;
+  background-color:#1b8aba;
+  /*background-color: #dddddd;*/
   color: #006;
 }
 .sort:focus {
