@@ -128,14 +128,14 @@
                                 <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
                                 <input class="search form-control" placeholder="ค้นหา" />
                             </div>
-                            <table class="table table-bordered table-hover">
+                            <table class="table table-bordered table-striped table-hover">
                                 <thead>
                                
-                                    <tr class="bg-gray-light">
-                                        <th class="text-center">ID</th>
-                                        <th >ชื่อ-นามสกุล</th>
-                                        <th class="text-center">ตำแหน่ง</th>
-                                        <th class="text-center">แผนก</th>
+                                    <tr class="">
+                                        <th class="text-center"><button class="sort" data-sort="id">ID</button></th>
+                                        <th ><button class="sort" data-sort="name">ชื่อ-นามสกุล</button></th>
+                                        <th class="text-center"><button class="sort" data-sort="job">ตำแหน่ง</button></th>
+                                        <th class="text-center"><button class="sort" data-sort="dept">แผนก</button></th>
                                         <th class="text-center">KPI ที่รับผิดชอบ</th>
                                     </tr>
                                 </thead>

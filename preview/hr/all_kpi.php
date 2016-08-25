@@ -214,42 +214,32 @@
                                 $query_kpi = mysqli_query($conn, $sql_kpi);
                                 
                                 ?>
-                                    <table class="display table table-hover table-responsive table-striped">                               
+                                    <table class="display table table-hover table-bordered table-responsive table-striped">                               
                                         <thead>
                                             <tr>
                                                 <th class="id" style="width: 65px;"><button class="sort" data-sort="id">ID</button></th>
-                                                <th class="kpi_name" style="width: 200px;">ชื่อKPIs</th>
-                                                <th class="kpidesc">คำอธิบาย</th>
-                                                <th class="unit" style="width: 100px;text-align: center;">หน่วย</th>
-                                                <th class="period" style="width: 120px;text-align: center;">ระยะเวลา(เดือน)</th> 
-                                                <th class="group" style="width: 150px;">กลุ่มหมวดหมู่</th>
-                                                <th style="width: 80px;">แก้ไข/ลบ</th>
+                                                <th class="kpi_name" style="width: 200px;"><button class="sort" data-sort="kpi_name">ชื่อKPIs</button></th>
+                                                <th class="kpi_desc"><button class="sort" data-sort="kpi_desc">คำอธิบาย</button></th>
+                                                <th class="unit" style="width: 75px;text-align: center;"><button class="sort" data-sort="unit">หน่วย</button></th>
+                                                <th class="period" style="width: 145px;text-align: center;"><button class="sort" data-sort="period">ระยะเวลา(เดือน)</button></th> 
+                                                <th class="group" style="width: 150px;"><button class="sort" data-sort="group">กลุ่มหมวดหมู่</button></th>
+                                                <th style="width: 135px;text-align: center;">แก้ไข/ลบ</th>
                                             </tr>
                                         </thead>
                                         <tbody class="list">
                                     <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
                                         <tr>
-                                            <td class="id"><b><?php echo $result_kpi["kpi_id"]; ?></b></td>
-                                            <td class="kpi_name"><?php echo $result_kpi["kpi_name"]; ?></td>
-                                            <td class="kpi_desc"><?php echo $result_kpi["kpi_description"]; ?></td>
-                                            <td class="unit text-center"><?php echo $result_kpi["unit"]; ?></td>
-                                            <td class="period text-center"><?php echo $result_kpi["time_period"]; ?></td>
-                                            <td class="group"><?php echo $result_kpi["kpi_group_name"]; ?></td>
+                                            <td ><b><?php echo $result_kpi["kpi_id"]; ?></b></td>
+                                            <td ><?php echo $result_kpi["kpi_name"]; ?></td>
+                                            <td ><?php echo $result_kpi["kpi_description"]; ?></td>
+                                            <td class="text-center"><?php echo $result_kpi["unit"]; ?></td>
+                                            <td class="text-center"><?php echo $result_kpi["time_period"]; ?></td>
+                                            <td ><?php echo $result_kpi["kpi_group_name"]; ?></td>
                                             <td>
-                                                <div class="dropdown">
-                                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                                        <i class="glyphicon glyphicon-cog"></i>
-                                                        <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                                        <li><a data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a></li>
-                                                        <li role="separator" class="divider"></li>
-                                                        <li><a href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi.php?kpi_id=<?php echo $result_kpi["kpi_id"]; ?>&kpi_group_id=<?php echo $get_kpi_group_id; ?>">
-                                                                <i class="glyphicon glyphicon-remove"></i>ลบ</a>
-                                                        </li>
-                                                                
-                                                    </ul>
-                                                </div>
+                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi.php?kpi_id=<?php echo $result_kpi["kpi_id"]; ?>&kpi_group_id=<?php echo $get_kpi_group_id; ?>">
+                                                <i class="glyphicon glyphicon-remove"></i>ลบ</a>
+                                                        
                                                 <!--Modal delete-->
                                                 <?php include('./modal_delete_all_kpi.php'); ?>
                                                 <!--/Modal delete-->

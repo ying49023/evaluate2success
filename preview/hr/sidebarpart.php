@@ -93,13 +93,13 @@
                 </a>
                 <ul class="treeview-menu">
                     <li class="<?php if($page == 'all_kpi.php'){ echo "active" ; } ?>">
-                        <a href="all_kpi.php"><i class="fa fa-circle-o"></i>ข้อมูลKPIsทั้งหมด</a>
+                        <a href="all_kpi.php"><i class="fa fa-circle-o"></i>ข้อมูล KPIs ทั้งหมด</a>
                     </li>
                     <li class="<?php if($page == 'hr_kpi_group.php'){ echo "active" ; } ?>">
-                        <a href="hr_kpi_group.php"><i class="fa fa-circle-o"></i>จัดการกลุ่ม</a>
+                        <a href="hr_kpi_group.php"><i class="fa fa-circle-o"></i>ข้อมูลกลุ่ม KPIs</a>
                     </li>
                     <li class="<?php if($page == 'hr_all_kpi_detail.php'){ echo "active" ; } ?>">
-                        <a href="hr_all_kpi_detail.php"><i class="fa fa-circle-o"></i>จัดการข้อมูลKPIs</a>
+                        <a href="hr_all_kpi_detail.php"><i class="fa fa-circle-o"></i>ข้อมูล KPIs ตามแผนก / ตำแหน่ง</a>
                     </li>
                     <li class="<?php if($page == 'hr_kpi_individual.php' || $page == 'hr_kpi_individual_resp.php'){ echo "active" ; } ?>">
                         <a href="hr_kpi_individual.php"><i class="fa fa-circle-o"></i>ดูข้อมูลKPIsรายบุคคล</a>
