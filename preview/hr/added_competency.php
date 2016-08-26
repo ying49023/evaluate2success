@@ -6,7 +6,7 @@
         //Insert
         if(isset($_GET["submit_insert"])){
             
-            $sql_insert_group = "INSERT INTO competency (competency_description) VALUES ('".$_GET["com_desc"]."')";
+            $sql_insert_group = "INSERT INTO competency (competency_description,title_id) VALUES ('".$_GET["com_desc"]."','".$_GET["add_title_id"]."')";
             if (mysqli_query($conn, $sql_insert_group)) {
                     echo "Record new successfully";
                     echo $sql_insert_group;
@@ -45,7 +45,15 @@
                     
                 header("Location: added_competency.php");
             }
-                
+            
+         $get_title_id = '';
+        if (isset($_GET["title_id"])) {
+            $get_title_id = $_GET["title_id"];
+        }
+        $condition_search = '';
+        if ($get_title_id != '') {
+            $condition_search = " WHERE t.title_id = ".$get_title_id." ";
+        }      
         ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -95,8 +103,26 @@
                             <form action="" method="get">
                                 <div class="box-padding row">
                                     <div class="form-group col-sm-5">
-                                        <label>เพิ่มหัวข้อใหม่<span style="color: red;">*</span></label>
+                                        <label>เพิ่มรายการใหม่<span style="color: red;">*</span></label>
                                         <input class="form-control" type="text"  step="5" name="com_desc" required > 
+                                    </div>
+                                    <div class="form-group col-sm-5">
+                                       <label>หัวข้อ<span style="color: red;">*</span></label>
+                                    
+                                    <?php 
+                                        $sql_title = "SELECT * FROM competency_title ";
+                                        $query_title = mysqli_query($conn, $sql_title);
+                                    ?>
+                                        <select class="form-control" name="add_title_id">
+                                            <option value="">--เลือก--</option>
+                                        <?php while($result_title = mysqli_fetch_array($query_title,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_title["title_id"]; ?>" <?php if($get_title_id == $result_title["title_id"]) { echo "selected"; }  ?> >
+                                                <?php echo $result_title["title_name"]; ?>
+                                            </option>
+                                        <?php } ?>
+                                        </select>
+                                        
+                                    
                                     </div>
                                     <div class="form-group col-sm-1">
                                         <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
@@ -109,20 +135,43 @@
                             <div class="row">
                                 <div class="col-md-12">
                                 <?php
-                                $sql_com = "SELECT competency_id,competency_description FROM competency ORDER BY competency_id ASC";
+                                $sql_com = "SELECT c.competency_id,c.competency_description,t.title_name,t.title_id FROM competency c JOIN competency_title t ON c.title_id=t.title_id ".$condition_search." ORDER BY competency_id ASC";
                                 $query_com = mysqli_query($conn, $sql_com);
                                 
                                 ?>
                                     <!-- ช่องค้นหา by listJS -->
-                                    <div class="form-inline padding-small">
+                                    <div class="form-inline padding-small col-md-3">
                                         <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
                                         <input class="search form-control" placeholder="ค้นหา" />
                                     </div>
+                                    <form method="get">
+                                <div class="col-md-offset-1 col-md-7">
+                                    <label class="col-sm-1 control-label">หัวข้อ</label>
+                                    <div class="col-sm-6">
+                                    <?php 
+                                        $sql_title = "SELECT * FROM competency_title ";
+                                        $query_title = mysqli_query($conn, $sql_title);
+                                    ?>
+                                        <select class="form-control" name="title_id">
+                                            <option value="">เลือกทั้งหมด</option>
+                                        <?php while($result_title = mysqli_fetch_array($query_title,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_title["title_id"]; ?>" <?php if($get_title_id == $result_title["title_id"]) { echo "selected"; }  ?> >
+                                                <?php echo $result_title["title_name"]; ?>
+                                            </option>
+                                        <?php } ?>
+                                        </select>
+                                        
+                                    </div>
+                                    <input type="submit" class="btn-primary col-sm-2" value="ค้นหา">
+                                </div>
+                                        
+                                    </form>
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th style="width: 120px;">Competency ID</th>
+                                                <th style="width: 120px;">No.</th>
                                                 <th>Competency Name</th>
+                                                <th>Title Name</th>
                                                 <th style="width: 150px;text-align: center;">Management</th>
 
                                             </tr>
@@ -133,6 +182,7 @@
                                         <tr>
                                             <td class="competency_id"><b><?php echo $result_com["competency_id"]; ?></b></td>
                                             <td class="competency_name"><?php echo $result_com["competency_description"]; ?></td>
+                                            <td class="title_name"><?php echo $result_com["title_name"]; ?></td>
                                             <td style="text-align: center;">
 
                                                 <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
@@ -162,8 +212,13 @@
                                                                 <div class="col-sm-12">
                                                                     <div style="width: 75%;margin: auto;">
                                                                         <div class="form-group">
-                                                                            <label class="pull-left">แก้ไขหัวข้อ</label>
-                                                                            <input type="text" class="form-control" name="competency_desc" placeholder="ชื่อหัวข้อCompetency" value="<?php echo $result_com["competency_description"]; ?>" required >
+                                                                            <label class="pull-left">หัวข้อ</label>
+                                                                            <input type="text" class="form-control" name="title_desc" placeholder="ชื่อหัวข้อCompetency" value="<?php echo $result_com["title_name"]; ?>" required disabled="true" >
+                                                                                   
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="pull-left">แก้ไขรายละเอียด</label>
+                                                                            <textarea class="form-control" rows="3" name="competency_desc"  required ><?php echo $result_com["competency_description"]; ?></textarea>
                                                                                     
                                                                         </div>
                                                                                                             
@@ -173,7 +228,7 @@
                                                         </div>
                                                         <div class="modal-footer">
                                                             <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
-                                                            <input type="hidden" name="competency_id" value="<?php echo $result_com["competency_id"]; ?>" >
+                                                            <input type="hidden" name="competency_id" value="<?php echo $result_com["competency_id"]; ?>" >                                                            
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         </div>                 
                                                     </div>
@@ -185,7 +240,7 @@
                                     </tbody>
                                     <script>
                                         var options = {
-                                            valueNames: [ 'competency_id' , 'competency_name']
+                                            valueNames: [ 'competency_id' , 'competency_name','title_name']
                                         };
                                         
                                         var userList = new List('filter', options);

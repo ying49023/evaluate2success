@@ -352,7 +352,7 @@
 
                                            <td class="text-center">
                                                
-                                               <a href="remind_sendmail.php">
+                                               <a href="sendmail/sendmail.php">
                                                    <i class="glyphicon glyphicon-envelope"></i>
                                                </a>
                                            </td>
