@@ -137,10 +137,10 @@
                                                 <table id="example" class="table table-hover table-striped disabled"  >
                                                     <thead>
                                                         <tr>
-                                                            <th><b>รหัสพนักงาน</b></th>
-                                                            <th><b>ชื่อ-นามสกุล</b></th>
-                                                            <th class="text-center"><b>ตำแหน่ง</b></th>
-                                                            <th class="text-center"><b>แผนก</b></th>
+                                                            <th><button class="sort" data-sort="emp_id"><b>รหัสพนักงาน</b></button></th>
+                                                            <th><button class="sort" data-sort="emp_name"><b>ชื่อ-นามสกุล</b></button></th>
+                                                            <th class="text-center"><button class="sort" data-sort="job_name"><b>ตำแหน่ง</b></button></th>
+                                                            <th class="text-center"><button class="sort" data-sort="dept_name"><b>แผนก</b></button></th>
                                                             <th class="text-center"><b>แก้ไข/ลบ</b></th>
                                                         </tr>
                                                     </thead>
@@ -161,9 +161,9 @@
                                                             ?>
                                                             <tr>
                                                                 <td class="emp_id"><?php echo $emp_id; ?></td>
-                                                                <td class="name"><?php echo $name; ?></td>
-                                                                <td class="job text-center"><?php echo $job; ?></td>
-                                                                <td class="dept text-center"><?php echo $dept; ?></td>
+                                                                <td class="emp_name"><?php echo $name; ?></td>
+                                                                <td class="job_name text-center"><?php echo $job; ?></td>
+                                                                <td class="dept_name text-center"><?php echo $dept; ?></td>
                                                                 <td class="text-center">
                                                                     <a href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
                                                                     | <a onclick="myFunction()" ><i class="glyphicon glyphicon-trash"></i></a>
@@ -188,7 +188,7 @@
                                                     </tbody>
                                                     <script>
                                                         var options = {
-                                                            valueNames: [ 'emp_id', 'name' , 'job' , 'dept' ]
+                                                            valueNames: [ 'emp_id', 'emp_name' , 'job_name' , 'dept_name' ]
                                                         };
                                                         
                                                         var userList = new List('filter', options);

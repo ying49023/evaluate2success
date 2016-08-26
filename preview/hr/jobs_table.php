@@ -133,8 +133,8 @@
                             </div>
                             <table  class="table table-bordered table-condensed" >
                                 <thead>
-                                    <tr class="bg-gray-light">
-                                        <th class="text-center">ชื่อตำแหน่งงาน</th>
+                                    <tr>
+                                        <th class="text-center"><button class="sort" data-sort="job_name">ชื่อตำแหน่งงาน</button></th>
                                         <th class="text-center" style="width: 150px;">จัดการ</th>
                                     </tr>
                                 </thead>
@@ -151,10 +151,8 @@
                                     $id = $result["job_id"];
                                    
                                 ?>
-                                
-                            
                                 <tr>
-                                    <td class="name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                    <td class="job_name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
                                         
                                         <td class="text-center">
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
@@ -169,7 +167,6 @@
                                     </tr>
                                 
                                 <!--Edit Modal -->
-
                                 <form class="form-horizontal" name="frmMain" method="post" action="jobs_table.php?erp=update&id=<?php echo $id; ?>" >
                                         <div class="modal fade" id="<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -202,7 +199,6 @@
                                 <!--Edit Modal -->
                                 
                                 <!--Delete Modal -->
-
                                 <form class="form-horizontal" name="frmMain" method="post" action="jobs_table.php?erp=delete&id=<?php echo $id; ?>" >
                                         <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                             <div class="modal-dialog" role="document">
@@ -237,7 +233,7 @@
                             </tbody>
                             <script>
                                 var options = {
-                                    valueNames: [ 'name']
+                                    valueNames: [ 'job_name']
                                 };
                                 
                                 var userList = new List('filter', options);

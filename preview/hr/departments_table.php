@@ -132,8 +132,8 @@
                                  </div>
                                  <table  class="table table-bordered table-condensed" >
                                      <thead>
-                                         <tr class="bg-gray-light">
-                                             <th class="text-center">ชื่อแผนก/ฝ่าย</th>
+                                         <tr class="">
+                                             <th class="text-center"><button class="sort" data-sort="dept_name">ชื่อแผนก/ฝ่าย</button></th>
                                              <th class="text-center" style="width: 150px">จัดการ</th>
                                          </tr>
                                      </thead>
@@ -150,17 +150,15 @@
                                          $id = $result["department_id"];
 
                                      ?>
-
-
-                                     <tr>
-                                         <td class="name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-
+                                         <tr>
+                                             <td class="dept_name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                                 
                                              <td class="text-center">
                                                  <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                                      <i class="glyphicon glyphicon-pencil" ></i>
                                                  </button>                                                   
                                                  |
-
+                                                     
                                                  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
                                                      <i class="glyphicon glyphicon-remove" ></i>
                                                  </button>
@@ -236,7 +234,7 @@
                                  </tbody>
                                  <script>
                                      var options = {
-                                         valueNames: [ 'department_id','department_name']
+                                         valueNames: [ 'dept_name']
                                      };
                                      
                                      var userList = new List('filter', options);

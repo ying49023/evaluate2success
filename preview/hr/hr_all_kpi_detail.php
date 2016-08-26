@@ -12,6 +12,19 @@
             $get_job_id = $_GET["job_id"];
         }
         ?>
+        <?php
+        $condition_search = '';
+
+        if ($get_department_id != '' && $get_job_id != '') {
+            $condition_search = " WHERE mk.department_id = '" . $get_department_id . "' AND mk.job_id = '" . $get_job_id . "' ";
+        } else if ($get_department_id != '' || $get_job_id != '') {
+            if ($get_department_id != '') {
+                $condition_search = " WHERE mk.department_id = '" . $get_department_id . "' ";
+            } else if ($get_job_id != '') {
+                $condition_search = " WHERE mk.job_id = '" . $get_job_id . "' ";
+            }
+        }
+        ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -97,21 +110,7 @@
                     </div>
                     
                 </div>
-                <?php 
-                                
-                $condition_search = '';
                 
-                if($get_department_id != '' && $get_job_id != ''){
-                    $condition_search = " WHERE mk.department_id = '".$get_department_id."' AND mk.job_id = '".$get_job_id."' ";
-                }else if($get_department_id != '' || $get_job_id != ''){
-                    if($get_department_id != ''){
-                        $condition_search = " WHERE mk.department_id = '".$get_department_id."' ";
-                    }else if($get_job_id != ''){
-                        $condition_search = " WHERE mk.job_id = '".$get_job_id."' ";
-                    }
-                }
-                
-                ?>
                 <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -226,7 +225,7 @@
                                     <table class="table table-hover table-responsive table-bordered table-striped">                               
                                         <thead>
                                             <tr>
-                                                <th  style="width: 75px;"><button class="sort" data-sort="no">No</button></th>
+                                                <th style="width: 75px;"><button class="sort" data-sort="no">No</button></th>
                                                 <th style="width: 250px"><button class="sort" data-sort="kpi_name">ชื่อ KPIs</button></th>
                                                 <th style="width: 250px"><button class="sort" data-sort="kpi_desc">คำอธิบาย</button></th>
                                                 <th style="width: 75px;"><button class="sort" data-sort="unit">หน่วย</button></th>
@@ -236,23 +235,23 @@
                                             </tr>
                                         </thead>
                                         <tbody class="list" >
-                                    <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
-                                        <tr>
-                                            <td class="no"><b><?php echo $result_kpi["manage_kpi_id"]; ?></b></td>
-                                            <td class="kpi_name"><?php echo $result_kpi["kpi_name"]; ?></td>
-                                            <td class="kpi_desc"><?php echo $result_kpi["kpi_description"]; ?></td>
-                                            <td class="unit"><?php echo $result_kpi["unit"]; ?></td>
-                                            <td class="job_name"><?php echo $result_kpi["job_name"]; ?></td>
-                                            <td class="dept_name"><?php echo $result_kpi["department_name"]; ?></td>
-                                            <td>
-                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
-                                                <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi_group.php?manage_kpi_id=<?php echo $result_kpi["manage_kpi_id"]; ?>&department_id=<?php echo $get_department_id; ?>&job_id=<?php echo $get_job_id; ?>" ><i class="glyphicon glyphicon-remove"></i>ลบ</a>
-                                                <!--Modal delete-->
-                                                <?php include('./modal_delete.php'); ?>
-                                                      <!--/Modal delete-->
+                                        <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
+                                            <tr>
+                                                <td class="no"><b><?php echo $result_kpi["manage_kpi_id"]; ?></b></td>
+                                                <td class="kpi_name"><?php echo $result_kpi["kpi_name"]; ?></td>
+                                                <td class="kpi_desc"><?php echo $result_kpi["kpi_description"]; ?></td>
+                                                <td class="unit"><?php echo $result_kpi["unit"]; ?></td>
+                                                <td class="job_name"><?php echo $result_kpi["job_name"]; ?></td>
+                                                <td class="dept_name"><?php echo $result_kpi["department_name"]; ?></td>
+                                                <td>
+                                                    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                    <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi_group.php?manage_kpi_id=<?php echo $result_kpi["manage_kpi_id"]; ?>&department_id=<?php echo $get_department_id; ?>&job_id=<?php echo $get_job_id; ?>" ><i class="glyphicon glyphicon-remove"></i>ลบ</a>
+                                                    <!--Modal delete-->
+                                                    <?php include('./modal_delete.php'); ?>
+                                                    <!--/Modal delete-->
 
-                                            </td>
-                                        </tr>
+                                                </td>
+                                            </tr>
                                         <!-- Modal Edit-->   
                                             <div class="modal animated fade " id="edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                 <div class="modal-dialog" role="document">
@@ -328,8 +327,8 @@
                                                     </div>
                                                 </div>  
                                             </div>
-                                            <!--/Modal Edit-->
-                                    <?php } ?>
+                                        <!--/Modal Edit-->
+                                        <?php } ?>
                                         </tbody>
                                         <script>
                                             var options = {
@@ -346,14 +345,8 @@
                     </div>
                     
                 </div>
-                <script>
-                    var options = {
-                        valueNames: [ 'no', 'kpi_name' , 'kpi_desc' , 'unit' , 'period' , 'group' ]
-                    };
-                    
-                    var userList = new List('filter', options);
-                </script>
-                <!-- /.content --> </div>
+                <!-- /.content --> 
+            </div>
             <!-- /.content-wrapper -->
             
             <!--Footer -->
