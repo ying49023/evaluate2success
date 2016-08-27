@@ -126,9 +126,8 @@
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th style="width: 120px;">Title ID</th>
-                                                <th>Title Name</th>
-                                                
+                                                <th style="width: 120px;"><button class="sort" data-sort="title_id">Title ID</button></th>
+                                                <th><button class="sort" data-sort="title_name">Title Name</button></th>
                                                 <th style="width: 150px;text-align: center;">Management</th>
 
                                             </tr>
@@ -180,43 +179,44 @@
                                                             });
                                                         </script>
                                                         <!--/Modal delete-->
+                                                        <form method="get" >
+                                                        <!-- Modal Edit -->   
+                                                        <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["title_id"];; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                            <div class="modal-dialog" role="document">
+                                                                <div class="modal-content">
+
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                        <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <div class="row">
+                                                                            <div class="col-sm-12">
+                                                                                <div style="width: 75%;margin: auto;">
+                                                                                    <div class="form-group">
+                                                                                        <label class="pull-left">หัวข้อ</label>
+                                                                                        <input type="text" class="form-control" name="title_name"  value="<?php echo $result_com["title_name"]; ?>" required >
+                                                                                        <br>
+
+                                                                                    </div>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
+                                                                        <input type="hidden" name="title_id" value="<?php echo $result_com["title_id"]; ?>" >
+                                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                    </div>                 
+                                                                </div>
+                                                            </div>  
+                                                        </div>
+                                                        <!--/Modal Edit-->
+                                                        </form>
                                             </td>
                                         </tr>
-                                        <form action="" method="get" >
-                                        <!-- Modal Edit -->   
-                                            <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["title_id"];; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div style="width: 75%;margin: auto;">
-                                                                        <div class="form-group">
-                                                                            <label class="pull-left">หัวข้อ</label>
-                                                                            <input type="text" class="form-control" name="title_name"  value="<?php echo $result_com["title_name"]; ?>" required >
-                                                                            <br>
-                                                                                    
-                                                                        </div>
-                                                                                                            
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
-                                                            <input type="hidden" name="title_id" value="<?php echo $result_com["title_id"]; ?>" >
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                        </div>                 
-                                                    </div>
-                                                </div>  
-                                            </div>
-                                            <!--/Modal Edit-->
-                                            </form>
+                                        
                                          <?php } ?>
                                     </tbody>
                                     <script>

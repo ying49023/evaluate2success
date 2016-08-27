@@ -1,8 +1,18 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <?php include('./classes/connection_mysqli.php') ?>
-        <?php
+        <?php 
+        include('./classes/connection_mysqli.php'); 
+        
+        $get_title_id = '';
+        if(isset($_GET["title_id"])) {
+            $get_title_id = $_GET["title_id"];
+        }
+        $condition_search = '';
+        if ($get_title_id != '') {
+            $condition_search = " WHERE t.title_id = ".$get_title_id." ";
+        }  
+        
         //Insert
         if(isset($_GET["submit_insert"])){
             
@@ -15,12 +25,15 @@
                     echo $sql_insert_group;
                 }
                     
-                header("Location: added_competency.php");
+                header("Location: added_competency.php?title_id=$get_title_id");
             }
         //Edit
         if(isset($_GET["submit_edit"])){
-            
-            $sql_edit_group = "UPDATE competency SET competency_description='".$_GET["competency_desc"]."' WHERE competency_id='".$_GET["competency_id"]."'";
+            $title_id = "";
+            if(isset($_GET["title_id"])){
+                $title_id = $_GET["title_id"];
+            }
+            $sql_edit_group = "UPDATE competency SET competency_description='".$_GET["competency_desc"]."' WHERE competency_id='".$_GET["competency_id"]."' AND title_id='".$_GET["title_id"]."'";
             if (mysqli_query($conn, $sql_edit_group)) {
                     echo "Record edit successfully";
                     echo $sql_edit_group;
@@ -29,11 +42,11 @@
                     echo $sql_edit_group;
                 }
                     
-                header("Location: added_competency.php");
+                header("Location: added_competency.php?title_id=$get_title_id");
             }
         //Delete  
         if(isset($_GET["delete_group"])){
-            
+            $title_id = $_GET["title_id"];
             $sql_delete_group = "DELETE FROM competency WHERE competency_id='".$_GET["comp_id"]."'";
             if (mysqli_query($conn, $sql_delete_group)) {
                     echo "Record new successfully";
@@ -43,17 +56,10 @@
                     echo $sql_delete_group;
                 }
                     
-                header("Location: added_competency.php");
+                header("Location: added_competency.php?title_id=$get_title_id");
             }
             
-         $get_title_id = '';
-        if (isset($_GET["title_id"])) {
-            $get_title_id = $_GET["title_id"];
-        }
-        $condition_search = '';
-        if ($get_title_id != '') {
-            $condition_search = " WHERE t.title_id = ".$get_title_id." ";
-        }      
+            
         ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -145,33 +151,35 @@
                                         <input class="search form-control" placeholder="ค้นหา" />
                                     </div>
                                     <form method="get">
-                                <div class="col-md-offset-1 col-md-7">
-                                    <label class="col-sm-1 control-label">หัวข้อ</label>
-                                    <div class="col-sm-6">
-                                    <?php 
-                                        $sql_title = "SELECT * FROM competency_title ";
-                                        $query_title = mysqli_query($conn, $sql_title);
-                                    ?>
-                                        <select class="form-control" name="title_id">
-                                            <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_title = mysqli_fetch_array($query_title,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_title["title_id"]; ?>" <?php if($get_title_id == $result_title["title_id"]) { echo "selected"; }  ?> >
-                                                <?php echo $result_title["title_name"]; ?>
-                                            </option>
-                                        <?php } ?>
-                                        </select>
-                                        
-                                    </div>
-                                    <input type="submit" class="btn-primary col-sm-2" value="ค้นหา">
-                                </div>
+                                        <div class="form-inline padding-small col-md-7">
+                                            <label class="col-sm-1 control-label">หัวข้อ</label>
+                                            <div class="col-sm-8">
+                                                <?php
+                                                $sql_title = "SELECT * FROM competency_title ";
+                                                $query_title = mysqli_query($conn, $sql_title);
+                                                ?>
+                                                <select class="form-control" name="title_id">
+                                                    <option value="">เลือกทั้งหมด</option>
+                                                    <?php while ($result_title = mysqli_fetch_array($query_title, MYSQLI_ASSOC)) { ?>
+                                                        <option value="<?php echo $result_title["title_id"]; ?>" <?php if ($get_title_id == $result_title["title_id"]) {
+                                                        echo "selected";
+                                                    } ?> >
+                                                        <?php echo $result_title["title_name"]; ?>
+                                                        </option>
+                                                    <?php } ?>
+                                                </select>
+
+                                            </div>
+                                            <input type="submit" class="btn btn-primary col-sm-3" value="ค้นหา">
+                                        </div>
                                         
                                     </form>
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th style="width: 120px;">No.</th>
-                                                <th>Competency Name</th>
-                                                <th>Title Name</th>
+                                                <th style="width: 120px;"><button class="sort" data-sort="competency_id">No.</button></th>
+                                                <th><button class="sort" data-sort="competency_name">Competency Name</button></th>
+                                                <th><button class="sort" data-sort="title_name">Title Name</button></th>
                                                 <th style="width: 150px;text-align: center;">Management</th>
 
                                             </tr>
@@ -184,58 +192,55 @@
                                             <td class="competency_name"><?php echo $result_com["competency_description"]; ?></td>
                                             <td class="title_name"><?php echo $result_com["title_name"]; ?></td>
                                             <td style="text-align: center;">
-
                                                 <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                <!-- Modal Edit -->
+                                                <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <form method="GET">
+                                                        <div class="modal-content">  
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div style="width: 75%;margin: auto;">
+                                                                            <div class="form-group">
+                                                                                <label class="pull-left">หัวข้อ</label>
+                                                                                <input type="text" class="form-control" name="title_name" placeholder="ชื่อหัวข้อCompetency" value="<?php echo $result_com["title_name"]; ?>" required disabled="true" >
 
-                                                  <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="added_competency.php?comp_id=<?php echo $result_com["competency_id"]; ?>&delete_group=1">
-                                                          <i class="glyphicon glyphicon-remove"></i>ลบ</a>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="pull-left">แก้ไขรายละเอียด</label>
+                                                                                <textarea class="form-control" rows="3" name="competency_desc"  required ><?php echo $result_com["competency_description"]; ?></textarea>
 
+                                                                            </div>
 
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input type="hidden" name="title_id" value="<?php echo $get_title_id; ?>" >
+                                                                <input type="hidden" name="competency_id" value="<?php echo $result_com["competency_id"]; ?>" >   
+                                                                <input type="submit" class="btn btn-primary" name="submit_edit" value="บันทึก" >                                                      
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                            </div>                 
+                                                        </div>
+                                                        </form>
+                                                    </div>  
+                                                </div>
+                                            <!--/Modal Edit--> 
+                                                <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="added_competency.php?comp_id=<?php echo $result_com["competency_id"]; ?>&delete_group=1&title_id=<?php echo $result_com["title_id"]; ?>">
+                                                    <i class="glyphicon glyphicon-remove"></i>ลบ
+                                                </a>
                                                 <!--Modal delete-->
                                                 <?php  include('./modal_delete.php');?>
                                                 <!--/Modal delete-->
                                             </td>
                                         </tr>
-                                        
-                                        <form action="" method="get" >
-                                        <!-- Modal Edit -->   
-                                            <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div style="width: 75%;margin: auto;">
-                                                                        <div class="form-group">
-                                                                            <label class="pull-left">หัวข้อ</label>
-                                                                            <input type="text" class="form-control" name="title_desc" placeholder="ชื่อหัวข้อCompetency" value="<?php echo $result_com["title_name"]; ?>" required disabled="true" >
-                                                                                   
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <label class="pull-left">แก้ไขรายละเอียด</label>
-                                                                            <textarea class="form-control" rows="3" name="competency_desc"  required ><?php echo $result_com["competency_description"]; ?></textarea>
-                                                                                    
-                                                                        </div>
-                                                                                                            
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
-                                                            <input type="hidden" name="competency_id" value="<?php echo $result_com["competency_id"]; ?>" >                                                            
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                        </div>                 
-                                                    </div>
-                                                </div>  
-                                            </div>
-                                            <!--/Modal Edit-->
-                                            </form>
+                                                 
                                          <?php } ?>
                                     </tbody>
                                     <script>
