@@ -181,7 +181,7 @@
                         <div class="box-body">
                             <div class="row"> 
                                 <?php
-                                $sql_title = "SELECT t.title_id as title_id, t.title_name as title FROM  competency_title t LEFT JOIN match_competency m ON m.title_id=t.title_id WHERE m.position_level_id='$level'and m.status=1 GROUP BY t.title_name";
+                                $sql_title = "SELECT t.title_id as title_id, t.title_name as title FROM  competency_title t LEFT JOIN manage_competency m ON m.title_id=t.title_id WHERE m.position_level_id='$level'and m.status=1 GROUP BY t.title_name";
                                 $query_title= mysqli_query($conn, $sql_title);
                                 
                                 while ($result_title = mysqli_fetch_array($query_title, MYSQLI_ASSOC))  {

@@ -5,6 +5,13 @@
         $msg='';
         if(isset($_GET['fn']))
             $fn=$_GET['fn'];
+        
+        
+        // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
+        require_once('classes/class.upload.php') ;
+        //  ถ้าหากหน้านี้ถูกเรียก เพราะการ submit form  
+        //  ประโยคนี้จะเป็นจริงกรณีเดียวก็ด้วยการ submit form 
+
         //++++++++++++++++++save record+++++++++++++        
                                
         if($fn=='add'){
@@ -20,27 +27,64 @@
             $email=$_POST['email'];
             $hiredate =$_POST['startdate'];
             $mng =''; 
-            $sql = "SELECT employee_id,concat(first_name,' ',last_name) as name from employees where concat(first_name,' ',last_name) like '%$manager%'  ";
-            $query= mysqli_query($conn, $sql);
-             while($mresult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-             $mng =$mresult['employee_id'];                                           
-             $name =$mresult['name'];
-             echo $mng;
-             echo $name;
-             
-             }   
-            $add_query="INSERT INTO employees(prefix,first_name,last_name,department_id,job_id,position_level_id,manager_id,telephone_no,address,email,company_id,hiredate) VALUES ('$prefix','$first_name','$last_name',$department_id,$job_id,$position_level_id,$mng,'$telephone','$address','$email',1,'$hiredate')";            
-            $a_query =  mysqli_query($conn,$add_query);
             
-            if($a_query)
-               header ("location:manage_employee_list.php");
-            else {
-                $msg='Error :'.mysql_error();
-                echo "Error Save [" . $add_query . "]";
-                echo $sql;
-                
-                
-            }
+            // เริ่มต้นใช้งาน class.upload.php ด้วยการสร้าง instant จากคลาส
+            $upload_image = new upload($_FILES['image_name']) ; // $_FILES['image_name'] ชื่อของช่องที่ให้เลือกไฟล์เพื่ออัปโหลด
+
+            //  ถ้าหากมีภาพถูกอัปโหลดมาจริง
+            if ( $upload_image->uploaded ) {
+
+                // ย่อขนาดภาพให้เล็กลงหน่อย  โดยยึดขนาดภาพตามความกว้าง  ความสูงให้คำณวนอัตโนมัติ
+                // ถ้าหากไม่ต้องการย่อขนาดภาพ ก็ลบ 3 บรรทัดด้านล่างทิ้งไปได้เลย
+                $upload_image->image_resize         = true ; // อนุญาติให้ย่อภาพได้
+                $upload_image->image_x              = 400 ; // กำหนดความกว้างภาพเท่ากับ 400 pixel 
+                $upload_image->image_ratio_y        = true; // ให้คำณวนความสูงอัตโนมัติ
+
+                $upload_image->process( "upload_images" ); // เก็บภาพไว้ในโฟลเดอร์ที่ต้องการ  *** โฟลเดอร์ต้องมี permission 0777
+
+                // ถ้าหากว่าการจัดเก็บรูปภาพไม่มีปัญหา  เก็บชื่อภาพไว้ในตัวแปร เพื่อเอาไปเก็บในฐานข้อมูลต่อไป
+                if ( $upload_image->processed ) {
+
+                    $image_name =  $upload_image->file_dst_name ; // ชื่อไฟล์หลังกระบวนการเก็บ จะอยู่ที่ file_dst_name
+                    $upload_image->clean(); // คืนค่าหน่วยความจำ
+                    //
+                    //
+                    //
+                    $sql = "SELECT employee_id,concat(first_name,' ',last_name) as name from employees where concat(first_name,' ',last_name) like '%$manager%'  ";
+                    $query= mysqli_query($conn, $sql);
+                     while($mresult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                     $mng =$mresult['employee_id'];                                           
+                     $name =$mresult['name'];
+                     echo $mng;
+                     echo $name;
+
+                     }   
+                    $add_query="INSERT INTO employees(prefix,first_name,last_name,department_id,job_id,position_level_id,manager_id,telephone_no,address,email,company_id,hiredate,profile_picture) VALUES ('$prefix','$first_name','$last_name',$department_id,$job_id,$position_level_id,$mng,'$telephone','$address','$email',1,'$hiredate','$image_name')";            
+                    $a_query =  mysqli_query($conn,$add_query);
+
+                    if($a_query)
+                       header ("location:manage_employee_list.php");
+                    else {
+                        $msg='Error :'.mysql_error();
+                        echo "Error Save [" . $add_query . "]";
+                        echo $sql;
+
+
+                    }
+                    // เก็บชื่อภาพลงฐานข้อมูล
+                    //$insertSQL = sprintf("INSERT INTO tbl_image (image_name) VALUES ( '%s' )", $image_name );
+                    //echo $insertSQL ;
+                    //mysql_select_db($dbName, $conn);
+                    //mysqli_select_db($conn, $dbName);
+                    //$Result1 = mysqli_query($conn,$insertSQL) or die(mysql_error());
+
+
+
+                }// END if ( $upload_image->processed )
+
+            }//END if ( $upload_image->uploaded )
+            
+            
         }
            
             
@@ -116,7 +160,7 @@
                                         <!--add employee-->
                                         <div class="row ">
                                             <div class="col-md-offset-1 col-md-10 box-padding">
-                                                <form action='manage_employee_insert.php?fn=add' method='POST' >
+                                                <form action='manage_employee_insert.php?fn=add' method='POST' enctype="multipart/form-data" name="form1" id="form1">
                                                     <div class="box-body">
 
                                                         <div class="row">
@@ -265,7 +309,7 @@
                                                     <div class="box-footer">
                                                         <center>
                                                             <input  class="btn btn-danger search-button" type="reset" name="Reset">
-                                                            <button type="submit" class="btn btn-primary search-button">เพิ่ม</button>
+                                                            <button type="submit" class="btn btn-primary search-button" value="Upload" >เพิ่ม</button>
                                                         </center>
 
                                                     </div>
