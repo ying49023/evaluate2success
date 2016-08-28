@@ -181,7 +181,7 @@
                                                         <!--/Modal delete-->
                                                         <form method="get" >
                                                         <!-- Modal Edit -->   
-                                                        <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["title_id"];; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["title_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                             <div class="modal-dialog" role="document">
                                                                 <div class="modal-content">
 

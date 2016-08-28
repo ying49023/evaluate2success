@@ -186,7 +186,8 @@
 
                                 $sql_title =    "SELECT
                                                         t.title_id AS title_id,
-                                                        t.title_name AS title_name
+                                                        t.title_name AS title_name,
+                                                        SUM(m.weight) as sumweight
                                                 FROM
                                                         competency_title t
                                                 JOIN competency c ON c.title_id = t.title_id 
@@ -201,13 +202,14 @@
                                 while ($result_title = mysqli_fetch_array($query_title, MYSQLI_ASSOC))  {
                                         $result_title_id = $result_title["title_id"];
                                         $result_title_name = $result_title["title_name"];
+                                        $result_title_sum = $result_title["sumweight"];
                                     
                                  ?> 
                                 <div class="col-md-12">
                                     <div class="col-md-12 bg-blue-active" style=" height:40px;" >                                        
                                         <button style="margin-top: 5px;" class="btn btn-default pull-right btn-sm"  data-toggle="collapse" data-target="#add_<?php echo $result_title_id; ?>">เพิ่มหัวข้อย่อย</button>                                                   
                                         <h4>
-                                            <?php echo $result_title_name."  ";?> 
+                                            <?php echo $result_title_name." | Total Weight: ".$result_title_sum." %  " ;?> 
                                             <a href="" data-href="competency_match.php?title_id=<?php echo $result_title_id; ?>&delete_title=1&level=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ; ?>" data-toggle="modal" data-target="#confirm-delete" style="color:#aaaaaa;">(<i class="glyphicon glyphicon-trash"></i>)</a>
                                         </h4>
                                     </div>
@@ -259,7 +261,7 @@
                                             c.competency_description As detail,
                                             t.title_name As title_name,
                                             p.position_description As position,
-                                            m.weight As weight 
+                                            m.weight As weight
                                             FROM manage_competency m 
                                             JOIN competency c ON m.competency_id=c.competency_id 
                                             JOIN competency_title t ON c.title_id=t.title_id 
@@ -307,7 +309,7 @@
 
                                                                 <div class="modal-header">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                                    <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ<?php echo $result_title_name."  ";?> ระดับ<?php echo $level_name;?> </h4>
                                                                 </div>
                                                                 <div class="modal-body ">
                                                                     <div class="row">
