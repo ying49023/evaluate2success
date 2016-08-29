@@ -7,8 +7,9 @@
             //++++++++++++++++++insert record+++++++++++++
            if($erp=='insert'){          
                $name =$_POST['company_name'];
-
-               $strSQL =" INSERT INTO company(company_name) VALUES('$name') ";
+				$fullname =$_POST['company_full_name'];
+               $strSQL =" INSERT INTO company(company_name,company_full_name) VALUES('$name','$fullname') ";
+			   
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
@@ -23,8 +24,9 @@
             //++++++++++++++++++update record+++++++++++++
            if($erp=='update'){          
                $name =$_POST['textcom'];
+			   $fullname =$_POST['textfullcom'];
                $id=$_GET['id'];
-               $strSQL =" UPDATE company SET company_name ='$name' WHERE company_id=$id ";
+               $strSQL =" UPDATE company SET company_name ='$name',company_full_name ='$fullname'  WHERE company_id=$id ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
@@ -109,14 +111,22 @@
                     <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
                         <form action="company_table.php?erp=insert" method="POST">
                         <div class="row">
-                            <div class="col-sm-7">
+                            <div class="col-sm-4">
                                 ชื่อบริษัท
                                 <input class="form-control" type="text" name="company_name" placeholder="----- กรุณากรอกชื่อบริษัท -----">
+								 
                             </div>
-                            
+                            <div class="col-sm-6">
+                                ชื่อเต็มบริษัท
+                                <input class="form-control" type="text" name="company_full_name" placeholder="----- กรุณากรอกชื่อเต็มบริษัท -----">
+								 
+                            </div>
+							
+							
+							
                             <div class="col-sm-2">
                                 <div class="form-group">
-                                  <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
+                                  <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 60%;" type="submit" value="เพิ่ม">
                                 </div>
                             </div>
                         </div>
@@ -128,6 +138,7 @@
                                 <thead>
                                     <tr class="bg-gray-light">
                                         <th class="text-center">ชื่อบริษัท</th>
+										<th class="text-center">ชื่อเต็มของบริษัท</th>
                                         <th class="text-center" style="width: 150px">จัดการ</th>
                                     </tr>
                                 </thead>
@@ -140,6 +151,7 @@
                                  ?>
                                 <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
                                     $name = $result["company_name"];
+									$fullname = $result["company_full_name"];
                                     $id = $result["company_id"];
                                    
                                 ?>
@@ -147,7 +159,7 @@
                             
                                 <tr>
                                         <td>&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                        
+                                        <td>&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $fullname; ?></td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                                 <i class="glyphicon glyphicon-pencil" ></i>
@@ -177,6 +189,12 @@
                                                             <label for="ชื่อบริษัท" class="col-sm-4 control-label">ชื่อบริษัท:</label>
                                                             <div class="col-sm-8">               
                                                                 <input type="text" class="form-control" value="<?php echo $result["company_name"]; ?>" name='textcom'   >
+                                                            </div>
+                                                        </div>
+														<div class="input-group col-sm-12" >
+                                                            <label for="ชื่อเต็มบริษัท" class="col-sm-4 control-label">ชื่อเต็มบริษัท:</label>
+                                                            <div class="col-sm-8">               
+                                                                <input type="text" class="form-control" value="<?php echo $result["company_full_name"]; ?>" name='textfullcom'   >
                                                             </div>
                                                         </div>
                                                      
@@ -209,6 +227,13 @@
                                                             <label for="ชื่อบริษัท" class="col-sm-4 control-label">ชื่อบริษัท:</label>
                                                             <div class="col-sm-8">               
                                                                 <input type="text" class="form-control" value="<?php echo $result["company_name"]; ?>" name='textcom' disabled="true"  >
+                                                            </div>
+															
+                                                        </div>
+														<div class="input-group col-sm-12" >
+                                                            <label for="ชื่อเต็มบริษัท" class="col-sm-4 control-label">ชื่อเต็มบริษัท:</label>
+                                                            <div class="col-sm-8">               
+                                                                <input type="text" class="form-control" value="<?php echo $result["company_full_name"]; ?>" name='textfullcom'   >
                                                             </div>
                                                         </div>
                                                         
