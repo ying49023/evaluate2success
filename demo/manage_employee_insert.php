@@ -118,7 +118,14 @@
                                             <div class="col-md-offset-1 col-md-10 box-padding">
                                                 <form action='manage_employee_insert.php?fn=add' method='POST' >
                                                     <div class="box-body">
-
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                <div class="col-md-6">
+                                                                    <label>อัพโหลดภาพ</label>
+                                                                    <input name="image_name" type="file" id="image_name" size="40" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-md-2">
                                                                 <div class="form-group">
@@ -251,14 +258,7 @@
                                                                 </div>
                                                             </div>  
                                                         </div>
-                                                        <div class="row">
-                                                            <div class="form-group">
-                                                                <div class="col-md-6">
-                                                                    <label>อัพโหลดภาพ</label>
-                                                                    <input name="image_name" type="file" id="image_name" size="40" />
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                        
                                                         <br>
 
                                                     </div><!-- /Box body -->
