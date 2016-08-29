@@ -6,7 +6,6 @@ session_start();
 if (!isset($_SESSION['username'])) {
     echo "Please Login!";
     header("location:login.php");
-    exit();
 }
 ?>
 <header class="main-header">
