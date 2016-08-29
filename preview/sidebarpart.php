@@ -9,7 +9,10 @@
             </div>
             <div class="pull-left info">
                 <p>นภัทร อินทร์ใจเอื้อ </p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <p>ตำแหน่ง： HR Manager</p>
+                <!--
+                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>  -->
+                
             </div>
         </div>
         <!-- search form -->
@@ -101,12 +104,9 @@
                     <li class="active"><a href="#"><i class="fa fa-circle-o"></i>ข้อมูลKPIsทั้งหมด</a></li>
                     <li class="active"><a href="hr_approve_kpi.php"><i class="fa fa-circle-o"></i>อนุมัติKPIsครั้งถัดไป</a></li>
                     <li class="active"><a href="hr_report_page.php"><i class="fa fa-circle-o"></i>ออกรายงาน</a></li>
-                    
-=======
                     <li class="<?php if($page == 'update_kpi.php'){ echo "active" ; } ?>">
                         <a href="update_kpi.php"><i class="fa fa-circle-o"></i>อัพเดทKPIs</a>
                     </li>
->>>>>>> 1fa6bbe2e4253b8e3aa2a8ee15e6389cf0417e8f
                 </ul>
             </li>
             <li class="<?php if($page == 'assignkpi.php'){ echo "active" ; } ?>">
