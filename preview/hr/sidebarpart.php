@@ -1,32 +1,34 @@
 <?php $page = basename($_SERVER['SCRIPT_NAME']); ?>
+
 <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
+    <?php
+    $sql_emp = "SELECT
+                                    e.*,d.*,j.*,c.*,p.*
+                            FROM
+                                    employees e
+                            JOIN departments d ON d.department_id = e.department_id
+                            JOIN jobs j ON j.job_id = e.job_id
+                            JOIN position_level p ON p.position_level_id = e.position_level_id
+                            JOIN company c ON c.company_id = e.company_id
+                            WHERE username = '" . $_SESSION["username"] . "'";
+
+    $query_emp = mysqli_query($conn, $sql_emp);
+    while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
+        ?>
     <section class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img style="width: 45px;height: 45px;"  src="upload_images/<?php echo $result_emp["profile_picture"]; ?>" class="img-circle " alt="<?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?>">
             </div>
             <div class="pull-left info">
-                <p>นภัทร อินทร์ใจเอื้อ </p>
+                <p><?php echo $result_emp["prefix"].$result_emp["first_name"]." ".$result_emp["last_name"]; ?></p>
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
-        </div>
-        <!-- search form -->
-        <!--<form action="#" method="get" class="sidebar-form">
-          <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                  <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                  </button>
-                </span>
-          </div>
-        </form>-->
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
-        
+        </div>     
         <ul class="sidebar-menu">
-            <li class="header" >เมนูสำหรับฝ่ายบุคคล</li>
+            <li class="header" style="color:white;font-size: 14px;" >เมนูสำหรับระดับ<?php echo $result_emp["position_description"]; ?></li>
             <!-- เมนูsubordinate-->
             <li class="<?php if($page == '' || $page == 'index.php'){ echo "active" ; } ?>">
                 <a href="index.php">
@@ -122,9 +124,6 @@
                     </li>
                     </ul>
             </li>
-            
-            
-            
             <li class="<?php if($page == 'departments_table.php' || $page == 'jobs_table.php' || $page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php' || $page == 'edit_profile.php'){ echo "active" ; } ?>">    
                 <a href="manage_employee.php">
                     <i class="glyphicon glyphicon-user"></i> <span>จัดการข้อมูลพนักงาน</span>
@@ -177,9 +176,8 @@
 
                 </a>
             </li>
-           
-
         </ul>
     </section>
+    <?php } ?>
     <!-- /.sidebar -->
 </aside>

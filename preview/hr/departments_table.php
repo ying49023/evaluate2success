@@ -67,9 +67,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-
-        <!-- SCRIPT PACKS -->
-        <?php include('./script_packs.html') ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
         
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -267,4 +266,6 @@
         </div>
         <!-- ./wrapper -->
     </body>
+    <!-- SCRIPT PACKS -->
+<?php include('./script_packs.html') ?>
 </html>

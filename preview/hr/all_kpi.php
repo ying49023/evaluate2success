@@ -15,46 +15,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
-        <script>
-            $(document).ready(function(){
-                $.extend(true, $.fn.dataTable.defaults, {
-                    "language": {
-                        "sProcessing": "กำลังดำเนินการ...",
-                        "sLengthMenu": "แสดง_MENU_ แถว",
-                        "sZeroRecords": "ไม่พบข้อมูล",
-                        "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
-                        "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
-                        "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
-                        "sInfoPostFix": "",
-                        "sSearch": "ค้นหา:",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "เิริ่มต้น",
-                            "sPrevious": "ก่อนหน้า",
-                            "sNext": "ถัดไป",
-                            "sLast": "สุดท้าย"
-                        }
-                    }
-                });
-
-                // Datatable Function
-                var table = $('#example').DataTable({
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                    scrollY:   '50vh',
-                    scrollCollapse: true,
-                    paging: false,
-                    "stateSave": true,
-                    'columnDefs': [{
-                                'targets': 6,
-                                'searchable': false,
-                            'orderable': false,
-                        }],
-                    'order': [[0, 'asc']]
-                });
-            });
-        </script>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -282,7 +244,7 @@
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
-        
-        
     </body>
+    <!-- SCRIPT PACKS -->
+        <?php include ('./script_packs.html'); ?>
 </html>
