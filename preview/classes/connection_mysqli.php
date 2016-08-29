@@ -26,6 +26,11 @@
 
     mysqli_set_charset($conn, "utf8"); // Change latin charset to UTF-8 charset for MSQL
     /* END DB Config and connection */
+    
+    //*** Reject user not online
+//    $intRejectTime = 20; // Minute
+//    $sql = "UPDATE user_login SET login_status = '0', login_datetime = '0000-00-00 00:00:00'  WHERE 1 AND DATE_ADD(LastUpdate, INTERVAL $intRejectTime MINUTE) <= NOW() ";
+//    $query = mysqli_query($conn,$sql);
 
     
 ?>
