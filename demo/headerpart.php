@@ -1,10 +1,29 @@
+<?php include ('./classes/connection_mysqli.php'); ?>
+<?php 
+
+session_start();
+
+if (!isset($_SESSION['username'])) {
+    echo "Please Login!";
+    $sql_check = "SELECT * FROM employees WHERE username = '".$_SESSION["username"]."' ";
+    $query_check = mysqli_query($conn, $sql_check);
+    $result_check = mysqli_fetch_array($query_check);
+    
+    if($result_check["login_status"] == '1'){
+        $sql = "UPDATE employees SET login_status = '0', login_datetime = '0000-00-00 00:00:00' WHERE username = '".$_SESSION["username"]."' ";
+	$query = mysqli_query($conn,$sql);
+    }
+    header("location:login.php");
+    
+}
+?>
 <header class="main-header">
     <!-- Logo -->
     <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <!--<span class="logo-mini"><b>A</b>LT</span>-->
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-lg"><b>A</b>LT</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -209,23 +228,43 @@
                     </ul>
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
+                <?php 
+                $sql_emp = "SELECT
+                                    e.*,d.*,j.*,c.*,p.*
+                            FROM
+                                    employees e
+                            JOIN departments d ON d.department_id = e.department_id
+                            JOIN jobs j ON j.job_id = e.job_id
+                            JOIN position_level p ON p.position_level_id = e.position_level_id
+                            JOIN company c ON c.company_id = e.company_id
+                            WHERE username = '".$_SESSION["username"]."'";
+
+                $query_emp = mysqli_query($conn, $sql_emp);    
+                while($result_emp = mysqli_fetch_array($query_emp , MYSQLI_ASSOC)){
+                    if($result_emp["profile_picture"] == ""){
+                        $picture = "contact.png";
+                    }else{
+                        $picture = $result_emp["profile_picture"];
+                    }
+                ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">นภัทร อินทร์ใจเอื้อ</span>
+                        <img src="upload_images/<?php echo $picture; ?>" class="user-image" alt="<?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?>">
+                        <span class="hidden-xs"><?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                            <img src="upload_images/<?php echo $picture; ?>" class="img-circle" alt="User Image">
 
                             <p>
-                                นภัทร อินทร์ใจเอื้อ - หัวหน้าฝ่ายบุคคล
-                                <small>Member since Nov. 2012</small>
+                                <?php echo $result_emp["prefix"].$result_emp["first_name"]." ".$result_emp["last_name"]; ?>
+                                <br>
+                                <small><?php echo $result_emp["department_name"]; ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body">
+                        <!--                        <li class="user-body">
                             <div class="row">
                                 <div class="col-xs-4 text-center">
                                     <a href="#">Followers</a>
@@ -237,19 +276,20 @@
                                     <a href="#">Friends</a>
                                 </div>
                             </div>
-                            <!-- /.row -->
-                        </li>
+                             /.row 
+                        </li>-->
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+<!--                                <a href="#" class="btn btn-default btn-flat" disable >Profile</a>-->
                             </div>
                             <div class="pull-right">
-                                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="logout.php" class="btn btn-default btn-flat">Logout</a>
                             </div>
                         </li>
                     </ul>
                 </li>
+                <?php } ?>
                 <!-- Control Sidebar Toggle Button -->
                 <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>

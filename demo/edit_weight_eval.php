@@ -13,9 +13,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
         <!-- CSS PACKS -->
-    <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-    <?php include ('./script_packs.html'); ?>
+        <?php include ('./css_packs.html'); ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        
         <style type="text/css">    
             table.table tr td,th{
                 text-align: center;
@@ -402,4 +403,6 @@
         </div><!-- ./wrapper -->
             
     </body>
+    <!-- SCRIPT PACKS -->
+<?php include('./script_packs.html') ?>
 </html>

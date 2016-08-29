@@ -54,44 +54,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
-        <script>
-            $(document).ready(function(){
-                $.extend(true, $.fn.dataTable.defaults, {
-                    "language": {
-                        "sProcessing": "กำลังดำเนินการ...",
-                        "sLengthMenu": "แสดง_MENU_ แถว",
-                        "sZeroRecords": "ไม่พบข้อมูล",
-                        "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
-                        "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
-                        "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
-                        "sInfoPostFix": "",
-                        "sSearch": "ค้นหา:",
-                        "sUrl": "",
-                        "oPaginate": {
-                            "sFirst": "เิริ่มต้น",
-                            "sPrevious": "ก่อนหน้า",
-                            "sNext": "ถัดไป",
-                            "sLast": "สุดท้าย"
-                        }
-                    }
-                });
-
-                // Datatable Function
-                var table = $('#example').DataTable({
-                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-                    paging: false,
-                    "stateSave": true,
-                    'columnDefs': [{
-                                'targets': 2,
-                                'searchable': false,
-                            'orderable': false,
-                        }],
-                    'order': [[0, 'asc']]
-                });
-            });
-        </script>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -146,7 +110,10 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <!-- ช่องค้นหา by listJS -->
-                                    <input class="search" placeholder="ค้นหา" />
+                                    <div class="form-inline padding-small">
+                                        <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                        <input class="search form-control" placeholder="ค้นหา" />
+                                    </div>
                                 <?php
                                 $sql_kpi_group = "SELECT kpi_group_id,	kpi_group_name FROM kpi_group ORDER BY	kpi_group_id ASC";
                                 $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
@@ -156,12 +123,12 @@
                                         <thead>
                                             <tr>
                                                 <th  style="width: 120px;">
-                                                    <a href="#" class="sort" data-sort="group_id">Group ID</a>
+                                                    <button class="sort" data-sort="group_id">Group ID</button>
                                                 </th>
                                                 <th>
-                                                    <a href="#" class="sort" data-sort="kpi_group_name">
+                                                    <button class="sort" data-sort="kpi_group_name">
                                                         ชื่อกลุ่ม
-                                                    </a>
+                                                    </button>
                                                 </th>
                                                 <th style="width: 150px;text-align: center;">แก้ไข/ลบ</th>
                                             </tr>
@@ -178,47 +145,46 @@
                                                   <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="hr_kpi_group.php?kpi_group_id=<?php echo $result_kpi_group["kpi_group_id"]; ?>&delete_group=1">
                                                           <i class="glyphicon glyphicon-remove"></i>ลบ</a>
 
+                                                <!-- Modal Edit -->   
+                                                <form action="" method="get" >
+                                                <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
 
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div style="width: 75%;margin: auto;">
+                                                                            <div class="form-group">
+                                                                                <label class="pull-left">แก้ไขหัวข้อ</label>
+                                                                                <input type="text" class="form-control" name="kpi_group_name" placeholder="ชื่อหัวข้อKPI" value="<?php echo $result_kpi_group["kpi_group_name"]; ?>" required >
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
+                                                                <input type="hidden" name="kpi_group_id" value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" >
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                            </div>                 
+                                                        </div>
+                                                    </div>  
+                                                </div>
+                                                </form>
+                                                <!--/Modal Edit-->
                                                 <!--Modal delete-->
                                                       <?php include ('./modal_delete.php'); ?>
                                                 <!--/Modal delete-->
                                                       
                                             </td>
                                         </tr>
-                                        <form action="" method="get" >
-                                        <!-- Modal Edit -->   
-                                            <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div style="width: 75%;margin: auto;">
-                                                                        <div class="form-group">
-                                                                            <label class="pull-left">แก้ไขหัวข้อ</label>
-                                                                            <input type="text" class="form-control" name="kpi_group_name" placeholder="ชื่อหัวข้อKPI" value="<?php echo $result_kpi_group["kpi_group_name"]; ?>" required >
-                                                                                    
-                                                                        </div>
-                                                                                                            
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
-                                                            <input type="hidden" name="kpi_group_id" value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" >
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                        </div>                 
-                                                    </div>
-                                                </div>  
-                                            </div>
-                                            <!--/Modal Edit-->
-                                            </form>
                                          <?php } ?>
                                     </tbody>
                                     <script>
@@ -252,4 +218,6 @@
         </div>
         <!-- ./wrapper -->
     </body>
+    <!-- SCRIPT PACKS -->
+        <?php include ('./script_packs.html'); ?>
 </html>

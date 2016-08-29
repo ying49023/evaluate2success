@@ -67,9 +67,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-
-        <!-- SCRIPT PACKS -->
-        <?php include('./script_packs.html') ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
         
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -126,11 +125,14 @@
 
                              <div class="box-body ">
                                  <!-- ช่องค้นหา by listJS -->
-                                <input class="search " placeholder="ค้นหา" />
+                                 <div class="form-inline padding-small">
+                                     <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                     <input class="search form-control" placeholder="ค้นหา" />
+                                 </div>
                                  <table  class="table table-bordered table-condensed" >
                                      <thead>
-                                         <tr class="bg-gray-light">
-                                             <th class="text-center">ชื่อแผนก/ฝ่าย</th>
+                                         <tr class="">
+                                             <th class="text-center"><button class="sort" data-sort="dept_name">ชื่อแผนก/ฝ่าย</button></th>
                                              <th class="text-center" style="width: 150px">จัดการ</th>
                                          </tr>
                                      </thead>
@@ -147,93 +149,92 @@
                                          $id = $result["department_id"];
 
                                      ?>
-
-
-                                     <tr>
-                                         <td class="name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-
+                                         <tr>
+                                             <td class="dept_name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                                 
                                              <td class="text-center">
                                                  <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                                      <i class="glyphicon glyphicon-pencil" ></i>
                                                  </button>                                                   
                                                  |
-
+                                                     
                                                  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
                                                      <i class="glyphicon glyphicon-remove" ></i>
                                                  </button>
+                                                 <!--Edit Modal -->
+
+                                                    <form class="form-horizontal" name="frmMain" method="post" action="departments_table.php?erp=update&id=<?php echo $id; ?>" >
+                                                         <div class="modal fade" id="<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                             <div class="modal-dialog" role="document">
+                                                                 <div class="modal-content">
+                                                                     <div class="modal-header">
+                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                         <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
+                                                                     </div>
+                                                                     <div class="modal-body">
+
+                                                                         <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+                                                                         <div class="input-group col-sm-12" >
+                                                                             <label for="ชื่อแผนก/ฝ่าย" class="col-sm-4 control-label">ชื่อแผนก/ฝ่าย:</label>
+                                                                             <div class="col-sm-8">               
+                                                                                 <input type="text" class="form-control" value="<?php echo $result["department_name"]; ?>" name='textdepartment'   >
+                                                                             </div>
+                                                                         </div>
+
+
+                                                                     </div>
+                                                                     <div class="modal-footer">
+                                                                         <input type="submit" class="btn btn-primary" value="บันทึก" >
+                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </form>
+                                                 <!--Edit Modal -->
+
+                                                 <!--Delete Modal -->
+
+                                                    <form class="form-horizontal" name="frmMain" method="post" action="departments_table.php?erp=delete&id=<?php echo $id; ?>" >
+                                                         <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                             <div class="modal-dialog" role="document">
+                                                                 <div class="modal-content">
+                                                                     <div class="modal-header">
+                                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                         <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
+                                                                     </div>
+                                                                     <div class="modal-body">
+                                                                         <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+                                                                         <div class="input-group col-sm-12" >
+                                                                             <label for="ชื่อแผนก/ฝ่าย" class="col-sm-4 control-label">ชื่อแผนก/ฝ่าย:</label>
+                                                                             <div class="col-sm-8">               
+                                                                                 <input type="text" class="form-control" value="<?php echo $result["department_name"]; ?>" name='textdepartment' disabled="true"  >
+                                                                             </div>
+                                                                         </div>
+
+
+
+                                                                     </div>
+                                                                     <div class="modal-footer">
+                                                                         <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
+                                                                         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </div>
+                                                     </form>
+                                                 <!--Delete Modal -->
                                              </td>
                                          </tr>
 
-                                     <!--Edit Modal -->
-
-                                     <form class="form-horizontal" name="frmMain" method="post" action="departments_table.php?erp=update&id=<?php echo $id; ?>" >
-                                             <div class="modal fade" id="<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                 <div class="modal-dialog" role="document">
-                                                     <div class="modal-content">
-                                                         <div class="modal-header">
-                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                             <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
-                                                         </div>
-                                                         <div class="modal-body">
-
-                                                             <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
-                                                             <div class="input-group col-sm-12" >
-                                                                 <label for="ชื่อแผนก/ฝ่าย" class="col-sm-4 control-label">ชื่อแผนก/ฝ่าย:</label>
-                                                                 <div class="col-sm-8">               
-                                                                     <input type="text" class="form-control" value="<?php echo $result["department_name"]; ?>" name='textdepartment'   >
-                                                                 </div>
-                                                             </div>
-
-
-                                                         </div>
-                                                         <div class="modal-footer">
-                                                             <button type="submit" class="btn btn-primary">บันทึก</button>
-                                                             <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </form>
-                                     <!--Edit Modal -->
-
-                                     <!--Delete Modal -->
-
-                                     <form class="form-horizontal" name="frmMain" method="post" action="departments_table.php?erp=delete&id=<?php echo $id; ?>" >
-                                             <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                 <div class="modal-dialog" role="document">
-                                                     <div class="modal-content">
-                                                         <div class="modal-header">
-                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                             <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
-                                                         </div>
-                                                         <div class="modal-body">
-                                                             <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
-                                                             <div class="input-group col-sm-12" >
-                                                                 <label for="ชื่อแผนก/ฝ่าย" class="col-sm-4 control-label">ชื่อแผนก/ฝ่าย:</label>
-                                                                 <div class="col-sm-8">               
-                                                                     <input type="text" class="form-control" value="<?php echo $result["department_name"]; ?>" name='textdepartment' disabled="true"  >
-                                                                 </div>
-                                                             </div>
-
-
-
-                                                         </div>
-                                                         <div class="modal-footer">
-                                                             <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
-                                                             <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-
-                                                         </div>
-                                                     </div>
-                                                 </div>
-                                             </div>
-                                         </form>
-                                     <!--Delete Modal -->
+                                     
                                     <?php } ?>
                                  </tbody>
                                  <script>
                                      var options = {
-                                         valueNames: [ 'name']
+                                         valueNames: [ 'dept_name']
                                      };
                                      
                                      var userList = new List('filter', options);
@@ -266,4 +267,6 @@
         </div>
         <!-- ./wrapper -->
     </body>
+    <!-- SCRIPT PACKS -->
+<?php include('./script_packs.html') ?>
 </html>

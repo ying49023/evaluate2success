@@ -62,15 +62,16 @@
 <html>
     <head>
         
-        <meta charset="utf-8">
+        
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
         <!-- javascript   menu -->
         <script type="text/javascript">
             jQuery(document).ready(function ($) {
@@ -312,7 +313,7 @@
                                                     employees e
                                             JOIN employees m ON e.manager_id = m.employee_id
                                             WHERE
-                                                e.manager_id = 1"; 
+                                                e.manager_id = e.manager_id"; 
                                         $query_mail = mysqli_query($conn, $sql_mail);
                                         
                                         ?>
@@ -326,7 +327,7 @@
                                        </tr>
 
                                        <?php 
-                                        $sql_meval = "SELECT  CONCAT(m.prefix,m.first_name,' ',m.last_name) as name, ( SELECT  COUNT(e.employee_id)
+                                        $sql_meval = "SELECT  CONCAT(m.prefix,m.first_name,' ',m.last_name) as name,e.manager_id, ( SELECT  COUNT(e.employee_id)
                                                         FROM evaluation_employee v JOIN employees e ON v.employee_id = e.employee_id JOIN employees m ON e.manager_id = m.employee_id
                                                         WHERE e.manager_id = 1 AND sum_point <> 0) AS 'Completed_evaluate' , COUNT(e.employee_id)-( SELECT  COUNT(e.employee_id)
                                                         FROM evaluation_employee v JOIN employees e ON v.employee_id = e.employee_id JOIN employees m ON e.manager_id = m.employee_id
@@ -336,15 +337,22 @@
                                                         WHERE e.manager_id = 1  ";
                                         $query_meval= mysqli_query($conn, $sql_meval);
                                     ?>
-                                    <?php while($result_meval = mysqli_fetch_array($query_meval,MYSQLI_ASSOC)) { ?>
+                                    <?php while($result_meval = mysqli_fetch_array($query_meval,MYSQLI_ASSOC)) { 
+                                        $name=$result_meval['name'];
+                                        $completed=$result_meval['Completed_evaluate'];
+                                        $uncompleted=$result_meval['Uncompleted_evaluate'];
+                                        $all=$result_meval['All_subordinate'];
+                                        $mng_id=$result_meval['manager_id'];
+                                        ?>
                                        <tr>
-                                           <td><?php echo $result_meval['name']; ?></td>
-                                           <td class="text-center"><?php echo $result_meval['Completed_evaluate']; ?></td>
-                                           <td class="text-center"><?php echo $result_meval['Uncompleted_evaluate']; ?></td>
-                                           <td class="text-center"><?php echo $result_meval['All_subordinate']; ?></td>
+                                           <td><?php echo $name; ?></td>
+                                           <td class="text-center"><a href="manage_evaluate_sub_list.php?mng_id=<?php echo $mng_id ?>"><?php echo $completed; ?></a></td>
+                                           <td class="text-center"><a href="manage_evaluate_sub_list.php"><?php echo $uncompleted; ?></a></td>
+                                           <td class="text-center"><a href="manage_evaluate_sub_list.php"><?php echo $all; ?></a></td>
 
                                            <td class="text-center">
-                                               <a href="">
+                                               
+                                               <a href="sendmail/sendmail.php">
                                                    <i class="glyphicon glyphicon-envelope"></i>
                                                </a>
                                            </td>
@@ -422,19 +430,15 @@
                                            <th>ชื่อพนักงาน</th>
                                            <th class="text-center">สถานะ</th>
                                            <th class="text-center">ดูรายละเอียด</th>
-                                           <th class="text-center">แจ้งเตือนถึงพนักงาน</th>
-                                           <th class="text-center">แจ้งเตือนถึงผู้บังคับบัญชา</th>
+                                           <th class="text-center">แจ้งเตือนถึงพนักงาน/ผู้บังคับบัญชา</th>
+                                           
                                        </tr>
                                        <tr>
                                            <td>นาย สมศักดิ์ ดวงจันทร์</td>
                                            <td class="text-center" style="color: red">uncomplete</td>
                                            <td class="text-center"><a href="#" class="glyphicon glyphicon-eye-open"></a></td>
                                            <td class="text-center"><a href="#" class="glyphicon glyphicon-envelope"></a></td>
-                                           <td class="text-center">
-                                               <a href="#">
-                                                   <i class="glyphicon glyphicon-envelope"></i>
-                                               </a>
-                                           </td>
+                                           
                                        </tr>
                                        
                                    </table>
@@ -463,4 +467,6 @@
         <!-- ./wrapper -->
 
     </body>
+    <!-- SCRIPT PACKS -->
+    <?php include ('./script_packs.html'); ?>
 </html>

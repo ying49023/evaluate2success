@@ -7,7 +7,7 @@
                 $get_emp_id = $_GET["emp_id"];
             }
             // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
-            require_once('classes/class.upload.php') ;
+            require_once('./classes/class.upload.php') ;
         ?>
         
         <meta charset="utf-8">

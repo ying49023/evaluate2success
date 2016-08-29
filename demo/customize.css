@@ -1,20 +1,20 @@
 .box-padding{
-        padding: 10px 30px 0px 30px;
-    }
-    .box-padding-small{
-        padding: 10px 15px 10px 15px;
-    }
-    .search-button{
-        max-width: 120px;
-        width: 100%;
-    }
-    .box-padding-table{
-        padding: 10px 40px 20px 40px;
-    }
-    .circle-thumbnail{
-        max-height: 120px;
-    }
-    #img-box{
+    padding: 10px 30px 0px 30px;
+}
+.box-padding-small{
+    padding: 10px 15px 10px 15px;
+}
+.search-button{
+    max-width: 120px;
+    width: 100%;
+}
+.box-padding-table{
+    padding: 10px 40px 20px 40px;
+}
+.circle-thumbnail{
+    max-height: 120px;
+}
+#img-box{
     width:120px;
     height: 150px;
     margin: 10px 10px 5px 10px;
@@ -22,14 +22,14 @@
 }
 #detail-content{
     margin: 0px 5px 5px 5px;
-
-
+    
+    
 }
 #menu_status{
     margin: 5px 5px 5px 55px;
     width:100%;
 }
-            .padding-top-table{
+.padding-top-table{
     padding-top: 25px;
 }
 .circle-thumbnail{
@@ -40,4 +40,11 @@
     overflow-y: no-display;
     height: 100%;
     min-height: 450px;
+}
+.padding-small{
+    padding: 10px 5px;
+}
+.button-login{
+    width: 200px;
+    height: 50px;
 }

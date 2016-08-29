@@ -6,6 +6,8 @@
         if (isset($_GET["emp_id"])) {
                 $get_emp_id = $_GET["emp_id"];
             }
+            // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
+            require_once('./classes/class.upload.php') ;
         ?>
         
         <meta charset="utf-8">
@@ -15,8 +17,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -61,7 +63,13 @@
                             $position_level_id = $result["position_level_id"];
                             $id = $result["employee_id"];
                             $mng_id =$result["manager_id"];
-                                   
+                            
+                            $pic=$result["profile_picture"];
+                            if($result["profile_picture"] == ""){
+                                $pic = "contact.png";
+                            }else{
+                                $pic = $result["profile_picture"];
+                            }      
                     ?>
                     <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' >
                     <div class="box box-primary">
@@ -74,13 +82,15 @@
                                 <div class="row with-border">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <img class="thumbnail img-circle" src="" alt="รูปโปรไฟล์" />
+                                            <img class="thumbnail img-circle" src="upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
+                                            
                                         </div>
                                     </div>
                                     <div class="col-md-4">                                                
                                         <div class="form-group">
                                             <label>อัพโหลดรูปภาพ</label>
-                                            <input class="form-control" name="first_name" type="file" value="<?php echo $f_name; ?>">
+                                            <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file"  size="40" />
+                                            
                                         </div>                                                
                                     </div>
                                     <div class="col-md-2">                                                
@@ -231,14 +241,7 @@
                                         </div>
                                     </div>  
                                 </div>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <label>อัพโหลดภาพ</label>
-                                            <input name="image_name" type="file" id="image_name" size="40" />
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <br>
 
                             </div>
@@ -272,4 +275,6 @@
         <!-- ./wrapper -->
 
     </body>
+    <!-- SCRIPT PACKS -->
+<?php include('./script_packs.html') ?>
 </html>

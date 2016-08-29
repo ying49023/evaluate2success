@@ -1,25 +1,21 @@
 .sort {
-  /*padding:10px;*/
-  /*border-radius: 6px;*/
+  /*padding:3px;*/
+  border-radius: 4px;
   border:none;
   display:inline-block;
-  color:black;
+  background: #ffffff;
   text-decoration: none;
-  
-  height:100%;
-  width: 100%;
 }
-.sort button{
-    background-color: #dddddd; 
-}
+
 .sort:hover {
   text-decoration: none;
-  /*background-color:#1b8aba;*/
-  background-color: #dddddd;
-  color: #006;
+  background-color:#1b8aba;
+  /*background-color: #dddddd;*/
+  color: #FFFFFF;
 }
 .sort:focus {
   outline:none;
+  color: #003399;
 }
 .sort:after {
   display:inline-block;

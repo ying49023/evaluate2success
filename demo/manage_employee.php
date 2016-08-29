@@ -68,32 +68,9 @@
 
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
-        <script>
-            $.extend(true, $.fn.dataTable.defaults, {
-                "language": {
-                    "sProcessing": "กำลังดำเนินการ...",
-                    "sLengthMenu": "แสดง_MENU_ แถว",
-                    "sZeroRecords": "ไม่พบข้อมูล",
-                    "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
-                    "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
-                    "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ค้นหา:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "เริ่มต้น",
-                        "sPrevious": "ก่อนหน้า",
-                        "sNext": "ถัดไป",
-                        "sLast": "สุดท้าย"
-                    }
-                }
-            });
-            $(document).ready(function() {
-                $('#example').DataTable();
-            } );
-        </script>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -134,14 +111,7 @@
                                             <div class="col-md-offset-1 col-md-10 box-padding">
                                                 <form action='manage_employee.php?fn=add' method='POST' >
                                                     <div class="box-body">
-                                                       <div class="row">
-                                                            <div class="form-group">
-                                                                <div class="col-md-6">
-                                                                    <label>อัพโหลดภาพ</label>
-                                                                    <input name="image_name" type="file" id="image_name" size="40" />
-                                                                </div>
-                                                            </div>
-                                                        </div>             
+
                                                         <div class="row">
                                                             <div class="col-md-2">
                                                                 <div class="form-group">
@@ -266,7 +236,14 @@
                                                                 </div>
                                                             </div>  
                                                         </div>
-                                                        
+                                                        <div class="row">
+                                                            <div class="form-group">
+                                                                <div class="col-md-6">
+                                                                    <label>อัพโหลดภาพ</label>
+                                                                    <input name="image_name" type="file" id="image_name" size="40" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                         <br>
 
                                                     </div><!-- /Box body -->
@@ -389,4 +366,6 @@
         <!-- ./wrapper -->
 
     </body>
+    <!-- SCRIPT PACKS -->
+        <?php include('./script_packs.html') ?>
 </html>

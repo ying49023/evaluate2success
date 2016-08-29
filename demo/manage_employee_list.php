@@ -34,32 +34,9 @@
 
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
-        <script>
-            $.extend(true, $.fn.dataTable.defaults, {
-                "language": {
-                    "sProcessing": "กำลังดำเนินการ...",
-                    "sLengthMenu": "แสดง_MENU_ แถว",
-                    "sZeroRecords": "ไม่พบข้อมูล",
-                    "sInfo": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
-                    "sInfoEmpty": "แสดง 0 ถึง 0 จาก 0 แถว",
-                    "sInfoFiltered": "(กรองข้อมูล _MAX_ ทุกแถว)",
-                    "sInfoPostFix": "",
-                    "sSearch": "ค้นหา:",
-                    "sUrl": "",
-                    "oPaginate": {
-                        "sFirst": "เริ่มต้น",
-                        "sPrevious": "ก่อนหน้า",
-                        "sNext": "ถัดไป",
-                        "sLast": "สุดท้าย"
-                    }
-                }
-            });
-            $(document).ready(function() {
-                $('#example').DataTable();
-            } );
-        </script>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -130,14 +107,17 @@
                                                     </div>
                                                 </div>-->
                                                 <!-- ช่องค้นหา by listJS -->
-                                                <input class="search " placeholder="ค้นหา" />
+                                                <div class="form-inline padding-small">
+                                                    <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                                    <input class="search form-control" placeholder="ค้นหา" />
+                                                </div>
                                                 <table id="example" class="table table-hover table-striped disabled"  >
                                                     <thead>
                                                         <tr>
-                                                            <th><b>รหัสพนักงาน</b></th>
-                                                            <th><b>ชื่อ-นามสกุล</b></th>
-                                                            <th class="text-center"><b>ตำแหน่ง</b></th>
-                                                            <th class="text-center"><b>แผนก</b></th>
+                                                            <th><button class="sort" data-sort="emp_id"><b>รหัสพนักงาน</b></button></th>
+                                                            <th><button class="sort" data-sort="emp_name"><b>ชื่อ-นามสกุล</b></button></th>
+                                                            <th class="text-center"><button class="sort" data-sort="job_name"><b>ตำแหน่ง</b></button></th>
+                                                            <th class="text-center"><button class="sort" data-sort="dept_name"><b>แผนก</b></button></th>
                                                             <th class="text-center"><b>แก้ไข/ลบ</b></th>
                                                         </tr>
                                                     </thead>
@@ -158,9 +138,9 @@
                                                             ?>
                                                             <tr>
                                                                 <td class="emp_id"><?php echo $emp_id; ?></td>
-                                                                <td class="name"><?php echo $name; ?></td>
-                                                                <td class="job text-center"><?php echo $job; ?></td>
-                                                                <td class="dept text-center"><?php echo $dept; ?></td>
+                                                                <td class="emp_name"><?php echo $name; ?></td>
+                                                                <td class="job_name text-center"><?php echo $job; ?></td>
+                                                                <td class="dept_name text-center"><?php echo $dept; ?></td>
                                                                 <td class="text-center">
                                                                     <a href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
                                                                     | <a onclick="myFunction()" ><i class="glyphicon glyphicon-trash"></i></a>
@@ -185,7 +165,7 @@
                                                     </tbody>
                                                     <script>
                                                         var options = {
-                                                            valueNames: [ 'emp_id', 'name' , 'job' , 'dept' ]
+                                                            valueNames: [ 'emp_id', 'emp_name' , 'job_name' , 'dept_name' ]
                                                         };
                                                         
                                                         var userList = new List('filter', options);
@@ -220,4 +200,6 @@
         <!-- ./wrapper -->
 
     </body>
+    <!-- SCRIPT PACKS -->
+        <?php include('./script_packs.html') ?>
 </html>

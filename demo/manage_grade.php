@@ -71,8 +71,8 @@
         <!-- CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
 
-        <!-- SCRIPT PACKS -->
-        <?php include('./script_packs.html') ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -295,4 +295,6 @@
         </div>
         <!-- ./wrapper -->
     </body>
+    <!-- SCRIPT PACKS -->
+    <?php include ('./script_packs.html'); ?>
 </html>
