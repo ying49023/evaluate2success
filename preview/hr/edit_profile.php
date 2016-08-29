@@ -64,11 +64,11 @@
                             $id = $result["employee_id"];
                             $mng_id =$result["manager_id"];
                             
-                            $picture=$result["profile_picture"];
+                            $pic=$result["profile_picture"];
                             if($result["profile_picture"] == ""){
-                                $picture = "contact.png";
+                                $pic = "contact.png";
                             }else{
-                                $picture = $result["profile_picture"];
+                                $pic = $result["profile_picture"];
                             }      
                     ?>
                     <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' >
@@ -82,14 +82,14 @@
                                 <div class="row with-border">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <img class="thumbnail img-circle" src="upload_images/<?php echo $picture;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
+                                            <img class="thumbnail img-circle" src="upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
                                             
                                         </div>
                                     </div>
                                     <div class="col-md-4">                                                
                                         <div class="form-group">
                                             <label>อัพโหลดรูปภาพ</label>
-                                            <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file" id="image_name" size="40" />
+                                            <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file"  size="40" />
                                             
                                         </div>                                                
                                     </div>
