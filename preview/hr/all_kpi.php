@@ -201,16 +201,16 @@
                                                 <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
                                                 <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi.php?kpi_id=<?php echo $result_kpi["kpi_id"]; ?>&kpi_group_id=<?php echo $get_kpi_group_id; ?>">
                                                 <i class="glyphicon glyphicon-remove"></i>ลบ</a>
-                                                        
+                                                <!-- Modal Edit -->
+                                                <?php include('./modal_edit_all_kpi.php') ; ?>
+                                                <!--/Modal Edit-->        
                                                 <!--Modal delete-->
                                                 <?php include('./modal_delete_all_kpi.php'); ?>
                                                 <!--/Modal delete-->
                                             </td>
                                             
                                         </tr>
-                                        <!-- Modal Edit -->
-                                        <?php include('./modal_edit_all_kpi.php') ; ?>
-                                        <!--/Modal Edit-->
+                                        
                                     <?php } ?>
                                         </tbody>
                                         <script>

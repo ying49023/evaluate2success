@@ -145,47 +145,46 @@
                                                   <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="hr_kpi_group.php?kpi_group_id=<?php echo $result_kpi_group["kpi_group_id"]; ?>&delete_group=1">
                                                           <i class="glyphicon glyphicon-remove"></i>ลบ</a>
 
+                                                <!-- Modal Edit -->   
+                                                <form action="" method="get" >
+                                                <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
 
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div style="width: 75%;margin: auto;">
+                                                                            <div class="form-group">
+                                                                                <label class="pull-left">แก้ไขหัวข้อ</label>
+                                                                                <input type="text" class="form-control" name="kpi_group_name" placeholder="ชื่อหัวข้อKPI" value="<?php echo $result_kpi_group["kpi_group_name"]; ?>" required >
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
+                                                                <input type="hidden" name="kpi_group_id" value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" >
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                            </div>                 
+                                                        </div>
+                                                    </div>  
+                                                </div>
+                                                </form>
+                                                <!--/Modal Edit-->
                                                 <!--Modal delete-->
                                                       <?php include ('./modal_delete.php'); ?>
                                                 <!--/Modal delete-->
                                                       
                                             </td>
                                         </tr>
-                                        <form action="" method="get" >
-                                        <!-- Modal Edit -->   
-                                            <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                <div class="modal-dialog" role="document">
-                                                    <div class="modal-content">
-                                                        
-                                                        <div class="modal-header">
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                            <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div style="width: 75%;margin: auto;">
-                                                                        <div class="form-group">
-                                                                            <label class="pull-left">แก้ไขหัวข้อ</label>
-                                                                            <input type="text" class="form-control" name="kpi_group_name" placeholder="ชื่อหัวข้อKPI" value="<?php echo $result_kpi_group["kpi_group_name"]; ?>" required >
-                                                                                    
-                                                                        </div>
-                                                                                                            
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
-                                                            <input type="hidden" name="kpi_group_id" value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" >
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                        </div>                 
-                                                    </div>
-                                                </div>  
-                                            </div>
-                                            <!--/Modal Edit-->
-                                            </form>
                                          <?php } ?>
                                     </tbody>
                                     <script>

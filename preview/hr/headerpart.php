@@ -12,9 +12,9 @@ if (!isset($_SESSION['username'])) {
     <!-- Logo -->
     <a href="index.php" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>A</b>LT</span>
+        <!--<span class="logo-mini"><b>A</b>LT</span>-->
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>Admin</b>LTE</span>
+        <span class="logo-lg"><b>A</b>LT</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -241,7 +241,7 @@ if (!isset($_SESSION['username'])) {
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="upload_images/<?php echo $picture; ?>" class="user-image" alt="<?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?>">
-                        <span class="hidden-xs"><?php echo $result_emp["prefix"].$result_emp["first_name"]." ".$result_emp["last_name"]; ?></span>
+                        <span class="hidden-xs"><?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
