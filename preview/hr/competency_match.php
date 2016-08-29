@@ -92,8 +92,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
+        
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -183,12 +182,11 @@
                         <div class="box-body">
                             <div class="row"> 
                                 <?php
-<<<<<<< HEAD
-                                $sql_title = "SELECT t.title_id as title_id, t.title_name as title FROM  competency_title t LEFT JOIN manage_competency m ON m.title_id=t.title_id WHERE m.position_level_id='$level'and m.status=1 GROUP BY t.title_name";
-=======
+
                                 $sql_title =    "SELECT
                                                         t.title_id AS title_id,
-                                                        t.title_name AS title_name
+                                                        t.title_name AS title_name,
+                                                        SUM(m.weight*5) as sumweight
                                                 FROM
                                                         competency_title t
                                                 JOIN competency c ON c.title_id = t.title_id 
@@ -197,19 +195,20 @@
                                                         m.position_level_id = '$level'
                                                 AND m.STATUS = 1 
                                                 GROUP BY t.title_name";
->>>>>>> 51b50b399ad8cf2ddd5b767afcb507bfa92417a8
+
                                 $query_title= mysqli_query($conn, $sql_title);
                                 
                                 while ($result_title = mysqli_fetch_array($query_title, MYSQLI_ASSOC))  {
                                         $result_title_id = $result_title["title_id"];
                                         $result_title_name = $result_title["title_name"];
+                                        $result_title_sum = $result_title["sumweight"];
                                     
                                  ?> 
                                 <div class="col-md-12">
                                     <div class="col-md-12 bg-blue-active" style=" height:40px;" >                                        
                                         <button style="margin-top: 5px;" class="btn btn-default pull-right btn-sm"  data-toggle="collapse" data-target="#add_<?php echo $result_title_id; ?>">เพิ่มหัวข้อย่อย</button>                                                   
                                         <h4>
-                                            <?php echo $result_title_name."  ";?> 
+                                            <?php echo $result_title_name." | Total Weight: ".$result_title_sum." %" ;?> 
                                             <a href="" data-href="competency_match.php?title_id=<?php echo $result_title_id; ?>&delete_title=1&level=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ; ?>" data-toggle="modal" data-target="#confirm-delete" style="color:#aaaaaa;">(<i class="glyphicon glyphicon-trash"></i>)</a>
                                         </h4>
                                     </div>
@@ -261,7 +260,8 @@
                                             c.competency_description As detail,
                                             t.title_name As title_name,
                                             p.position_description As position,
-                                            m.weight As weight 
+                                            m.weight As weight,
+                                            c.competency_id As competency_id
                                             FROM manage_competency m 
                                             JOIN competency c ON m.competency_id=c.competency_id 
                                             JOIN competency_title t ON c.title_id=t.title_id 
@@ -276,6 +276,7 @@
                                                 <th>No</th>
                                                 <th>Detail</th>
                                                 <th style="width: 70px;text-align: center;">Weight</th>
+                                                <th style="width: 70px;text-align: center;">Point</th>
                                                 <th style="width: 150px;text-align: center;">Management</th>
 
                                             </tr>
@@ -287,13 +288,84 @@
                                             $m_detail = $result_mng["detail"];
                                             $m_position = $result_mng["position"];
                                             $m_weight = $result_mng["weight"];
+                                            $m_com = $result_mng["competency_id"];
                                             ?>
                                         
                                             <tr>
-
+                                                
                                                 <td><?php echo $m_id; ?></td>
                                                 <td><?php echo $m_detail; ?></td>
                                                 <td style="text-align: center;"><?php echo $m_weight; ?></td>
+                                                 <?php
+                                                    $sql_pointdetail = "
+                                                        SELECT 
+                                                            c.title_id,c.competency_description,mc.weight,mcp.point_id
+                                                            ,cp.point_score, cp.point_description,max(cp.point_score) as maxscore
+                                                            ,c.competency_id
+                                                            FROM  competency_point cp 
+                                                            JOIN match_competency_point mcp 
+                                                            ON cp.point_id = mcp.point_id 
+                                                            JOIN manage_competency mc 
+                                                            ON mcp.match_comp_id = mc.manage_comp_id 
+                                                            JOIN competency c 
+                                                            ON c.competency_id = mc.competency_id
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                    $query_pointdetail= mysqli_query($conn, $sql_pointdetail);
+
+                                                    ?>
+                                                <?php while ($result_pointdetail= mysqli_fetch_array($query_pointdetail, MYSQLI_ASSOC))  {
+                                                    $maxscore = $result_pointdetail["maxscore"];
+                                                    $comp_id=$result_pointdetail["competency_id"];
+                                                    $point_score=$result_pointdetail["point_score"];
+                                                    $point_description=$result_pointdetail["point_description"];
+                                                    $comp_description=$result_pointdetail["competency_description"];
+                                                    
+                                                    ?>
+                                                <td style="text-align: center;">
+                                                    <a data-toggle="modal" href="#view_point<?php echo $comp_id;?>_<?php echo $level;?>" ><?php echo $maxscore;?></a>
+                                                    <!-- Veiw Score-->   
+                                                    <div class="modal animated fade " id="view_point<?php echo $comp_id;?>_<?php echo $level;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog modal-lg" role="document">
+                                                            <div class="modal-content ">
+
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">คำอธิบายคะแนน <?php echo $comp_description; ?></h4>
+                                                                </div>
+                                                                <div class="modal-body ">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+                                                                            <table class="table table-hover table-responsive table-striped table-bordered">                               
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>คะแนน</th>
+                                                                                    <th>คำอธิบาย</th>
+                                                                                    
+
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tr>
+                                                                                    <th><?php echo $point_score; ?></th>
+                                                                                    <th><?php echo $point_description; ?></th>
+                                                                                    
+
+                                                                            </tr>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">                                                            
+                                                                    
+                                                                    
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                </div>                 
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                                    <!--/Veiw Score-->
+                                                </td>
+                                               <?php } ?> <!--/score--> 
+                                                </td>
                                                 <td style="text-align: center;">
 
                                                     <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit__manage_competency_<?php echo $m_id; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
@@ -309,7 +381,7 @@
 
                                                                 <div class="modal-header">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
+                                                                    <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ<?php echo $result_title_name."  ";?> ระดับ<?php echo $level_name;?> </h4>
                                                                 </div>
                                                                 <div class="modal-body ">
                                                                     <div class="row">
@@ -373,12 +445,13 @@
                                                     </div>
                                                     <!--/Modal Edit-->
                                                     </form>
-                                                </td>
-                                                
+                                                    
                                             </tr>
+                                            
                                         <?php } ?>
                                         </tbody>
                                     </table>
+                                    
                                 </div>
                                 <?php } ?> 
                                     
@@ -409,4 +482,6 @@
         <!-- ./wrapper -->
         
     </body>
+    <!-- SCRIPT PACKS -->
+        <?php include ('./script_packs.html'); ?>
 </html>

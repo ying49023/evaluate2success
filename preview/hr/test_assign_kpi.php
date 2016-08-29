@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <?php include ('./classes/connection_mysqli.php'); ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -9,10 +10,7 @@
     <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
     
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
-     <?php include ('./classes/connection_mysqli.php'); ?>
-    
+   
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -283,4 +281,6 @@
     </div>
     <!-- ./wrapper -->
 </body>
+<!-- SCRIPT PACKS -->
+<?php include('./script_packs.html') ?>
 </html>

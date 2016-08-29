@@ -30,10 +30,13 @@
         //Edit
         if(isset($_GET["submit_edit"])){
             $title_id = "";
-            if(isset($_GET["title_id"])){
-                $title_id = $_GET["title_id"];
+            if(isset($_GET["titleid"])){
+                $title_id = $_GET["titleid"];
             }
-            $sql_edit_group = "UPDATE competency SET competency_description='".$_GET["competency_desc"]."' WHERE competency_id='".$_GET["competency_id"]."' AND title_id='".$_GET["title_id"]."'";
+            if(isset($_GET["competency_id"])){
+                $competency_id= $_GET["competency_id"];
+            }
+            $sql_edit_group = "UPDATE competency SET competency_description='".$_GET["competency_desc"]."' WHERE competency_id='".$_GET["competency_id"]."' AND title_id='$title_id' ";
             if (mysqli_query($conn, $sql_edit_group)) {
                     echo "Record edit successfully";
                     echo $sql_edit_group;
@@ -42,7 +45,7 @@
                     echo $sql_edit_group;
                 }
                     
-                header("Location: added_competency.php?title_id=$get_title_id");
+                header("Location: added_competency.php?titleid=$title_id&competency_id=$competency_id");
             }
         //Delete  
         if(isset($_GET["delete_group"])){
@@ -68,8 +71,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -222,7 +225,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <input type="hidden" name="title_id" value="<?php echo $get_title_id; ?>" >
+                                                                <input type="hidden" name="titleid" value="<?php echo $result_com["title_id"]; ?>" >
                                                                 <input type="hidden" name="competency_id" value="<?php echo $result_com["competency_id"]; ?>" >   
                                                                 <input type="submit" class="btn btn-primary" name="submit_edit" value="บันทึก" >                                                      
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
@@ -274,4 +277,6 @@
         </div>
         <!-- ./wrapper -->
     </body>
+    <!-- SCRIPT PACKS -->
+        <?php include ('./script_packs.html'); ?>
 </html>
