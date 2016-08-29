@@ -15,12 +15,17 @@
 
     $query_emp = mysqli_query($conn, $sql_emp);
     while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
-        ?>
+        if ($result_emp["profile_picture"] == "") {
+            $picture = "contact.png";
+        } else {
+            $picture = $result_emp["profile_picture"];
+        }
+    ?>
     <section class="sidebar">
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img style="width: 45px;height: 45px;"  src="upload_images/<?php echo $result_emp["profile_picture"]; ?>" class="img-circle " alt="<?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?>">
+                <img style="width: 45px;height: 45px;"  src="upload_images/<?php echo $picture; ?>" class="img-circle " alt="<?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?>">
             </div>
             <div class="pull-left info">
                 <p><?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?></p>

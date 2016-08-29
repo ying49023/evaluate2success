@@ -5,6 +5,7 @@ session_start();
 
 if (!isset($_SESSION['username'])) {
     echo "Please Login!";
+    header("location:login.php");
     exit();
 }
 ?>
@@ -232,16 +233,21 @@ if (!isset($_SESSION['username'])) {
 
                 $query_emp = mysqli_query($conn, $sql_emp);    
                 while($result_emp = mysqli_fetch_array($query_emp , MYSQLI_ASSOC)){
+                    if($result_emp["profile_picture"] == ""){
+                        $picture = "contact.png";
+                    }else{
+                        $picture = $result_emp["profile_picture"];
+                    }
                 ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="upload_images/<?php echo $result_emp["profile_picture"]; ?>" class="user-image" alt="<?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?>">
+                        <img src="upload_images/<?php echo $picture; ?>" class="user-image" alt="<?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?>">
                         <span class="hidden-xs"><?php echo $result_emp["prefix"].$result_emp["first_name"]." ".$result_emp["last_name"]; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="upload_images/<?php echo $result_emp["profile_picture"]; ?>" class="img-circle" alt="User Image">
+                            <img src="upload_images/<?php echo $picture; ?>" class="img-circle" alt="User Image">
 
                             <p>
                                 <?php echo $result_emp["prefix"].$result_emp["first_name"]." ".$result_emp["last_name"]; ?>
@@ -267,10 +273,10 @@ if (!isset($_SESSION['username'])) {
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat" disable >Profile</a>
+<!--                                <a href="#" class="btn btn-default btn-flat" disable >Profile</a>-->
                             </div>
                             <div class="pull-right">
-                                <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="logout.php" class="btn btn-default btn-flat">Logout</a>
                             </div>
                         </li>
                     </ul>

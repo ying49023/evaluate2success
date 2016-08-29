@@ -17,8 +17,10 @@
             } else {
                 if ($objResult["login_status"] == "1") {
                     echo "'" . $strUsername . "' Exists login!";
+                    header("location:index.php");
                     exit();
-                } else {
+                    
+                }else {
                     //*** Update Status Login
                     $sql = "UPDATE employees SET login_status = '1' , login_datetime = NOW() WHERE employee_id = '" . $objResult["employee_id"] . "' ";
                     $query = mysqli_query($conn, $sql);

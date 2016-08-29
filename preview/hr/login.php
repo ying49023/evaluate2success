@@ -87,7 +87,17 @@ and open the template in the editor.
                         </div>
                         <!-- /.box-footer -->
                     </form>
+                    <div class="form-horizontal form-signin" style="padding:20px;color:red;width: 500px">
+                        <p ><u>หมายเหตุ</u>โปรดLogin โดย username : admin / password : 123456789 </p>
+                        <p>ขั้นตอนการ Logout</p>
+                        <ol>
+                            <li>คลิกมุมบนขวาที่แสดงชื่อ</li>
+                            <li>เลือกปุ่ม logout</li>
+                        </ol>
+                        <p>ระบบตอนนี้ยังไม่สมบูรณ์ ขอให้ Logout หลังจากใช้จากทุกครั้งนะครับ</p>
+                    </div>
                 </div>
+                
             </div> 
 
         </div>

@@ -276,8 +276,8 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <div class="form-group">
-                                                                    <label>email</label>
-                                                                    <input type="email" name="email" class="form-control" />
+                                                                    <label>email<span style="color: red;">*</span></label>
+                                                                    <input type="email" name="email" class="form-control" required />
                                                                 </div>
                                                             </div>  
                                                         </div>
@@ -291,9 +291,9 @@
                                                                 ?>
                                                                   
                                                                 <div class="form-group">
-                                                                    <label>บริษัทหลัก</label>
+                                                                    <label>บริษัทหลัก<span style="color: red;">*</span></label>
                                                                     
-                                                                    <select class="form-control" name="maincompany" required>
+                                                                    <select class="form-control" name="maincompany" required >
                                                                         <option value="">--เลือก--</option> 
                                                                         <?php while($result_maincompany = mysqli_fetch_array($query_maincompany,MYSQLI_ASSOC)) { 
                                                                         $maincompany_name = $result_maincompany["company_name"];
