@@ -139,7 +139,16 @@
                                             <div class="col-md-offset-1 col-md-10 box-padding">
                                                 <form action='manage_employee_insert.php?fn=add' method='POST' enctype="multipart/form-data" name="form1" id="form1">
                                                     <div class="box-body">
+                                                        <div class="row">
+                                                            <div class="col-md-4">                                                
+                                                                <div class="form-group">
+                                                                    <label>อัพโหลดรูปภาพ</label>
+                                                                    <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file" id="image_name" size="40" >
 
+                                                                </div>                                                
+                                                            </div>
+                                                            
+                                                        </div>
                                                         <div class="row">
                                                             <div class="col-md-2">
                                                                 <div class="form-group">
@@ -273,14 +282,66 @@
                                                             </div>  
                                                         </div>
                                                         <div class="row">
-                                                            <div class="form-group">
-                                                                <div class="col-md-6">
-                                                                    <label>อัพโหลดภาพ</label>
-                                                                    <input name="image_name" type="file" id="image_name" size="40" />
+                                                            <div class="col-md-6">
+                                                                 <?php
+                                                                 $sql_maincompany = "SELECT * FROM company";
+                                                                 $query_maincompany = mysqli_query($conn, $sql_maincompany );
+                                                                
+                                                                
+                                                                ?>
+                                                                  
+                                                                <div class="form-group">
+                                                                    <label>บริษัทหลัก</label>
+                                                                    
+                                                                    <select class="form-control" name="maincompany" required>
+                                                                        <option value="">--เลือก--</option> 
+                                                                        <?php while($result_maincompany = mysqli_fetch_array($query_maincompany,MYSQLI_ASSOC)) { 
+                                                                        $maincompany_name = $result_maincompany["company_name"];
+                                                                        $maincompany_id = $result_maincompany["company_id"];
+                                                                    ?>
+                                                                        <option value="<?php echo $maincompany_id; ?>">
+                                                                                <?php echo $maincompany_name; ?>
+                                                                        </option>
+                                                                     <?php } ?>    
+                                                                    </select>
+                                                                   
                                                                 </div>
+                                                                
+                                                                </div>
+                                                            <div class="col-md-6">
+                                                                <?php
+                                                                 $sql_company = "SELECT * FROM company";
+                                                                 $query_company = mysqli_query($conn, $sql_company);
+                                                                
+                                                                
+                                                                ?>
+                                                                
+                                                                <div class="col-md-12">
+                                                                    <label>บริษัททั้งหมด </label>
+                                                                </div>
+                                                                
+                                                                    <?php while($result_company = mysqli_fetch_array($query_company,MYSQLI_ASSOC)) { 
+                                                                        $company_name = $result_company["company_name"];
+                                                                        $company_id = $result_company["company_id"];
+                                                                    ?>
+                                                                <div class="col-md-2">
+                                                                        <div class="form-inline">
+
+                                                                            <label class="">
+                                                                                <input class="form-check-input" type="checkbox" name="company" id="inlineCheckbox1" value="<?php echo $company_id; ?>" ><?php echo $company_name; ?>
+
+                                                                            </label>
+
+                                                                        </div>
+                                                                </div>
+                                                               
+                                                                
+                                                                    <?php } ?>
                                                             </div>
+                                                             
+                                                            
                                                         </div>
-                                                        <br>
+                                                        
 
                                                     </div><!-- /Box body -->
                                                     <div class="box-footer">
