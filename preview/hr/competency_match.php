@@ -335,6 +335,7 @@
                                                                 <div class="modal-body ">
                                                                     <div class="row">
                                                                         <div class="col-sm-12">
+                                                                           
                                                                             <table class="table table-hover table-responsive table-striped table-bordered">                               
                                                                             <thead>
                                                                                 <tr>
@@ -344,12 +345,32 @@
 
                                                                                 </tr>
                                                                             </thead>
-                                                                            <tr>
-                                                                                    <th><?php echo $point_score; ?></th>
-                                                                                    <th><?php echo $point_description; ?></th>
-                                                                                    
+                                                                            <?php
+                                                                            $sql_pointdetail_sub = "
+                                                                                SELECT 
+                                                                                    c.title_id,c.competency_description,mc.weight,mcp.point_id
+                                                                                    ,cp.point_score, cp.point_description
+                                                                                    ,c.competency_id
+                                                                                    FROM  competency_point cp 
+                                                                                    JOIN match_competency_point mcp 
+                                                                                    ON cp.point_id = mcp.point_id 
+                                                                                    JOIN manage_competency mc 
+                                                                                    ON mcp.match_comp_id = mc.manage_comp_id 
+                                                                                    JOIN competency c 
+                                                                                    ON c.competency_id = mc.competency_id
+                                                                                    WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                                            $query_pointdetail_sub= mysqli_query($conn, $sql_pointdetail_sub);
+                                                                            ?>
+                                                                            <tbody>
+                                                                                <?php  while($result_pointdetail_sub = mysqli_fetch_array($query_pointdetail_sub,MYSQLI_ASSOC)) { ?>
+                                                                                <tr class="text-left">
+                                                                                    <td><?php echo $result_pointdetail_sub["point_score"]; ?></td>
+                                                                                    <td><?php echo $result_pointdetail_sub["point_description"]; ?></td>
 
-                                                                            </tr>
+                                                                                </tr>
+                                                                                <?php } ?>
+                                                                            </tbody>
+                                                                            
                                                                             </table>
                                                                         </div>
                                                                     </div>
@@ -364,8 +385,9 @@
                                                     </div>
                                                     <!--/Veiw Score-->
                                                 </td>
-                                               <?php } ?> <!--/score--> 
-                                                </td>
+                                                
+                                                <?php } ?> <!--/score--> 
+                                                
                                                 <td style="text-align: center;">
 
                                                     <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit__manage_competency_<?php echo $m_id; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
@@ -446,6 +468,7 @@
                                                     <!--/Modal Edit-->
                                                     </form>
                                                     
+                                                </td>
                                             </tr>
                                             
                                         <?php } ?>

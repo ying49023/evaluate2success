@@ -77,7 +77,7 @@ if ($get_emp_id != '') {
                 }// END if ( $upload_image->processed )
 
             }
-    $add_query = "UPDATE employees SET prefix ='$prefix',first_name='$first_name',last_name='$last_name',department_id=$department_id,job_id=$job_id,manager_id=$mng,position_level_id=$position_level_id,telephone_no='$telephone',email='$email',address='$address',company_id=1,profile_picture='$pic' WHERE employee_id=$get_emp_id ";
+    $add_query = "UPDATE employees SET prefix ='$prefix',first_name='$first_name',last_name='$last_name',department_id=$department_id,job_id=$job_id,manager_id=$mng,position_level_id=$position_level_id,telephone_no='$telephone',email='$email',address='$address',company_id=1 WHERE employee_id=$get_emp_id ";
 
     $a_query = mysqli_query($conn, $add_query);
 

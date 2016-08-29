@@ -77,14 +77,14 @@
                                 <div class="row with-border">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <img class="thumbnail img-circle" src="upload_images/<?php echo $pic;?>" alt="รูปโปรไฟล์" height="150px" width="120px" />
+                                            <img class="thumbnail img-circle" src="upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
                                             
                                         </div>
                                     </div>
                                     <div class="col-md-4">                                                
                                         <div class="form-group">
                                             <label>อัพโหลดรูปภาพ</label>
-                                            <input class="form-control" name="image_name" type="file" id="image_name" size="40" />
+                                            <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file" id="image_name" size="40" />
                                             
                                         </div>                                                
                                     </div>
