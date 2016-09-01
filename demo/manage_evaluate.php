@@ -1,3 +1,20 @@
+<?php
+    session_start();
+    //Check_login
+    if($_SESSION["employee_id"]==''){
+        echo "Please login again";
+        echo "<a href='login.php'>Click Here to Login</a>";
+        header("location:login.php");
+    }else{
+        $now = time(); // Checking the time now when home page starts.
+//        echo $now." - session expire ".$_SESSION["expire"];
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header("location:session_timeout.php");
+            echo "Your session has expired! <a href='login.php'>Login here</a>";
+        }else{
+            //HTML PAGE
+            ?>
 <!DOCTYPE html>
 <?php include('./classes/connection_mysqli.php');
         
@@ -133,7 +150,7 @@
                                 <div class="box-body">
                                   <div class="col-md-offset-1 col-md-10 ">
                                     <?php 
-                                        $sql_eval = "SELECT term,year,DATE_FORMAT(open_system_date,'%d/%m/%Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/%m/%Y') as close_system_date from evaluation where company_id=1  ";
+                                        $sql_eval = "SELECT term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1  ";
                                         $query_eval= mysqli_query($conn, $sql_eval);
                                     ?>
                                      
@@ -159,56 +176,56 @@
                                                <a href="manage_evaluate.php?erp=delete&term=<?php echo $result_eval["term"] ; ?>&year=<?php echo $result_eval["year"] ; ?>">
                                                    <i class="glyphicon glyphicon-trash"></i>
                                                </a>
+                                               <!--Edit Modal -->
+                                                <form class="form-horizontal" name="frmMain" method="post" action="manage_evaluate.php?erp=update" >
+                                                    <div class="modal fade" id="<?php echo $result_eval["term"]; ?>_<?php echo $result_eval["year"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+
+                                                                    <div class="input-group col-sm-12" >
+                                                                        <label for="รอบการประเมิน" class="col-sm-4 control-label">เทอม:</label>
+                                                                        <div class="col-sm-8">               
+                                                                            <input type="text" class="form-control" value="<?php echo $result_eval["term"]; ?>" name='textterm'   >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="input-group col-sm-12" >
+                                                                        <label for="รอบการประเมิน" class="col-sm-4 control-label">ปี:</label>
+                                                                        <div class="col-sm-8">               
+                                                                            <input type="text" class="form-control" value="<?php echo $result_eval["year"]; ?>" name='textyear'    >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="input-group col-sm-12">
+                                                                        <label class="col-sm-4 control-label" >วันเปิด: </label>
+                                                                        <div class="col-sm-8"> 
+                                                                            <input type="date" class="form-control" name="textopen" value="<?php echo $result_eval["open_system_date"]; ?>" >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="input-group col-sm-12">
+                                                                        <label class="col-sm-4 control-label">วันปิด: </label>
+                                                                        <div class="col-sm-8"> 
+                                                                            <input type="date" class="form-control" name="textclose" value="<?php echo $result_eval["close_system_date"]; ?>" >
+                                                                        </div>
+                                                                    </div>                                              
+
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                 </form>
+                                               <!-- Edit Modal -->
                                            </td>
                                        </tr>
-                                       <!--Edit Modal -->
-                                       <form class="form-horizontal" name="frmMain" method="post" action="manage_evaluate.php?erp=update" >
-                                        <div class="modal fade" id="<?php echo $result_eval["term"] ; ?>_<?php echo $result_eval["year"] ; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                          <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                              <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
-                                              </div>
-                                              <div class="modal-body">
-                                                  
-                                                      <iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>
-                                                      <div class="input-group col-sm-12" >
-                                                          <label for="รอบการประเมิน" class="col-sm-4 control-label">เทอม:</label>
-                                                          <div class="col-sm-8">               
-                                                              <input type="text" class="form-control" value="<?php echo $result_eval["term"] ; ?>" name='textterm'   >
-                                                          </div>
-                                                      </div>
-                                                      <div class="input-group col-sm-12" >
-                                                          <label for="รอบการประเมิน" class="col-sm-4 control-label">ปี:</label>
-                                                          <div class="col-sm-8">               
-                                                              <input type="text" class="form-control" value="<?php echo $result_eval["year"] ; ?>" name='textyear'    >
-                                                          </div>
-                                                      </div>
-                                                      <div class="input-group col-sm-12">
-                                                          <label class="col-sm-4 control-label" >วันเปิด: </label>
-                                                          <div class="col-sm-8"> 
-                                                              <input type="date" class="form-control" name="textopen"  >
-                                                          </div>
-                                                      </div>
-                                                      <div class="input-group col-sm-12">
-                                                          <label class="col-sm-4 control-label">วันปิด: </label>
-                                                          <div class="col-sm-8"> 
-                                                              <input type="date" class="form-control" name="textclose" >
-                                                          </div>
-                                                      </div>                                              
-         
-                                              </div>
-                                              <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">บันทึก</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                                                
-                                              </div>
-                                            </div>
-                                          </div>
-                                        </div>
-                                        </form>
-                                      <!-- Edit Modal -->
+                                       
                                        
 
                                        <?php } ?>
@@ -347,8 +364,8 @@
                                        <tr>
                                            <td><?php echo $name; ?></td>
                                            <td class="text-center"><a href="manage_evaluate_sub_list.php?mng_id=<?php echo $mng_id ?>"><?php echo $completed; ?></a></td>
-                                           <td class="text-center"><a href="manage_evaluate_sub_list.php"><?php echo $uncompleted; ?></a></td>
-                                           <td class="text-center"><a href="manage_evaluate_sub_list.php"><?php echo $all; ?></a></td>
+                                           <td class="text-center"><a href="manage_evaluate_sub_list.php?mng_id=<?php echo $mng_id ?>"><?php echo $uncompleted; ?></a></td>
+                                           <td class="text-center"><a href="manage_evaluate_sub_list.php?mng_id=<?php echo $mng_id ?>"><?php echo $all; ?></a></td>
 
                                            <td class="text-center">
                                                
@@ -470,3 +487,9 @@
     <!-- SCRIPT PACKS -->
     <?php include ('./script_packs.html'); ?>
 </html>
+            <?php
+        }
+    }
+
+    
+?>

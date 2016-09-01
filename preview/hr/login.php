@@ -1,14 +1,12 @@
-<?php  
-$page = basename($_SERVER['PHP_SELF']);
-
-include './classes/connection_mysqli.php';
-
-$sql = "SELECT * FROM employees WHERE  login_status = '1' ";
-$query = mysqli_query($conn, $sql);
-$result = mysqli_fetch_array($query);
-
-if($result["login_status"] == '1'){
-    header("location:index.php");
+<?php 
+$value = ''; 
+if(isset($_GET["check"])){
+    $check = $_GET["check"];
+    if($check == 'no_user'){
+        $value = "ไม่มี User นี้อยู่ในระบบ" ;
+    }else if($check == 'wrong_pass'){
+        $value = "Password ผิดกรุณากรอกใหม่";
+    }
 }
 
 ?>
@@ -78,17 +76,17 @@ and open the template in the editor.
                                 <label for="username" class=" control-label">Username</label>
 
                                 <div class="">
-                                    <input type="text" class="form-control" name="username" placeholder="username">
+                                    <input type="text" class="form-control" name="username" placeholder="username" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="password" class=" control-label">Password</label>
 
                                 <div class=" ">
-                                    <input type="password" class="form-control" name="password" placeholder="********">
+                                    <input type="password" class="form-control" name="password" placeholder="********" required>
                                 </div>
                             </div>
-
+                            <p style="color: red;font-weight: 600;text-align: center;"><?php echo $value; ?></p>
                         </div>
                         <!-- /.box-body -->
                         <div class=" box-footer">
@@ -101,14 +99,13 @@ and open the template in the editor.
                         </div>
                         <!-- /.box-footer -->
                     </form>
-                    <div class="form-horizontal form-signin" style="color:red;width: 500px">
+                    <div class="form-horizontal form-signin" style="color:green;width: 500px;font-weight: 800;font-style: italic">
                         <p ><u>หมายเหตุ</u>โปรดLogin โดย username : admin / password : 123456789 </p>
                         <p>ขั้นตอนการ Logout</p>
                         <ol>
                             <li>คลิกมุมบนขวาที่แสดงชื่อ</li>
                             <li>เลือกปุ่ม logout</li>
                         </ol>
-                        <p>ระบบตอนนี้ยังไม่สมบูรณ์ ขอให้ Logout หลังจากใช้จากทุกครั้งนะครับ</p>
                     </div>
                 </div>
                 

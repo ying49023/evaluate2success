@@ -1,3 +1,20 @@
+<?php
+    session_start();
+    //Check_login
+    if($_SESSION["employee_id"]==''){
+        echo "Please login again";
+        echo "<a href='login.php'>Click Here to Login</a>";
+        header("location:login.php");
+    }else{
+        $now = time(); // Checking the time now when home page starts.
+//        echo $now." - session expire ".$_SESSION["expire"];
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header("location:session_timeout.php");
+            echo "Your session has expired! <a href='login.php'>Login here</a>";
+        }else{
+            //HTML PAGE
+            ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -82,7 +99,7 @@
                                 <div class="row with-border">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <img class="thumbnail img-circle" src="upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
+                                            <img class="thumbnail img-circle img-center" src="upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
                                             
                                         </div>
                                     </div>
@@ -278,3 +295,9 @@
     <!-- SCRIPT PACKS -->
 <?php include('./script_packs.html') ?>
 </html>
+            <?php
+        }
+    }
+
+    
+?>

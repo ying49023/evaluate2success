@@ -10,7 +10,7 @@ if(isset($_POST["kpi_group_id"])){
 <?php
     foreach ($query as $kpi){
 ?>
-<option value="<?php echo $kpi["kpi_id"]; ?>">
+<option value="<?php echo $kpi["kpi_id"]; ?>" >
     <?php echo $kpi["kpi_id"] . " - " . $kpi["kpi_name"]; ?>
 </option>
 <?php

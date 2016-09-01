@@ -1,22 +1,28 @@
 <?php include ('./classes/connection_mysqli.php'); ?>
-<?php 
-
-session_start();
-
-if (!isset($_SESSION['username'])) {
-    echo "Please Login!";
-    $sql_check = "SELECT * FROM employees WHERE username = '".$_SESSION["username"]."' ";
-    $query_check = mysqli_query($conn, $sql_check);
-    $result_check = mysqli_fetch_array($query_check);
-    
-    if($result_check["login_status"] == '1'){
-        $sql = "UPDATE employees SET login_status = '0', login_datetime = '0000-00-00 00:00:00' WHERE username = '".$_SESSION["username"]."' ";
-	$query = mysqli_query($conn,$sql);
-    }
-    header("location:login.php");
-    
-}
-?>
+<?php  
+        $sql = "SELECT
+                        *
+                FROM
+                        employees e
+                JOIN departments d ON e.department_id = d.department_id
+                JOIN position_level p ON p.position_level_id = e.position_level_id
+                JOIN company c ON c.company_id = e.company_id
+                JOIN jobs j ON j.job_id = e.job_id
+                WHERE username = '".$_SESSION["username"]."' 
+                LIMIT 1" ;
+        $query = mysqli_query($conn, $sql);
+        while($result = mysqli_fetch_array($query)){
+        $emp_id = $result["employee_id"];
+        $prefix = $result["prefix"];
+        $name = $result["first_name"]." ".$result["last_name"];
+        $email = $result["email"];
+        $picture = $result["profile_picture"];
+        $tel = $result["telephone_no"];
+        $job = $result["job_name"];
+        $department = $result["department_name"];
+        $company = $result["company_name"];
+        $position = $result["position_description"];
+    ?>
 <header class="main-header">
     <!-- Logo -->
     <a href="index.php" class="logo">
@@ -228,39 +234,20 @@ if (!isset($_SESSION['username'])) {
                     </ul>
                 </li>
                 <!-- User Account: style can be found in dropdown.less -->
-                <?php 
-                $sql_emp = "SELECT
-                                    e.*,d.*,j.*,c.*,p.*
-                            FROM
-                                    employees e
-                            JOIN departments d ON d.department_id = e.department_id
-                            JOIN jobs j ON j.job_id = e.job_id
-                            JOIN position_level p ON p.position_level_id = e.position_level_id
-                            JOIN company c ON c.company_id = e.company_id
-                            WHERE username = '".$_SESSION["username"]."'";
-
-                $query_emp = mysqli_query($conn, $sql_emp);    
-                while($result_emp = mysqli_fetch_array($query_emp , MYSQLI_ASSOC)){
-                    if($result_emp["profile_picture"] == ""){
-                        $picture = "contact.png";
-                    }else{
-                        $picture = $result_emp["profile_picture"];
-                    }
-                ?>
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="upload_images/<?php echo $picture; ?>" class="user-image" alt="<?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?>">
-                        <span class="hidden-xs"><?php echo $result_emp["first_name"]." ".$result_emp["last_name"]; ?></span>
+                        <img src="upload_images/<?php echo $picture; ?>" class="user-image img-center" alt="<?php echo $name ?>">
+                        <span class="hidden-xs"><?php echo $name; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="upload_images/<?php echo $picture; ?>" class="img-circle" alt="User Image">
+                            <img src="upload_images/<?php echo $picture; ?>" class="img-circle img-center" alt="User Image">
 
                             <p>
-                                <?php echo $result_emp["prefix"].$result_emp["first_name"]." ".$result_emp["last_name"]; ?>
+                                <?php echo $name; ?>
                                 <br>
-                                <small><?php echo $result_emp["department_name"]; ?></small>
+                                <small><?php echo $department ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -289,12 +276,12 @@ if (!isset($_SESSION['username'])) {
                         </li>
                     </ul>
                 </li>
-                <?php } ?>
                 <!-- Control Sidebar Toggle Button -->
-                <li>
+<!--                <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li>
+                </li>-->
             </ul>
         </div>
     </nav>
 </header>
+<?php } ?>    

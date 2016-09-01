@@ -1,0 +1,38 @@
+body{
+    margin: 0 !important;
+}
+.container{
+    background-color: yellow;
+}
+.box-body{
+    
+    background-color: gray;
+    color: white;
+    padding: 20px;
+    margin: 0 auto ;
+    width: 800px;
+}
+.header{
+    background-color: black;
+    color: white;
+    height: 50px;
+}
+.button{
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    color: white;
+}
+.text-center{
+    text-align: center;
+}
+.pull-left{
+    float: left;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+.pull-right{
+    float:right;
+    padding-top: 20px;
+    padding-right: 20px;
+}
