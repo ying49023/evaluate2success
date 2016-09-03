@@ -25,6 +25,7 @@
             }
             // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
             require_once('./classes/class.upload.php') ;
+            
         ?>
         
         <meta charset="utf-8">
@@ -88,7 +89,7 @@
                                 $pic = $result["profile_picture"];
                             }      
                     ?>
-                    <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' >
+                    <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' enctype="multipart/form-data" >
                     <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">ข้อมูลของ : <?php echo $name; ?></h3>
@@ -106,7 +107,7 @@
                                     <div class="col-md-4">                                                
                                         <div class="form-group">
                                             <label>อัพโหลดรูปภาพ</label>
-                                            <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file"  size="40" />
+                                            <input class="form-control" id="image_name" name="image_name" value="<?php echo $pic;?>" type="file"  size="40" />
                                             
                                         </div>                                                
                                     </div>

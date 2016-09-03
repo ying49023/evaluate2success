@@ -1,6 +1,6 @@
 <?php
 include ('./classes/connection_mysqli.php');
-require_once('classes/class.upload.php') ;
+
 $status = '';
 $empid = '';
 $msg = '';
@@ -9,6 +9,7 @@ $msg = '';
   } */
 if (isset($_GET["emp_id"])) {
     $get_emp_id = $_GET["emp_id"];
+    require_once('classes/class.upload.php') ;
 }
 if ($get_emp_id != '') {
     $prefix = $_POST['prefix'];
@@ -21,7 +22,7 @@ if ($get_emp_id != '') {
     $telephone = $_POST['telephone'];
     $address = $_POST['address'];
     $email = $_POST['email'];
-    $pic= strtolower($_POST['image_name']);
+    $pic= $_REQUEST['image_name'];
     //$hiredate =$_POST['startdate'];
     $mng = '';
     $sql = "SELECT employee_id,concat(first_name,' ',last_name) as name from employees where concat(first_name,' ',last_name) like '%$manager%'  ";
@@ -47,7 +48,7 @@ if ($get_emp_id != '') {
                     //
                     //
                     //
-                      $add_query = "UPDATE employees SET prefix ='$prefix',first_name='$first_name',last_name='$last_name',department_id=$department_id,job_id=$job_id,manager_id=$mng,position_level_id=$position_level_id,telephone_no='$telephone',email='$email',address='$address',company_id=1,profile_picture='$pic' WHERE employee_id=$get_emp_id ";
+                      $add_query = "UPDATE employees SET prefix ='$prefix',first_name='$first_name',last_name='$last_name',department_id=$department_id,job_id=$job_id,manager_id=$mng,position_level_id=$position_level_id,telephone_no='$telephone',email='$email',address='$address',company_id=1,profile_picture='$image_name' WHERE employee_id=$get_emp_id ";
                         $a_query = mysqli_query($conn, $add_query);
                         if ($a_query)
                             echo "Record update successfully";

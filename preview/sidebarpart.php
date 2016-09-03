@@ -84,7 +84,7 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-<<<<<<< HEAD
+
                     <li class="active"><a href="update_kpi.php"><i class="fa fa-circle-o"></i>อัพเดทKPIs</a></li>
                     <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
                 </ul>

@@ -1,6 +1,25 @@
 <!DOCTYPE html>
+<?php
+    session_start();
+    //Check_login
+    if($_SESSION["employee_id"]==''){
+        echo "Please login again";
+        echo "<a href='login.php'>Click Here to Login</a>";
+        header("location:login.php");
+    }else{
+        $now = time(); // Checking the time now when home page starts.
+//        echo $now." - session expire ".$_SESSION["expire"];
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header("location:session_timeout.php");
+            echo "Your session has expired! <a href='login.php'>Login here</a>";
+        }else{
+            //HTML PAGE
+            ?>
+
 <html>
 <head>
+    <?php include('./classes/connection_mysqli.php') ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -53,14 +72,17 @@
             <div id="menu_status">
                 <center>
                     <ul class="nav nav-pills">
-                        <li class="active" role="presentation" style="width:30%">
-                            <a href="evalstep1.php">ส่วนที่1 การวัความสามารถในการปฏิบัติงาน</a>
+                        <li class="active" role="presentation" style="width:20%">
+                            <a href="evaluation_section_1.php">ส่วนที่1 Goal Setting(KPIs)</a>
                         </li>
-                        <li class="bg-info" role="presentation" style="width:30%">
-                            <a href="prominent_page.php">ส่วนที่2 ความจำเป็นในการพัฒนา</a>
+                        <li class="bg-info" role="presentation" style="width:20%">
+                            <a href="evaluation_section_2.php">ส่วนที่2 Competency(พฤติกรรม)</a>
                         </li>
-                        <li class="bg-info" role="presentation" class="active" style="width:30%">
-                            <a href="complete_page.php">การประเมินเรียบร้อย</a>
+                        <li class="bg-info" role="presentation" class="active" style="width:20%">
+                            <a href="evaluation_section_3.php">ส่วนที่3 การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท</a>
+                        </li>
+                        <li class="bg-info" role="presentation" class="active" style="width:20%">
+                            <a href="evaluation_section_4.php">ส่วนที่4 ความคิดเห็นเพิ่มเติมและการประเมินผลโดยรวม (Overall Rating)</a>
                         </li>
                     </ul>
 
@@ -115,7 +137,7 @@
                                 <table class="table table-bordered table-condensed">
                                     <tbody><tr>
                                             <th rowspan="4">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg">
+                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="upload_images/contact.png">
                                             </th>
                                             <th align="center" width="">ชื่อ-นามสกุล</th>
                                             <th align="center" width="120px">รหัส</th>
@@ -125,10 +147,10 @@
 
                                         </tr>
                                         <tr>
-                                            <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                            <td> 123456</td>
-                                            <td>พนักงานฝ่ายบุคคล</td>
-                                            <td>ฝ่ายบุคคล</td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
+                                            <td> </td>
                                             <td><span class="text-green"><i class="glyphicon glyphicon-ok"></i></span></td>
                                         </tr>
                                     </tbody>
@@ -140,13 +162,15 @@
                                     <table class="table table-responsive table-bordered ">
                                         <thead>
                                             <tr class="">
-                                                <th colspan="3">วันที่เริ่มงาน</th>
-                                                <th colspan="3">ผู้บังคับบัญชา</th>
+                                                <th colspan="2">วันที่เริ่มงาน</th>
+                                                <th colspan="2">ผู้บังคับบัญชาคนที่ 1</th>
+                                                <th colspan="2">ผู้บังคับบัญชาคนที่ 2</th>
                                             </tr>
                                         </thead>
                                         <tr>
-                                            <td colspan="3">1 ก.พ. 2556</td>
-                                            <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
+                                            <td colspan="2"> </td>
+                                            <td colspan="2"> </td>
+                                            <td colspan="2"> </t
                                         </tr>
                                         <thead>
                                             <tr class="">
@@ -164,11 +188,11 @@
                                             </tr>
                                         </thead>
                                         <TR>
-                                            <TD>1วัน</TD>
-                                            <TD>1วัน</TD>
                                             <TD>-</TD>
                                             <TD>-</TD>
-                                            <TD>2วัน</TD>
+                                            <TD>-</TD>
+                                            <TD>-</TD>
+                                            <TD>-</TD>
                                             <TD>-</TD>
                                         </TR>
                                     </table>
@@ -501,4 +525,12 @@
 <!-- ./wrapper -->
 
 </body>
+    <!-- SCRIPT PACKS -->
+    <?php include ('./script_packs.html'); ?>
 </html>
+            <?php
+        }
+    }
+
+    
+?>

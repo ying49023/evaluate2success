@@ -9,9 +9,9 @@
     /*
      * Database Configuration and Connection using mysqli
      */
-    $serverName = "localhost";
-	$userName = "root";
-	$userPassword = "";
+    $serverName = "103.27.202.37";
+	$userName = "prasukrit_alt";
+	$userPassword = "13579alt";
 	$dbName = "prasukrit_evaluate2success";
 	//$myTable = "project";
 

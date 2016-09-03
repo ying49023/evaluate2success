@@ -29,7 +29,7 @@
             $year=$_POST['add_year'];
             $open_eval=$_POST['add_open'];
             $close_eval=$_POST['add_close'];
-            $add_query="INSERT INTO evaluation VALUES (5,1,'$period','$year','$open_eval','$close_eval')";            
+            $add_query="INSERT INTO evaluation(company_id,term_id,year,open_system_date,close_system_date) VALUES (1,'$period','$year','$open_eval','$close_eval')";            
             $a_query =  mysqli_query($conn,$add_query);
             if($a_query)
                header ("location:manage_evaluate.php");
@@ -44,7 +44,7 @@
             if($erp=='delete'){            
             $dterm=$_GET['term']; 
             $dyear=$_GET['year'];            
-            $delete="DELETE FROM evaluation WHERE term='$dterm' and year='$dyear'";            
+            $delete="DELETE FROM evaluation WHERE term_id='$dterm' and year='$dyear'";            
             $d_query =  mysqli_query($conn,$delete);
             if($d_query)
                header ("location:manage_evaluate.php");
@@ -60,7 +60,7 @@
             $strSQL = "UPDATE evaluation SET ";
             $strSQL .="open_system_date= '" . $_POST["textopen"] . "' ";
             $strSQL .=",close_system_date = '" . $_POST["textclose"] . "' ";
-            $strSQL .="WHERE company_id = 1 and term= '".$_POST["textterm"]."' and year='".$_POST["textyear"]."'";
+            $strSQL .="WHERE company_id = 1 and term_id= '".$_POST["textterm"]."' and year='".$_POST["textyear"]."'";
             $objQuery = mysqli_query($conn,$strSQL);
             if ($objQuery) {
 
@@ -150,7 +150,7 @@
                                 <div class="box-body">
                                   <div class="col-md-offset-1 col-md-10 ">
                                     <?php 
-                                        $sql_eval = "SELECT term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1  ";
+                                        $sql_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1  ";
                                         $query_eval= mysqli_query($conn, $sql_eval);
                                     ?>
                                      
