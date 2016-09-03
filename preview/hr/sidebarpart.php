@@ -41,7 +41,7 @@
                         <a href="manage_evaluate.php"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a>
                     </li>
                     <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
-                        <a href="edit_weight_eval.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
+                        <a href="edit_weight_eval.php?position_level_id="><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
 					
                     <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">
