@@ -235,7 +235,7 @@
                                             <div class="box-padding row">
                                                 <div class="form-group col-sm-4">
                                                     <label>Title<span style="color: red;">*</span></label>
-                                                    <input class="form-control" type="text" value="<?php echo $result_title_name;?>" disabled="true" > 
+                                                    <input class="form-control" type="text" value="<?php echo $result_title_name; ?>" disabled="true" > 
                                                 </div>
                                                 <div class="form-group col-sm-4">
                                                     <?php
@@ -323,14 +323,14 @@
                                                             JOIN match_competency_point mcp 
                                                             ON cp.point_id = mcp.point_id 
                                                             JOIN manage_competency mc 
-                                                            ON mcp.match_comp_id = mc.manage_comp_id 
+                                                            ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
                                                             WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
                                                     $query_pointdetail= mysqli_query($conn, $sql_pointdetail);
 
                                                     ?>
-                                                <?php while ($result_pointdetail= mysqli_fetch_array($query_pointdetail, MYSQLI_ASSOC))  {
+                                                <?php while($result_pointdetail = mysqli_fetch_array($query_pointdetail, MYSQLI_ASSOC))  {
                                                     $maxscore = $result_pointdetail["maxscore"];
                                                     $comp_id=$result_pointdetail["competency_id"];
                                                     $point_score=$result_pointdetail["point_score"];
@@ -358,24 +358,27 @@
                                                                                 <tr>
                                                                                     <th>คะแนน</th>
                                                                                     <th>คำอธิบาย</th>
-                                                                                    
-
                                                                                 </tr>
                                                                             </thead>
                                                                             <?php
                                                                             $sql_pointdetail_sub = "
-                                                                                SELECT 
-                                                                                    c.title_id,c.competency_description,mc.weight,mcp.point_id
-                                                                                    ,cp.point_score, cp.point_description
-                                                                                    ,c.competency_id
-                                                                                    FROM  competency_point cp 
-                                                                                    JOIN match_competency_point mcp 
-                                                                                    ON cp.point_id = mcp.point_id 
-                                                                                    JOIN manage_competency mc 
-                                                                                    ON mcp.match_comp_id = mc.manage_comp_id 
-                                                                                    JOIN competency c 
-                                                                                    ON c.competency_id = mc.competency_id
-                                                                                    WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                                                SELECT
+                                                                                        c.title_id,
+                                                                                        c.competency_description,
+                                                                                        mc.weight,
+                                                                                        mcp.point_id,
+                                                                                        cp.point_score,
+                                                                                        cp.point_description,
+                                                                                        c.competency_id
+                                                                                FROM
+                                                                                        competency_point cp
+                                                                                JOIN match_competency_point mcp ON cp.point_id = mcp.point_id
+                                                                                JOIN manage_competency mc ON mcp.manage_comp_id = mc.manage_comp_id
+                                                                                JOIN competency c ON c.competency_id = mc.competency_id
+                                                                                WHERE
+                                                                                        mc.competency_id = '$m_com'
+                                                                                AND mc.position_level_id = '$level'
+                                                                                AND mc. STATUS = 1";
                                                                             $query_pointdetail_sub= mysqli_query($conn, $sql_pointdetail_sub);
                                                                             ?>
                                                                             <tbody>

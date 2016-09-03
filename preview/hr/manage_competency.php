@@ -61,41 +61,32 @@
                 <!-- Main content -->
                 <div class="row box-padding">
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <b>การจัดการแบบประเมิน Competency ตามระดับต่างๆ</b>
-                            
-                        </div>
-                        
-                        <div class="box-body">
+                                                
+                        <div class="box-body" style="min-height: 320px;">
                             <div class="row">
                                 <div class="col-md-12">
+                                    <div class="box-padding">
+                                        <p style="font-size: 1.5em;text-align: center;">เลือกระดับการจัดการแบบประเมิน Competency </p>
+                                    </div>
+                                    <hr>
                                <?php
                                 $sql_level = "SELECT position_level_id,position_description FROM position_level ORDER BY position_level_id ASC";
                                 $query_level = mysqli_query($conn, $sql_level);
                                 
-                                ?>
-                                    <table class="table table-hover table-responsive table-striped table-bordered">                               
-                                        <thead>
-                                            <tr>
-                                                
-                                                <th>ตารางแสดงระดับปฏิบัติงาน</th>                                            
-
-                                            </tr>
-                                        </thead>
-                                <?php while ($result_level = mysqli_fetch_array($query_level, MYSQLI_ASSOC)) {  
+                                while ($result_level = mysqli_fetch_array($query_level, MYSQLI_ASSOC)) {  
                                         $position_id = $result_level['position_level_id'];
                                         $position_name=$result_level['position_description'];
                                 
                                 ?>
-                                        <tr>
-                                            
-                                            <td><a href="competency_match.php?level=<?php echo $position_id; ?>&level_name=<?php echo $position_name; ?>"><?php echo $position_name; ?></a></td>                                              
-                                        </tr>
-                                        
-                                        
+                                    <div class="col-md-6">
+                                        <div class="btn btn-default btn-lg" style="margin: 10px;width: 100%;padding-top: 15px;height: 60px;">
+                                            <a href="competency_match.php?level=<?php echo $position_id; ?>&level_name=<?php echo $position_name; ?>"><?php echo $position_name; ?></a>                                             
+                                                            
+                                        </div>
+                                    </div>
                                 <?php } ?>       
                                            
-                                    </table>
+                                    
                                 </div>
                             </div>
                             
