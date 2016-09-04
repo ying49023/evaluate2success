@@ -105,26 +105,30 @@
                             </form>
                         </div>
                     </div>     
-                    <div>
+                    <!-- /Search -->
+                    <!-- Navbar process -->
+                    <div class="navbar-process">
+                        <?php // $page = basename($_SERVER['SCRIPT_NAME']); ?>
                             <ul id="tabs" class="nav nav-pills nav-justified" data-tabs="tabs">
-                                <li class="">
-                                    <a href="explan_evaluation.php" data-toggle="tab" aria-expanded="true">คำชี้แจง</a>
+                                <li class="<?php if($page == 'explan_evaluation.php'){ echo "active"; } ?>">
+                                    <a href="explan_evaluation.php"  aria-expanded="false">คำชี้แจง</a>
                                 </li>
-                                <li class="">
-                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 1 : KPIs</a>
+                                <li class="<?php if($page == 'evaluation_section_1.php'){ echo "active"; } ?>">
+                                    <a href="evaluation_section_1.php"  aria-expanded="true">ส่วนที่ 1 : KPIs</a>
                                 </li>        
-                                <li class="active">
+                                <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active"; } ?>">
                                     <a href="edit_weight_eval.php?position_level_id="  aria-expanded="false">ส่วนที่ 2 : Competency</a>
                                 </li>        
-                                <li class="">
-                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 3 : กฎระเบียบข้อบังคับ</a>
+                                <li class="<?php if($page == 'evaluation_section_3.php'){ echo "active"; } ?>">
+                                    <a href="evaluation_section_3.php"  aria-expanded="false">ส่วนที่ 3 : กฎระเบียบข้อบังคับ</a>
                                 </li>        
-                                <li class="">
-                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
+                                <li class="<?php if($page == 'evaluation_section_4.php'){ echo "active"; } ?>">
+                                    <a href="evaluation_section_4.php"  aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
                                 </li>        
                             </ul>
                     </div>
-                    <!-- Search -->
+                    <!-- /Navbar process -->
+                    <!-- Part 2 -->
                     <div class="box box-primary">
                         <script type="text/javascript">
                             //Script สำหรับ เลือก dropdown menu แบบไม่ต้องกด submit จะเปลี่ยนข้อมูลแบบ " A U T O "
@@ -139,43 +143,38 @@
                             <div class="row">
                                 <div class=" text-center">
                                     <form name="form_name" onchange="position_level()" method="get" class="form-inline" >
-                                                        <span style="font-size: 20px;;">แบบฟอร์มประเมินผลการปฏิบัติงานพฤติกรรมในการทำงานของพนักงาน</span> 
-                                                        <div class="form-group">
-                                                            <?php
-                                                            $sql_position_level = "SELECT * FROM position_level ";
-                                                            $query_position_level = mysqli_query($conn, $sql_position_level);
-                                                            ?>
-                                                            <select class="form-control" name="position_level_id" style="width: 200px;">
-                                                                <option value="">--เลือกระดับ--</option>
-                                                                        <?php while ($result_position_level = mysqli_fetch_array($query_position_level)) { ?>
-                                                                <option value="<?php echo $result_position_level["position_level_id"]; ?>" <?php if($level == $result_position_level["position_level_id"]){ echo "selected"; } ?> >
-                                                                                <?php echo $result_position_level["position_description"]; ?>
-                                                                </option>
-                                                                        <?php } ?>
-                                                            </select>
-                                                        </div>
-                                                    </form>
-                                    
+                                        <span style="font-size: 20px;;">แบบฟอร์มประเมินผลการปฏิบัติงานพฤติกรรมในการทำงานของพนักงาน</span> 
+                                        <div class="form-group">
+                                                    <?php
+                                                    $sql_position_level = "SELECT * FROM position_level ";
+                                                    $query_position_level = mysqli_query($conn, $sql_position_level);
+                                                    ?>
+                                            <select class="form-control" name="position_level_id" style="width: 200px;">
+                                                <option value="">--เลือกระดับ--</option>
+                                                        <?php while ($result_position_level = mysqli_fetch_array($query_position_level)) { ?>
+                                                <option value="<?php echo $result_position_level["position_level_id"]; ?>" <?php if ($level == $result_position_level["position_level_id"]) {
+                                                    echo "selected";
+                                                } ?> >
+                                                            <?php echo $result_position_level["position_description"]; ?>
+                                                </option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </form>
+                                                
                                 </div>
                             </div>
-                            
                         </div>
-                        <!-- ./box-body -->
-                        <!-- /.content -->                            
-                    <!--</div>-->
-                    
+                        <!-- ./box-body -->                 
                     
                     <?php
                     if($level != '') {
-                        //$level = $_GET["position_level_id"];
 
-                        //Level Name
                         $sql_level = "SELECT * FROM position_level WHERE position_level_id = '$level'" ; 
                         $query_level = mysqli_query($conn, $sql_level);
                         $result_level = mysqli_fetch_array($query_level,MYSQLI_ASSOC);
                         $level_name = $result_level["position_description"];
                     ?>
-                    <!--<div class="box box-primary">-->
                         <div class="box-header with-border">
                             <b>การจัดการแบบประเมินระดับ<?php echo $level_name; ?></b>
                             <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่มหัวข้อ</button>
@@ -354,12 +353,9 @@
                                             ?>
                                         
                                             <tr>
-                                                
                                                 <td><?php echo $no; ?></td>
                                                 <td style="text-align: left;"><?php echo $m_detail; ?></td>
                                                 <td style="text-align: center;"><?php echo $m_weight; ?></td>
-                                                
-                                                
                                                 <td style="text-align: center;">
                                                     <?php
                                                     $sql_score1 = "
@@ -386,7 +382,7 @@
                                                             </select>
                                                 </td>
                                                 <td style="text-align: center;"> </td>
-                                                <td style="text-align: center;"><?php echo $m_weight; ?></td>
+                                                <td style="text-align: center;" ><?php echo $m_weight; ?></td>
                                                 <td style="text-align: center;">
                                                     <?php
                                                     $score2=0;
@@ -590,24 +586,17 @@
                                                     </div>
                                                     <!--/Modal Edit-->
                                                     </form>
-                                                    
                                                 </td>
                                             </tr>
                                             
                                         <?php } ?>
                                         </tbody>
                                     </table>
-                                    
                                 </div>
                                 <?php } ?> 
-                                    
                             </div>
-                                   
-                                    
-                                
-                            
                         </div>
-                    </div>
+                    
                     <?php } else {
                     ?>
                     
@@ -616,27 +605,26 @@
                                 <p><i class="glyphicon glyphicon-warning-sign"></i>ไม่มีข้อมูล กรุณาเลือกระดับ</p>
                             </div>
                         </div>
-                    </div>
+                    
                     <?php
                     }
                     ?>
-                    
+                    </div>
+                    <!-- /Part 2 -->
                 </div>
-                
-                
+
             </div><!-- /.content-wrapper -->
-            <!-- Control Sidebar -->
+        <!-- Control Sidebar -->
         <?php include './controlsidebar.php'; ?>
             
-            <!--Footer -->
+        <!--Footer -->
         <?php include './footer.php'; ?>
             
             <!-- Add the sidebar's background. This div must be placed
                      immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
-            <!--Finish body content-wrapper-->
-        </div><!-- ./wrapper -->
-            
+        <div class="control-sidebar-bg"></div>
+        <!--Finish body content-wrapper-->
+        </div><!-- ./wrapper -->   
     </body>
     <!-- SCRIPT PACKS -->
 <?php include('./script_packs.html') ?>

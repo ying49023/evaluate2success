@@ -51,7 +51,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        แก้ไขแบบประเมิน
+                        ส่วนที่ 1 : KPIs
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -99,29 +99,14 @@
                                 </div>
                             </form>
                         </div>
-                    </div>     
-                    <div>
-                            <ul id="tabs" class="nav nav-pills nav-justified" data-tabs="tabs">
-                                <li >
-                                    <a href="explan_evaluation.php" data-toggle="tab" aria-expanded="false">คำชี้แจง</a>
-                                </li>
-                                <li class="active">
-                                    <a href="evaluation_section_1.php" data-toggle="tab" aria-expanded="true">ส่วนที่ 1 : KPIs</a>
-                                </li>        
-                                <li class="">
-                                    <a href="edit_weight_eval.php?position_level_id="  aria-expanded="false">ส่วนที่ 2 : Competency</a>
-                                </li>        
-                                <li class="">
-                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 3 : กฎระเบียบข้อบังคับ</a>
-                                </li>        
-                                <li class="">
-                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
-                                </li>        
-                            </ul>
-                    </div>
-                <!--</div>-->
-                <br>
-                <div id="" class="box box-primary" >
+                    </div>    
+                    <!--/search-->
+                    <!-- Navbar process -->
+                    <?php include './navbar_process.php'; ?>
+                    <!-- /Navbar process -->
+                    
+                    <!-- Employee Profile -->
+                    <div class="box box-primary" >
                     <div class="box-body">
                         <div class="row"> 
                             <div class="box-padding">
@@ -178,107 +163,108 @@
                         </div>  
                     </div>
                 </div>
-                <!--/search-->
-                <!--<div class="row box-padding" >-->
+                    <!-- /Employee Profile -->
+                    <!-- Part 1 -->
                     <div class="box box-primary ">
                         <div class="box-header with-border">
                             <h4><i class="glyphicon glyphicon-info-sign"></i> &nbsp; ส่วนที่ 1  :   การประเมินด้านผลงาน (คะแนนเต็ม 60 )</h4>
                         </div>
-                    <div class="box-body">
-                        <div class="box-padding">
-                            <div class="row">
-                                <h4 class="text-bold">สำหรับการประเมินผลครั้งที่: </h4>
-                                <h4></h4>
-                                <br>
-                                <table>
-                                    <tr> 
-                                        <th>ผู้บังคับบัญชาและพนักงาน : </th>
-                                    </tr>
-                                    <tr>
-                                    <th>1) กำหนดเต็มในส่วนที่ 1 (คะแนนเต็ม 60 )  </th>
-                                    </tr>
-                                    <tr>
-                                    <th>2) กำหนดวัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน</th>
-                                    </tr>
-                                    <tr>
-                                    <th>3) การวัดผลงานควรอยู่ระหว่าง 4-7 ข้อ เท่านั้น เพื่อให้พนักงานใช้เป็นแนวทางและเป้าหมายในการปฏิบัติงาน</th>
-                                </tr>
-                                </table>
-                                
-                            </div>  
-                            <div class="row">
-                                <br>
-                                <table class="table table-bordered ">
-                                    <thead>
-                                    <tr> 
-                                        <th rowspan="2">
-                                            วัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน (Performance Objectives / KPIs)
-                                        </th>
-                                        <th rowspan="2">
-                                            ผลการปฏิบัติงานที่เกิดขึ้นจริง (Actual Performance)
-                                        </th>
-                                        <th rowspan="1" colspan="3">ครั้งที่ 1 ม.ค. - มิ.ย. </th>
-                                    </tr>
-                                    <tr> 
-                                        
-                                        <th rowspan="1">น้ำหนักรวม</th>
-                                        <th rowspan="1">คะแนน</th>
-                                        <th rowspan="1">คะแนนรวม(น้ำหนัก X คะแนน) </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                       <tr> 
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        </tr>
+                        <div class="box-body">
+                            <div class="box-padding">
+                                <div class="row">
+                                    <h4 class="text-bold">สำหรับการประเมินผลครั้งที่: </h4>
+                                    <h4></h4>
+                                    <br>
+                                    <table>
                                         <tr> 
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
+                                            <th>ผู้บังคับบัญชาและพนักงาน : </th>
                                         </tr>
-                                        <tr> 
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
+                                        <tr>
+                                            <th>1) กำหนดเต็มในส่วนที่ 1 (คะแนนเต็ม 60 )  </th>
                                         </tr>
-                                        <tr> 
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
+                                        <tr>
+                                            <th>2) กำหนดวัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน</th>
                                         </tr>
-                                        <tr> 
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
+                                        <tr>
+                                            <th>3) การวัดผลงานควรอยู่ระหว่าง 4-7 ข้อ เท่านั้น เพื่อให้พนักงานใช้เป็นแนวทางและเป้าหมายในการปฏิบัติงาน</th>
                                         </tr>
-                                        <tr> 
-                                            <th rowspan="1" colspan="2" class="text-right">รวม</th>
-                                        
-                                        <th rowspan="1">100</th>
-                                        <th rowspan="1"></th>
-                                        <th rowspan="1"></th>
-                                        </tr>
-                                    </tbody>
-                                    
-                                </table>
-                                
-                            </div>  
-                        
-                        
+                                    </table>
+                                                
+                                </div>  
+                                <div class="row">
+                                    <br>
+                                    <table class="table table-bordered ">
+                                        <thead>
+                                            <tr> 
+                                                <th rowspan="2">
+                                                    วัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน (Performance Objectives / KPIs)
+                                                </th>
+                                                <th rowspan="2">
+                                                    ผลการปฏิบัติงานที่เกิดขึ้นจริง (Actual Performance)
+                                                </th>
+                                                <th rowspan="1" colspan="3">ครั้งที่ 1 ม.ค. - มิ.ย. </th>
+                                            </tr>
+                                            <tr> 
+                                                        
+                                                <th rowspan="1">น้ำหนักรวม</th>
+                                                <th rowspan="1">คะแนน</th>
+                                                <th rowspan="1">คะแนนรวม(น้ำหนัก X คะแนน) </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr> 
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                            </tr>
+                                            <tr> 
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                            </tr>
+                                            <tr> 
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                            </tr>
+                                            <tr> 
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                            </tr>
+                                            <tr> 
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                            </tr>
+                                            <tr> 
+                                                <th rowspan="1" colspan="2" class="text-right">รวม</th>
+                                                            
+                                                <th rowspan="1">100</th>
+                                                <th rowspan="1"></th>
+                                                <th rowspan="1"></th>
+                                            </tr>
+                                        </tbody>
+                                                    
+                                    </table>
+                                                
+                                </div>  
+                                            
+                                            
+                            </div>
+                        </div>
                     </div>
-                    </div>
-                </div>
+                    <!-- /Part 1 -->
                 </div>
                 
                 

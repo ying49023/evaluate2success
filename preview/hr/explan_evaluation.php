@@ -51,7 +51,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        แก้ไขแบบประเมิน
+                        คำชี้แจงแบบประเมินผลการปฏิบัติงาน
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -62,13 +62,14 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                <!--search-->
+                
                 <div class="row box-padding">
+                    <!-- search -->
                     <div class="box box-success">
                         <div class="box-body">
                             <form method="get">
                                 <div class="col-sm-4">
-                                    
+                                            
                                     <div class="col-sm-2 form-inline">
                                         <label class=" control-label">ปี</label>
                                     </div>
@@ -81,7 +82,7 @@
                                         </select>
                                     </div>
                                 </div> 
-
+                                            
                                 <div class="col-md-6">
                                     <div class="col-sm-3 form-inline">
                                         <label class=" control-label">รอบการประเมิน</label>
@@ -99,63 +100,66 @@
                                 </div>
                             </form>
                         </div>
-                    </div>     
-                    <div>
+                    </div>
+                    <!--/search -->
+                    <!-- Navbar process -->
+                    <div class="navbar-process">
+                        <?php // $page = basename($_SERVER['SCRIPT_NAME']); ?>
                             <ul id="tabs" class="nav nav-pills nav-justified" data-tabs="tabs">
-                                <li class="active">
-                                    <a href="explan_evaluation.php" data-toggle="tab" aria-expanded="true">คำชี้แจง</a>
+                                <li class="<?php if($page == 'explan_evaluation.php'){ echo "active"; } ?>">
+                                    <a href="explan_evaluation.php"  aria-expanded="false">คำชี้แจง</a>
                                 </li>
-                                <li class="">
-                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 1 : KPIs</a>
+                                <li class="<?php if($page == 'evaluation_section_1.php'){ echo "active"; } ?>">
+                                    <a href="evaluation_section_1.php"  aria-expanded="true">ส่วนที่ 1 : KPIs</a>
                                 </li>        
-                                <li class="">
+                                <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active"; } ?>">
                                     <a href="edit_weight_eval.php?position_level_id="  aria-expanded="false">ส่วนที่ 2 : Competency</a>
                                 </li>        
-                                <li class="">
-                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 3 : กฎระเบียบข้อบังคับ</a>
+                                <li class="<?php if($page == 'evaluation_section_3.php'){ echo "active"; } ?>">
+                                    <a href="evaluation_section_3.php"  aria-expanded="false">ส่วนที่ 3 : กฎระเบียบข้อบังคับ</a>
                                 </li>        
-                                <li class="">
-                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
+                                <li class="<?php if($page == 'evaluation_section_4.php'){ echo "active"; } ?>">
+                                    <a href="evaluation_section_4.php"  aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
                                 </li>        
                             </ul>
                     </div>
-                <!--</div>-->
-                <!--/search-->
-                <!--<div class="row box-padding" >-->
+                    <!-- /Navbar process -->
+                    
+                    <!-- Explane -->
                     <div class="box box-primary ">
                         <div class="box-header with-border">
                             <h4><i class="glyphicon glyphicon-info-sign"></i> &nbsp; คำชี้แจงแบบประเมินผลการปฏิบัติงาน (Performance Appraisal Guideline) ระดับปฏิบัติการ</h4>
                         </div>
-                    <div class="box-body">
-                        <div class="box-padding">
-                            
-                        
-                        <?php
-                        $sql_title_exp = "SELECT * FROM explaned_evaluation WHERE explaned_id > 1 ";
-                        $query_title_exp = mysqli_query($conn, $sql_title_exp);
-                        while($result_title_exp = mysqli_fetch_array($query_title_exp,MYSQLI_ASSOC)){
-                            $explaned_id = $result_title_exp["explaned_id"];
-                        ?>
-                            <p style="font-size: 16px;"><strong><?php echo $result_title_exp["explaned_header"]." ".$result_title_exp["explaned_small_header"]; ?></strong></p>
-                        <div class="box-padding">
-                            <?php 
-                            $sql_detail = "SELECT * FROM explaned_detail WHERE explaned_id = '$explaned_id'";
-                            $query_detail = mysqli_query($conn, $sql_detail);
-                            while($result_detail = mysqli_fetch_array($query_detail,MYSQLI_ASSOC)){
-                            
-                                ?>    
-                                <p><?php echo $result_detail["detail"]; ?></p>
-                            
-                                <?php
-                            }
-                            ?>
+                        <div class="box-body">
+                            <div class="box-padding">
+                                        
+                                        
+                                        <?php
+                                        $sql_title_exp = "SELECT * FROM explaned_evaluation WHERE explaned_id > 1 ";
+                                        $query_title_exp = mysqli_query($conn, $sql_title_exp);
+                                        while ($result_title_exp = mysqli_fetch_array($query_title_exp, MYSQLI_ASSOC)) {
+                                            $explaned_id = $result_title_exp["explaned_id"];
+                                            ?>
+                                <p style="font-size: 16px;"><strong><?php echo $result_title_exp["explaned_header"] . " " . $result_title_exp["explaned_small_header"]; ?></strong></p>
+                                <div class="box-padding">
+                                                <?php
+                                                $sql_detail = "SELECT * FROM explaned_detail WHERE explaned_id = '$explaned_id'";
+                                                $query_detail = mysqli_query($conn, $sql_detail);
+                                                while ($result_detail = mysqli_fetch_array($query_detail, MYSQLI_ASSOC)) {
+                                                    ?>    
+                                                    <p><?php echo $result_detail["detail"]; ?></p>
+                                                        
+                                                    <?php
+                                                }
+                                                ?>
+                                </div>
+                                            <?php
+                                        }
+                                        ?>
+                            </div>
                         </div>
-                        <?php
-                        }
-                        ?>
                     </div>
-                    </div>
-                </div>
+                    <!--/Explane -->
                 </div>
                 
                 
