@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
     session_start();
     //Check_login
@@ -16,517 +15,292 @@
         }else{
             //HTML PAGE
             ?>
-
+<!DOCTYPE html>
 <html>
-<head>
-    <?php include('./classes/connection_mysqli.php') ?>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- CSS PACKS -->
-    <?php include ('./css_packs.html'); ?>
-    
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
-    
-    <style>
-        
-            table.table tr td,th{
-                text-align: center;
+    <head>
+        <?php 
+        include ('./classes/connection_mysqli.php');
+        if (isset($_GET["emp_id"])) {
+                $get_emp_id = $_GET["emp_id"];
             }
-                
-    </style>
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
-        <!--Header part-->
-        <?php include './headerpart.php'; ?>
-        <!-- Left side column. contains the logo and sidebar -->
-        <?php include './sidebarpart.php'; ?>
-
-        <!-- Content Wrapper. Contains page content แก้เนื้อหาแต่ละหน้าตรงนี้นะ -->
-        <div class="content-wrapper">
-
-            <!-- Content Header (Page header)  -->
-
-            <section class="content-header">
-
-                <h1>แบบฟอร์มประเมินผลการปฏิบัติงาน<small>แบบเน้น Competency, KPIs และ Development</small></h1>
-                
-                <ol class="breadcrumb">
-                    <li>
-                        <a href="#"> <i class="fa fa-dashboard"></i>
-                            Home
-                        </a>
-                    </li>
-                    <li class="active">Evaluation</li>
-                </ol>
-                <hr>
-            </section>
-            <!--/Page header -->
-
-            <!-- Main content -->
+            // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
+            require_once('./classes/class.upload.php') ;
             
-            <div id="menu_status">
-                <center>
-                    <ul class="nav nav-pills">
-                        <li class="active" role="presentation" style="width:20%">
-                            <a href="evaluation_section_1.php">ส่วนที่1 Goal Setting(KPIs)</a>
-                        </li>
-                        <li class="bg-info" role="presentation" style="width:20%">
-                            <a href="evaluation_section_2.php">ส่วนที่2 Competency(พฤติกรรม)</a>
-                        </li>
-                        <li class="bg-info" role="presentation" class="active" style="width:20%">
-                            <a href="evaluation_section_3.php">ส่วนที่3 การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท</a>
-                        </li>
-                        <li class="bg-info" role="presentation" class="active" style="width:20%">
-                            <a href="evaluation_section_4.php">ส่วนที่4 ความคิดเห็นเพิ่มเติมและการประเมินผลโดยรวม (Overall Rating)</a>
-                        </li>
-                    </ul>
+        ?>
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>แก้ไขข้อมูลพนักงาน : ALT Evaluation</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!--CSS PACKS -->
+        <?php include ('./css_packs.html'); ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <!--Header part-->
+            <?php include './headerpart.php'; ?>
+            <!-- Left side column. contains the logo and sidebar -->
+            <?php include './sidebarpart.php'; ?>
 
-                </center>
-            </div>
-            <!--/Process bar-->
-            <script>
-                $(document).ready(function() {
-                    var s = $("#sticker");
-                    var pos = s.position();                    
-                    $(window).scroll(function() {
-                        var windowpos = $(window).scrollTop();
-                        
-                        if (windowpos >= pos.top) {
-                            s.addClass("stick");
-                        } else {
-                            s.removeClass("stick"); 
-                        }
-                    });
-                });
+            <!-- Content Wrapper. Contains page content แก้เนื้อหาแต่ละหน้าตรงนี้นะ -->
+            <div class="content-wrapper">
 
+                <!-- Content Header (Page header)  -->
+                <section class="content-header">
+                    <h1>
+                        แก้ไขแบบประเมิน
+                        <small></small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Edit profile</li>
+                    </ol>
+                </section>
+                <!--/Page header -->
 
-            </script>
-            <style>
-                .clear { 
-                    clear:both; 
-                }
-                div#sticker {
-                    padding:20px;
-                    margin:20px 0;
-                    width: 200px;
-                }
-                .stick {
-                    position:fixed;
-                    top:0px;
-                }
-                div#sideBar {
-                    width:130px;
-                    padding:20px;
-                    margin-left:30px;
-                    float:left;
-                }
-            </style>
-            <div class=" row box-padding "  >
-                <div id="">
+                <!-- Main content -->
+                <!--search-->
+                <div class="row box-padding">
+                    <div class="box box-success">
+                        <div class="box-body">
+                            <form method="get">
+                                <div class="col-sm-4">
+                                    
+                                    <div class="col-sm-2 form-inline">
+                                        <label class=" control-label">ปี</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <select class="form-control " name="year" >
+                                            <option value="">--เลือกปี--</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2016">2015</option>
+                                            <option value="2016">2014</option>
+                                        </select>
+                                    </div>
+                                </div> 
 
-                <div id="" class="box box-success" >
+                                <div class="col-md-6">
+                                    <div class="col-sm-3 form-inline">
+                                        <label class=" control-label">รอบการประเมิน</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <select class="form-control " name="term" >
+                                            <option value="">--เลือกรอบการประเมิน--</option>
+                                            <option value="1">ครั้งที่ 1 (มค - มิย)</option>
+                                            <option value="2">ครั้งที่ 2 (กค - ธค)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary " style="width: 100%;"><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>     
+                    <div>
+                            <ul id="tabs" class="nav nav-pills nav-justified" data-tabs="tabs">
+                                <li >
+                                    <a href="explan_evaluation.php" data-toggle="tab" aria-expanded="false">คำชี้แจง</a>
+                                </li>
+                                <li class="active">
+                                    <a href="evaluation_section_1.php" data-toggle="tab" aria-expanded="true">ส่วนที่ 1 : KPIs</a>
+                                </li>        
+                                <li class="">
+                                    <a href="edit_weight_eval.php?position_level_id="  aria-expanded="false">ส่วนที่ 2 : Competency</a>
+                                </li>        
+                                <li class="">
+                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 3 : กฎระเบียบข้อบังคับ</a>
+                                </li>        
+                                <li class="">
+                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
+                                </li>        
+                            </ul>
+                    </div>
+                <!--</div>-->
+                <br>
+                <div id="" class="box box-primary" >
                     <div class="box-body">
                         <div class="row"> 
                             <div class="box-padding">
                                 <!--ข้อมูลทั่วไป-->
-                                <table class="table table-bordered table-condensed">
-                                    <tbody><tr>
-                                            <th rowspan="4">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="upload_images/contact.png">
+                                <table class="table table-responsive ">
+                                    
+                                        <tr>
+                                            <th rowspan="5">
+                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="upload_images/default.png">
                                             </th>
-                                            <th align="center" width="">ชื่อ-นามสกุล</th>
-                                            <th align="center" width="120px">รหัส</th>
-                                            <th align="center" width="">ตำแหน่ง</th>
-                                            <th align="center" width="">แผนก</th>
-                                            <th align="center" width="">ครั้งที่ 1 </th>
+                                            <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
+                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="1" width="">ตำแหน่ง: </th>
+                                            <th align="center" colspan="1" width=""> </th>
+                                            <th align="center" colspan="1" width="">ระดับตำแหน่ง:  </th>
+                                            <th align="center" colspan="1" width=""> </th>
 
                                         </tr>
                                         <tr>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td> </td>
-                                            <td><span class="text-green"><i class="glyphicon glyphicon-ok"></i></span></td>
+                                            <th align="center" colspan="2" width="">รหัส: </th>
+                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width="">อายุงาน: </th>
+                                            <th align="center" colspan="2" width=""> </th>
+                                            
                                         </tr>
-                                    </tbody>
-                                </table><!--/ข้อมูลทั่วไป-->
-                                <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    <i class="glyphicon glyphicon-triangle-bottom"></i>รายละเอียดบุคคลเพิ่มเติม
-                                </a>
-                                <div class="collapse" id="collapseExample" style="margin-top:10px;">
-                                    <table class="table table-responsive table-bordered ">
-                                        <thead>
-                                            <tr class="">
-                                                <th colspan="2">วันที่เริ่มงาน</th>
-                                                <th colspan="2">ผู้บังคับบัญชาคนที่ 1</th>
-                                                <th colspan="2">ผู้บังคับบัญชาคนที่ 2</th>
-                                            </tr>
-                                        </thead>
                                         <tr>
-                                            <td colspan="2"> </td>
-                                            <td colspan="2"> </td>
-                                            <td colspan="2"> </t
+                                            <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
+                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
+                                            <th align="center" colspan="2" width=""> </th>
+                                            
                                         </tr>
-                                        <thead>
-                                            <tr class="">
-                                                <th colspan="6">
-                                                    สถิติการมาปฏิบัติงาน
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>ลาป่วย</th>
-                                                <th>ลากิจ</th>
-                                                <th>ลาอื่นๆ</th>
-                                                <th>ขาดงาน</th>
-                                                <th>ลางาน</th>
-                                                <th width="16%">ลงโทษทางวินัย</th>
-                                            </tr>
-                                        </thead>
-                                        <TR>
-                                            <TD>-</TD>
-                                            <TD>-</TD>
-                                            <TD>-</TD>
-                                            <TD>-</TD>
-                                            <TD>-</TD>
-                                            <TD>-</TD>
-                                        </TR>
-                                    </table>
-                                </div>
+                                        <tr>
+                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
+                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
+                                            <th align="center" colspan="2" width=""> </th>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th align="center" colspan="2" width="">วันที่ประเมิน : </th>
+                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width="">ระยะเวลาประเมินผล </th>
+                                            <th align="center" colspan="2" width=""> ......../ ......... / 25 ......  ถึง ......... / ......... / 25........ </th>
+                                            
+                                        </tr>
+                                    
+                                
+                                
+                                
+                                       
+                                   </table><!--/ข้อมูลทั่วไป--> 
                             </div>
                         </div>  
                     </div>
                 </div>
-                </div>
-                <div class="clear"></div>
-            </div>
-
-            <div class="row box-padding ">
-                <div class="box box-primary">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">
-                            <b>การวัดความสามารถ (Competency)</b>
-                            ในการปฏิบัติงานตามตำแหน่งงานของพนักงานในระดับนี้ที่บริษัทกำหนดไว้ (career level)
-                        </h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
-                                <i class="fa fa-minus"></i>
-                            </button>
+                <!--/search-->
+                <!--<div class="row box-padding" >-->
+                    <div class="box box-primary ">
+                        <div class="box-header with-border">
+                            <h4><i class="glyphicon glyphicon-info-sign"></i> &nbsp; ส่วนที่ 1  :   การประเมินด้านผลงาน (คะแนนเต็ม 60 )</h4>
                         </div>
-                    </div>
-                    <!-- /.box-header -->
-                    <!--box-body-->
                     <div class="box-body">
-                        <!-- /.row -->
-                        <div class="row">
-                            <div class="box-padding-small">
-                                <center>
-                                    <TABLE class="table table-bordered" HEIGHT="100" WIDTH="100%" border="1" >
-                                        <thead>
-                                            <TR>
-                                                <th style="padding-top:25px;" rowspan="2" colspan="4">ความสามารถ(Competency)</th>
-                                                <th style="padding-top:25px;" rowspan="2" >%น้ำหนัก(W)</th>
-                                                <th colspan="2">ระดับที่คาดหวัง (E)</th>
-                                                <th colspan="6">ระดับที่ทำจริง (A)</th>
-                                            </TR>
-                                            <tr>
-                                                <td>ระดับ</td>
-                                                <td>รวม</td>
-                                                <td>1</td>
-                                                <td>2</td>
-                                                <td>3</td>
-                                                <td>4</td>
-                                                <td>5</td>
-                                                <td>รวม</td>
-                                            </tr>
-                                        </thead>
-                                        <TR>
-                                            <th colspan="13">
-                                                ความสามารถในการปฏิบัติงาน (Competency) - ผู้บังคับบัญชากรุณาทำความเข้าใจ "คำอธิบายระดับความสามารถ" เพื่อประเมินได้ถูกต้อง
-                                            </th>
-                                        </TR>
-
-                                        <TR>
-                                            <th style="text-align:left"  colspan="13">ความสามารถในการบริหารหรือจัดการงาน (10%)</th>
-
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">1. การวางแผนงาน</td>
-
-                                            <td >3</td>
-                                            <td >2</td>
-                                            <td >6</td>
-                                            <td >
-                                                <input type="radio" name="optradio"></td>
-                                            <td >
-                                                <input type="radio" name="optradio"></td>
-                                            <td >
-                                                <input type="radio" name="optradio"></td>
-                                            <td >
-                                                <input type="radio" name="optradio"></td>
-                                            <td >
-                                                <input type="radio" name="optradio"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">2. การดำเนินการตามแผนและติดตามผลงาน</td>
-
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >9</td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td >
-                                                <input type="radio" name="optradio2"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">3. การแก้ไขปัญหาและการตัดสินใจ</td>
-
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >9</td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td >
-                                                <input type="radio" name="optradio3"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">4. การพัฒนาผู้ใต้บังคับบัญชา</td>
-
-                                            <td >2</td>
-                                            <td >2</td>
-                                            <td >4</td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td >
-                                                <input type="radio" name="optradio4"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">5. การสร้างทีมงาน</td>
-
-                                            <td >1</td>
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td >
-                                                <input type="radio" name="optradio5"></td>
-                                            <td ></td>
-                                        </TR>
-
-                                        <TR>
-                                            <th style="text-align:left" colspan="13">ความสามารถในงาน (ความรู้ ,ทักษะ ,คุณสมบัติเฉพาะบุคคล) (20%)</th>
-
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">6. ความรู้ความเข้าใจในหน้าที่งานที่รับผิดชอบ</td>
-
-                                            <td >4</td>
-                                            <td >3</td>
-                                            <td >12</td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td >
-                                                <input type="radio" name="optradio6"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">7. ความละเอียดรอบคอบ</td>
-
-                                            <td >4</td>
-                                            <td >3</td>
-                                            <td >12</td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td >
-                                                <input type="radio" name="optradio7"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">8. ความสามารถในการสื่อสาร</td>
-
-                                            <td >1</td>
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td >
-                                                <input type="radio" name="optradio8"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">9. มนุษยสัมพันธ์ในการทำงาน</td>
-
-                                            <td >2</td>
-                                            <td >3</td>
-                                            <td >6</td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td >
-                                                <input type="radio" name="optradio9"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">10. การบริหารจัดการรายงานและเอกสารต่างๆ</td>
-
-                                            <td >3</td>
-                                            <td >3</td>
-                                            <td >9</td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td >
-                                                <input type="radio" name="optradio10"></td>
-                                            <td ></td>
-                                        </TR>
-
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">11. ความรับผิดชอบและไว้วางใจได้</td>
-
-                                            <td >4</td>
-                                            <td >2</td>
-                                            <td >8</td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td >
-                                                <input type="radio" name="optradio11"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <td style="text-align:left" colspan="4">12. ความร่วมมือต่อทั้งผู้บังคับบัญชาและบริษัทฯ</td>
-
-                                            <td >2</td>
-                                            <td >3</td>
-                                            <td >6</td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td >
-                                                <input type="radio" name="optradio12"></td>
-                                            <td ></td>
-                                        </TR>
-                                        <TR>
-                                            <th colspan="4">รวม</th>
-
-                                            <td >30</td>
-                                            <td ></td>
-                                            <td >83</td>
-                                            <td colspan="6"></td>
-
-                                        </TR>
-                                    </TABLE>
-
-                                </center>
-
-                            </div>
-
-                        </div>
-
+                        <div class="box-padding">
+                            <div class="row">
+                                <h4 class="text-bold">สำหรับการประเมินผลครั้งที่: </h4>
+                                <h4></h4>
+                                <br>
+                                <table>
+                                    <tr> 
+                                        <th>ผู้บังคับบัญชาและพนักงาน : </th>
+                                    </tr>
+                                    <tr>
+                                    <th>1) กำหนดเต็มในส่วนที่ 1 (คะแนนเต็ม 60 )  </th>
+                                    </tr>
+                                    <tr>
+                                    <th>2) กำหนดวัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน</th>
+                                    </tr>
+                                    <tr>
+                                    <th>3) การวัดผลงานควรอยู่ระหว่าง 4-7 ข้อ เท่านั้น เพื่อให้พนักงานใช้เป็นแนวทางและเป้าหมายในการปฏิบัติงาน</th>
+                                </tr>
+                                </table>
+                                
+                            </div>  
+                            <div class="row">
+                                <br>
+                                <table class="table table-bordered ">
+                                    <thead>
+                                    <tr> 
+                                        <th rowspan="2">
+                                            วัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน (Performance Objectives / KPIs)
+                                        </th>
+                                        <th rowspan="2">
+                                            ผลการปฏิบัติงานที่เกิดขึ้นจริง (Actual Performance)
+                                        </th>
+                                        <th rowspan="1" colspan="3">ครั้งที่ 1 ม.ค. - มิ.ย. </th>
+                                    </tr>
+                                    <tr> 
+                                        
+                                        <th rowspan="1">น้ำหนักรวม</th>
+                                        <th rowspan="1">คะแนน</th>
+                                        <th rowspan="1">คะแนนรวม(น้ำหนัก X คะแนน) </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                       <tr> 
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        </tr>
+                                        <tr> 
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        </tr>
+                                        <tr> 
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        </tr>
+                                        <tr> 
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        </tr>
+                                        <tr> 
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        </tr>
+                                        <tr> 
+                                            <th rowspan="1" colspan="2" class="text-right">รวม</th>
+                                        
+                                        <th rowspan="1">100</th>
+                                        <th rowspan="1"></th>
+                                        <th rowspan="1"></th>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                                
+                            </div>  
+                        
+                        
                     </div>
-                    <!-- ./box-body -->
-                    <!-- /.content -->
-
-                    <!--box footer-->
-                    <div class="box-footer">
-                        <button class="btn btn-success">บันทึกข้อมูล</button>
-                        <a href="prominent_page.php">
-                            <button class="btn btn-instagram pull-right">หน้าถัดไป</button>
-                        </a>
                     </div>
-                    <!--/box footer--> </div>
+                </div>
+                </div>
+                
+                
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
 
-                <!-- /.content-wrapper --> </div>
+            <!--Footer -->
+            <?php include './footer.php'; ?>
+
+            <!-- Control Sidebar -->
+            <?php include './controlsidebar.php'; ?>
+
             <!-- Add the sidebar's background. This div must be placed
-                                 immediately after the control sidebar -->
+                 immediately after the control sidebar -->
             <div class="control-sidebar-bg"></div>
-
         </div>
-    </div>
-</div>
-<!--Finish body content-wrapper-->
+        <!-- ./wrapper -->
 
-<!--Footer -->
-<?php include './footer.php'; ?>
-
-<!-- Control Sidebar -->
-<?php include './controlsidebar.php'; ?></div>
-<!-- ./wrapper -->
-
-</body>
+    </body>
     <!-- SCRIPT PACKS -->
-    <?php include ('./script_packs.html'); ?>
+<?php include('./script_packs.html') ?>
 </html>
             <?php
         }
