@@ -107,13 +107,13 @@
                     </div>     
                     <div>
                             <ul id="tabs" class="nav nav-pills nav-justified" data-tabs="tabs">
-                                <li class="active">
+                                <li class="">
                                     <a href="explan_evaluation.php" data-toggle="tab" aria-expanded="true">คำชี้แจง</a>
                                 </li>
                                 <li class="">
                                     <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 1 : KPIs</a>
                                 </li>        
-                                <li class="">
+                                <li class="active">
                                     <a href="edit_weight_eval.php?position_level_id="  aria-expanded="false">ส่วนที่ 2 : Competency</a>
                                 </li>        
                                 <li class="">
@@ -125,7 +125,7 @@
                             </ul>
                     </div>
                     <!-- Search -->
-                    <div class="box box-success">
+                    <div class="box box-primary">
                         <script type="text/javascript">
                             //Script สำหรับ เลือก dropdown menu แบบไม่ต้องกด submit จะเปลี่ยนข้อมูลแบบ " A U T O "
                             function position_level()
@@ -162,7 +162,7 @@
                         </div>
                         <!-- ./box-body -->
                         <!-- /.content -->                            
-                    </div>
+                    <!--</div>-->
                     
                     
                     <?php
@@ -175,7 +175,7 @@
                         $result_level = mysqli_fetch_array($query_level,MYSQLI_ASSOC);
                         $level_name = $result_level["position_description"];
                     ?>
-                    <div class="box box-primary">
+                    <!--<div class="box box-primary">-->
                         <div class="box-header with-border">
                             <b>การจัดการแบบประเมินระดับ<?php echo $level_name; ?></b>
                             <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่มหัวข้อ</button>
@@ -610,7 +610,7 @@
                     </div>
                     <?php } else {
                     ?>
-                    <div class="box box-primary">
+                    
                         <div class="box-body">
                             <div class="box-padding text-center">
                                 <p><i class="glyphicon glyphicon-warning-sign"></i>ไม่มีข้อมูล กรุณาเลือกระดับ</p>
