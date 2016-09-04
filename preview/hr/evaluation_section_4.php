@@ -21,53 +21,6 @@
         
         include './classes/connection_mysqli.php';
         
-        if(isset($_GET['erp'])) {
-            $erp=$_GET['erp'];
-            //++++++++++++++++++insert record+++++++++++++
-           if($erp=='insert'){          
-                $name =$_POST['company_name'];
-                $fullname =$_POST['company_full_name'];
-                $strSQL =" INSERT INTO company(company_name,company_full_name) VALUES('$name','$fullname') ";
-			   
-               $objQuery = mysqli_query($conn,$strSQL);
-               if ($objQuery) {
-
-                   header ("location:company_table.php");
-
-               } else {
-
-                   echo "Error Save [" . $strSQL . "]";
-               }
-
-           }
-            //++++++++++++++++++update record+++++++++++++
-           if($erp=='update'){          
-                $name =$_POST['textcom'];
-                $fullname =$_POST['textfullcom'];
-                $id=$_GET['id'];
-                $strSQL =" UPDATE company SET company_name ='$name',company_full_name ='$fullname'  WHERE company_id=$id ";
-                $objQuery = mysqli_query($conn,$strSQL);
-                if ($objQuery) {
-
-                    header ("location:company_table.php");
-                } else {
-                   echo "Error Save [" . $strSQL . "]";
-               }
-
-           }
-            //++++++++++++++++++delete record+++++++++++++
-           if($erp=='delete'){        
-
-               $id=$_GET['id'];
-               $strSQL =" DELETE FROM company WHERE company_id=$id ";
-               $objQuery = mysqli_query($conn,$strSQL);
-               if ($objQuery) {
-                   header ("location:company_table.php");
-               } else {
-                   echo "Error Save [" . $strSQL . "]";
-               }
-           }
-        }
             
 ?>
 <!DOCTYPE html>
@@ -117,7 +70,7 @@
 
                             <!--Table Point-->
 
-                            <table class="table ">
+                            <table class="table table-hover">
                                 <thead class="thead-inverse">
                                     <tr>
                                         <th colspan="5"><h4>สรุปคะแนนที่ได้รับจากแต่ละส่วนเพื่อประเมินผลโดยรวม</h4></th>
@@ -126,7 +79,7 @@
                                 </thead>
                                 <tbody>
                                     <tr align="center">
-                                        <td rowspan=2><b>หัวข้อประเมิน</b></td>
+                                        <td rowspan=2 style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
                                         <td colspan=2 style="background-color:#FFCCFF"><b>ผู้ประเมินที่ 1</b></td>
                                         <td colspan=2 style="background-color:#99FF99"><b>ผู้ประเมินที่ 2</b></td>
                                     </tr>
