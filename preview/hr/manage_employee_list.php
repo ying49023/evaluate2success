@@ -131,6 +131,7 @@
                                                 <table id="example" class="table table-hover table-striped disabled"  >
                                                     <thead>
                                                         <tr>
+                                                            <th class=""></th>
                                                             <th><button class="sort" data-sort="emp_id"><b>รหัสพนักงาน</b></button></th>
                                                             <th><button class="sort" data-sort="emp_name"><b>ชื่อ-นามสกุล</b></button></th>
                                                             <th class="text-center"><button class="sort" data-sort="job_name"><b>ตำแหน่ง</b></button></th>
@@ -140,7 +141,7 @@
                                                     </thead>
                                                     <?php
                                                         $sql_emp = "SELECT emp.employee_id as emp_id,emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
-                                                                . "dept.department_name as dept_name, j.job_name as job FROM employees emp "
+                                                                . "dept.department_name as dept_name, j.job_name as job, emp.profile_picture as profile_picture FROM employees emp "
                                                                 . "join departments dept on emp.department_id = dept.department_id join jobs j "
                                                                 . "on emp.job_id = j.job_id ".$condition_search." ORDER BY emp_id ASC";
                                                         $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
@@ -150,10 +151,12 @@
                                                         while ($result = mysqli_fetch_assoc($query)) {
                                                             $emp_id = $result["emp_id"];
                                                             $name = $result["prefix"].$result["f_name"] . "  " . $result["l_name"];
+                                                            $profile_picture = $result["profile_picture"];
                                                             $dept = $result["dept_name"];
                                                             $job = $result["job"];
                                                             ?>
                                                             <tr>
+                                                                <td class="profile_picture"><img class="img-circle img-center" src="upload_images/<?php if($profile_picture == ''){ echo 'default.png' ;}else { echo $profile_picture;} ?>" style="width: 35px;height: 35px;" alt="<?php echo $profile_picture; ?>" ></td>
                                                                 <td class="emp_id"><?php echo $emp_id; ?></td>
                                                                 <td class="emp_name"><?php echo $name; ?></td>
                                                                 <td class="job_name text-center"><?php echo $job; ?></td>

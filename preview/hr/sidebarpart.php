@@ -30,7 +30,7 @@
             <!-- / Dashboard menu -->
 
             <!-- Evaluation menu -->
-            <li class="<?php if($page == 'manage_evaluate_sub_list.php' || $page == 'manage_grade.php' || $page == 'edit_weight_eval.php'  || $page == 'competency.php'|| $page == 'manage_evaluate.php' || $page == 'grade_management.php'|| $page == 'manage_competency.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'manage_evaluate_sub_list.php' || $page == 'manage_grade.php' || $page == 'edit_weight_eval.php'  || $page == 'competency.php'|| $page == 'manage_evaluate.php' || $page == 'grade_management.php'|| $page == 'manage_competency.php' || $page == 'explan_evaluation.php' ){ echo "active" ; } ?>">
                 <a href="">
                     <i class="glyphicon glyphicon-list-alt"></i>
                         <span>แบบประเมิน</span>
@@ -40,8 +40,8 @@
                     <li class="<?php if($page == 'manage_evaluate.php' || $page == 'manage_evaluate_sub_list.php' ){ echo "active" ; } ?>">
                         <a href="manage_evaluate.php"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a>
                     </li>
-                    <li class="<?php if($page == 'edit_weight_eval.php'){ echo "active" ; } ?>">
-                        <a href="edit_weight_eval.php?position_level_id="><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
+                    <li class="<?php if($page == 'edit_weight_eval.php' || $page == 'explan_evaluation.php'){ echo "active" ; } ?>">
+                        <a href="explan_evaluation.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
 					
                     <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">

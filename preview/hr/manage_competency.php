@@ -79,10 +79,11 @@
                                 
                                 ?>
                                     <div class="col-md-6">
-                                        <div class="btn btn-default btn-lg" style="margin: 10px;width: 100%;padding-top: 15px;height: 60px;">
-                                            <a href="competency_match.php?level=<?php echo $position_id; ?>&level_name=<?php echo $position_name; ?>"><?php echo $position_name; ?></a>                                             
-                                                            
-                                        </div>
+                                        <a href="competency_match.php?level=<?php echo $position_id; ?>&level_name=<?php echo $position_name; ?>">
+                                            <button class="btn btn-default btn-lg" style="margin: 10px;width: 100%;padding-top: 15px;height: 60px;color: #555;">
+                                            <?php echo $position_name; ?>                                                                                                       
+                                            </button>
+                                        </a> 
                                     </div>
                                 <?php } ?>       
                                            

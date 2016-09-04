@@ -84,7 +84,7 @@
                             
                             $pic=$result["profile_picture"];
                             if($result["profile_picture"] == ""){
-                                $pic = "contact.png";
+                                $pic = "default.png";
                             }else{
                                 $pic = $result["profile_picture"];
                             }      

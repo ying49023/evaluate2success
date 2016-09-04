@@ -68,7 +68,64 @@
                     
                 <!-- Main content -->
                 <div class="row box-padding ">
+                    <!-- Search -->
                     <div class="box box-success">
+                        <div class="box-body">
+                            <form method="get">
+                                <div class="col-sm-4">
+                                    
+                                    <div class="col-sm-2 form-inline">
+                                        <label class=" control-label">ปี</label>
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <select class="form-control " name="year" >
+                                            <option value="">--เลือกปี--</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2016">2015</option>
+                                            <option value="2016">2014</option>
+                                        </select>
+                                    </div>
+                                </div> 
+
+                                <div class="col-md-6">
+                                    <div class="col-sm-3 form-inline">
+                                        <label class=" control-label">รอบการประเมิน</label>
+                                    </div>
+                                    <div class="col-sm-9">
+                                        <select class="form-control " name="term" >
+                                            <option value="">--เลือกรอบการประเมิน--</option>
+                                            <option value="1">ครั้งที่ 1 (มค - มิย)</option>
+                                            <option value="2">ครั้งที่ 2 (กค - ธค)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary " style="width: 100%;"><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>     
+                    <div>
+                            <ul id="tabs" class="nav nav-pills nav-justified" data-tabs="tabs">
+                                <li class="">
+                                    <a href="explan_evaluation.php" data-toggle="tab" aria-expanded="true">คำชี้แจง</a>
+                                </li>
+                                <li class="">
+                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 1 : KPIs</a>
+                                </li>        
+                                <li class="active">
+                                    <a href="edit_weight_eval.php?position_level_id="  aria-expanded="false">ส่วนที่ 2 : Competency</a>
+                                </li>        
+                                <li class="">
+                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 3 : กฎระเบียบข้อบังคับ</a>
+                                </li>        
+                                <li class="">
+                                    <a href="" data-toggle="tab" aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
+                                </li>        
+                            </ul>
+                    </div>
+                    <!-- Search -->
+                    <div class="box box-primary">
                         <script type="text/javascript">
                             //Script สำหรับ เลือก dropdown menu แบบไม่ต้องกด submit จะเปลี่ยนข้อมูลแบบ " A U T O "
                             function position_level()
@@ -105,7 +162,8 @@
                         </div>
                         <!-- ./box-body -->
                         <!-- /.content -->                            
-                    </div>
+                    <!--</div>-->
+                    
                     
                     <?php
                     if($level != '') {
@@ -117,7 +175,7 @@
                         $result_level = mysqli_fetch_array($query_level,MYSQLI_ASSOC);
                         $level_name = $result_level["position_description"];
                     ?>
-                    <div class="box box-primary">
+                    <!--<div class="box box-primary">-->
                         <div class="box-header with-border">
                             <b>การจัดการแบบประเมินระดับ<?php echo $level_name; ?></b>
                             <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่มหัวข้อ</button>
@@ -552,7 +610,7 @@
                     </div>
                     <?php } else {
                     ?>
-                    <div class="box box-primary">
+                    
                         <div class="box-body">
                             <div class="box-padding text-center">
                                 <p><i class="glyphicon glyphicon-warning-sign"></i>ไม่มีข้อมูล กรุณาเลือกระดับ</p>
