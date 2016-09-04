@@ -1,4 +1,33 @@
 <!DOCTYPE html>
+<?php include ('./classes/connection_mysqli.php'); 
+    
+    if(isset($_GET["emp_id"])){
+     $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+     }
+     if(isset($_GET["kpi_id"])){
+     $kpi_id = $_GET["kpi_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+     }
+     $sql_emp = "SELECT
+                                        emp.employee_id AS emp_id,
+                                        emp.prefix As prefix,
+                                        emp.first_name AS f_name,
+                                        emp.last_name AS l_name,
+                                        emp.hiredate AS hiredate,
+                                        emp.manager_id AS manager_id,
+                                        emp.email AS email,
+                                        emp.telephone_no AS telephone,
+                                        dept.department_name AS dept_name,
+                                        pos.position_description AS pos,
+                                        emp.profile_picture 
+                                FROM
+                                        employees emp
+                                JOIN departments dept ON emp.department_id = dept.department_id
+                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
+                                WHERE
+                                        emp.employee_id = '".$get_emp_id."'
+                                LIMIT 1";
+     $query = mysqli_query($conn, $sql_emp); 
+ ?>    
 <html>
     <head>
         <meta charset="utf-8">
@@ -93,70 +122,81 @@
 
                 <!-- Main content -->
                 <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body">
+                <div class="box box-success">
+                    <div class="box-body">
+                        <!--ข้อมูลทั่วไป-->
+                        <?php  while($result = mysqli_fetch_assoc($query)){ 
+                                    $emp_id = $result["emp_id"];
+                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
+                                    $hire = $result["hiredate"];
+                                    $manager_id = $result["manager_id"];
+                                    $dept = $result["dept_name"];
+                                    $pos = $result["pos"];
+                                    $email = $result["email"];
+                                    $tel = $result["telephone"];
+                                    $picture = $result["profile_picture"];
+                                    $sql_manager = "SELECT * from employees where employee_id = '".$manager_id."'" ;
+                                    $query_manager = mysqli_query($conn, $sql_manager);
+                                    $result_manager = mysqli_fetch_array($query_manager);
+                                    $manager_name = $result_manager["prefix"].$result_manager["first_name"]." ".$result_manager["last_name"];
+                        ?>
+                                <table class="table table-responsive ">
+                                    
+                                        <tr>
+                                            <th rowspan="5">
+                                                <img class=" img-responsive img-thumbnail img-lg"   src="hr/upload_images/<?php echo $picture;?>">
+                                            </th>
+                                            <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
+                                            <td  colspan="2" width=""><?php echo $name;?></td>
+                                            <th align="center" colspan="2" width="">รหัส: </th>
+                                            <td  colspan="2" width=""><?php echo $emp_id;?> </td>
 
-                            <table class="table table-bordered" width="90%" height="100px" align="right">
-                                <tbody>
-                                    <tr>
-                                        <th rowspan="2">
-                                            <img class="img-circle img-thumbnail circle-thumbnail" src="dist/img/user2-160x160.jpg" alt="Smiley face" style="margin: 10px 10px 0px 10px;"></th>
-                                        <th>
-                                <center>รหัสพนักงาน</center>
-                                </th>
-                                <th>
-                                <center>ชื่อพนักงาน</center>
-                                </th>
-                                <th>
-                                <center>ตำแหน่ง</center>
-                                </th>
-                                <th>
-                                <center>ฝ่าย/แผนก</center>
-                                </th>
-                                <th>
-                                <center>เป้าหมาย</center>
-                                </th>
-                                <th>
-                                <center>ค่าจริง</center>
-                                </th>
-                                <th>
-                                <center>เทียบกับเป้าหมาย</center>
-                                </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                <center>111111</center>
-                                </td>
-                                <td>
-                                <center>นาย นภัทร อินทร์ใจเอื้อ</center>
-                                </td>
-                                <td>
-                                <center>หัวหน้าฝ่ายบุคคล</center>
-                                </td>
-                                <td>
-                                <center>ฝ่ายบุคคล</center>
-                                </td>
-                                <th>
-                                <center>&gt;=80%</center>
-                                </th>
-                                <th>
-                                <center>35.5%</center>
-                                </th>
-                                <th>
-                                <center></center>
-                                </th>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
+                                            <td  colspan="2" width=""><?php echo $hire;?></td>
+                                            <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
+                                            <td  colspan="2" width=""><?php echo $pos;?></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
+                                            <td  colspan="2" width=""><?php echo $manager_name;?></td>
+                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
+                                            <td colspan="2" width=""> </td>
+                                            
+                                        </tr>
+                                        
+                                    
+                                
+                                
+                                
+                                       
+                                   </table><!--/ข้อมูลทั่วไป--> 
+                        <?php } ?>
+                        
                     </div>
                 </div>
+            </div>
                 <!-- Chart -->
                 <div class="row box-padding">
                     <div class="box box-primary ">
+                        <?php
+                            $sql_kpi_title ="select * from kpi where kpi_code='$kpi_id'";
+                            $query_kpi = mysqli_query($conn, $sql_kpi_title);
+                            
+                        ?>
                         <div class="box-header with-border">
-                            <strong>KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด</strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
+                             <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
+                
+                                $kpi_id = $result_kpi["kpi_code"];
+                                $kpi_name = $result_kpi["kpi_name"];
+                                
+
+                             ?>
+                            <strong><?php echo $kpi_id;?> -<?php echo $kpi_name;?></strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
+                             <?php } ?>
                         </div>
                     </div>
                     <div class="row">

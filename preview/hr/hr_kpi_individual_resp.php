@@ -85,7 +85,8 @@
                                         emp.email AS email,
                                         emp.telephone_no AS telephone,
                                         dept.department_name AS dept_name,
-                                        pos.position_description AS pos
+                                        pos.position_description AS pos,
+                                        emp.profile_picture 
                                 FROM
                                         employees emp
                                 JOIN departments dept ON emp.department_id = dept.department_id
@@ -106,6 +107,7 @@
                                     $pos = $result["pos"];
                                     $email = $result["email"];
                                     $tel = $result["telephone"];
+                                    $picture = $result["profile_picture"];
                                     $sql_manager = "SELECT * from employees where employee_id = '".$manager_id."'" ;
                                     $query_manager = mysqli_query($conn, $sql_manager);
                                     $result_manager = mysqli_fetch_array($query_manager);
@@ -115,8 +117,8 @@
                                 <table class="table table-bordered table-condensed">
                                     <tbody>
                                         <tr>
-                                            <th rowspan="4">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg">
+                                            <th rowspan="4" >
+                                                <img class="img-responsive img-lg" src="upload_images/<?php echo $picture;?>">
                                             </th>
                                             <th align="center" width="" >ชื่อ-นามสกุล</th>
                                             <th align="center" width="120px">รหัส</th>
@@ -318,14 +320,19 @@
                 <h3>KPIs ที่รับผิดชอบทั้งหมด</h3>
             </div>
             <?php  
-                $sql_kpi = "SELECT kpi_resp.kpi_id as kpi_id , kpi.kpi_name as kpi_name , kpi_resp.percent_weight as weight , "
+                /*$sql_kpi = "SELECT kpi_resp.kpi_id as kpi_id , kpi.kpi_name as kpi_name , kpi_resp.percent_weight as weight , "
                     ." kpi_resp.goal as goal , kpi_resp.success as success, eval.term as term , eval.year as year "
                     ." FROM employees emp " 
                     ." JOIN evaluation_employee eval_emp on eval_emp.employee_id = emp.employee_id "
                     ." JOIN evaluation eval on eval_emp.evaluation_code = eval.evaluation_code "
                     ." JOIN kpi_responsible kpi_resp on eval_emp.evaluate_employee_id = kpi_resp.evaluate_employee_id "
                     ." JOIN kpi on kpi_resp.kpi_id = kpi.kpi_id "
-                    ." WHERE eval_emp.employee_id = '".$emp_id."' ORDER BY kpi_id ";
+                    ." WHERE eval_emp.employee_id = '".$emp_id."' ORDER BY kpi_id ";*/
+                $sql_kpi="SELECT k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol 
+                            FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
+                            JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
+                            WHERE ee.employee_id = '".$emp_id."' ORDER BY kpi_id ";
                 $query_kpi = mysqli_query($conn, $sql_kpi);
             ?>
             
@@ -347,6 +354,7 @@
                                 $kpi_name = $result_kpi["kpi_name"];
                                 $weight = $result_kpi["weight"];
                                 $goal = $result_kpi["goal"];
+                                $symbol = $result_kpi["symbol"];
                                 $success = $result_kpi["success"];
                                 $term = $result_kpi["term"];
                                 $year = $result_kpi["year"];
@@ -356,7 +364,7 @@
                                         <td><?php echo $kpi_id ;?></td>
                                         <td><?php echo $kpi_name ; ?></td>
                                         <td class="text-center"><?php echo $weight."%" ; ?></td>
-                                        <td class="text-center"><?php echo $goal ; ?></td>
+                                        <td class="text-center"><?php echo $symbol."".$goal ; ?></td>
                                         <td class="text-center"><?php echo $success ; ?></td>
                                         <td class="text-center">
                                             <?php echo $term." / ".$year ;?>
