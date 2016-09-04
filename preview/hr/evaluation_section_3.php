@@ -81,7 +81,19 @@
                                 <tbody>
                                     <tr align="center">
                                         <td rowspan=2 colspan=4 style="vertical-align: middle;"><b>ประเภทวันลา</b></td>
-                                        <td colspan=2 align="center"><b>ระหว่างเดือน............ถึง.............</b></td>
+                                        <?php
+                                            $sql_month = "SELECT start_month, end_month FROM term where term_id = 1";
+                                            $query = mysqli_query($conn, $sql_month); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                        ?>
+                                        <?php
+                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                                                $start = $result["start_month"];
+                                                $end = $result["end_month"];
+                                         ?>
+                                           
+                                        <td colspan=2 align="center"><b>ระหว่างเดือน</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $start; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ถึง</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $end?></td>
+                                        <?php } ?>
+                        
                                         <td rowspan=2 align="center" style="vertical-align: middle;"><b>รวมคะแนนทั้งหมด</b></td>
                                     </tr>
                                     <tr align="center">
