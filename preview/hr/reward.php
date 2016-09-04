@@ -98,7 +98,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        ส่วนที่ 4: ความคิดเห็นเพิ่มเติม
+                        ส่วนที่ 4: ความคิดเห็นเพิ่มเติมและการประเมินผลโดยรวม (Overall Rating)
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -114,9 +114,93 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
+
+                            <!--Table Point-->
+
+                            <table class="table ">
+                                <thead class="thead-inverse">
+                                    <tr>
+                                        <th colspan="5"><h4>สรุปคะแนนที่ได้รับจากแต่ละส่วนเพื่อประเมินผลโดยรวม</h4></th>
+                                       
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr align="center">
+                                        <td rowspan=2><b>หัวข้อประเมิน</b></td>
+                                        <td colspan=2 style="background-color:#FFCCFF"><b>ผู้ประเมินที่ 1</b></td>
+                                        <td colspan=2 style="background-color:#99FF99"><b>ผู้ประเมินที่ 2</b></td>
+                                    </tr>
+                                    <tr align="center">
+                                       <td><b>คะแนนเต็ม</b></td>
+                                       <td><b>คะแนนที่ได้รับ</b></td>
+                                       <td><b>คะแนนเต็ม</b></td>
+                                       <td><b>คะแนนที่ได้รับ</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
+                                        <td align="center"><b>60</b></td>
+                                        <td align="center"></td>
+                                        <td align="center"><b>60</b></td>
+                                        <td align="center"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>คะแนนรวมส่วนที่ 2 : พฤติกรรมการทำงาน</b></td>
+                                        <td style="background-color:rgb(200,200,200);"></td>
+                                        <td style="background-color:rgb(128,128,128);"></td>
+                                        <td style="background-color:rgb(200,200,200);"></td>
+                                        <td style="background-color:rgb(128,128,128);"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
+                                        <td align="center"><b>20</b></td>
+                                        <td align="center"></td>
+                                        <td align="center"><b>20</b></td>
+                                        <td align="center"></td>
+                                    </tr>
+                                    <tr>
+                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
+                                        <td align="center"><b>20</b></td>
+                                        <td align="center"></td>
+                                        <td align="center"><b>20</b></td>
+                                        <td align="center"></td>
+                                    </tr>
+                                     <tr>
+                                        <td><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
+                                        <td style="background-color:rgb(200,200,200);"></td>
+                                        <td></td>
+                                        <td style="background-color:rgb(200,200,200);"></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 )</td>
+                                        <td colspan=2 align="center" style="color: red;"><b>0</b></td>
+                                        <td colspan=2 align="center" style="color: red;"><b>0</b></td>
+                                    </tr>
+                                     <tr>
+                                        <td align= right><b>สรุปคะแนนตลอดปี (คะแนนสุทธิผู้ประเมินที่ 1 +  คะแนนสุทธิผู้ประเมินที่ 2) หาร 2</b></td>
+                                        <td colspan=4 align="center" style="background-color:#FFEFD5;"><b>0</b></td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td align= right><b>สรุปคะแนนพิจารณาบทลงโทษทางวินัย</b></td>
+                                        <td colspan=4 align="center" style="background-color:#FAF0E6;"><b></b></td>
+                                       
+                                    </tr>
+                                    <tr>
+                                        <td align= right><b>สรุปคะแนนประเมินผลงานโดยรวม (Overall rating)</b></td>
+                                        <td colspan=4 align="center" style="background-color:#F0FFFF;"><b></b></td>
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <br>
+
+
+
                                     
                             <!--Table Good Bad-->
-                                        
+                            <h4>ความคิดเห็นเพิ่มเติม</h4>
                             <table class="table ">
                                 <thead class="thead-inverse">
                                     <tr>
@@ -298,68 +382,7 @@
                                 </tbody>
                             </table>
                                         
-                            <!--Table assessor-->
-                                        
-                            <table class="table ">
-                                <thead class="thead-inverse">
-                                    <tr>
-                                        <th colspan="2">ลงนามผู้ประเมินที่ 1</th>
-                                        <th colspan="2">ลงนามผู้ประเมินที่ 2</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row" colspan="2" rowspan="4"></th>
-                                        <th scope="row" colspan="2" rowspan="4"></th>
-                                                    
-                                    </tr>
-                                    <tr>
-                                        <td>ลงชื่อ...........................................................………. </td>
-                                        <td>ลงชื่อ...........................................................………. </td>
-                                    </tr>
-                                    <tr>
-                                        <td>ตำแหน่ง...........................................………......………</td>
-                                        <td>ตำแหน่ง...........................................………......………</td>
-                                                    
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">วันที่ ...................................................................</td>
-                                        <td colspan="2">วันที่ ...................................................................</td>
-                                                    
-                                    </tr>
-                                                
-                                </tbody>
-                                            
-                                <thead class="thead-default">
-                                    <tr>
-                                        <th colspan="2">ผู้บริหารลงนามอนุมัติผลการประเมิน</th>
-                                        <th colspan="2">พนักงานรับทราบผลการประเมิน</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row" colspan="2" rowspan="4"></th>
-                                        <th scope="row" colspan="2" rowspan="4"></th>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">ลงชื่อ...........................................................………. </td>
-                                        <td colspan="2">ลงชื่อ...........................................................………. </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">ตำแหน่ง...........................................………......………</td>
-                                        <td colspan="2">ตำแหน่ง...........................................………......………</td>
-                                                    
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">วันที่ ...................................................................</td>
-                                        <td colspan="2">วันที่ ...................................................................</td>
-                                                    
-                                    </tr>
-                                                
-                                </tbody>
-                                </tbody>
-                            </table>
-                                        
+            
                                         
                         </div>           
                     </div> 
