@@ -80,7 +80,7 @@ if($username == ''){
             //Session Timeout Start
             $_SESSION['start'] = time(); // Taking now logged in time.
             // Ending a session in 30 minutes from the starting time. example 30 min = 30*60 / 1 day = 24*60*60
-            $_SESSION['expire'] = $_SESSION['start'] + (30*60);
+            $_SESSION['expire'] = $_SESSION['start'] + (2*60*60);
         }//end while
     }//end else
     
