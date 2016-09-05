@@ -20,12 +20,27 @@
     <head>
         <?php 
         include ('./classes/connection_mysqli.php');
-        if (isset($_GET["emp_id"])) {
-                $get_emp_id = $_GET["emp_id"];
+            if (isset($_GET["term"]) && isset($_GET["year"])) {
+                $term = $_GET["term"];
+                $year = $_GET["year"];
+
+                $sql_evaluation = "insert into evaluation(company_id,term_id,year,open_system_date,close_system_date,current_eval) values(1,$term,$year,'0000-00-00','0000-00-00',1)";
+                $query_evaluation = mysqli_query($conn, $sql_evaluation);
+
+
+                $eval_code = '';
+                $sql_eval_id = "select max(e.evaluation_code) as code from evaluation e  join term t on e.term_id=t.term_name";
+                $query_eval_id = mysqli_query($conn, $sql_eval_id);
+
+                $result_eval_id = mysqli_fetch_array($query_eval_id, MYSQLI_ASSOC);
+                $eval_code = $result_eval_id['code'];
+                
+                if($eval_code != ''){
+                    echo $eval_code;
+                    header("location:explan_evaluation.php?eval_id=$eval_code");
+                }           
+
             }
-            // Include คลาส class.upload.php เข้ามา เพื่อจัดการรูปภาพ
-            require_once('./classes/class.upload.php') ;
-            
         ?>
         
         <meta charset="utf-8">
@@ -65,48 +80,45 @@
                 
                 <div class="row box-padding">
                     <div class="box box-success">
-                        <div class="box-body">
-                            <form action="new_evaluation.php" method="post">
-                                <div class="col-sm-4">
-                                    
-                                    <div class="col-sm-2 form-inline">
-                                        <label class=" control-label">ปี</label>
-                                    </div>
-                                    <div class="col-sm-10">
-                                        <select class="form-control " name="year" >
-                                            <option value="">--เลือกปี--</option>
-                                            <?php for($i=2015;$i<=2020;$i++){ echo "<option value='$i'>$i</option>" ; } ?>
-                                                                                        
-                                        </select>
-                                    </div>
-                                </div> 
+                        <div class="box-body" style="padding: 80px 0px 80px 0px;">
+                            <form action="" method="get">
+                                <div class="row">
+                                    <div class="col-md-offset-1 col-sm-4">
+                                            <label class=" control-label">ปี</label>
 
-                                <div class="col-md-6">
-                                    <div class="col-sm-3 form-inline">
-                                        <label class=" control-label">รอบการประเมิน</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <?php
-                                            $slq_term ="SELECT term_id,term_name,start_month,end_month
-                                                        FROM term";
-                                            $query_term = mysqli_query($conn, $slq_term);
-                                        ?>
-                                        <select class="form-control " name="term" >
-                                            <option value="">--เลือกรอบการประเมิน--</option>
-                                            <?php while ($result_term = mysqli_fetch_array($query_term,MYSQLI_ASSOC)){
-                                                $term_name= $result_term['term_name'];
-                                                $term_date= $result_term['start_month'].'-'.$result_term['end_month'];
-                                                $term_id=$result_term['term_id'];
+                                            <select class="form-control " name="year" >
+                                                <option value="">--เลือกปี--</option>
+                                                <?php for($i=2015;$i<=2020;$i++){ echo "<option value='$i'>$i</option>" ; } ?>                                         
+                                            </select>
+                                    </div> 
+
+                                    <div class="col-md-6">
+
+                                            <label class=" control-label">รอบการประเมิน</label>
+                                            <?php
+                                                $slq_term ="SELECT term_id,term_name,start_month,end_month
+                                                            FROM term";
+                                                $query_term = mysqli_query($conn, $slq_term);
                                             ?>
-?>
-                                            <option value="<?php echo $term_name;?>">เทอม<?php echo $term_name.' ( ';?><?php echo $term_date.' )';?></option>
-                                            <?php } ?>
-                                        </select>
+                                            <select class="form-control " name="term" >
+                                                <option value="">--เลือกรอบการประเมิน--</option>
+                                                <?php while ($result_term = mysqli_fetch_array($query_term,MYSQLI_ASSOC)){
+                                                    $term_name= $result_term['term_name'];
+                                                    $term_date= $result_term['start_month'].'-'.$result_term['end_month'];
+                                                    $term_id=$result_term['term_id'];
+                                                ?>
+    ?>
+                                                <option value="<?php echo $term_name;?>">เทอม<?php echo $term_name.' ( ';?><?php echo $term_date.' )';?></option>
+                                                <?php } ?>
+                                            </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary " style="width: 100%;"><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
+                                <div class="row box-padding">
+                                    <div class="col-md-offset-4 col-md-4" >
+                                        <button  type="submit" class="btn btn-primary " style="width: 100%;" ><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
+                                    </div>
                                 </div>
+                                
                             </form>
                         </div>
                     </div> 

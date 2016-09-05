@@ -69,54 +69,25 @@
                     
                 <!-- Main content -->
                 <div class="row box-padding ">
-                    <!-- Search -->
+                    <!-- search -->
                     <div class="box box-success">
                         <div class="box-body">
-                            <form method="get">
-                                <div class="col-sm-4">
-                                    
-                                    <div class="col-sm-2 form-inline">
-                                        <label class=" control-label">ปี</label>
-                                    </div>
-                                    <div class="col-sm-10">
-                                        <select class="form-control " name="year" >
-                                            <option value="">--เลือกปี--</option>
-                                            <?php for($i=2015;$i<=2020;$i++){ echo "<option value='$i'>$i</option>" ; } ?>
-                                                                                        
-                                        </select>
-                                    </div>
-                                </div> 
-
-                                <div class="col-md-6">
-                                    <div class="col-sm-3 form-inline">
-                                        <label class=" control-label">รอบการประเมิน</label>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <?php
-                                            $slq_term ="SELECT term_id,term_name,start_month,end_month
-                                                        FROM term";
-                                            $query_term = mysqli_query($conn, $slq_term);
-                                        ?>
-                                        <select class="form-control " name="term" >
-                                            <option value="">--เลือกรอบการประเมิน--</option>
-                                            <?php while ($result_term = mysqli_fetch_array($query_term,MYSQLI_ASSOC)){
-                                                $term_name= $result_term['term_name'];
-                                                $term_date= $result_term['start_month'].'-'.$result_term['end_month'];
-                                                $term_id=$result_term['term_id'];
-                                            ?>
-?>
-                                            <option value="<?php echo $term_name;?>">เทอม<?php echo $term_name.' ( ';?><?php echo $term_date.' )';?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <button type="submit" class="btn btn-primary " style="width: 100%;"><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
-                                </div>
-                            </form>
+                            <?php 
+                            $eval_code = '';
+                            if(isset($_GET["eval_code"])){
+                                $eval_code = $_GET["eval_code"];
+                            }
+                            
+                            $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
+                            $query_year_term = mysqli_query($conn, $sql_year_term);
+                            while($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)){
+                                echo "<span style='font-size:18px'><b>ปีการประเมิน ".$year = $result_year_term["year"]."</b></span> | ";
+                                echo "<span style='font-size:18px'>รอบการประเมินที่ ".$term = $result_year_term["term_name"]." : ".$result_year_term["start_month"]."-".$result_year_term["end_month"]."</span>";
+                            }
+                            ?>
                         </div>
-                    </div>     
-                    <!-- /Search -->
+                    </div>
+                    <!--/search -->
                     <!-- Navbar process -->
                     <?php include './navbar_process.php'; ?>
                     <!-- /Navbar process -->
@@ -152,6 +123,7 @@
                                                 <?php } ?>
                                             </select>
                                         </div>
+                                        <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
                                     </form>
                                                 
                                 </div>
