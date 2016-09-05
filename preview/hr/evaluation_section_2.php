@@ -24,6 +24,7 @@
         if(isset($_GET["position_level_id"])){
             $level = $_GET["position_level_id"];
         }
+         
     ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -80,9 +81,8 @@
                                     <div class="col-sm-10">
                                         <select class="form-control " name="year" >
                                             <option value="">--เลือกปี--</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2016">2015</option>
-                                            <option value="2016">2014</option>
+                                            <?php for($i=2015;$i<=2020;$i++){ echo "<option value='$i'>$i</option>" ; } ?>
+                                                                                        
                                         </select>
                                     </div>
                                 </div> 
@@ -92,10 +92,21 @@
                                         <label class=" control-label">รอบการประเมิน</label>
                                     </div>
                                     <div class="col-sm-9">
+                                        <?php
+                                            $slq_term ="SELECT term_id,term_name,start_month,end_month
+                                                        FROM term";
+                                            $query_term = mysqli_query($conn, $slq_term);
+                                        ?>
                                         <select class="form-control " name="term" >
                                             <option value="">--เลือกรอบการประเมิน--</option>
-                                            <option value="1">ครั้งที่ 1 (มค - มิย)</option>
-                                            <option value="2">ครั้งที่ 2 (กค - ธค)</option>
+                                            <?php while ($result_term = mysqli_fetch_array($query_term,MYSQLI_ASSOC)){
+                                                $term_name= $result_term['term_name'];
+                                                $term_date= $result_term['start_month'].'-'.$result_term['end_month'];
+                                                $term_id=$result_term['term_id'];
+                                            ?>
+?>
+                                            <option value="<?php echo $term_name;?>">เทอม<?php echo $term_name.' ( ';?><?php echo $term_date.' )';?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -296,7 +307,7 @@
                                             JOIN competency c ON m.competency_id=c.competency_id 
                                             JOIN competency_title t ON c.title_id=t.title_id 
                                             JOIN position_level p ON p.position_level_id=m.position_level_id 
-                                            WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1";
+                                            WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1 ";
                                 $query_mng= mysqli_query($conn, $sql_mng);
                                 $no=0;
                                 ?>

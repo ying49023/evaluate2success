@@ -20,7 +20,6 @@
     <head>
         <?php 
         include ('./classes/connection_mysqli.php');
-        $sql_eval = "SELECT * evaluation"
         if (isset($_GET["emp_id"])) {
                 $get_emp_id = $_GET["emp_id"];
             }
@@ -52,7 +51,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        คำชี้แจงแบบประเมินผลการปฏิบัติงาน
+                        สร้างการประเมิน
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -65,34 +64,43 @@
                 <!-- Main content -->
                 
                 <div class="row box-padding">
-                    <!-- search -->
                     <div class="box box-success">
                         <div class="box-body">
-                            <form method="get">
+                            <form action="new_evaluation.php" method="post">
                                 <div class="col-sm-4">
-                                            
+                                    
                                     <div class="col-sm-2 form-inline">
                                         <label class=" control-label">ปี</label>
                                     </div>
                                     <div class="col-sm-10">
                                         <select class="form-control " name="year" >
                                             <option value="">--เลือกปี--</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2016">2015</option>
-                                            <option value="2016">2014</option>
+                                            <?php for($i=2015;$i<=2020;$i++){ echo "<option value='$i'>$i</option>" ; } ?>
+                                                                                        
                                         </select>
                                     </div>
                                 </div> 
-                                            
+
                                 <div class="col-md-6">
                                     <div class="col-sm-3 form-inline">
                                         <label class=" control-label">รอบการประเมิน</label>
                                     </div>
                                     <div class="col-sm-9">
+                                        <?php
+                                            $slq_term ="SELECT term_id,term_name,start_month,end_month
+                                                        FROM term";
+                                            $query_term = mysqli_query($conn, $slq_term);
+                                        ?>
                                         <select class="form-control " name="term" >
                                             <option value="">--เลือกรอบการประเมิน--</option>
-                                            <option value="1">ครั้งที่ 1 (มค - มิย)</option>
-                                            <option value="2">ครั้งที่ 2 (กค - ธค)</option>
+                                            <?php while ($result_term = mysqli_fetch_array($query_term,MYSQLI_ASSOC)){
+                                                $term_name= $result_term['term_name'];
+                                                $term_date= $result_term['start_month'].'-'.$result_term['end_month'];
+                                                $term_id=$result_term['term_id'];
+                                            ?>
+?>
+                                            <option value="<?php echo $term_name;?>">เทอม<?php echo $term_name.' ( ';?><?php echo $term_date.' )';?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -101,47 +109,7 @@
                                 </div>
                             </form>
                         </div>
-                    </div>
-                    <!--/search -->
-                    <!-- Navbar process -->
-                    <?php include './navbar_process.php'; ?>
-                    <!-- /Navbar process -->
-                    
-                    <!-- Explane -->
-                    <div class="box box-primary ">
-                        <div class="box-header with-border">
-                            <h4><i class="glyphicon glyphicon-info-sign"></i> &nbsp; คำชี้แจงแบบประเมินผลการปฏิบัติงาน (Performance Appraisal Guideline) ระดับปฏิบัติการ</h4>
-                        </div>
-                        <div class="box-body">
-                            <div class="box-padding">
-                                        
-                                        
-                                        <?php
-                                        $sql_title_exp = "SELECT * FROM explaned_evaluation WHERE explaned_id > 1 ";
-                                        $query_title_exp = mysqli_query($conn, $sql_title_exp);
-                                        while ($result_title_exp = mysqli_fetch_array($query_title_exp, MYSQLI_ASSOC)) {
-                                            $explaned_id = $result_title_exp["explaned_id"];
-                                            ?>
-                                <p style="font-size: 16px;"><strong><?php echo $result_title_exp["explaned_header"] . " " . $result_title_exp["explaned_small_header"]; ?></strong></p>
-                                <div class="box-padding">
-                                                <?php
-                                                $sql_detail = "SELECT * FROM explaned_detail WHERE explaned_id = '$explaned_id'";
-                                                $query_detail = mysqli_query($conn, $sql_detail);
-                                                while ($result_detail = mysqli_fetch_array($query_detail, MYSQLI_ASSOC)) {
-                                                    ?>    
-                                                    <p><?php echo $result_detail["detail"]; ?></p>
-                                                        
-                                                    <?php
-                                                }
-                                                ?>
-                                </div>
-                                            <?php
-                                        }
-                                        ?>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/Explane -->
+                    </div> 
                 </div>
                 
                 
