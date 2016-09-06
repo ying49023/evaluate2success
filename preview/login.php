@@ -7,7 +7,7 @@ if(isset($_GET["check"])){
     }else if($check == 'wrong_pass'){
         $value = "Password ผิดกรุณากรอกใหม่";
     }else if($check == 'limit_level'){
-        $value = "ไม่สามารถดข้าถึงระดับ Admin ได้";
+        $value = "ไม่สามารถเข้าถึงระดับ User ได้";
     }
 }
 
@@ -42,13 +42,13 @@ and open the template in the editor.
             hr{
                 width: 50%;
             }
-            button{
+/*            button{
                 width: 100%;
                 max-width: 200px;
                 height: 350px;
                 text-align: center;
                 padding: 10px;
-            }
+            }*/
             .container >h1,h3{
                 text-align: center;
             }
@@ -102,7 +102,7 @@ and open the template in the editor.
                         <!-- /.box-footer -->
                     </form>
                     <div class="form-horizontal form-signin" style="color:green;width: 500px;font-weight: 800;font-style: italic">
-                        <p ><u>หมายเหตุ</u>โปรดLogin โดย username : admin / password : 123456789 </p>
+                        <p ><u>หมายเหตุ</u>โปรดLogin โดย username : rose / password : 1234 </p>
                         <p>ขั้นตอนการ Logout</p>
                         <ol>
                             <li>คลิกมุมบนขวาที่แสดงชื่อ</li>

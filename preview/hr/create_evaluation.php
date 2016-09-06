@@ -37,7 +37,7 @@
                 
                 if($eval_code != ''){
                     echo $eval_code;
-                    header("location:explan_evaluation.php?eval_id=$eval_code");
+                    header("location:explan_evaluation.php?eval_code=$eval_code");
                 }           
 
             }
@@ -113,7 +113,7 @@
                                             </select>
                                     </div>
                                 </div>
-                                <div class="row box-padding">
+                                <div class="row box-padding" style="margin-top: 20px;">
                                     <div class="col-md-offset-4 col-md-4" >
                                         <button  type="submit" class="btn btn-primary " style="width: 100%;" ><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
                                     </div>

@@ -29,14 +29,20 @@ if($username == ''){
                 echo "Password is wrong !";
                 header("location:login.php?check=wrong_pass");
             }else if($result["username"] == $username && $result["password"] == $password){
-                if ($result['position_level_id'] == '1') {
+                if($result["login_status"] != '1'){
+                    //Limit level
+                    echo "Limit level";
+                    // send to Admin
+                    header("location:login.php?check=limit_level");
+                }else if ($result['position_level_id'] == '1') {
                     //Admin
                     $_SESSION["employee_id"] = session_id();
                     $_SESSION["username"] = $result["username"];
                     $_SESSION["department_id"] = $result["department_id"];
                     $_SESSION["job_id"] = $result["job_id"];
                     $_SESSION["company_id"] = $result["company_id"];
-                    $_SESSION["position_level_id"] = 1;
+                    $_SESSION["position_level_id"] = $result["position_level_id"];
+                    $_SESSION["login_status"] = $result["login_status"];
 
                     // send to Employee
                     header("location:index.php");
@@ -47,7 +53,8 @@ if($username == ''){
                     $_SESSION["department_id"] = $result["department_id"];
                     $_SESSION["job_id"] = $result["job_id"];
                     $_SESSION["company_id"] = $result["company_id"];
-                    $_SESSION["position_level_id"] = 2;
+                    $_SESSION["position_level_id"] = $result["position_level_id"];
+                    $_SESSION["login_status"] = $result["login_status"];
 
                     // send to Leader
                     header("location:index.php");
@@ -58,7 +65,8 @@ if($username == ''){
                     $_SESSION["department_id"] = $result["department_id"];
                     $_SESSION["job_id"] = $result["job_id"];
                     $_SESSION["company_id"] = $result["company_id"];
-                    $_SESSION["position_level_id"] = 3;
+                    $_SESSION["position_level_id"] = $result["position_level_id"];
+                    $_SESSION["login_status"] = $result["login_status"];
 
                     // send to Manager
                     header("location:index.php");
@@ -69,7 +77,8 @@ if($username == ''){
                     $_SESSION["department_id"] = $result["department_id"];
                     $_SESSION["job_id"] = $result["job_id"];
                     $_SESSION["company_id"] = $result["company_id"];
-                    $_SESSION["position_level_id"] = 4;
+                    $_SESSION["position_level_id"] = $result["position_level_id"];
+                    $_SESSION["login_status"] = $result["login_status"];
 
                     // send to President
                     header("location:index.php");
