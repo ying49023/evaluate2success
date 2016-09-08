@@ -412,9 +412,9 @@
 
                                                     <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit__manage_competency_<?php echo $m_id; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
                                                     
-                                                    <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="competency_match.php?match_id=<?php  echo $m_id; ; ?>&delete_group=1&level=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ; ?>">
+                                                    <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="competency_match.php?match_id=<?php  echo $m_id; ; ?>&delete_group=1&level=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ?>">
                                                               <i class="glyphicon glyphicon-remove"></i>ลบ</a>
-                                                    <?php include('./modal_delete.php'); ?>
+                                                    <?php require_once('./modal_delete.php'); ?>
                                                     <form action method="get" >
                                                     <!-- Modal Edit -->   
                                                     <div class="modal animated fade " id="edit__manage_competency_<?php echo $m_id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

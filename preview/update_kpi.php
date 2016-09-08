@@ -1,3 +1,24 @@
+<?php
+    //General user
+    session_start();
+    //Check_login
+    if($_SESSION["employee_id"]==''){
+        echo "Please login again";
+        echo "<a href='login.php'>Click Here to Login</a>";
+        header("location:login.php");
+    }else if($_SESSION["login_status"] != '0' ){
+        echo "Login wrong level" ;
+        header("location:hr/index.php");
+    } else{
+        $now = time(); // Checking the time now when home page starts.
+//        echo $now." - session expire ".$_SESSION["expire"];
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header("location:session_timeout.php");
+            echo "Your session has expired! <a href='login.php'>Login here</a>";
+        }else{
+            //HTML PAGE
+            ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -191,7 +212,7 @@
                                         $query_kpi = mysqli_query($conn, $sql_kpi);
                                     ?>
             
-                                <table class="table table-bordered " width="90%" height="100px" border="1px">
+                                <table class="table table-bordered" width="90%" height="100px" border="1px">
                                     <tr>
                                         <th>No.</th>
                                         <th>KPIs</th>
@@ -258,7 +279,6 @@
                     </div>
 
                     <!-- /.content --> </div>
-            </div>
 
             <!-- /.content-wrapper -->
 
@@ -276,4 +296,8 @@
 
         
 </body>
-    </html>
+</html>
+<?php
+        }
+    }
+?>

@@ -33,11 +33,11 @@
                 $query_eval_id = mysqli_query($conn, $sql_eval_id);
 
                 $result_eval_id = mysqli_fetch_array($query_eval_id, MYSQLI_ASSOC);
-                $eval_code = $result_eval_id['code'];
+                $_SESSION["eval_id"] = $result_eval_id['code'];
                 
                 if($eval_code != ''){
                     echo $eval_code;
-                    header("location:explan_evaluation.php?eval_code=$eval_code");
+                    header("location:explan_evaluation.php");
                 }           
 
             }
@@ -81,9 +81,9 @@
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body" style="padding: 80px 0px 80px 0px;">
-                            <form action="" method="get">
-                                <div class="row">
-                                    <div class="col-md-offset-1 col-sm-4">
+                            <form action="new_evaluation.php" method="post">
+                                <div class="row box-padding">
+                                    <div class="col-md-offset-2 col-sm-4">
                                             <label class=" control-label">ปี</label>
 
                                             <select class="form-control " name="year" >
@@ -92,7 +92,7 @@
                                             </select>
                                     </div> 
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
 
                                             <label class=" control-label">รอบการประเมิน</label>
                                             <?php
@@ -114,12 +114,62 @@
                                     </div>
                                 </div>
                                 <div class="row box-padding" style="margin-top: 20px;">
-                                    <div class="col-md-offset-4 col-md-4" >
-                                        <button  type="submit" class="btn btn-primary " style="width: 100%;" ><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
+                                    <div class="col-md-2"></div>
+                                    <div class=" col-md-4" >
+                                        <a class="btn btn-primary " data-toggle="modal" data-target="#history" style="width: 100%;" ><i class="glyphicon glyphicon glyphicon-list"></i> &nbsp; ประวัติย้อนหลัง</a>
+                                    </div>
+                                    <div class=" col-md-4" >
+                                        <button  type="submit" class="btn btn-success " style="width: 100%;" ><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
                                     </div>
                                 </div>
                                 
                             </form>
+                            <!--History -->
+                            <div class="modal fade" id="history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">ข้อมูลการประเมินย้อนหลัง</h4>
+                                        </div>
+                                        <div class="modal-body">                                           
+                                            <?php
+                                            $sql_history_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=0  ";
+                                            $query_history_eval = mysqli_query($conn, $sql_history_eval);
+                                            
+                                            ?>    
+                                            <table class="table table-hover">
+                                                        <tr>
+
+                                                            <th>รอบการประเมิน</th>
+                                                            <th>วันเปิด</th>
+                                                            <th>วันปิด</th>
+                                                            <th class="text-center">สถานะ</th>
+
+                                                        </tr>
+                                                        <?php while ($result_history_eval = mysqli_fetch_array($query_history_eval, MYSQLI_ASSOC)) { ?>
+                                                            <tr>
+
+                                                                <td><?php echo $result_history_eval["term"]; ?> / <?php echo $result_history_eval["year"]; ?></td>
+                                                                <td><?php echo $result_history_eval["open_system_date"]; ?></td>
+                                                                <td><?php echo $result_history_eval["close_system_date"]; ?></td>
+                                                                <td class="text-center"><span style="color:maroon;">ปิดรอบการประเมิน</span></td>
+                                                            </tr>
+
+
+
+                                                        <?php } ?>
+                                                    </table>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">บันทึก</button>
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                        
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/History-->
                         </div>
                     </div> 
                 </div>

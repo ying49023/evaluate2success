@@ -1,3 +1,24 @@
+<?php
+    //General user
+    session_start();
+    //Check_login
+    if($_SESSION["employee_id"]==''){
+        echo "Please login again";
+        echo "<a href='login.php'>Click Here to Login</a>";
+        header("location:login.php");
+    }else if($_SESSION["login_status"] != '0' ){
+        echo "Login wrong level" ;
+        header("location:hr/index.php");
+    } else{
+        $now = time(); // Checking the time now when home page starts.
+//        echo $now." - session expire ".$_SESSION["expire"];
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header("location:session_timeout.php");
+            echo "Your session has expired! <a href='login.php'>Login here</a>";
+        }else{
+            //HTML PAGE
+            ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -77,11 +98,12 @@
                                                 <th colspan="3">วันที่เริ่มงาน</th>
                                                 <th colspan="3">ผู้บังคับบัญชา</th>
                                             </tr>
-                                        </thead>
-                                        <tr>
+                                            <tr>
                                             <td colspan="3">1 ก.พ. 2556</td>
                                             <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
                                         </tr>
+                                        </thead>
+                                        
                                         <thead>
                                             <tr class="">
                                                 <th colspan="6">
@@ -97,14 +119,16 @@
                                                 <th width="16%">ลงโทษทางวินัย</th>
                                             </tr>
                                         </thead>
-                                        <TR>
-                                            <TD>1วัน</TD>
-                                            <TD>1วัน</TD>
-                                            <TD>-</TD>
-                                            <TD>-</TD>
-                                            <TD>2วัน</TD>
-                                            <TD>-</TD>
-                                        </TR>
+                                        <tbody>
+                                            <TR>
+                                                <TD>1วัน</TD>
+                                                <TD>1วัน</TD>
+                                                <TD>-</TD>
+                                                <TD>-</TD>
+                                                <TD>2วัน</TD>
+                                                <TD>-</TD>
+                                            </TR>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -268,3 +292,7 @@
     <!-- ./wrapper -->
 </body>
 </html>
+<?php
+        }
+    }
+?>

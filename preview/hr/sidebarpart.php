@@ -40,7 +40,7 @@
                     <li class="<?php if($page == 'manage_evaluate.php' || $page == 'manage_evaluate_sub_list.php' ){ echo "active" ; } ?>">
                         <a href="manage_evaluate.php"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a>
                     </li>
-                    <li class="<?php if($page == 'create_evaluation.php' || $page == 'explan_evaluation.php?eval_id=' || $page == 'evaluation_section_1.php' || $page == 'evaluation_section_2.php' || $page == 'evaluation_section_3.php' || $page == 'evaluation_section_4.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'create_evaluation.php' || $page == 'explan_evaluation.php' || $page == 'evaluation_section_1.php' || $page == 'evaluation_section_2.php' || $page == 'evaluation_section_3.php' || $page == 'evaluation_section_4.php'){ echo "active" ; } ?>">
                         <a href="create_evaluation.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
                     </li>
 					
