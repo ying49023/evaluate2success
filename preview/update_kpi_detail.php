@@ -263,7 +263,20 @@
                             <p class="text-center">
                                 <strong>ประวัติการอัพเดต KPIs</strong>
                             </p>
-                        </div>  
+                        </div> 
+                        
+                        <?php 
+                        $sql_kpi_history ="
+                            SELECT k.kpi_name, kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol
+                            FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id 
+                            JOIN kpi k ON ks.kpi_id = k.kpi_id
+                            JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
+                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                            WHERE ee.employee_id = $get_emp_id  AND
+                            e.term_id=1 AND e.year=2016 AND k.kpi_code='$kpi_id'";
+                        $query_kpi_history = mysqli_query($conn,$sql_kpi_history);
+                        $count=0;
+                        ?>
                         <form method="get" action="compareevaluation.php" >
                             <div class="box-body box-padding-table "> 
 
@@ -277,52 +290,27 @@
                                         <td class="text-center">อัพเดท</td>
                                         <td class="text-center">คำอธิบาย</td>
                                     </tr>
+                                    <?php
+                                        while($result_kpi_history = mysqli_fetch_assoc($query_kpi_history)) {
+                
+                                        $kpi_id = $result_kpi_history["kpi_id"];
+                                        $kpi_name = $result_kpi_history["kpi_name"];                                        
+                                        $goal = $result_kpi_history["goal"];
+                                        $symbol = $result_kpi_history["symbol"];
+                                        $kpi_progress_update = $result_kpi_history["kpi_progress_update"];
+                                        $progress_time_update = $result_kpi_history["progress_time_update"];
+                                        $count++;
+                                    ?>
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">30 ม.ค. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">1 คน</td>
-                                        <td class="text-center">1 คน</td>
+                                        <td class="text-center"><?php echo $count;?></td>
+                                        <td class="text-center"><?php echo $progress_time_update;?></td>
+                                        <td class="text-center"><?php echo $kpi_id;?></td>
+                                        <td class="text-center"><?php echo $symbol.''.$goal;?></td>
+                                        <td class="text-center"><?php echo $kpi_progress_update;?></td>
+                                        <td class="text-center"> </td>
                                         <td class="text-center"> </td>
                                     </tr>
-                                    <tr>
-                                         <td class="text-center">2</td>
-                                        <td class="text-center">30 ก.พ. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">2 คน</td>
-                                        <td class="text-center">1 คน</td>
-                                        <td class="text-center"> </td>
-                                    </tr>
-                                    <tr>
-                                         <td class="text-center">3</td>
-                                        <td class="text-center">30 มี.ค. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">4 คน</td>
-                                        <td class="text-center">2 คน</td>
-                                        <td class="text-center"> </td>
-                                    </tr>
-                                    <tr>
-                                         <td class="text-center">4</td>
-                                        <td class="text-center">30 เม.ย. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">5 คน</td>
-                                        <td class="text-center">1 คน</td>
-                                        <td class="text-center"> </td>
-                                    </tr>
-                                    <tr >
-
-                                         <td class="text-center">5</td>
-                                        <td class="text-center">30 พ.ค. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">6 คน</td>
-                                        <td class="text-center">1 คน</td>
-                                        <td class="text-center"> </td>
-                                    </tr>
+                                        <?php } ?>
                                 </table>
 
                             </div>
