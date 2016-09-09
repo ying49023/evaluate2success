@@ -1,3 +1,24 @@
+<?php
+    //General user
+    session_start();
+    //Check_login
+    if($_SESSION["employee_id"]==''){
+        echo "Please login again";
+        echo "<a href='login.php'>Click Here to Login</a>";
+        header("location:login.php");
+    }else if($_SESSION["login_status"] != '0' ){
+        echo "Login wrong level" ;
+        header("location:hr/index.php");
+    } else{
+        $now = time(); // Checking the time now when home page starts.
+//        echo $now." - session expire ".$_SESSION["expire"];
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header("location:session_timeout.php");
+            echo "Your session has expired! <a href='login.php'>Login here</a>";
+        }else{
+            //HTML PAGE
+            ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,9 +29,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
-    
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
     
     <style>
         
@@ -221,6 +239,7 @@
                                                 <td>รวม</td>
                                             </tr>
                                         </thead>
+                                        <tbody>
                                         <TR>
                                             <th colspan="13">
                                                 ความสามารถในการปฏิบัติงาน (Competency) - ผู้บังคับบัญชากรุณาทำความเข้าใจ "คำอธิบายระดับความสามารถ" เพื่อประเมินได้ถูกต้อง
@@ -462,6 +481,7 @@
                                             <td colspan="6"></td>
 
                                         </TR>
+                                        </tbody>
                                     </TABLE>
 
                                 </center>
@@ -497,8 +517,13 @@
 <?php include './footer.php'; ?>
 
 <!-- Control Sidebar -->
-<?php include './controlsidebar.php'; ?></div>
+<?php include './controlsidebar.php'; ?>
+</div>
 <!-- ./wrapper -->
 
 </body>
 </html>
+<?php
+        }
+    }
+?>

@@ -1,3 +1,24 @@
+<?php
+    //General user
+    session_start();
+    //Check_login
+    if($_SESSION["employee_id"]==''){
+        echo "Please login again";
+        echo "<a href='login.php'>Click Here to Login</a>";
+        header("location:login.php");
+    }else if($_SESSION["login_status"] != '0' ){
+        echo "Login wrong level" ;
+        header("location:hr/index.php");
+    } else{
+        $now = time(); // Checking the time now when home page starts.
+//        echo $now." - session expire ".$_SESSION["expire"];
+        if ($now > $_SESSION['expire']) {
+            session_destroy();
+            header("location:session_timeout.php");
+            echo "Your session has expired! <a href='login.php'>Login here</a>";
+        }else{
+            //HTML PAGE
+            ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +30,7 @@
   <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
     
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
+    
     
     <style>
       table.table tr td,th{
@@ -318,8 +338,7 @@
             </div>
 
           </div>
-        </div>
-      </div>
+
       <!--/ข้อมูลทั่วไป-->
 
       <!-- /.content-wrapper -->
@@ -338,4 +357,10 @@
   <!-- ./wrapper -->
 
 </body>
+<!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
 </html>
+<?php
+        }
+    }
+?>

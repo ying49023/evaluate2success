@@ -6,6 +6,7 @@ include './classes/connection_mysqli.php';
 $username = $_POST["username"];
 
 $password = $_POST["password"];
+
 if($username == ''){
     echo 'Check username';
 }else if($password == ''){
@@ -38,6 +39,7 @@ if($username == ''){
                     //Admin
                     $_SESSION["employee_id"] = session_id();
                     $_SESSION["username"] = $result["username"];
+                    $_SESSION["password"] = md5(base64_encode($result["password"]));
                     $_SESSION["department_id"] = $result["department_id"];
                     $_SESSION["job_id"] = $result["job_id"];
                     $_SESSION["company_id"] = $result["company_id"];
@@ -50,6 +52,7 @@ if($username == ''){
                     //User
                     $_SESSION["employee_id"] = session_id();
                     $_SESSION["username"] = $result["username"];
+                    $_SESSION["password"] = md5(base64_encode($result["password"]));
                     $_SESSION["department_id"] = $result["department_id"];
                     $_SESSION["job_id"] = $result["job_id"];
                     $_SESSION["company_id"] = $result["company_id"];
@@ -62,6 +65,7 @@ if($username == ''){
                     //Guest
                     $_SESSION["employee_id"] = session_id();
                     $_SESSION["username"] = $result["username"];
+                    $_SESSION["password"] = md5(base64_encode($result["password"]));
                     $_SESSION["department_id"] = $result["department_id"];
                     $_SESSION["job_id"] = $result["job_id"];
                     $_SESSION["company_id"] = $result["company_id"];
@@ -74,6 +78,7 @@ if($username == ''){
                     //Guest
                     $_SESSION["employee_id"] = session_id();
                     $_SESSION["username"] = $result["username"];
+                    $_SESSION["password"] = md5(base64_encode($result["password"]));
                     $_SESSION["department_id"] = $result["department_id"];
                     $_SESSION["job_id"] = $result["job_id"];
                     $_SESSION["company_id"] = $result["company_id"];

@@ -150,7 +150,7 @@
                                 <div class="box-body">
                                   <div class="col-md-offset-1 col-md-10 ">
                                     <?php 
-                                        $sql_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1  ";
+                                        $sql_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1 AND current_eval='1' ";
                                         $query_eval= mysqli_query($conn, $sql_eval);
                                     ?>
                                      

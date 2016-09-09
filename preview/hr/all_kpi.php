@@ -232,7 +232,7 @@
                                         </tbody>
                                         <script>
                                             var options = {
-                                                valueNames: [ 'id', 'kpi_name' , 'kpi_desc' , 'unit' , 'period' , 'group' ]
+                                                valueNames: [ 'id', 'kpi_name' , 'kpi_desc' , 'unit' , 'period' , 'group' ];
                                             };
                                             
                                             var userList = new List('filter', options);
