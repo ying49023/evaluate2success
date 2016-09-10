@@ -203,7 +203,7 @@
 
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <input type="submit" class="btn btn-primary"value="บันทึก" >
+                                                                <input type="submit" class="btn btn-primary" value="บันทึก" >
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
 
                                                             </div>
