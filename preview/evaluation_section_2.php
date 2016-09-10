@@ -202,24 +202,54 @@
                                         <tbody class="list">
                                         <?php while ($result_mng = mysqli_fetch_array($query_mng, MYSQLI_ASSOC))  {
                                             $m_id = $result_mng["manage_comp_id"];
-                                            $m_title = $result_mng["title_name"];
+                                            //$m_title = $result_mng["title_name"];
                                             $m_detail = $result_mng["detail"];
                                             $m_position = $result_mng["position"];
                                             $m_weight = $result_mng["weight"];
                                             $m_com = $result_mng["competency_id"];
+                                            
                                             $no++;
                                             ?>
-                                        
                                             <tr>
                                                 <td><?php echo $no; ?></td>
-                                                <td style="text-align: left;"><?php echo $m_detail; ?></td>
-                                                <td style="text-align: center;"><?php echo $m_weight; ?></td>
-                                                <td style="text-align: center;">
-                                                    <?php
+                                                <td style="text-align: left;"><?=$m_detail ?></td>
+                                                <td id="<?=$m_id?>weight<?=$no?>" value="<?=$m_weight?>" style="text-align: center;"><?=$m_weight?></td>
+                                                
+                                                <!-- เช็คคนประเมิน -->
+                                                <?php
+                                                $employee_id_com =$_GET['emp_id'];
+                                                    $sql_huahna = "
+                                                        SELECT
+                                                            e.employee_id AS looknong,
+                                                            m.employee_id AS huahna1,
+                                                            (
+                                                                    SELECT
+                                                                            m2.manager_id
+                                                                    FROM
+                                                                            employees m2
+                                                                    WHERE
+                                                                            m2.employee_id = m.employee_id
+                                                            ) AS huahna2
+                                                    FROM
+                                                            employees e
+                                                    JOIN employees m ON e.manager_id = m.employee_id
+                                                    WHERE
+                                                            e.employee_id = $employee_id_com ";
+                                                   $query_huahna= mysqli_query($conn, $sql_huahna);
+                                                   $huahna1=0;
+                                                   $huahna2=0;
+                                                   
+                                                   
+                                                   ?>
+                                                <?php  while($result_huahna = mysqli_fetch_assoc($query_huahna)){ 
+                                                    $huahna1 = $result_huahna["huahna1"];
+                                                    $huahna2 = $result_huahna["huahna2"];                                                                
+                                                }?>
+                                                <!-- คนประเมิน1 -->
+                                                <?php
                                                     $sql_score1 = "
                                                         SELECT 
-                                                            c.title_id,c.competency_description,mc.weight,mcp.point_id
-                                                            ,cp.point_score as score, cp.point_description,c.competency_id
+                                                            cp.point_score as score
                                                             FROM  competency_point cp 
                                                             JOIN match_competency_point mcp 
                                                             ON cp.point_id = mcp.point_id 
@@ -227,10 +257,13 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status= 1";
                                                     $query_score1= mysqli_query($conn, $sql_score1);
                                                             ?>
-                                                            <select class="form-control" id="score1" onchange="show_selected()" >
+                                                <td style="text-align: center;">
+                                                    
+                                                    <?php if($emp_id==$huahna1){?>
+                                                            <select class="form-control" id="score<?=$m_id?>_1" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_1', 'score<?=$m_id?>_1')" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score1 = mysqli_fetch_array($query_score1)) { ?>
                                                                 <option value="<?php echo $result_score1["score"]; ?>">
@@ -238,18 +271,30 @@
                                                                 </option>
                                                                         <?php } ?>
                                                             </select>
+                                                    <?php }else {?>
+                                                    <select disabled="true" class="form-control" id="score<?=$m_id?>" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>', 'score<?=$m_id?>')" >
+                                                                <option value=""> </option>
+                                                                        <?php while ($result_score1 = mysqli_fetch_array($query_score1)) { ?>
+                                                                <option value="<?php echo $result_score1["score"]; ?>">
+                                                                                <?php  echo $result_score1["score"]; ?>
+                                                                </option>
+                                                                        <?php } ?>
+                                                            </select>
+                                                    <?php } ?>
                                                 </td>
                                                 <script>       
-                                                    function show_selected() {
-                                                                        var selector = document.getElementById('score1');
-                                                                        var value = selector[selector.selectedIndex].value;
-                                                                        document.getElementById('display').innerHTML = value*<?php echo $m_weight ; ?>;
-                                                                    }                                                    
+                                                    function show_selected(name, display, score) {
+                                                        var selector = document.getElementById(score);
+                                                        var value = selector[selector.selectedIndex].value;
+                                                        var weight = document.getElementById(name).innerText;
+                                                        document.getElementById(display).innerHTML = (value * weight).toFixed(1);;
+                                                    }                                                    
                                                 </script>
-                                                <td style="text-align: center;"><p id="display"></p></td>
+                                                
+                                                <td style="text-align: center;"><p id="display<?=$m_id?>_1"></p></td>                                                                            
                                                 <td style="text-align: center;" ><?php echo $m_weight; ?></td>
-                                                <td style="text-align: center;">
-                                                    <?php
+                                                <!-- คนประเมิน2 -->
+                                                <?php
                                                     $score2=0;
                                                     $sql_score2 = "
                                                         SELECT 
@@ -265,7 +310,9 @@
                                                             WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
                                                     $query_score2= mysqli_query($conn, $sql_score2);
                                                             ?>
-                                                            <select class="form-control" name="score2" >
+                                                <?php if($emp_id==$huahna2){?>
+                                                <td style="text-align: center;">                                                    
+                                                            <select class="form-control" id="score<?=$m_id?>_2" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_2', 'score<?=$m_id?>_2')" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score2 = mysqli_fetch_array($query_score2)) {
                                                                             $score2=$result_score2["score"];
@@ -276,8 +323,23 @@
                                                                         <?php } ?>
                                                             </select>
                                                 </td>
-                                                <td style="text-align: center;"><?php echo $m_weight*$result_score2; ?></td>
-                                                <?php
+                                                <?php }else{?>
+                                                <td style="text-align: center;">                                                    
+                                                    <select class="form-control" name="score2" disabled="true" >
+                                                                <option value=""> </option>
+                                                                        <?php while ($result_score2 = mysqli_fetch_array($query_score2)) {
+                                                                            $score2=$result_score2["score"];
+                                                                            ?>
+                                                                <option value="<?php echo $score2; ?>">
+                                                                                <?php  echo $score2; ?>
+                                                                </option>
+                                                                        <?php } ?>
+                                                            </select>
+                                                </td>
+                                                <?php }?>
+                                                <td style="text-align: center;"><p id="display<?=$m_id?>_2"></p></td>
+                                                
+                                                    <?php
                                                     $sql_pointdetail = "
                                                         SELECT 
                                                             c.title_id,c.competency_description,mc.weight,mcp.point_id
