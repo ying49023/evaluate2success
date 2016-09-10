@@ -230,7 +230,7 @@
                                                             WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
                                                     $query_score1= mysqli_query($conn, $sql_score1);
                                                             ?>
-                                                            <select class="form-control" name="position_level_id" >
+                                                            <select class="form-control" id="score1" onchange="show_selected()" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score1 = mysqli_fetch_array($query_score1)) { ?>
                                                                 <option value="<?php echo $result_score1["score"]; ?>">
@@ -239,7 +239,14 @@
                                                                         <?php } ?>
                                                             </select>
                                                 </td>
-                                                <td style="text-align: center;"> </td>
+                                                <script>       
+                                                    function show_selected() {
+                                                                        var selector = document.getElementById('score1');
+                                                                        var value = selector[selector.selectedIndex].value;
+                                                                        document.getElementById('display').innerHTML = value*<?php echo $m_weight ; ?>;
+                                                                    }                                                    
+                                                </script>
+                                                <td style="text-align: center;"><p id="display"></p></td>
                                                 <td style="text-align: center;" ><?php echo $m_weight; ?></td>
                                                 <td style="text-align: center;">
                                                     <?php
@@ -258,7 +265,7 @@
                                                             WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
                                                     $query_score2= mysqli_query($conn, $sql_score2);
                                                             ?>
-                                                            <select class="form-control" name="position_level_id" >
+                                                            <select class="form-control" name="score2" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score2 = mysqli_fetch_array($query_score2)) {
                                                                             $score2=$result_score2["score"];
@@ -269,7 +276,7 @@
                                                                         <?php } ?>
                                                             </select>
                                                 </td>
-                                                <td style="text-align: center;"></td>
+                                                <td style="text-align: center;"><?php echo $m_weight*$result_score2; ?></td>
                                                 <?php
                                                     $sql_pointdetail = "
                                                         SELECT 
