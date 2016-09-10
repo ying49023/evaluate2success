@@ -14,15 +14,38 @@
             echo "Your session has expired! <a href='login.php'>Login here</a>";
         }else{
             //HTML PAGE
-            ?>
+ ?>
+
+<!DOCTYPE html>
 <?php 
         $erp='';
         $msg='';
         
         include './classes/connection_mysqli.php';
-            
-?>
-<!DOCTYPE html>
+        
+        if(isset($_GET['erp'])) {
+            $erp=$_GET['erp'];
+            //++++++++++++++++++insert record leave+++++++++++++
+           if($erp=='insert'){   
+                $id = $_POST['eval_leave_id'];      
+                $leave_type =$_POST['leave_type_id'];
+                $noday =$_POST['no_of_day'];
+                $nohour =$_POST['no_of_hour'];
+                $eval_emp=$_POST['evaluate_employee_id'];
+                $strSQL =" INSERT INTO evaluation_leave(eval_leave_id,leave_type_id,no_of_day,no_of_hour,evaluate_employee_id) VALUES('$id','$leave_type','$noday','$nohour','$eval_emp') ";
+               
+               $objQuery = mysqli_query($conn,$strSQL);
+               if ($objQuery) {
+
+                   header ("location:evaluate_sec3_hr.php");
+
+               } else {
+
+                   echo "Error Save [" . $strSQL . "]";
+               }
+
+           }
+
 <html>
     <head>
         <meta charset="utf-8">
@@ -89,7 +112,7 @@
                         <div class="box-header with-border">
 
                             <!--Table Point-->
-                            <form>
+                            <form action="evaluate_sec3_hr.php?erp=insert" method="POST">
                             <table class="table table-hover">
                                 <thead class="thead-inverse">
                                     <tr>
@@ -124,7 +147,7 @@
                                         <th scope="row">1</th>
                                         <th scope="row" colspan=2>ลาป่วย</th>
                                         <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365"></td>
                                         <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
                                         <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
                                     </tr>
@@ -132,7 +155,7 @@
                                         <th scope="row">2</th>
                                         <th scope="row" colspan=2>ลากิจ</th>
                                         <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365"></td>
                                         <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
                                         <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
                                     </tr>
@@ -140,16 +163,16 @@
                                         <th scope="row">3</th>
                                         <th scope="row">มาสาย</th>
                                         <td>จำนวนครั้ง</td>
-                                        <td><input type="number" name="leave" min="1" max="365" disabled readonly></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
+                                        <td><input type="number" name="leave" min="1" max="365"></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365"></td>
+                                        <td align="center"><input type="number" name="hour" min="1" max="1000"></td>
                                         <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
                                     </tr>
                                       <tr>
                                         <th scope="row">4</th>
                                         <th scope="row" colspan=2>ลาอื่นๆ</th>
                                         <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365"></td>
                                         <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
                                         <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
                                     </tr>
@@ -158,6 +181,9 @@
                                         <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
                                         <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
                                         <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" colspan=7><input type="submit" class="btn btn-primary" value="บันทึก" ></td>
                                     </tr>
 
                                 </tbody>
@@ -178,45 +204,48 @@
                                     </tr>
                                     <tr>
                                        <th scope="row">1</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
+                                       <td><input type="text" name="reward" size="40"></td>
                                        <th scope="row">1</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
+                                       <td><input type="text" name="penalty" size="40"></td>
                                     </tr>
                                      <tr>
                                        <th scope="row">2</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
+                                       <td><input type="text" name="reward" size="40"></td>
                                        <th scope="row">2</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
+                                       <td><input type="text" name="penalty" size="40"></td>
                                     </tr>
                                       <tr>
                                        <th scope="row">3</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
+                                       <td><input type="text" name="reward" size="40"></td>
                                        <th scope="row">3</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
+                                       <td><input type="text" name="penalty" size="40"></td>
                                     </tr>
                                      <tr>
                                        <th scope="row">4</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
+                                       <td><input type="text" name="reward" size="40"></td>
                                        <th scope="row">4</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
+                                       <td><input type="text" name="penalty" size="40"></td>
                                     </tr>
                                         <tr>
                                        <th scope="row">5</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
+                                       <td><input type="text" name="reward" size="40"></td>
                                        <th scope="row">5</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
+                                       <td><input type="text" name="penalty" size="40"></td>
                                     </tr>
                                       <tr>
                                        <th scope="row">6</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
+                                       <td><input type="text" name="reward" size="40"></td>
                                        <th scope="row">6</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
+                                       <td><input type="text" name="penalty" size="40"></td>
                                     </tr>
                                       <tr>
                                        <th scope="row">7</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
+                                       <td><input type="text" name="reward" size="40"></td>
                                        <th scope="row">7</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
+                                       <td><input type="text" name="penalty" size="40"></td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" colspan=4><input type="submit" class="btn btn-primary" value="บันทึก" ></td>
                                     </tr>
 
                                 </tbody>  
@@ -230,19 +259,19 @@
                                     </tr>
                                     <tr>
                                         <th scope="row">1</th>
-                                        <td><input type="text" name="commentpart3" size="60"></td>
+                                        <td><input type="text" name="commentpart3" size="60" readonly></td>
                                         <td align="center" height="50" width="100" style="background-color:#F5F5F5;"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
 
                                     </tr>
                                      <tr>
                                         <th scope="row">2</th>
-                                        <td><input type="text" name="commentpart3" size="60"></td>
+                                        <td><input type="text" name="commentpart3" size="60" readonly></td>
                                         <td align="center" height="80" width="100" style="background-color:#E6E6FA;"><b>คะแนนเต็ม (ระหว่าง 5-20)</b></td>
 
                                     </tr>
                                      <tr>
                                         <th scope="row">3</th>
-                                        <td><input type="text" name="commentpart3" size="60"></td>
+                                        <td><input type="text" name="commentpart3" size="60" readonly></td>
                                         <td align="center" height="50" width="100" style="background-color:#F5F5F5;"><input type="number" name="point" min="5" max="20" disabled readonly></td>
                                     </tr>
                                 
