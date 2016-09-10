@@ -174,7 +174,7 @@
                         <span class="info-box-icon bg-blue"><i class="glyphicon glyphicon-user"></i></span>
 
                         <div class="info-box-content">
-                          <span class="info-box-text">สมาชิกในแผนก</span>
+                          <span class="info-box-text">สมาชิกทั้งหมด</span>
                           <span class="info-box-number">57 คน</span>
                         </div>
                         <!-- /.info-box-content -->
@@ -201,6 +201,24 @@
                                 </div>
                             </div>
                             <div class="box-body">
+                                <?php 
+                                            $sql_emp_list="SELECT
+                                                                    ee.employee_id,
+                                                                    e.prefix,
+                                                                    e.first_name,
+                                                                    e.last_name,
+                                                                    e.position_level_id,
+                                                                    ee.status_success
+                                                            FROM
+                                                                    employees e
+                                                            JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                            JOIN evaluation ev ON ee.evaluation_code = ev.evaluation_code
+                                                            WHERE
+                                                                    e.manager_id = $emp_id                                                            
+                                                            AND ev.term_id = 1
+                                                            AND ev. YEAR = '2016'";
+                                            $query_emp_list = mysqli_query($conn, $sql_emp_list);
+                                        ?>
 
                                 <table class="table table-bordered table-hover" width="90%" >
                                 <thead>
@@ -213,56 +231,36 @@
                                         <th><center>สถานะ</center></th>
                                     </tr>
                                 </thead>
+                                    <?php
+                                        while($result_emp_list = mysqli_fetch_assoc($query_emp_list)) {
+                
+                                        $employee_id = $result_emp_list["employee_id"];                                       
+                                        $emp_name = $result_emp_list["prefix"].' '.$result_emp_list["first_name"].'  '.$result_emp_list["last_name"];
+                                        $status=$result_emp_list["status_success"];
+                                        $position=$result_emp_list["position_level_id"];
+                                        
+                                        ?>
                                     <tr>
-                                        <td>123456</td>
-                                        <td>นาย ศตวรรษ วินวิวัฒน์</td>
+                                        <td><?php echo $employee_id; ?></td>
+                                        <td><?php echo $emp_name; ?></td>
                                         <td> </td>
                                         <td> </td>
                                         <td>
-                                            <a href="evalstep1.php">    
+                                            <a href="evaluation_section_2.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=41">    
                                             <center><i class="glyphicon glyphicon-book"></i></center>
                                             </a>
                                         </td>
-                                        <td ><center><font color="green" >ประเมินแล้ว</font></center></td>
+                                        <?php if($status==0){
+                                           echo '<td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>';   
+                                        }else{
+                                            echo '<td ><center><font color="green" >ประเมินแล้ว</font></center></td>';  
+                                        }?>
+                                       
                                         
                                     </tr>
-
-                                    <tr>
-                                        <td>130911</td>
-                                        <td>น.ส. สมสวย เห็นงาม</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <a href="">    
-                                            <center><i class="glyphicon glyphicon-book"></i></center>
-                                            </a>
-                                        </td>
-                                        <td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>130912</td>
-                                        <td>นาย ชัยเดช พ่วงเพชร</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <a href="">    
-                                            <center><i class="glyphicon glyphicon-book"></i></center>
-                                            </a>
-                                        </td>
-                                        <td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>
-                                    </tr>
-                                    <tr>
-                                        <td>130913</td>
-                                        <td>นาย ศักดิ์ดา เกียรติกมล</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <a href="">    
-                                            <center><i class="glyphicon glyphicon-book"></i></center>
-                                            </a>
-                                        </td>
-                                        <td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>
-                                    </tr>
+                                        <?php } ?>
+                                    
+                                    
                                     
                                 </table>
 

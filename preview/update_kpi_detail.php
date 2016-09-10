@@ -28,26 +28,7 @@
      if(isset($_GET["kpi_id"])){
      $kpi_id = $_GET["kpi_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
      }
-     $sql_emp = "SELECT
-                                        emp.employee_id AS emp_id,
-                                        emp.prefix As prefix,
-                                        emp.first_name AS f_name,
-                                        emp.last_name AS l_name,
-                                        emp.hiredate AS hiredate,
-                                        emp.manager_id AS manager_id,
-                                        emp.email AS email,
-                                        emp.telephone_no AS telephone,
-                                        dept.department_name AS dept_name,
-                                        pos.position_description AS pos,
-                                        emp.profile_picture 
-                                FROM
-                                        employees emp
-                                JOIN departments dept ON emp.department_id = dept.department_id
-                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
-                                WHERE
-                                        emp.employee_id = '".$get_emp_id."'
-                                LIMIT 1";
-     $query = mysqli_query($conn, $sql_emp); 
+     
  ?>    
 <html>
     <head>
@@ -146,8 +127,31 @@
                 <div class="box box-success">
                     <div class="box-body">
                         <!--ข้อมูลทั่วไป-->
+                        <?php
+                                $sql_emp = "SELECT
+                                        emp.employee_id AS emp_id,
+                                        emp.prefix As prefix,
+                                        emp.first_name AS f_name,
+                                        emp.last_name AS l_name,
+                                        emp.hiredate AS hiredate,
+                                        emp.manager_id AS manager_id,
+                                        emp.email AS email,
+                                        emp.telephone_no AS telephone,
+                                        dept.department_name AS dept_name,
+                                        pos.position_description AS pos,
+                                        emp.profile_picture 
+                                FROM
+                                        employees emp
+                                JOIN departments dept ON emp.department_id = dept.department_id
+                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
+                                WHERE
+                                        emp.employee_id = '".$get_emp_id."'
+                                LIMIT 1";
+                                $query = mysqli_query($conn, $sql_emp); 
+                        
+                        ?>
                         <?php  while($result = mysqli_fetch_assoc($query)){ 
-                                    $emp_id = $result["emp_id"];
+                                    $employee_id = $result["emp_id"];
                                     $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
                                     $hire = $result["hiredate"];
                                     $manager_id = $result["manager_id"];
@@ -170,7 +174,7 @@
                                             <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
                                             <td  colspan="2" width=""><?php echo $name;?></td>
                                             <th align="center" colspan="2" width="">รหัส: </th>
-                                            <td  colspan="2" width=""><?php echo $emp_id;?> </td>
+                                            <td  colspan="2" width=""><?php echo $employee_id;?> </td>
 
                                         </tr>
                                         

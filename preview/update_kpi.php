@@ -23,34 +23,7 @@
 <html>
 <head>
     
-    <?php include ('./classes/connection_mysqli.php'); 
-    $get_emp_id = 10002;
-    if(isset($_GET["emp_id"])){
-     $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
-     }
-     
-     $sql_emp = "SELECT
-                                        emp.employee_id AS emp_id,
-                                        emp.prefix As prefix,
-                                        emp.first_name AS f_name,
-                                        emp.last_name AS l_name,
-                                        emp.hiredate AS hiredate,
-                                        emp.manager_id AS manager_id,
-                                        emp.email AS email,
-                                        emp.telephone_no AS telephone,
-                                        dept.department_name AS dept_name,
-                                        pos.position_description AS pos,
-                                        emp.profile_picture 
-                                FROM
-                                        employees emp
-                                JOIN departments dept ON emp.department_id = dept.department_id
-                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
-                                WHERE
-                                        emp.employee_id = '".$get_emp_id."'
-                                LIMIT 1";
-     $query = mysqli_query($conn, $sql_emp); 
-     
-    ?>
+    <?php include ('./classes/connection_mysqli.php');?>
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -102,8 +75,30 @@
                 <div class="box box-success">
                     <div class="box-body">
                         <!--ข้อมูลทั่วไป-->
+                        <?php
+                            $sql_emp = "SELECT
+                                        emp.employee_id AS emp_id,
+                                        emp.prefix As prefix,
+                                        emp.first_name AS f_name,
+                                        emp.last_name AS l_name,
+                                        emp.hiredate AS hiredate,
+                                        emp.manager_id AS manager_id,
+                                        emp.email AS email,
+                                        emp.telephone_no AS telephone,
+                                        dept.department_name AS dept_name,
+                                        pos.position_description AS pos,
+                                        emp.profile_picture 
+                                FROM
+                                        employees emp
+                                JOIN departments dept ON emp.department_id = dept.department_id
+                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
+                                WHERE
+                                        emp.employee_id = '".$emp_id."'
+                                LIMIT 1";
+                                $query = mysqli_query($conn, $sql_emp); 
+                        ?>
                         <?php  while($result = mysqli_fetch_assoc($query)){ 
-                                    $emp_id = $result["emp_id"];
+                                    $employee_id = $result["emp_id"];
                                     $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
                                     $hire = $result["hiredate"];
                                     $manager_id = $result["manager_id"];
@@ -208,7 +203,7 @@
                                                     FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
                                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
                                                     JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
-                                                    WHERE ee.employee_id = '".$emp_id."' ORDER BY kpi_id ";
+                                                    WHERE ee.employee_id = '".$employee_id."' ORDER BY kpi_id ";
                                         $query_kpi = mysqli_query($conn, $sql_kpi);
                                     ?>
             
@@ -259,7 +254,7 @@
                                         </th>
                                         <th>
                                             <center>
-                                                <a href="update_kpi_detail.php?emp_id=<?php echo $emp_id?>&kpi_id=<?php echo $kpi_id;?>">
+                                                <a href="update_kpi_detail.php?emp_id=<?php echo $employee_id?>&kpi_id=<?php echo $kpi_id;?>">
                                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                                 </a>
                                             </center>
