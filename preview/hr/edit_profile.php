@@ -100,7 +100,7 @@
                                 <div class="row with-border">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <img class="thumbnail img-circle img-center" src="upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
+                                            <img class="thumbnail img-circle img-center" src="../upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
                                             
                                         </div>
                                     </div>

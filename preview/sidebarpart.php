@@ -5,11 +5,11 @@
         <!-- Sidebar user panel -->
         <div class="user-panel" style="white-space:normal;max-width: 230px;">
             <div class="pull-left image">
-                <img style="height: 45px;max-width: 45px;" src="upload_images/<?php echo $picture; ?>" class="img-circle img-center " alt="<?php echo $name; ?>">
+                <img style="height: 45px;max-width: 45px;" src="upload_images/<?php echo $my_picture; ?>" class="img-circle img-center " alt="<?php echo $my_name; ?>">
             </div>
             <div class="pull-left info" >
-                <p><?php echo $name; ?></p>
-                <p>ตำแหน่ง: <?php echo $job; ?></p>
+                <p><?php echo $my_name; ?></p>
+                <p>ตำแหน่ง: <?php echo $my_job; ?></p>
                 <!--
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
@@ -18,7 +18,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         
         <ul class="sidebar-menu">
-            <li class="header" style="color:white;font-size: 14px;" >เมนูสำหรับระดับ<?php echo $position; ?></li>
+            <li class="header" style="color:white;font-size: 14px;" >เมนูสำหรับระดับ<?php echo $my_position; ?></li>
             
             <li class="<?php if($page == 'index.php' || $page == 'total_personal_dashboard.php' || $page == 'myindex.php'){ echo "active" ; } ?> treeview">
                 <a href="index.php">
@@ -79,6 +79,7 @@
                 </ul>
             </li>
              <!-- เมนู HR-->
+             <?php if($my_job_id == '38') { ?>
             <li >
                 <a href="">
                     <i class="glyphicon glyphicon-user"></i>
@@ -98,6 +99,8 @@
                     </li>
                 </ul>
             </li>
+            <!-- /HR -->
+             <?php } ?>
             <li class="<?php if($page == 'assignkpi.php'){ echo "active" ; } ?>">
                 <a href="assignkpi.php">
                     <i class="glyphicon glyphicon-check"></i> <span>การกำหนดKPIs</span>

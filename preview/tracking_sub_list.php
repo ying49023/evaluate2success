@@ -57,45 +57,7 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                <!--search form-->
-                <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <form >
-                                <div class="col-sm-3">
-                                    <label class="col-sm-6 control-label">รหัสพนักงาน</label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" type="text" name="emp_id">
-                                    </div>
-                                </div> 
-
-                                <div class="col-md-3">
-                                    <label class="col-sm-5 control-label">ชื่อพนักงาน</label>
-                                    <div class="col-sm-7">
-                                        <input class="form-control" type="text" name="emp_id" >
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-
-                                    <label class="col-sm-4 control-label">แผนก/ฝ่าย</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control">
-                                            <option>บุคคล/ฝ่ายบุคคล </option>
-                                            <option>บริหาร/การเงิน</option>
-                                            <option>บริหาร/บัญชี</option>
-                                        </select>
-                                    </div>                               
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-primary search-button"><i class="glyphicon glyphicon-search"></i></button>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!--/search form-->
-                <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                         <div class="box box-primary">
 
                             <div class="box-header with-border">
@@ -111,72 +73,58 @@
                                 </div>
                             </div>
                             <div class="box-body">
+                                <!-- ช่องค้นหา by listJS -->
+                                <div class="form-inline padding-small">
+                                    <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                    <input class="search form-control" placeholder="ค้นหา" />
+                                </div>
+                                <table class="table table-bordered" border="1px">
+                                    <thead>
+                                        <tr>
+                                            <th><button class="sort" data-sort="emp_id">รหัสพนักงาน</button></th>
+                                            <th><button class="sort" data-sort="emp_name">ชื่อพนักงาน</button></th>
+                                            <th><button class="sort" data-sort="job_name">ตำแหน่ง</button></th>
+                                            <th><button class="sort" data-sort="department_name">ฝ่าย/แผนก</button></th>
+                                            <th><center>ติดตามสถานะKPI</center></th>
 
-                                <table class="table table-bordered" width="90%" height="150px" border="1px">
-                                <thead>
-                                    <tr>
-                                        <th>รหัสพนักงาน</th>
-                                        <th>ชื่อพนักงาน</th>
-                                        <th>ตำแหน่ง</th>
-                                        <th>ฝ่าย/แผนก</th>
-                                        <th><center>ติดตามสถานะKPI</center></th>
-                                    
-                                    </tr>
-                                </thead>
-                                    
-                                    <tr>
-                                        <td>123456</td>
-                                        <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <a href="tracking_sub_kpi.php">    
-                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
-                                            </a>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>130911</td>
-                                        <td>น.ส. สมสวย เห็นงาม</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <a href="">    
-                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
-                                            </a>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>130912</td>
-                                        <td>นาย ชัยเดช พ่วงเพชร</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <a href="">    
-                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
-                                            </a>
-                                        </td>
-                                        
-                                    </tr>
-                                    <tr>
-                                        <td>130913</td>
-                                        <td>นาย ศักดิ์ดา เกียรติกมล</td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <a href="">    
-                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
-                                            </a>
-                                        </td>
-                                        
-                                    </tr>
-                                    
+                                        </tr>
+                                    </thead>
+                                    <tbody class="list">
+                                        <?php 
+                                        $sql_emp = "SELECT
+                                                            e.employee_id as employee_id, e.prefix as prefix, e.first_name as first_name, e.last_name as last_name, d.department_name as department_name, j.job_name as job_name
+                                                    FROM
+                                                            employees e
+                                                    JOIN employees m ON e.manager_id = m.employee_id
+                                                    JOIN departments d ON e.department_id = d.department_id
+                                                    JOIN jobs j ON j.job_id = e.job_id
+                                                    WHERE
+                                                            m.employee_id = '$my_emp_id'";
+                                        $query_emp = mysqli_query($conn, $sql_emp);
+                                        while($result_emp = mysqli_fetch_array($query_emp , MYSQLI_ASSOC)){
+
+                                        ?>
+                                        <tr>
+                                            <td class="emp_id"><?php echo $result_emp["employee_id"]; ?></td>
+                                            <td class="emp_name"><?php echo $result_emp["prefix"].$result_emp["first_name"]."  ".$result_emp["last_name"]; ?></td>
+                                            <td class="job_name"><?php echo $result_emp["job_name"]; ?></td>
+                                            <td class="department_name"><?php echo $result_emp["department_name"]; ?></td>
+                                            <td>
+                                                <a href="tracking_sub_kpi.php?emp_id=<?php echo $result_emp["employee_id"]; ?>">    
+                                                <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <?php  } ?>
+                                    </tbody>
+                                    <script>
+                                        var options = {
+                                            valueNames: [ 'emp_id', 'emp_name' , 'job_name' , 'department_name' ]
+                                        };
+
+                                        var userList = new List('filter', options);
+                                    </script>
                                 </table>
-
-                                
-                                
                                 <!-- /.chart-responsive -->
                             </div>
                         </div>

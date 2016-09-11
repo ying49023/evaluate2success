@@ -214,7 +214,7 @@
                                                             JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
                                                             JOIN evaluation ev ON ee.evaluation_code = ev.evaluation_code
                                                             WHERE
-                                                                    e.manager_id = $emp_id                                                            
+                                                                    e.manager_id = $my_emp_id                                                            
                                                             AND ev.term_id = 1
                                                             AND ev. YEAR = '2016'";
                                             $query_emp_list = mysqli_query($conn, $sql_emp_list);

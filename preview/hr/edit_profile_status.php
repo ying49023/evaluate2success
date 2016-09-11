@@ -40,7 +40,7 @@ if ($get_emp_id != '') {
                 $upload_image->image_resize         = true ; // อนุญาติให้ย่อภาพได้
                 $upload_image->image_x              = 400 ; // กำหนดความกว้างภาพเท่ากับ 400 pixel 
                 $upload_image->image_ratio_y        = true; // ให้คำณวนความสูงอัตโนมัติ
-                $upload_image->process( "upload_images" ); // เก็บภาพไว้ในโฟลเดอร์ที่ต้องการ  *** โฟลเดอร์ต้องมี permission 0777
+                $upload_image->process( "../upload_images" ); // เก็บภาพไว้ในโฟลเดอร์ที่ต้องการ  *** โฟลเดอร์ต้องมี permission 0777
                 // ถ้าหากว่าการจัดเก็บรูปภาพไม่มีปัญหา  เก็บชื่อภาพไว้ในตัวแปร เพื่อเอาไปเก็บในฐานข้อมูลต่อไป
                 if( $upload_image->processed ) {
                     $image_name =  $upload_image->file_dst_name ; // ชื่อไฟล์หลังกระบวนการเก็บ จะอยู่ที่ file_dst_name

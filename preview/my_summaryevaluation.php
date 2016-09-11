@@ -59,18 +59,18 @@
 
                 <!-- Main content -->
                 <style>
-                    .navbar-fixed {
-    	top: 0;
-    	z-index: 100;
-	  	position: fixed;
-	    width: 100%;
-  	}
-  	#nav_bar {
-    	border: 0;
-    	background-color: #ffffff;
-    	border-radius: 0px;
-    	margin-bottom: 0;
-  	}
+                            .navbar-fixed {
+                top: 0;
+                z-index: 100;
+                        position: fixed;
+                    width: 100%;
+                }
+                #nav_bar {
+                border: 0;
+                background-color: #ffffff;
+                border-radius: 0px;
+                margin-bottom: 0;
+                }
                 </style>
                 <div id="" class="row box-padding ">
                     <div class="box box-primary ">
@@ -79,8 +79,8 @@
                                     <div class="box-padding">
                                         <table class="table table-bordered table-condensed">
                                             <tr>
-                                                <th rowspan="4">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/user2-160x160.jpg" >
+                                                <th rowspan="4" style="width: 75px;">
+                                                    <img class="circle-thumbnail img-circle img-thumbnail img-md img-center" src="./upload_images/<?php echo $my_picture; ?>" >
                                                 </th>
                                                 <th align="center" width="">ชื่อ-นามสกุล</th>
                                                 <th align="center" width="120px">รหัส</th>
@@ -88,10 +88,10 @@
                                                 <th align="center" width="">แผนก</th>
                                             </tr>
                                             <tr>
-                                                <td >นาย นภัทร อินทร์ใจเอื้อ</td>
-                                                <td > 11111</td>
-                                                <td >ผู้จัดการฝ่าย</td>
-                                                <td >ฝ่ายทรัพยากรบุคคล</td>
+                                                <td ><?php echo $my_prefix.$my_name; ?></td>
+                                                <td ><?php echo $my_emp_id; ?></td>
+                                                <td ><?php echo $my_job; ?></td>
+                                                <td ><?php echo $my_department; ?></td>
                                             </tr>
                                         </table>
                                         <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -106,7 +106,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tr>
-                                                    <td colspan="3">1 ก.พ. 2556</td>
+                                                    <td colspan="3"><?php echo $my_hiredate; ?></td>
                                                     <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
                                                 </tr>
                                             </table>

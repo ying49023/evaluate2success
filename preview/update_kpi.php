@@ -93,7 +93,7 @@
                                 JOIN departments dept ON emp.department_id = dept.department_id
                                 JOIN position_level pos ON emp.position_level_id = pos.position_level_id
                                 WHERE
-                                        emp.employee_id = '".$emp_id."'
+                                        emp.employee_id = '".$my_emp_id."'
                                 LIMIT 1";
                                 $query = mysqli_query($conn, $sql_emp); 
                         ?>
@@ -116,12 +116,12 @@
                                     
                                         <tr>
                                             <th rowspan="5">
-                                                <img class=" img-responsive img-thumbnail img-lg"   src="hr/upload_images/<?php echo $picture;?>">
+                                                <img class=" img-responsive img-thumbnail img-lg img-center"   src="./upload_images/<?php echo $picture;?>">
                                             </th>
                                             <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
                                             <td  colspan="2" width=""><?php echo $name;?></td>
                                             <th align="center" colspan="2" width="">รหัส: </th>
-                                            <td  colspan="2" width=""><?php echo $emp_id;?> </td>
+                                            <td  colspan="2" width=""><?php echo $my_emp_id;?> </td>
 
                                         </tr>
                                         

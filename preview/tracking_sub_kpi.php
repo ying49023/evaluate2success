@@ -19,6 +19,12 @@
         }else{
             //HTML PAGE
             ?>
+<?php
+    $get_emp_id = '';
+    if(isset($_GET["emp_id"])){
+        $get_emp_id  = $_GET["emp_id"];
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,11 +76,35 @@
             <div class="row box-padding">
                 <div class="box box-success">
                     <div class="box-body">
+                        <?php
+                        $sql_emp = "SELECT
+                                    e.employee_id as employee_id,
+                                    e.prefix as prefix,
+                                    e.first_name as first_name,
+                                    e.last_name as last_name,
+                                    e.profile_picture as profile_picture,
+                                    d.department_name as department_name,
+                                    j.job_name as job_name,
+                                    (sum(kr.success*kr.percent_weight)/sum(kr.success*kr.percent_weight)*100) as target_percent,
+                                    (sum(kr.success*kr.percent_weight)/sum(kr.goal*kr.percent_weight)*100) as actual_percent
 
-                        <table class="table table-bordered table-condensed" width="90%" height="100px" align="right" >
+                                    FROM
+                                        kpi_responsible kr
+                                    JOIN kpi k ON kr.kpi_id = k.kpi_id
+                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                    JOIN employees e ON ee.employee_id = e.employee_id
+                                    JOIN departments d ON e.department_id = d.department_id
+                                    JOIN jobs j ON e.job_id = j.job_id
+                                    WHERE ee.employee_id = '$get_emp_id';";
+                        $query_emp = mysqli_query($conn, $sql_emp);
+                        while($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
+                        ?>
+                        <table class="table table-bordered table-condensed" align="right" >
+                            
                             <tr>
                                 <th rowspan="2">
-                                    <img class="img-circle img-thumbnail circle-thumbnail" src="img/emp1.jpg" alt="Smiley face" style="margin:10px 0px 0px 15px;"></th>
+                                    <img class="img-circle img-thumbnail circle-thumbnail img-center" src="./upload_images/<?php if($result_emp["profile_picture"] == ''){ echo "default.png"; } else { echo $result_emp["profile_picture"]; } ?>" alt="<?php echo $result_emp["profile_picture"]; ?>" style="width: 55px;height: 55px;">
+                                </th>
                                 <th>
                                     <center>รหัสพนักงาน</center>
                                 </th>
@@ -99,29 +129,29 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <center>123456</center>
+                                    <center><?php echo $result_emp["employee_id"]; ?></center>
                                 </td>
                                 <td>
-                                    <center>นาย ศตวรรษ วินวิวัฒน์</center>
+                                    <center><?php echo $result_emp["prefix"].$result_emp["first_name"].'  '.$result_emp["last_name"]; ?></center>
                                 </td>
                                 <td>
-                                    <center>พนักงานฝ่ายบุคคล</center>
+                                    <center><?php echo $result_emp["job_name"]; ?></center>
                                 </td>
                                 <td>
-                                    <center>ฝ่ายบุคคล</center>
+                                    <center><?php echo $result_emp["department_name"]; ?></center>
                                 </td>
                                 <th>
-                                    <center>>=80%</center>
+                                    <center><?php echo number_format($result_emp["target_percent"]).'%'; ?></center>
                                 </th>
                                 <th>
-                                    <center>35.5%</center>
+                                    <center><?php echo number_format($result_emp["actual_percent"],2).'%'; ?></center>
                                 </th>
                                 <th>
                                     <center></center>
                                 </th>
                             </tr>
-
                         </table>
+                        <?php } ?>
                     </div>
 
                 </div>
@@ -171,7 +201,7 @@
                                 </div>
                             </div>
                             <div class="box-body" >
-                                <table class="table table-bordered " width="90%" height="100px" border="1px">
+                                <table class="table table-bordered " border="1px">
                                     <tr>
                                         <th>No.</th>
                                         <th>KPIs</th>
@@ -189,30 +219,57 @@
                                         </th>
 
                                     </tr>
+                                    <?php
+                                    $sql_kpi = "SELECT 
+                                                        k.kpi_id As kpi_id,
+                                                        k.kpi_code AS kpi_code,
+                                                        k.kpi_name As kpi_name,
+                                                        k.measure_symbol As symbol,
+                                                        kr.goal as goal,
+                                                        kr.success as success,
+                                                        eval.year AS year,
+                                                        eval.term_id AS term_id,
+                                                        t.start_month AS start_month,
+                                                        t.end_month AS end_month,
+                                                        e.employee_id As employee_id,
+                                                        (((kr.success*kr.percent_weight)/(kr.goal*kr.percent_weight))*100) as status_percent
+                                                 FROM
+                                                        kpi_responsible kr
+                                                JOIN kpi k ON kr.kpi_id = k.kpi_id
+                                                JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                                JOIN employees e ON ee.employee_id = e.employee_id
+                                                JOIN departments d ON e.department_id = d.department_id
+                                                JOIN jobs j ON e.job_id = j.job_id
+                                                JOIN evaluation eval ON ee.evaluation_code = eval.evaluation_code
+                                                JOIN term t ON t.term_id = eval.term_id
+                                                WHERE ee.employee_id = '$get_emp_id'";
+                                    $query_kpi = mysqli_query($conn, $sql_kpi);
+                                    while($result_kpi = mysqli_fetch_array($query_kpi,MYSQLI_ASSOC)){
+                                    ?>
                                     <tr>
-                                        <th>1201</th>
-                                        <th>ความสามารถในการสรรหาตรงตามเวลาที่กำหนด(60วัน)</th>
+                                        <th><?php echo $result_kpi["kpi_code"]; ?></th>
+                                        <th><?php echo $result_kpi["kpi_name"]; ?></th>
                                         <th>
-                                            <center>>=80%</center>
+                                            <center><?php echo $result_kpi["symbol"].$result_kpi["goal"]; ?></center>
                                         </th>
                                         <th>
-                                            <center>60%</center>
+                                            <center><?php echo $result_kpi["success"]; ?></center>
                                         </th>
                                         <th>
                                             <div class="progress">
                                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-                                                style="width: 60%;">60%</div>
+                                                     style="width: <?php echo number_format($result_kpi["status_percent"],0); ?>%;"><?php echo number_format($result_kpi["status_percent"],0)."%"; ?></div>
                                             </div>
                                         </th>
                                         <th>
                                             <center>
-                                                <a href="tracking_sub_detail.php">
+                                                <a href="tracking_sub_detail.php?emp_id=<?php echo $result_kpi["employee_id"]; ?>&kpi_id=<?php echo $result_kpi["kpi_id"]; ?>">
                                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                                 </a>
                                             </center>
                                         </th>
-
                                     </tr>
+                                    <?php } ?>
                                     <tr>
                                         <th>1202</th>
                                         <th>ความสามารถจัดทำอัตราแผนความสามารถกำลังคน</th>

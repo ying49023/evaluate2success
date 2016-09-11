@@ -522,6 +522,9 @@
 <!-- ./wrapper -->
 
 </body>
+<!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
+    
 </html>
 <?php
         }

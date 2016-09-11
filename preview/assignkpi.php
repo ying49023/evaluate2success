@@ -29,8 +29,9 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
 
-        
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -57,35 +58,6 @@
 
                 <!-- Main content -->
                 <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body ">
-                            <form >
-                                <div class="col-md-4">
-                                    <label class="col-sm-5 control-label">รหัสพนักงาน</label>
-                                    <div class="col-sm-7">
-                                        <input class="form-control" type="text"  name="emp_id" >
-                                    </div>
-                                </div>
-                                
-                                <div class="col-md-4">
-                                    <label class="col-sm-5 control-label">ชื่อนามสกุล</label>
-                                    <div class="col-sm-7">
-                                        <input class="form-control" type="text"  name="emp_name" >
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-2 ">
-                                    <button  class="btn btn-primary search-button" type="submit">ค้นหา</button>
-                                </div>
-
-                            </form>
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h4>ตารางรายชื่อพนักงาน</h4>
@@ -99,47 +71,55 @@
                             </div>
                         </div>
      
-                        <div class="box-body ">    
+                        <div  id="filter" class="box-body ">
+                            <!-- ช่องค้นหา by listJS -->
+                            <div class="form-inline padding-small">
+                                <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                <input class="search form-control" placeholder="ค้นหา" />
+                            </div>
                             <table class="table table-bordered table-hover">
                                 <thead>
                                
                                     <tr class="bg-gray-light">
-                                        <th class="text-center">ID</th>
-                                        <th>ชื่อ-นามสกุล</th>
-                                        <th class="text-center">ตำแหน่ง</th>
-                                        <th class="text-center">แผนก</th>
+                                        <th class="text-center"><button class="sort" data-sort="emp_id">ID</button></th>
+                                        <th><button class="sort" data-sort="name">ชื่อ-นามสกุล</button></th>
+                                        <th class="text-center"><button class="sort" data-sort="job_name">ตำแหน่ง</button></th>
+                                        <th class="text-center"><button class="sort" data-sort="department_name">แผนก</button></th>
                                         <th class="text-center">กำหนดKPI</th>
                                         
                                     </tr>
                                 </thead>
-                                <tr>
-                                    <td class="text-center">123456</td>
-                                    <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">130911</td>
-                                    <td>น.ส. สมสวย เห็นงาม</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">130912</td>
-                                    <td>นาย ชัยเดช พ่วงเพชร</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">130913</td>
-                                    <td>นาย ศักดิ์ดา เกียรติกมล</td>
-                                    <td class="text-center">พนักงานทั่วไป</td>
-                                    <td class="text-center">บุคคล</td>
-                                    <td class="text-center"><a href="manageassignkpi.php"><i class="glyphicon glyphicon-folder-open"></i></a></td>
-                                </tr>
+                                <tbody class="list">
+                                    <?php 
+                                    $sql_emp = "SELECT
+                                                        e.employee_id as employee_id, e.prefix as prefix, e.first_name as first_name, e.last_name as last_name, d.department_name as department_name, j.job_name as job_name
+                                                FROM
+                                                        employees e
+                                                JOIN employees m ON e.manager_id = m.employee_id
+                                                JOIN departments d ON e.department_id = d.department_id
+                                                JOIN jobs j ON j.job_id = e.job_id
+                                                WHERE
+                                                        m.employee_id = '$my_emp_id'";
+                                    $query_emp = mysqli_query($conn, $sql_emp);
+                                    while($result_emp = mysqli_fetch_array($query_emp , MYSQLI_ASSOC)){
+                                    
+                                    ?>
+                                        <tr>
+                                            <td class="emp_id text-center"><?php echo $result_emp["employee_id"]; ?></td>
+                                            <td class="name" ><?php echo $result_emp["prefix"].$result_emp["first_name"]."  ".$result_emp["last_name"]; ?></td>
+                                            <td class="job_name text-center"><?php echo $result_emp["job_name"]; ?></td>
+                                            <td class="department_name text-center"><?php echo $result_emp["department_name"]; ?></td>
+                                            <td class="text-center"><a href="manageassignkpi.php?employee_id=<?php echo $result_emp["employee_id"]; ?>"><i class="glyphicon glyphicon-folder-open"></i></a></td>
+                                        </tr>
+                                    <?php } ?>
+                                </tbody>
+                                <script>
+                                    var options = {
+                                        valueNames: [ 'emp_id', 'name' , 'job_name' , 'department_name' ]
+                                    };
+                                    
+                                    var userList = new List('filter', options);
+                                </script>
                             </table>
 
                         </div>

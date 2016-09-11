@@ -12,16 +12,18 @@
                 LIMIT 1" ;
         $query = mysqli_query($conn, $sql);
         while($result = mysqli_fetch_array($query)){
-        $emp_id = $result["employee_id"];
-        $prefix = $result["prefix"];
-        $name = $result["first_name"]." ".$result["last_name"];
-        $email = $result["email"];
-        $picture = $result["profile_picture"];
-        $tel = $result["telephone_no"];
-        $job = $result["job_name"];
-        $department = $result["department_name"];
-        $company = $result["company_name"];
-        $position = $result["position_description"];
+        $my_emp_id = $result["employee_id"];
+        $my_prefix = $result["prefix"];
+        $my_name = $result["first_name"]." ".$result["last_name"];
+        $my_email = $result["email"];
+        $my_picture = $result["profile_picture"];
+        $my_tel = $result["telephone_no"];
+        $my_job_id = $result["job_id"];
+        $my_job = $result["job_name"];
+        $my_department = $result["department_name"];
+        $my_company = $result["company_name"];
+        $my_position = $result["position_description"];
+        $my_hiredate = $result["hiredate"];
     ?>
 <header class="main-header">
     <!-- Logo -->
@@ -236,18 +238,18 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="upload_images/<?php echo $picture; ?>" class="user-image img-center" alt="<?php echo $name ?>">
-                        <span class="hidden-xs"><?php echo $name; ?></span>
+                        <img src="upload_images/<?php echo $my_picture; ?>" class="user-image img-center" alt="<?php echo $my_name ?>">
+                        <span class="hidden-xs"><?php echo $my_name; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="upload_images/<?php echo $picture; ?>" class="img-circle img-center" alt="User Image">
+                            <img src="upload_images/<?php echo $my_picture; ?>" class="img-circle img-center" alt="User Image">
 
                             <p>
-                                <?php echo $name; ?>
+                                <?php echo $my_name; ?>
                                 <br>
-                                <small><?php echo $department ?></small>
+                                <small><?php echo $my_department ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->

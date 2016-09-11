@@ -19,6 +19,17 @@
         }else{
             //HTML PAGE
             ?>
+<?php
+    $get_emp_id = '';
+    if(isset($_GET["emp_id"])){
+        $get_emp_id  = $_GET["emp_id"];
+    }
+    $get_kpi_id ='';
+    if(isset($_GET["kpi_id"])){
+        $get_kpi_id  = $_GET["kpi_id"];
+    }
+    
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -115,59 +126,83 @@
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body">
+                        <?php
+                        $sql_emp = "SELECT
+                                    e.employee_id as employee_id,
+                                    e.prefix as prefix,
+                                    e.first_name as first_name,
+                                    e.last_name as last_name,
+                                    e.profile_picture as profile_picture,
+                                    d.department_name as department_name,
+                                    j.job_name as job_name,
+                                    (sum(kr.success*kr.percent_weight)/sum(kr.success*kr.percent_weight)*100) as target_percent,
+                                    (sum(kr.success*kr.percent_weight)/sum(kr.goal*kr.percent_weight)*100) as actual_percent
+
+                                    FROM
+                                        kpi_responsible kr
+                                    JOIN kpi k ON kr.kpi_id = k.kpi_id
+                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                    JOIN employees e ON ee.employee_id = e.employee_id
+                                    JOIN departments d ON e.department_id = d.department_id
+                                    JOIN jobs j ON e.job_id = j.job_id
+                                    WHERE ee.employee_id = '$get_emp_id';";
+                        $query_emp = mysqli_query($conn, $sql_emp);
+                        while($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
+                        ?>
+                        <table class="table table-bordered table-condensed" align="right" >
                             
-                            <table class="table table-bordered table-condensed" width="90%" height="100px" align="right" >
-                                <tr>
-                                    <th rowspan="2">
-                                        <img class="img-circle img-thumbnail circle-thumbnail" src="img/emp1.jpg" alt="Smiley face" style="margin:10px 0px 0px 15px;">
-                                    </th>
-                                    <th>
-                                <center>รหัสพนักงาน</center>
+                            <tr>
+                                <th rowspan="2">
+                                    <img class="img-circle img-thumbnail circle-thumbnail img-center" src="./upload_images/<?php echo $result_emp["profile_picture"]; ?>" alt="<?php echo $result_emp["profile_picture"]; ?>" style="width: 55px;height: 55px;">
                                 </th>
                                 <th>
-                                <center>ชื่อพนักงาน</center>
+                                    <center>รหัสพนักงาน</center>
                                 </th>
                                 <th>
-                                <center>ตำแหน่ง</center>
+                                    <center>ชื่อพนักงาน</center>
                                 </th>
                                 <th>
-                                <center>ฝ่าย/แผนก</center>
+                                    <center>ตำแหน่ง</center>
                                 </th>
                                 <th>
-                                <center>เป้าหมาย</center>
+                                    <center>ฝ่าย/แผนก</center>
                                 </th>
                                 <th>
-                                <center>ค่าจริง</center>
+                                    <center>เป้าหมาย</center>
                                 </th>
                                 <th>
-                                <center>เทียบกับเป้าหมาย</center>
+                                    <center>ค่าจริง</center>
                                 </th>
-                                </tr>
-                                <tr>
-                                    <td>
-                                <center>123456</center>
+                                <th>
+                                    <center>เทียบกับเป้าหมาย</center>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <center><?php echo $result_emp["employee_id"]; ?></center>
                                 </td>
                                 <td>
-                                <center>นาย ศตวรรษ วินวิวัฒน์</center>
+                                    <center><?php echo $result_emp["prefix"].$result_emp["first_name"].'  '.$result_emp["last_name"]; ?></center>
                                 </td>
                                 <td>
-                                <center>พนักงานฝ่ายบุคคล</center>
+                                    <center><?php echo $result_emp["job_name"]; ?></center>
                                 </td>
                                 <td>
-                                <center>ฝ่ายบุคคล</center>
+                                    <center><?php echo $result_emp["department_name"]; ?></center>
                                 </td>
                                 <th>
-                                <center>>=80%</center>
+                                    <center><?php echo number_format($result_emp["target_percent"]).'%'; ?></center>
                                 </th>
                                 <th>
-                                <center>35.5%</center>
+                                    <center><?php echo number_format($result_emp["actual_percent"],2).'%'; ?></center>
                                 </th>
                                 <th>
-                                <center></center>
+                                    <center></center>
                                 </th>
-                                </tr>
-                            </table>
-                        </div>
+                            </tr>
+                        </table>
+                        <?php } ?>
+                    </div>
                         
                     </div>
                 </div>

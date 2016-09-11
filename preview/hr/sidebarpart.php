@@ -7,7 +7,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel" style="white-space:normal;max-width: 230px;">
             <div class="pull-left image">
-                <img style="height: 45px;max-width: 45px;" src="upload_images/<?php echo $picture; ?>" class="img-circle img-center " alt="<?php echo $name; ?>">
+                <img style="height: 45px;max-width: 45px;" src="../upload_images/<?php echo $picture; ?>" class="img-circle img-center " alt="<?php echo $name; ?>">
             </div>
             <div class="pull-left info" >
                 <p><?php echo $name; ?></p>

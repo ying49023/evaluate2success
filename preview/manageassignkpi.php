@@ -19,6 +19,12 @@
         }else{
             //HTML PAGE
             ?>
+<?php
+    $get_emp_id = '';
+    if(isset($_GET["employee_id"])){
+        $get_emp_id  = $_GET["employee_id"];
+    }
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,10 +35,7 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
-    
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
-    
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -64,27 +67,59 @@
             <!-- Main content -->
             <div class="row box-padding">
                 <div class="box box-success">
-                    <div class="box-body">
-                        <div class="row"> 
+                    <div class="row box-body">
+                            <?php 
+                            $sql_emp = "SELECT
+                                                e.employee_id AS emp_id,
+                                                GROUP_CONCAT(
+                                                        e.prefix,
+                                                        e.first_name,
+                                                        '  ',
+                                                        e.last_name
+                                                ) AS emp_name,
+                                                GROUP_CONCAT(
+                                                        m.prefix,
+                                                        m.first_name,
+                                                        '  ',
+                                                        m.last_name
+                                                ) AS manager_name,
+                                                d.department_name AS department_name,
+                                                j.job_name AS job_name,
+                                                p.position_description AS position_description,
+                                                e.hiredate As hiredate,
+                                                e.profile_picture As profile_picture
+                                        FROM
+                                                employees e
+                                        JOIN employees m ON e.manager_id = m.employee_id
+                                        JOIN departments d ON e.department_id = d.department_id
+                                        JOIN jobs j ON j.job_id = e.job_id
+                                        JOIN position_level p ON e.position_level_id = p.position_level_id
+                                        WHERE
+                                                e.employee_id = '$get_emp_id'
+                                        LIMIT 1";
+                            $query_emp = mysqli_query($conn, $sql_emp);
+                            while($result_emp = mysqli_fetch_array($query_emp)) {
+                                $profile_picture = $result_emp["profile_picture"];
+                            ?>
                             <div class="box-padding">
+                                
                                 <!--ข้อมูลทั่วไป-->
                                 <table class="table table-bordered table-condensed">
-                                    <tbody><tr>
-                                            <th rowspan="4">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg">
+                                    <tbody>
+                                        <tr>
+                                            <th rowspan="4" style="width: 55px;">
+                                                <img class="img-circle img-center" src="upload_images/<?php if($profile_picture == ''){ echo 'default.png' ;}else { echo $profile_picture;} ?>" style="width: 50px;height: 50px;" alt="<?php echo $profile_picture; ?>" >
                                             </th>
                                             <th align="center" width="">ชื่อ-นามสกุล</th>
                                             <th align="center" width="120px">รหัส</th>
                                             <th align="center" width="">ตำแหน่ง</th>
                                             <th align="center" width="">แผนก</th>
-                                            
-
                                         </tr>
                                         <tr>
-                                            <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                            <td> 123456</td>
-                                            <td>พนักงานฝ่ายบุคคล</td>
-                                            <td>ฝ่ายบุคคล</td>
+                                            <td><?php echo $result_emp["emp_name"]; ?></td>
+                                            <td><?php echo $result_emp["emp_id"]; ?></td>
+                                            <td><?php echo $result_emp["job_name"]; ?></td>
+                                            <td><?php echo $result_emp["department_name"]; ?></td>
                                         </tr>
                                     </tbody>
                                 </table><!--/ข้อมูลทั่วไป-->
@@ -99,8 +134,8 @@
                                                 <th colspan="3">ผู้บังคับบัญชา</th>
                                             </tr>
                                             <tr>
-                                            <td colspan="3">1 ก.พ. 2556</td>
-                                            <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
+                                            <td colspan="3"><?php echo $result_emp["hiredate"]; ?></td>
+                                            <td colspan="3"><?php echo $result_emp["manager_name"]; ?></td>
                                         </tr>
                                         </thead>
                                         
@@ -131,8 +166,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
-                        </div>  
+                            </div> 
+                            <?php } ?>
                     </div>
                 </div>
             </div>
@@ -291,6 +326,8 @@
     </div>
     <!-- ./wrapper -->
 </body>
+<!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
 </html>
 <?php
         }
