@@ -91,39 +91,56 @@
                         <div class="row"> 
                             <div class="box-padding">
                                 <!--ข้อมูลทั่วไป-->
+                                <?php 
+                                $sql_emp = "SELECT
+                                                    GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
+                                                    GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1,
+                                                    GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2
+                                            FROM
+                                                    employees e
+                                            JOIN position_level p ON p.position_level_id = e.position_level_id
+                                            JOIN departments d ON d.department_id = e.department_id
+                                            JOIN jobs j ON j.job_id = e.job_id
+                                            JOIN employees m ON e.manager_id = m.employee_id
+                                            JOIN employees m2 ON m.manager_id = m2.employee_id
+                                            WHERE
+                                                    e.employee_id ='$get_emp_id'";
+                                $query_emp = mysqli_query($conn, $sql_emp);
+                                while($result_emp = mysqli_fetch_array($query_emp,MYSQLI_ASSOC)){
+                                ?>
                                 <table class="table table-responsive ">
                                     
                                         <tr>
                                             <th rowspan="5">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="upload_images/default.png">
+                                                <img class="circle-thumbnail img-circle img-center img-thumbnail img-lg" style="width: 70px;height: 70px;" src="upload_images/<?php if($result_emp["profile_picture"] == ''){ echo "defalut.png"; }else{ echo $result_emp["profile_picture"]; } ?>">
                                             </th>
                                             <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
-                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width=""><?php echo $result_emp["emp_name"]; ?></th>
                                             <th align="center" colspan="1" width="">ตำแหน่ง: </th>
-                                            <th align="center" colspan="1" width=""> </th>
+                                            <th align="center" colspan="1" width=""><?php echo $result_emp["job_name"]; ?></th>
                                             <th align="center" colspan="1" width="">ระดับตำแหน่ง:  </th>
-                                            <th align="center" colspan="1" width=""> </th>
+                                            <th align="center" colspan="1" width=""><?php echo $result_emp["position_description"]; ?></th>
 
                                         </tr>
                                         <tr>
                                             <th align="center" colspan="2" width="">รหัส: </th>
-                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width=""><?php echo $result_emp["employee_id"]; ?></th>
                                             <th align="center" colspan="2" width="">อายุงาน: </th>
-                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width=""></th>
                                             
                                         </tr>
                                         <tr>
                                             <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
-                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width=""><?php echo $result_emp["hiredate"]; ?></th>
                                             <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
-                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width=""><?php echo $result_emp["department_name"]; ?></th>
                                             
                                         </tr>
                                         <tr>
                                             <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
-                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width=""><?php echo $result_emp["manager_name_1"]; ?></th>
                                             <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
-                                            <th align="center" colspan="2" width=""> </th>
+                                            <th align="center" colspan="2" width=""><?php echo $result_emp["manager_name_2"]; ?></th>
                                             
                                         </tr>
                                         <tr>
@@ -138,7 +155,9 @@
                                 
                                 
                                        
-                                   </table><!--/ข้อมูลทั่วไป--> 
+                                   </table>
+                                <?php } ?>
+                                <!--/ข้อมูลทั่วไป--> 
                             </div>
                         </div>  
                     </div>
