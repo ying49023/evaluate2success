@@ -373,7 +373,7 @@
                                                             employees e
                                                     JOIN employees m ON e.manager_id = m.employee_id
                                                     WHERE
-                                                            e.employee_id = $employee_id_com ";
+                                                            e.employee_id = '$employee_id_com' ";
                                                    $query_huahna= mysqli_query($conn, $sql_huahna);
                                                    $huahna1=0;
                                                    $huahna2=0;
@@ -401,11 +401,11 @@
                                                             ?>
                                                 <td style="text-align: center;">
                                                     
-                                                    <?php if($emp_id==$huahna1){?>
+                                                    <?php if($my_emp_id==$huahna1){?>
                                                             <select name="score_huahna1[]" class="form-control" id="score<?=$m_id?>_1" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_1', 'score<?=$m_id?>_1')" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score1 = mysqli_fetch_array($query_score1)) { ?>
-                                                                <option value="<?php echo $result_score1["score"]; ?>">
+                                                                <option value="<?php echo $result_score1["score"]; ?>"  >
                                                                                 <?php  echo $result_score1["score"]; ?>
                                                                 </option>
                                                                         <?php } ?>
@@ -449,7 +449,7 @@
                                                             WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
                                                     $query_score2= mysqli_query($conn, $sql_score2);
                                                             ?>
-                                                <?php if($emp_id==$huahna2){?>
+                                                <?php if($my_emp_id==$huahna2){?>
                                                 <td style="text-align: center;">                                                    
                                                             <select class="form-control" id="score<?=$m_id?>_2" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_2', 'score<?=$m_id?>_2')" >
                                                                 <option value=""> </option>
@@ -590,7 +590,7 @@
                                     <button class="btn-success btn-lg" type="submit" >บันทึก</button>  
                                     <button class="btn-danger btn-lg" >รีเซ็ท</button> 
                                     <input type="hidden" name="position_level" value="<?php=$level?>" >
-                                    <input type="hidden" name="emp" value="<?php=$emp_id?>" >
+                                    <input type="hidden" name="emp" value="<?php=$my_emp_id?>" >
                                     <input type="hidden" name="evalcode" value="<?php=$eval_code?>" >
                                 </div>
                             </div>

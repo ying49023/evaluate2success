@@ -246,7 +246,7 @@
                                         <td> </td>
                                         <td> </td>
                                         <td>
-                                            <a href="evaluation_section_2.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=41">    
+                                            <a href="evaluation_section_2.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=3">    
                                             <center><i class="glyphicon glyphicon-book"></i></center>
                                             </a>
                                         </td>
