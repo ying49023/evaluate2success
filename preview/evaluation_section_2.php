@@ -28,6 +28,144 @@
         if(isset($_GET["position_level_id"])){
             $level = $_GET["position_level_id"];
         }
+        
+        if(isset($_POST['comp_id'])&&isset($_POST['score_huahna1'])){
+            //$pdo = new PDO('mysql:host=103.27.202.37;dbname=prasukrit_evaluate2success', "prasukrit_alt", "13579alt");           
+            $array_h[] = array();
+            $c=0;
+            foreach ($_POST['score_huahna1'] as $score_huahna1){
+                $array_h[$c]=$score_huahna1;
+                $c++;
+            }
+            $i=0;
+            foreach ($_POST['comp_id'] as $compId){
+                $positionID=$_GET['position_level_id'];
+                $e_code=$_GET['eval_code'];
+                $emp=$_GET['emp_id'];
+                //echo $compId.' '.$_GET['eval_code'].' '.$_GET['emp_id'].' '.$_GET['position_level_id'].' score '.$array_h[$i].' | ';
+               $sql_insert="INSERT INTO evaluation_competency (
+                                                    evaluation_competency_id,
+                                                    evaluate_employee_id,
+                                                    point_assessor1,
+                                                    point_assessor2,
+                                                    COMMENT,
+                                                    manage_comp_id
+                                            )
+                                            VALUES
+                                                    (
+                                                            DEFAULT,
+                                                            (
+                                                                    SELECT
+                                                                            evaluate_employee_id
+                                                                    FROM
+                                                                            evaluation_employee
+                                                                    WHERE
+                                                                            employee_id = $emp
+                                                                    AND evaluation_code = 3
+                                                            ),
+                                                            $array_h[$i],
+                                                            0,
+                                                            ' ',
+                                                            (
+                                                                    SELECT
+                                                                            manage_comp_id
+                                                                    FROM
+                                                                            manage_competency
+                                                                    WHERE
+                                                                            competency_id = $compId
+                                                                    AND position_level_id = $positionID
+                                                                    AND evaluation_code = 3
+                                                            )
+                                                    )";
+               $query_insert=  mysqli_query($conn, $sql_insert);
+               if ($query_insert)
+                            echo "Record update successfully";
+                        else {
+                            $msg = 'Error :' . mysql_error();
+                            echo "Error Save [" . $sql_insert . "]";
+                        }
+                $sql_max_compId = "select max(evaluate_employee_id) as max_compId from evaluation_competency";  
+                $query_max_compId=  mysqli_query($conn, $sql_max_compId);
+                $max_compId=0;//8
+                while ($result_max_compId = mysqli_fetch_array($query_max_compId, MYSQLI_ASSOC)) {  
+                                        $max_compId = $result_max_compId['max_compId'];
+                                      
+                }
+                $sql_update="UPDATE 	evaluation_employee 
+                                                SET 	point_competency1=( SELECT sum(point_assessor1) 
+                                                                        FROM evaluation_competency 
+                                                                        WHERE  evaluate_employee_id = $max_compId), 
+                                                        point_competency2=( SELECT sum(point_assessor2) 
+                                                                        FROM evaluation_competency 
+                                                                        WHERE  evaluate_employee_id = $max_compId)
+                                                   WHERE evaluate_employee_id = $max_compId";
+                $query_update=  mysqli_query($conn, $sql_update);
+               if ($query_update)
+                            echo "Record update successfully";
+                        else {
+                            $msg = 'Error :' . mysql_error();
+                            echo "Error Save [" . $sql_update . "]";
+                        }
+                
+                /*$query_insert =$pdo->prepare("INSERT INTO evaluation_competency (
+                                                    evaluation_competency_id,
+                                                    evaluate_employee_id,
+                                                    point_assessor1,
+                                                    point_assessor2,
+                                                    COMMENT,
+                                                    manage_comp_id
+                                            )
+                                            VALUES
+                                                    (
+                                                            DEFAULT,
+                                                            (
+                                                                    SELECT
+                                                                            evaluate_employee_id
+                                                                    FROM
+                                                                            evaluation_employee
+                                                                    WHERE
+                                                                            employee_id = $emp
+                                                                    AND evaluation_code = $e_code
+                                                            ),
+                                                            $array_h[$i],
+                                                            0,
+                                                            ' ',
+                                                            (
+                                                                    SELECT
+                                                                            manage_comp_id
+                                                                    FROM
+                                                                            manage_competency
+                                                                    WHERE
+                                                                            competency_id = $compId
+                                                                    AND position_level_id = $positionID
+                                                                    AND evaluation_code = $e_code
+                                                            )
+                                                    )");
+                $query_insert->bindParam(':comp_id',$compId);
+                $query_insert->bindParam(':positionID',$positionID);
+                $query_insert->bindParam(':e_code',$e_code);
+                $query_insert->bindParam(':emp',$emp);
+                $query_insert->bindParam(':huahna_score',$huahna_score);
+                $query_insert->execute();      */                 
+                
+                /*$query_update =$pdo->prepare("UPDATE 	evaluation_employee 
+                                                SET 	point_competency1=( SELECT sum(point_assessor1) 
+                                                                        FROM evaluation_competency 
+                                                                        WHERE  evaluate_employee_id = 9), 
+                                                        point_competency2=( SELECT sum(point_assessor2) 
+                                                                        FROM evaluation_competency 
+                                                                        WHERE  evaluate_employee_id = 9)
+                                                   WHERE evaluate_employee_id = 9");
+                */
+                
+                
+                
+                $i++;
+              
+            }
+           
+            
+        }
          
     ?>
         <meta charset="utf-8">
@@ -123,6 +261,7 @@
                         </div>
                         
                         <div class="box-body">
+                            <form method="post" >
                             <div class="row"> 
                                 <?php
 
@@ -263,7 +402,7 @@
                                                 <td style="text-align: center;">
                                                     
                                                     <?php if($emp_id==$huahna1){?>
-                                                            <select class="form-control" id="score<?=$m_id?>_1" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_1', 'score<?=$m_id?>_1')" >
+                                                            <select name="score_huahna1[]" class="form-control" id="score<?=$m_id?>_1" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_1', 'score<?=$m_id?>_1')" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score1 = mysqli_fetch_array($query_score1)) { ?>
                                                                 <option value="<?php echo $result_score1["score"]; ?>">
@@ -364,6 +503,9 @@
                                                     $comp_description=$result_pointdetail["competency_description"];
                                                     
                                                     ?>
+                                                <!-- comp_id loop -->
+                                                <input type="hidden" name="comp_id[]" value="<?php echo $comp_id;?>">
+                                                <!-- comp_id loop -->
                                                 <td style="text-align: center;">
                                                     <a data-toggle="modal" href="#view_point<?php echo $comp_id;?>_<?php echo $level;?>" class="glyphicon glyphicon-eye-open"></a>
                                                     <!-- Veiw Score-->   
@@ -445,10 +587,14 @@
                                 </div>
                                 <?php } ?> 
                                 <div class="col-md-12 text-center">
-                                <button class="btn-success btn-lg" >บันทึก</button>  
-                                <button class="btn-danger btn-lg" >รีเซ็ท</button> 
+                                    <button class="btn-success btn-lg" type="submit" >บันทึก</button>  
+                                    <button class="btn-danger btn-lg" >รีเซ็ท</button> 
+                                    <input type="hidden" name="position_level" value="<?php=$level?>" >
+                                    <input type="hidden" name="emp" value="<?php=$emp_id?>" >
+                                    <input type="hidden" name="evalcode" value="<?php=$eval_code?>" >
                                 </div>
                             </div>
+                            </form>    
                         </div>
                     
                     <?php } else {
