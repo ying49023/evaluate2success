@@ -249,7 +249,7 @@
                                         <th>
                                             <div class="progress">
                                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-                                                style="width: <?php echo $success;?>;"><?php echo $success;?></div>
+                                                style="width:<?php echo $success;?>%"><?php echo $success;?></div>
                                             </div>
                                         </th>
                                         <th>

@@ -87,25 +87,14 @@
                 $sql_max_compId = "select max(evaluate_employee_id) as max_compId from evaluation_competency";  
                 $query_max_compId=  mysqli_query($conn, $sql_max_compId);
                 $max_compId=0;//8
+                if (isset($_GET["eval_emp_id"])) {
+                $get_eval_emp_id = $_GET["eval_emp_id"];
+                } 
                 while ($result_max_compId = mysqli_fetch_array($query_max_compId, MYSQLI_ASSOC)) {  
                                         $max_compId = $result_max_compId['max_compId'];
                                       
                 }
-                $sql_update="UPDATE 	evaluation_employee 
-                                                SET 	point_competency1=( SELECT sum(point_assessor1) 
-                                                                        FROM evaluation_competency 
-                                                                        WHERE  evaluate_employee_id = $max_compId), 
-                                                        point_competency2=( SELECT sum(point_assessor2) 
-                                                                        FROM evaluation_competency 
-                                                                        WHERE  evaluate_employee_id = $max_compId)
-                                                   WHERE evaluate_employee_id = $max_compId";
-                $query_update=  mysqli_query($conn, $sql_update);
-               if ($query_update)
-                            echo "Record update successfully";
-                        else {
-                            $msg = 'Error :' . mysql_error();
-                            echo "Error Save [" . $sql_update . "]";
-                        }
+                
                 
                 /*$query_insert =$pdo->prepare("INSERT INTO evaluation_competency (
                                                     evaluation_competency_id,
@@ -163,6 +152,19 @@
                 $i++;
               
             }
+            $sql_update="UPDATE evaluation_employee SET point_competency1=(
+                        SELECT sum(mc.weight*ec.point_assessor1)
+                        FROM manage_competency mc JOIN evaluation_competency ec
+                        ON mc.manage_comp_id = ec.manage_comp_id
+                        WHERE ec.evaluate_employee_id=$get_eval_emp_id)
+                        WHERE evaluate_employee_id=$get_eval_emp_id";
+                $query_update=  mysqli_query($conn, $sql_update);
+               if ($query_update)
+                            echo "Record update successfully";
+                        else {
+                            $msg = 'Error :' . mysql_error();
+                            echo "Error Save [" . $sql_update . "]";
+                        }
            
             
         }
