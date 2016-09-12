@@ -208,15 +208,23 @@
                                                                     e.first_name,
                                                                     e.last_name,
                                                                     e.position_level_id,
-                                                                    ee.status_success
+                                                                    ee.status_success,
+                                                                    ec.evaluate_employee_id,
+                                                                    d.department_name,
+                                                                    j.job_name
                                                             FROM
                                                                     employees e
                                                             JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
                                                             JOIN evaluation ev ON ee.evaluation_code = ev.evaluation_code
+                                                            JOIN evaluation_competency ec ON ec.evaluate_employee_id = ee.evaluate_employee_id
+                                                            JOIN jobs j ON j.job_id = e.job_id
+                                                            JOIN departments d ON d.department_id = e.department_id
                                                             WHERE
-                                                                    e.manager_id = $my_emp_id                                                            
+                                                                    e.manager_id = '$my_emp_id'
                                                             AND ev.term_id = 1
-                                                            AND ev. YEAR = '2016'";
+                                                            AND ev. YEAR = '2016'
+                                                            GROUP BY
+                                                                    ee.employee_id";
                                             $query_emp_list = mysqli_query($conn, $sql_emp_list);
                                         ?>
 
@@ -238,7 +246,9 @@
                                         $emp_name = $result_emp_list["prefix"].' '.$result_emp_list["first_name"].'  '.$result_emp_list["last_name"];
                                         $status=$result_emp_list["status_success"];
                                         $position=$result_emp_list["position_level_id"];
-                                        
+                                        $job_name = $result_emp_list["job_name"];
+                                        $department_name = $result_emp_list["department_name"];
+                                        $eval_emp_id = $result_emp_list["evaluate_employee_id"];
                                         ?>
                                     <tr>
                                         <td><?php echo $employee_id; ?></td>
@@ -246,7 +256,7 @@
                                         <td> </td>
                                         <td> </td>
                                         <td>
-                                            <a href="evaluation_section_2.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=3">    
+                                            <a href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=3&eval_emp_id=<?php echo $eval_emp_id; ?>">    
                                             <center><i class="glyphicon glyphicon-book"></i></center>
                                             </a>
                                         </td>

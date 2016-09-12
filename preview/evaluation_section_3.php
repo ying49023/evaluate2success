@@ -74,6 +74,10 @@
                             if(isset($_GET["eval_code"])){
                                 $eval_code = $_GET["eval_code"];
                             }
+                            $get_eval_emp_id = '';
+                            if(isset($_GET["eval_emp_id"])){
+                                $get_eval_emp_id = $_GET["eval_emp_id"];
+                            }
                             
                             $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
                             $query_year_term = mysqli_query($conn, $sql_year_term);
@@ -124,44 +128,96 @@
                                        <td align="center"><b>ชั่วโมง</b></td>
                                        
                                     </tr>
+                                    <?php
+                                    $sql_levae_type_1 = "SELECT * 
+                                                        FROM evaluatation_leave
+
+                                                        WHERE
+                                                                evaluate_employee_id = '$get_eval_emp_id'
+                                                        AND leave_type_id = '1'";
+                                    $query_leave_type_1 = mysqli_query($conn, $sql_levae_type_1);
+                                    $result_leave_type_1 = mysqli_fetch_array($query_leave_type_1);
+                                    ?>
                                     <tr>
                                         <th scope="row">1</th>
                                         <th scope="row" colspan=2>ลาป่วย</th>
                                         <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["no_of_day"];} ?>" disabled readonly ></td>
+                                        <td align="center"><input type="number" name="hour" min="1" max="1000" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["no_of_hour"];} ?>" disabled readonly ></td>
+                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["point_leave"];} ?>" disabled readonly></td>
                                     </tr>
+                                    <?php
+                                    $sql_levae_type_2 = "SELECT * 
+                                                        FROM evaluatation_leave
+
+                                                        WHERE
+                                                                evaluate_employee_id = '$get_eval_emp_id'
+                                                        AND leave_type_id = '2'";
+                                    $query_leave_type_2 = mysqli_query($conn, $sql_levae_type_2);
+                                    $result_leave_type_2 = mysqli_fetch_array($query_leave_type_2);
+                                    ?>
                                     <tr>
                                         <th scope="row">2</th>
                                         <th scope="row" colspan=2>ลากิจ</th>
                                         <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["no_of_day"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="hour" min="1" max="1000" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["no_of_hour"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["point_leave"];} ?>" disabled readonly></td>
                                     </tr>
+                                    <?php
+                                    $sql_levae_type_3 = "SELECT * 
+                                                        FROM evaluatation_leave
+
+                                                        WHERE
+                                                                evaluate_employee_id = '$get_eval_emp_id'
+                                                        AND leave_type_id = '3'";
+                                    $query_leave_type_3 = mysqli_query($conn, $sql_levae_type_3);
+                                    $result_leave_type_3 = mysqli_fetch_array($query_leave_type_3);
+                                    ?>
                                     <tr>
                                         <th scope="row">3</th>
                                         <th scope="row">มาสาย</th>
                                         <td>จำนวนครั้ง</td>
-                                        <td><input type="number" name="leave" min="1" max="365" disabled readonly></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
+                                        <td><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["no_of_day"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["no_of_day"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="hour"  min="1" max="1000" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["no_of_hour"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["point_leave"];} ?>" disabled readonly></td>
                                     </tr>
-                                      <tr>
+                                    <?php
+                                    $sql_levae_type_4 = "SELECT * 
+                                                        FROM evaluatation_leave
+
+                                                        WHERE
+                                                                evaluate_employee_id = '$get_eval_emp_id'
+                                                        AND leave_type_id = '4'";
+                                    $query_leave_type_4 = mysqli_query($conn, $sql_levae_type_4);
+                                    $result_leave_type_4 = mysqli_fetch_array($query_leave_type_4);
+                                    ?>
+                                    <tr>
                                         <th scope="row">4</th>
                                         <th scope="row" colspan=2>ลาอื่นๆ</th>
                                         <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["no_of_day"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="hour" min="1" max="1000" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["no_of_hour"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["point_leave"];} ?>" disabled readonly></td>
                                     </tr>
+                                    <?php
+                                    $sql_levae_sum = "SELECT
+                                                            SUM(no_of_day) AS sum_day_leave,
+                                                            SUM(no_of_hour) AS sum_hour_leave,
+                                                            SUM(point_leave) AS sum_point_leave
+                                                    FROM
+                                                            evaluatation_leave
+                                                    WHERE
+                                                            evaluate_employee_id = '$get_eval_emp_id'";
+                                    $query_leave_sum = mysqli_query($conn, $sql_levae_sum);
+                                    $result_leave_sum = mysqli_fetch_array($query_leave_sum);
+                                    ?>
                                     <tr>
                                         <td align="right" colspan=4><b>รวม</b></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" disabled readonly></td>
+                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_day_leave"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="hour" min="1" max="1000" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_hour_leave"];} ?>" disabled readonly></td>
+                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_point_leave"];} ?>" disabled readonly></td>
                                     </tr>
 
                                 </tbody>
