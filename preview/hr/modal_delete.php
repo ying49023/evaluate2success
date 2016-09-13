@@ -9,8 +9,7 @@
                 
             <div class="modal-body">
                 <p></p>
-                    
-                <p class="debug-url"></p>
+<!--                <p class="debug-url"></p>-->
             </div>
                 
             <div class="modal-footer">

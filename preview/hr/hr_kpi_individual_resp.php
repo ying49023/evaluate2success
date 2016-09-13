@@ -117,8 +117,8 @@
                                 <table class="table table-bordered table-condensed">
                                     <tbody>
                                         <tr>
-                                            <th rowspan="4" >
-                                                <img class="img-responsive img-lg" src="upload_images/<?php echo $picture;?>">
+                                            <th rowspan="2" style="padding: 10px;width: 90px;">
+                                                <img class="img-circle img-center img-md img-thumbnail"  src="../upload_images/<?php echo $picture;?>">
                                             </th>
                                             <th align="center" width="" >ชื่อ-นามสกุล</th>
                                             <th align="center" width="120px">รหัส</th>

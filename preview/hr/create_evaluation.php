@@ -93,24 +93,24 @@
                                     </div> 
 
                                     <div class="col-md-4">
-
-                                            <label class=" control-label">รอบการประเมิน</label>
-                                            <?php
-                                                $slq_term ="SELECT term_id,term_name,start_month,end_month
+                                        <label class=" control-label">รอบการประเมิน</label>
+                                                <?php
+                                                $slq_term = "SELECT term_id,term_name,start_month,end_month
                                                             FROM term";
                                                 $query_term = mysqli_query($conn, $slq_term);
-                                            ?>
-                                            <select class="form-control " name="term" >
-                                                <option value="">--เลือกรอบการประเมิน--</option>
-                                                <?php while ($result_term = mysqli_fetch_array($query_term,MYSQLI_ASSOC)){
-                                                    $term_name= $result_term['term_name'];
-                                                    $term_date= $result_term['start_month'].'-'.$result_term['end_month'];
-                                                    $term_id=$result_term['term_id'];
                                                 ?>
-    ?>
-                                                <option value="<?php echo $term_name;?>">เทอม<?php echo $term_name.' ( ';?><?php echo $term_date.' )';?></option>
+                                        <select class="form-control " name="term" >
+                                            <option value="">--เลือกรอบการประเมิน--</option>
+                                                    <?php
+                                                    while ($result_term = mysqli_fetch_array($query_term, MYSQLI_ASSOC)) {
+                                                        $term_name = $result_term['term_name'];
+                                                        $term_date = $result_term['start_month'] . '-' . $result_term['end_month'];
+                                                        $term_id = $result_term['term_id'];
+                                                        ?>
+                                            ?>
+                                            <option value="<?php echo $term_name; ?>">เทอม<?php echo $term_name . ' ( '; ?><?php echo $term_date . ' )'; ?></option>
                                                 <?php } ?>
-                                            </select>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="row box-padding" style="margin-top: 20px;">
@@ -124,6 +124,44 @@
                                 </div>
                                 
                             </form>
+                            <!-- Show รอบการประเมินที่ Active อยู่ current eval = 1 -->
+                            <hr>
+                            <div class="row box-padding">
+                                <div class="col-sm-offset-1 col-sm-10">
+                                   
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>รอบการประเมิน</th>
+                                            <th>วันเปิด</th>
+                                            <th>วันปิด</th>
+                                            <th class="text-center">สถานะ</th>
+                                            <th class="text-center">แก้ไข</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php 
+                                    $sql_active_eval = "SELECT evaluation_code,current_eval, count(current_eval) as count, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=1  ";
+                                    $query_active_eval = mysqli_query($conn, $sql_active_eval);
+                                    
+                                    while ($result_active_eval = mysqli_fetch_array($query_active_eval, MYSQLI_ASSOC)) {                                    
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $result_active_eval["term"]; ?> / <?php echo $result_active_eval["year"]; ?></td>
+                                            <td><?php echo $result_active_eval["open_system_date"]; ?></td>
+                                            <td><?php echo $result_active_eval["close_system_date"]; ?></td>
+                                            <td class="text-center"><span style="color:green;">เปิดรอบการประเมิน</span></td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary" href="explan_evaluation.php?eval_code=<?php echo $result_active_eval["evaluation_code"]; ?>" ><i class="glyphicon glyphicon-edit"></i>&nbsp; แก้ไข</a>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                                </div>
+                            </div>
+                            <!-- /Show รอบการประเมินที่ Active อยู่ current eval = 1 -->
+                            
                             <!--History -->
                             <div class="modal fade" id="history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog modal-lg" role="document">

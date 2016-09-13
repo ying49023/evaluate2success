@@ -179,7 +179,7 @@
                                     <td class="name"><?php echo $name; ?></td>
                                     <td class="job text-center"><?php echo $job; ?></td>
                                     <td class="dept text-center"><?php echo $dept; ?></td>
-                                    <td class="text-center"><a href="hr_kpi_individual_resp.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-folder-open"></i></a></td>
+                                    <td class="text-center"><a class="btn btn-primary" href="hr_kpi_individual_resp.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; ดู</a></td>
                                 </tr>
                                 <?php } ?>
                                 </tbody>

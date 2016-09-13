@@ -43,8 +43,9 @@
             //++++++++++++++++++delete record+++++++++++++
             if($erp=='delete'){            
             $dterm=$_GET['term']; 
-            $dyear=$_GET['year'];            
-            $delete="DELETE FROM evaluation WHERE term_id='$dterm' and year='$dyear'";            
+            $dyear=$_GET['year'];   
+            $eval_code = $_GET["eval_code"];
+            $delete="UPDATE evaluation SET current_eval = '0'  WHERE evaluation_code = '$eval_code'";            
             $d_query =  mysqli_query($conn,$delete);
             if($d_query)
                header ("location:manage_evaluate.php");
@@ -56,24 +57,25 @@
             
         }
         //++++++++++++++++++update record+++++++++++++
-            if($erp=='update'){            
-            $strSQL = "UPDATE evaluation SET ";
-            $strSQL .="open_system_date= '" . $_POST["textopen"] . "' ";
-            $strSQL .=",close_system_date = '" . $_POST["textclose"] . "' ";
-            $strSQL .="WHERE company_id = 1 and term_id= '".$_POST["textterm"]."' and year='".$_POST["textyear"]."'";
+            if($erp=='update'){
+                $condition = '';
+                if($_POST["textopen"] != '' && $_POST["textclose"] != ''){
+                    $condition = " open_system_date= '" . $_POST["textopen"] . "' , close_system_date = '" . $_POST["textclose"] . "' ";
+                }else if($_POST["textopen"] != '' && $_POST["textclose"] == ''){
+                    $condition = " open_system_date= '" . $_POST["textopen"]."' ";
+                }else if($_POST["textopen"] == '' && $_POST["textclose"] != ''){
+                    $condition = " close_system_date = '" . $_POST["textclose"] . "' ";
+                }
+            $strSQL = "UPDATE evaluation SET $condition WHERE company_id = 1 and evaluation_code = '".$_POST["eval_code"]."'";
             $objQuery = mysqli_query($conn,$strSQL);
             if ($objQuery) {
-
                 echo "Record update successfully";
-
-
+                echo $strSQL;
+                header("location:manage_evaluate.php");
             } else {
 
                 echo "Error Save [" . $strSQL . "]";
             }
-         
-                
-            
         }
         ?>
 <html>
@@ -150,7 +152,7 @@
                                 <div class="box-body">
                                   <div class="col-md-offset-1 col-md-10 ">
                                     <?php 
-                                        $sql_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1 AND current_eval='1' ";
+                                        $sql_eval = "SELECT evaluation_code, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1 AND current_eval='1' ";
                                         $query_eval= mysqli_query($conn, $sql_eval);
                                     ?>
                                      
@@ -170,15 +172,15 @@
                                            <td><?php echo $result_eval["open_system_date"] ; ?></td>
                                            <td><?php echo $result_eval["close_system_date"] ; ?></td>
                                            <td >
-                                               <a href="" data-toggle="modal" data-target="#<?php echo $result_eval["term"] ; ?>_<?php echo $result_eval["year"] ; ?>">
+                                               <a href="" data-toggle="modal" data-target="#<?php echo $result_eval["evaluation_code"]; ?>">
                                                    <i class="glyphicon glyphicon-pencil"></i>
                                                </a>|
-                                               <a href="manage_evaluate.php?erp=delete&term=<?php echo $result_eval["term"] ; ?>&year=<?php echo $result_eval["year"] ; ?>">
-                                                   <i class="glyphicon glyphicon-trash"></i>
+                                               <a href="manage_evaluate.php?erp=delete&eval_code=<?php echo $result_eval["evaluation_code"] ; ?>">
+                                                   <i class="glyphicon glyphicon-remove"></i>
                                                </a>
                                                <!--Edit Modal -->
                                                 <form class="form-horizontal" name="frmMain" method="post" action="manage_evaluate.php?erp=update" >
-                                                    <div class="modal fade" id="<?php echo $result_eval["term"]; ?>_<?php echo $result_eval["year"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal fade" id="<?php echo $result_eval["evaluation_code"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -214,6 +216,7 @@
 
                                                                 </div>
                                                                 <div class="modal-footer">
+                                                                    <input type="hidden" name="eval_code" value="<?php echo $result_eval["evaluation_code"]; ?>" >
                                                                     <button type="submit" class="btn btn-primary">บันทึก</button>
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
 
@@ -335,6 +338,7 @@
                                         
                                         ?>
                                    <table class="table table-hover">
+                                       <thead>
                                        <tr>
                                            <th>ผู้ประเมิน</th>
                                            <th class="text-center">ประเมินแล้ว</th>
@@ -342,18 +346,48 @@
                                            <th class="text-center">ทั้งหมด</th>
                                            <th class="text-center">แจ้งเตือน</th>
                                        </tr>
-
+                                       </thead>
                                        <?php 
-                                        $sql_meval = "SELECT  CONCAT(m.prefix,m.first_name,' ',m.last_name) as name,e.manager_id, ( SELECT  COUNT(e.employee_id)
-                                                        FROM evaluation_employee v JOIN employees e ON v.employee_id = e.employee_id JOIN employees m ON e.manager_id = m.employee_id
-                                                        WHERE e.manager_id = 1 AND sum_point <> 0) AS 'Completed_evaluate' , COUNT(e.employee_id)-( SELECT  COUNT(e.employee_id)
-                                                        FROM evaluation_employee v JOIN employees e ON v.employee_id = e.employee_id JOIN employees m ON e.manager_id = m.employee_id
-                                                        WHERE e.manager_id = 1 AND sum_point <> 0) AS 'Uncompleted_evaluate',
-                                                        COUNT(e.employee_id) AS 'All_subordinate' 
-                                                        FROM employees e JOIN employees m ON e.manager_id = m.employee_id
-                                                        WHERE e.manager_id = 1  ";
+                                        $sql_meval = "SELECT
+                                                            CONCAT(
+                                                                    m.prefix,
+                                                                    m.first_name,
+                                                                    ' ',
+                                                                    m.last_name
+                                                            ) AS name,
+                                                            e.manager_id,
+                                                            (
+                                                                    SELECT
+                                                                            COUNT(e.employee_id)
+                                                                    FROM
+                                                                            evaluation_employee v
+                                                                    JOIN employees e ON v.employee_id = e.employee_id
+                                                                    JOIN employees m ON e.manager_id = m.employee_id
+                                                                    WHERE
+                                                                            e.manager_id = 10002
+                                                                    AND status_success = 1
+                                                            ) AS 'Completed_evaluate',
+                                                            COUNT(e.employee_id) - (
+                                                                    SELECT
+                                                                            COUNT(e.employee_id)
+                                                                    FROM
+                                                                            evaluation_employee v
+                                                                    JOIN employees e ON v.employee_id = e.employee_id
+                                                                    JOIN employees m ON e.manager_id = m.employee_id
+                                                                    WHERE
+                                                                            e.manager_id = 10002
+                                                                    AND status_success = 0
+                                                            ) AS 'Uncompleted_evaluate',
+                                                            COUNT(e.employee_id) AS 'All_subordinate'
+                                                    FROM
+                                                            employees e
+                                                    JOIN employees m ON e.manager_id = m.employee_id
+                                                    JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                    WHERE
+                                                            e.manager_id = 10002";
                                         $query_meval= mysqli_query($conn, $sql_meval);
                                     ?>
+                                    <tbody>
                                     <?php while($result_meval = mysqli_fetch_array($query_meval,MYSQLI_ASSOC)) { 
                                         $name=$result_meval['name'];
                                         $completed=$result_meval['Completed_evaluate'];
@@ -376,7 +410,7 @@
                                        </tr>
 
                                        <?php }?>
-
+                                    </tbody>
                                    </table>
                                    </div>
                                 </div>

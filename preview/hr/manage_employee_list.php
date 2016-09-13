@@ -128,7 +128,7 @@
                                                     <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
                                                     <input class="search form-control" placeholder="ค้นหา" />
                                                 </div>
-                                                <table id="example" class="table table-hover table-striped disabled"  >
+                                                <table id="example" class="table table-hover table-striped "  >
                                                     <thead>
                                                         <tr>
                                                             <th class=""></th>
@@ -136,7 +136,7 @@
                                                             <th><button class="sort" data-sort="emp_name"><b>ชื่อ-นามสกุล</b></button></th>
                                                             <th class="text-center"><button class="sort" data-sort="job_name"><b>ตำแหน่ง</b></button></th>
                                                             <th class="text-center"><button class="sort" data-sort="dept_name"><b>แผนก</b></button></th>
-                                                            <th class="text-center"><b>แก้ไข/ลบ</b></th>
+                                                            <th class="text-center"  style="min-width:100px;"><b>แก้ไข/ลบ</b></th>
                                                         </tr>
                                                     </thead>
                                                     <?php
@@ -162,8 +162,8 @@
                                                                 <td class="job_name text-center"><?php echo $job; ?></td>
                                                                 <td class="dept_name text-center"><?php echo $dept; ?></td>
                                                                 <td class="text-center">
-                                                                    <a href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
-                                                                    | <a onclick="myFunction()" ><i class="glyphicon glyphicon-trash"></i></a>
+                                                                    <a class="btn btn-success btn-sm" href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                                                                    | <a class="btn btn-danger btn-sm" onclick="myFunction()" ><i class="glyphicon glyphicon-trash"></i></a>
                                                                 </td>
                                                             </tr>
                                                             

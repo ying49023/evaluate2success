@@ -132,7 +132,7 @@
                             </div>
                             <div  class="col-sm-offset-1 col-sm-3">
                                 คะแนน(ต่อครั้ง)
-                                <input class="form-control" style="margin-left:10px;" type="text" name="leave_point" placeholder="----- กรุณากรอกคะแนนวันลา -----">
+                                <input class="form-control" style="margin-left:10px;" type="number" step="0.1" name="leave_point" placeholder="----- กรุณากรอกคะแนนวันลา -----">
                             </div>
                             <div class="col-sm-2">
                                 <div class="form-group">
@@ -245,7 +245,7 @@
 
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <button type="submit" class="btn btn-primary">ยืนยันการลบ</button>
+                                                                    <button type="submit" class="btn btn-danger">ลบ</button>
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
 
                                                                 </div>

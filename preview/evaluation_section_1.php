@@ -23,6 +23,9 @@
         if (isset($_GET["emp_id"])) {
                 $get_emp_id = $_GET["emp_id"];
             }
+        if (isset($_GET["eval_emp_id"])) {
+                $get_eval_emp_id = $_GET["eval_emp_id"];
+            }    
             
         ?>
         
@@ -192,8 +195,17 @@
                                 </div>  
                                 <div class="row">
                                     <br>
+                                    <?php  
+               
+                                        $sql_kpi="SELECT k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,kr.percent_performance,kr.kpi_responsible_id
+                                                    FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
+                                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                                    JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
+                                                    WHERE ee.employee_id = '".$get_emp_id."' ORDER BY kpi_id ";
+                                        $query_kpi = mysqli_query($conn, $sql_kpi);
+                                    ?>
                                     <table class="table table-bordered ">
-                                        <thead>
+                                        <thead class="bg-gray">
                                             <tr> 
                                                 <th rowspan="2">
                                                     วัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน (Performance Objectives / KPIs)
@@ -211,47 +223,85 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
+                
+                                                $kpi_id = $result_kpi["kpi_id"];
+                                                $kpi_name = $result_kpi["kpi_name"];
+                                                $weight = $result_kpi["weight"];
+                                                $goal = $result_kpi["goal"];
+                                                $symbol = $result_kpi["symbol"];
+                                                $success = $result_kpi["success"];
+                                                $percent_performance = $result_kpi["percent_performance"];
+                                                $term = $result_kpi["term"];
+                                                $year = $result_kpi["year"];
+                                                $kpi_responsible_id=$result_kpi["kpi_responsible_id"];
+
+                                             ?>
+                                
                                             <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
+                                                <td rowspan="1"><?php echo $kpi_name.' เป้าหมาย: '.$symbol.''.$goal ;?></td>
+                                                <td rowspan="1"><?php echo $success;?></td>
+                                                <td rowspan="1"><?php echo $weight.'%';?></td>
+                                                <td rowspan="1"><?php echo $percent_performance/10;?></td>
+                                                <td rowspan="1"><?php echo $weight*($percent_performance/10);?></td>
+                                                <?php  
+                                                $sql_update_point_responsible="UPDATE kpi_responsible
+                                                                    SET point_kpi_resp =($percent_performance/10)
+                                                                    WHERE kpi_responsible_id=$kpi_responsible_id
+                                                            ";
+                                                $query_update_point_responsible = mysqli_query($conn, $sql_update_point_responsible);
+                                                $sql_update_point="UPDATE kpi_responsible
+                                                                    SET sum_point =($weight*($percent_performance/10))
+                                                                    WHERE kpi_responsible_id=$kpi_responsible_id
+                                                            ";
+                                                $query_update_point = mysqli_query($conn, $sql_update_point);
+                                                ?>
                                             </tr>
-                                            <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                            </tr>
-                                            <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                            </tr>
-                                            <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                            </tr>
-                                            <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                            </tr>
-                                            <tr> 
-                                                <th rowspan="1" colspan="2" class="text-right">รวม</th>
+                                            <?php }?>
+                                            
+                                            <tr class="bg-gray-active"> 
+                                                <th rowspan="1" colspan="2" class="text-right" >รวม</th>
                                                             
-                                                <th rowspan="1">100</th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
+                                                <th rowspan="1">60</th>
+                                                <?php                                                 
+               
+                                                $sql_sum_kpi="SELECT (SUM(sum_point)*60)/1000 as sum_point
+                                                            FROM kpi_responsible
+                                                            WHERE evaluate_employee_id=$get_eval_emp_id
+                                                            ";
+                                                $query_sum_kpi = mysqli_query($conn, $sql_sum_kpi);
+                                                while($result_sum_kpi = mysqli_fetch_assoc($query_sum_kpi)) {
+                                                    $sum_point=$result_sum_kpi['sum_point'];
+                                                 ?>
+                                                <th rowspan="1"><?php echo $sum_point;?></th>
+                                               
+                                                
+                                                
+                                                <th rowspan="1"><?php echo $sum_point*60;?></th>
+                                                    <?php } ?>
+                                            </tr>
+                                            
+                                            <tr>
+                                               <?php                                                 
+               
+                                                $sql_sum_kpi_total="UPDATE evaluation_employee 
+                                                        SET point_kpi=(	  SELECT (SUM(sum_point)*60)/1000
+                                                                                    FROM kpi_responsible
+                                                                                    WHERE evaluate_employee_id=$get_eval_emp_id)
+                                                        WHERE evaluate_employee_id=$get_eval_emp_id
+
+                                                            ";
+                                                $query_sum_kpi_total = mysqli_query($conn, $sql_sum_kpi_total);
+                                                ?>
+                                                <th colspan="4" class="bg-black"></th>
+                                                <?php 
+                                                $sql_point_kpi="select * from evaluation_employee WHERE evaluate_employee_id=$get_eval_emp_id";
+                                                $query_point_kpi=  mysqli_query($conn, $sql_point_kpi);
+                                                while($result_point_kpi = mysqli_fetch_assoc($query_point_kpi)) {
+                                                    $point_kpi=$result_point_kpi['point_kpi'];
+                                                 ?>
+                                                <th colspan="1" class="bg-blue"><?php echo $point_kpi;?></th>
+                                                <?php } ?>
                                             </tr>
                                         </tbody>
                                                     

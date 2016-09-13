@@ -214,7 +214,6 @@
                                         <!--Edit Modal -->
 
                                         <!--Delete Modal -->
-
                                             <form class="form-horizontal" name="frmMain" method="post" action="company_table.php?erp=delete&id=<?php echo $id; ?>" >
                                                 <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog" role="document">
@@ -224,7 +223,6 @@
                                                                 <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
                                                                 <div class="input-group col-sm-12" >
                                                                     <label for="ชื่อบริษัท" class="col-sm-4 control-label">ชื่อบริษัท:</label>
                                                                     <div class="col-sm-8">               
@@ -238,14 +236,10 @@
                                                                         <input type="text" class="form-control" value="<?php echo $result["company_full_name"]; ?>" name='textfullcom'   >
                                                                     </div>
                                                                 </div>
-
-
-
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-
                                                             </div>
                                                         </div>
                                                     </div>

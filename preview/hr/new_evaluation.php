@@ -12,9 +12,12 @@
         $eval_code = '';
         $sql_eval_id = "select max(e.evaluation_code) as code from evaluation e  join term t on e.term_id=t.term_name";
         $query_eval_id = mysqli_query($conn, $sql_eval_id);
-
+        
         $result_eval_id = mysqli_fetch_array($query_eval_id, MYSQLI_ASSOC);
         $eval_code = $result_eval_id['code'];
+        
+//        $insert_emp_to_eval = "update evaluate_employee set evaluation_code = '$eval_code' ";
+//        $query_emp_to_eval = mysqli_query($conn, $insert_emp_to_eval);
 
         if ($eval_code != '') {
             echo $eval_code;

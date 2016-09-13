@@ -46,7 +46,7 @@
             }
         //Edit
         if(isset($_GET["submit_edit"])){
-            $title_id = "";
+            $title_id = '';
             if(isset($_GET["titleid"])){
                 $title_id = $_GET["titleid"];
             }
@@ -62,7 +62,7 @@
                     echo $sql_edit_group;
                 }
                     
-                header("Location: added_competency.php?titleid=$title_id&competency_id=$competency_id");
+                header("Location: added_competency.php?titleid=$get_title_id");
             }
         //Delete  
         if(isset($_GET["delete_group"])){
@@ -212,7 +212,9 @@
                                             <td class="competency_name"><?php echo $result_com["competency_description"]; ?></td>
                                             <td class="title_name"><?php echo $result_com["title_name"]; ?></td>
                                             <td style="text-align: center;">
-                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                <button class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" >
+                                                    <i class="glyphicon glyphicon-pencil"></i>แก้ไข
+                                                </button>
                                                 <!-- Modal Edit -->
                                                 <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog" role="document">
@@ -252,11 +254,44 @@
                                                     </div>  
                                                 </div>
                                             <!--/Modal Edit--> 
-                                                <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="added_competency.php?comp_id=<?php echo $result_com["competency_id"]; ?>&delete_group=1&title_id=<?php echo $result_com["title_id"]; ?>">
+                                                <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo $result_com["competency_id"]; ?>_delete" data-href="added_competency.php?comp_id=<?php echo $result_com["competency_id"]; ?>&delete_group=1&title_id=<?php echo $result_com["title_id"]; ?>">
                                                     <i class="glyphicon glyphicon-remove"></i>ลบ
-                                                </a>
+                                                </button>
                                                 <!--Modal delete-->
-                                                <?php  include('./modal_delete.php');?>
+                                                <form class="form-horizontal" name="frmMain" method="get" action="" >
+                                                <div class="modal fade" id="<?php echo $result_com["competency_id"]; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <div class="input-group col-sm-12" >
+                                                                    <label for="" class="col-sm-4 control-label">Competency name</label>
+                                                                    <div class="col-sm-8">               
+                                                                        <input type="text" class="form-control" value="<?php echo $result_com["competency_description"]; ?>" name='textcom' disabled="true"  >
+                                                                    </div>
+
+                                                                </div>
+                                                                <div class="input-group col-sm-12" >
+                                                                    <label for="" class="col-sm-4 control-label">Title name</label>
+                                                                    <div class="col-sm-8">               
+                                                                        <input type="text" class="form-control" value="<?php echo $result_com["title_name"]; ?>" name='textfullcom' disabled="true"  >
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <input type="hidden" name="delete_group" value="1" >
+                                                                <input type="hidden" name="comp_id" value="<?php echo $result_com["competency_id"];?>" >
+                                                                <input type="hidden" name="title_id" value="<?php echo $result_com["title_id"];?>" >
+                                                                <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
                                                 <!--/Modal delete-->
                                             </td>
                                         </tr>
