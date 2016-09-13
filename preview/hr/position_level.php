@@ -119,7 +119,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">ตารางแสดงรายชื่อระดับ</h3>
                             <a class="pull-right " data-toggle="collapse" href="#strenghtPoint">
-                                <button type="button" class="btn btn-primary">เพิ่มระดับ</button>
+                                <button type="button" class="btn btn-success">เพิ่มระดับ</button>
                             </a>
                         </div>
                    <div class="box-body">
@@ -141,9 +141,9 @@
                       </div>
                         
                         <div class="box-body ">    
-                            <table  class="table table-bordered table-condensed" >
+                            <table  class="table table-bordered table-hover table-striped" >
                                 <thead>
-                                    <tr class="bg-gray-light">
+                                    <tr class="table-active">
                                         <th class="text-center">ชื่อระดับ</th>
                                         <th class="text-center" style="width: 150px">จัดการ</th>
                                     </tr>
@@ -166,13 +166,13 @@
                                         <td>&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
                                         
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
-                                                <i class="glyphicon glyphicon-pencil" ></i>
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
+                                                <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                             </button>                                                   
                                             |
 
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
-                                                <i class="glyphicon glyphicon-remove" ></i>
+                                                <i class="glyphicon glyphicon-remove" ></i>ลบ
                                             </button>
                                         </td>
                                     </tr>
@@ -200,7 +200,7 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                        <button type="submit" class="btn btn-success">บันทึก</button>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         
                                                     </div>

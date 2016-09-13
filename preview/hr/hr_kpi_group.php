@@ -119,7 +119,7 @@
                                         <input class="form-control" type="text"  step="5" name="kpi_group_name" required > 
                                     </div>
                                     <div class="form-group col-sm-1">
-                                        <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
+                                        <input style="margin-top: 25px;" class="btn btn-info" type="submit"  name="submit_insert" value="บันทึก" > 
                                         <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
                                     </div>
                                 </div>
@@ -159,7 +159,7 @@
                                             <td class="kpi_group_name"><?php echo $result_kpi_group["kpi_group_name"]; ?></td>
                                             <td class="edit_delete" style="text-align: center;">
 
-                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
 
                                                   <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="hr_kpi_group.php?kpi_group_id=<?php echo $result_kpi_group["kpi_group_id"]; ?>&delete_group=1">
                                                           <i class="glyphicon glyphicon-remove"></i>ลบ</a>

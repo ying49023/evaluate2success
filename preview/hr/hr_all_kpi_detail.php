@@ -264,7 +264,7 @@
                                                 <td class="job_name"><?php echo $result_kpi["job_name"]; ?></td>
                                                 <td class="dept_name"><?php echo $result_kpi["department_name"]; ?></td>
                                                 <td>
-                                                    <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                    <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
                                                     <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi_group.php?manage_kpi_id=<?php echo $result_kpi["manage_kpi_id"]; ?>&department_id=<?php echo $get_department_id; ?>&job_id=<?php echo $get_job_id; ?>" ><i class="glyphicon glyphicon-remove"></i>ลบ</a>
                                                     <!--Modal delete-->
                                                     <?php include('./modal_delete.php'); ?>

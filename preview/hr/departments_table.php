@@ -118,7 +118,7 @@
                         <div class="box-header with-border">
                             <h3 class="box-title">ตารางแสดงแผนก/ฝ่าย</h3>
                             <a class="pull-right " data-toggle="collapse" href="#strenghtPoint">
-                                <button type="button" class="btn btn-primary">เพิ่มแผนก</button>
+                                <button type="button" class="btn btn-success">เพิ่มแผนก</button>
                             </a>
                         </div>
                         <div class="box-body">
@@ -146,9 +146,9 @@
                                      <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
                                      <input class="search form-control" placeholder="ค้นหา" />
                                  </div>
-                                 <table  class="table table-bordered table-condensed" >
+                                 <table  class="table table-bordered table-hover table-striped" >
                                      <thead>
-                                         <tr class="">
+                                         <tr class="table-active">
                                              <th class="text-center"><button class="sort" data-sort="dept_name">ชื่อแผนก/ฝ่าย</button></th>
                                              <th class="text-center" style="width: 150px">จัดการ</th>
                                          </tr>
@@ -170,13 +170,13 @@
                                              <td class="dept_name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
                                                  
                                              <td class="text-center">
-                                                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
-                                                     <i class="glyphicon glyphicon-pencil" ></i>
+                                                 <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
+                                                     <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                                  </button>                                                   
                                                  |
                                                      
                                                  <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
-                                                     <i class="glyphicon glyphicon-remove" ></i>
+                                                     <i class="glyphicon glyphicon-remove" ></i>ลบ
                                                  </button>
                                                  <!--Edit Modal -->
 
@@ -201,7 +201,7 @@
 
                                                                      </div>
                                                                      <div class="modal-footer">
-                                                                         <input type="submit" class="btn btn-primary" value="บันทึก" >
+                                                                         <input type="submit" class="btn btn-success" value="บันทึก" >
                                                                          <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
 
                                                                      </div>

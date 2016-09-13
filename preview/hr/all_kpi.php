@@ -217,7 +217,7 @@
                                             <td class="period" class="text-center"><?php echo $result_kpi["time_period"]; ?></td>
                                             <td class="group" ><?php echo $result_kpi["kpi_group_name"]; ?></td>
                                             <td>
-                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
                                                 <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi.php?kpi_id=<?php echo $result_kpi["kpi_id"]; ?>&kpi_group_id=<?php echo $get_kpi_group_id; ?>">
                                                 <i class="glyphicon glyphicon-remove"></i>ลบ</a>
                                                 <!-- Modal Edit -->

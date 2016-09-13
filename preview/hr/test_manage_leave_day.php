@@ -99,12 +99,12 @@
                                     <td class="text-center" style="width: 200px"><?php echo $point; ?></td>
                                      <td class="text-center" style="width: 200px">
                                                     <button type="button" class="btn btn-success btn-sm" data-toggle="modal">
-                                                        <i class="glyphicon glyphicon-pencil" ></i>
+                                                        <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                                     </button>                                                   
                                                     |
                                                     <button type="button" class="btn btn-danger btn-sm">
                                                    
-                                                        <i class="glyphicon glyphicon-remove" ></i>
+                                                        <i class="glyphicon glyphicon-remove" ></i>ลบ
                                                     </button>
                                                 </td>
                                 </tr>

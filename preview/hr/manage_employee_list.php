@@ -74,6 +74,7 @@
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                         <li class="active">manage employee</li>
+                        
                     </ol>
                 </section>
                 <!--/Page header -->
@@ -127,6 +128,7 @@
                                                 <div class="form-inline padding-small">
                                                     <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
                                                     <input class="search form-control" placeholder="ค้นหา" />
+                                                    <a class="btn btn-success" href="manage_employee_insert.php" style="float: right;">เพิ่มพนักงาน</a>
                                                 </div>
                                                 <table id="example" class="table table-hover table-striped "  >
                                                     <thead>
@@ -162,7 +164,7 @@
                                                                 <td class="job_name text-center"><?php echo $job; ?></td>
                                                                 <td class="dept_name text-center"><?php echo $dept; ?></td>
                                                                 <td class="text-center">
-                                                                    <a class="btn btn-success btn-sm" href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
+                                                                    <a class="btn btn-primary btn-sm" href="edit_profile.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-edit"></i></a>
                                                                     | <a class="btn btn-danger btn-sm" onclick="myFunction()" ><i class="glyphicon glyphicon-trash"></i></a>
                                                                 </td>
                                                             </tr>

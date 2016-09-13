@@ -364,7 +364,7 @@
                                                     <div class="box-footer">
                                                         <center>
                                                             <input  class="btn btn-danger search-button" type="reset" name="Reset">
-                                                            <button type="submit" class="btn btn-primary search-button" value="Upload" >เพิ่ม</button>
+                                                            <button type="submit" class="btn btn-success search-button" value="Upload" >เพิ่ม</button>
                                                         </center>
 
                                                     </div>
