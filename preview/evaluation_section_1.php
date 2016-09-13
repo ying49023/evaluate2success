@@ -273,7 +273,7 @@
                                                 while($result_sum_kpi = mysqli_fetch_assoc($query_sum_kpi)) {
                                                     $sum_point=$result_sum_kpi['sum_point'];
                                                  ?>
-                                                <th rowspan="1"><?php echo $sum_point;?></th>
+                                                <th rowspan="1"></th>
                                                
                                                 
                                                 
@@ -293,7 +293,7 @@
                                                             ";
                                                 $query_sum_kpi_total = mysqli_query($conn, $sql_sum_kpi_total);
                                                 ?>
-                                                <th colspan="4" class="bg-black"></th>
+                                                <th colspan="4" class=""></th>
                                                 <?php 
                                                 $sql_point_kpi="select * from evaluation_employee WHERE evaluate_employee_id=$get_eval_emp_id";
                                                 $query_point_kpi=  mysqli_query($conn, $sql_point_kpi);
