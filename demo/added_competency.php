@@ -212,7 +212,7 @@
                                             <td class="competency_name"><?php echo $result_com["competency_description"]; ?></td>
                                             <td class="title_name"><?php echo $result_com["title_name"]; ?></td>
                                             <td style="text-align: center;">
-                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
                                                 <!-- Modal Edit -->
                                                 <div class="modal animated fade " id="edit_kpi_group_<?php echo $result_com["competency_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog" role="document">

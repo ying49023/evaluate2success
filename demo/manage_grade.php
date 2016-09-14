@@ -189,7 +189,7 @@
                                                     |
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>_delete">
                                                    
-                                                        <i class="glyphicon glyphicon-remove" ></i>
+                                                        <i class="glyphicon glyphicon-remove" ></i>ลบ
                                                     </button>
                                                 </td>
                                 </tr>

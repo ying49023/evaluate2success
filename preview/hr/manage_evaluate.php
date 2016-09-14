@@ -20,8 +20,9 @@
         
         $erp='';
         $msg='';
-        if(isset($_GET['erp']))
+        if(isset($_GET['erp'])){
             $erp=$_GET['erp'];
+        }
         //++++++++++++++++++save record+++++++++++++
         if($erp=='save'){
             
@@ -52,10 +53,10 @@
             else {
                 $msg='Error :'.mysql_error();
                 echo "Error Save [" . $delete . "]";
-            }   
-                
-            
-        }
+                }   
+
+
+            }
         //++++++++++++++++++update record+++++++++++++
             if($erp=='update'){
                 $condition = '';
@@ -89,6 +90,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
+        <!-- SCRIPT PACKS -->
+        <?php include ('./script_packs.html'); ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
         <!-- javascript   menu -->
@@ -123,7 +126,7 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-
+                
                 <!--list employee-->
                 <div class="row box-padding">                   
 
@@ -151,31 +154,31 @@
                                 </div>
                                 <div class="box-body">
                                   <div class="col-md-offset-1 col-md-10 ">
-                                    <?php 
-                                        $sql_eval = "SELECT evaluation_code, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1 AND current_eval='1' ";
-                                        $query_eval= mysqli_query($conn, $sql_eval);
-                                    ?>
-                                     
-                                   <table class="table table-hover">
-                                       
-                                       <tr>
-                                           
-                                           <th>รอบการประเมิน</th>
-                                           <th>วันเปิด</th>
-                                           <th>วันปิด</th>
-                                           <th align="center">จัดการ</th>
-                                       </tr>
-                                       <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
+                                   <table class="table table-hover table-bordered active">
+                                        <thead>
+                                            <tr>
+
+                                                <th>รอบการประเมิน</th>
+                                                <th>วันเปิด</th>
+                                                <th>วันปิด</th>
+                                                <th class="text-center">จัดการ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                       <?php 
+                                       $sql_eval = "SELECT evaluation_code, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1 AND current_eval='1' ";
+                                       $query_eval= mysqli_query($conn, $sql_eval);
+                                       while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
                                        <tr>
                                            
                                            <td><?php echo $result_eval["term"] ; ?> / <?php echo $result_eval["year"] ; ?></td>
                                            <td><?php echo $result_eval["open_system_date"] ; ?></td>
                                            <td><?php echo $result_eval["close_system_date"] ; ?></td>
-                                           <td >
-                                               <a href="" data-toggle="modal" data-target="#<?php echo $result_eval["evaluation_code"]; ?>">
+                                           <td class="text-center">
+                                               <a class="btn btn-primary btn-sm" href="" data-toggle="modal" data-target="#<?php echo $result_eval["evaluation_code"]; ?>">
                                                    <i class="glyphicon glyphicon-pencil"></i>
-                                               </a>|
-                                               <a href="manage_evaluate.php?erp=delete&eval_code=<?php echo $result_eval["evaluation_code"] ; ?>">
+                                               </a>
+                                               <a class="btn btn-danger btn-sm" href="manage_evaluate.php?erp=delete&eval_code=<?php echo $result_eval["evaluation_code"] ; ?>">
                                                    <i class="glyphicon glyphicon-remove"></i>
                                                </a>
                                                <!--Edit Modal -->
@@ -228,10 +231,8 @@
                                                <!-- Edit Modal -->
                                            </td>
                                        </tr>
-                                       
-                                       
-
                                        <?php } ?>
+                                        </tbody>
                                    </table>
                                       
                                      <?php echo $msg;?> 
@@ -288,7 +289,7 @@
                                 </div>
                             </div>                                                             
                         </div>
-
+                        
                         <div class="row box-padding">                  
                             <div class="box box-primary">
                                 <div class="box-header with-border">
@@ -301,8 +302,137 @@
                                     </div>
                                 </div>
                                 <div class="box-body">
+                                    <div class="col-md-offset-1 col-md-10">
+                                        <table class="table table-bordered table-hover table-striped">
+                                            
+                                                    <?php
+                                                    // Eval_code ตั้ง Default = 3 ไว้ก่อน
+                                                    $get_eval_code = 3;
+                                                    if (isset($_POST["eval_code"]) && isset($_POST["submit_eval_code"])) {
+                                                        $get_eval_code = $_POST["eval_code"];
+                                                    }
+                                                        
+                                                    $sql_pos = "SELECT
+                                                                e.employee_id AS emp_id, 
+                                                                concat(e.prefix,e.first_name,'  ',e.last_name) As name,
+                                                                p.position_level_id AS pos_id, 
+                                                                p.position_description AS pos_desc 
+                                                        FROM 	position_level p 
+                                                        JOIN  employees e ON p.position_level_id = e.position_level_id 
+                                                        JOIN  evaluation_employee ee ON ee.employee_id = e.employee_id 
+                                                        WHERE ee.evaluation_code = $get_eval_code AND e.position_level_id > 1 AND e.position_level_id <= 3   
+                                                          GROUP BY e.position_level_id ORDER BY e.position_level_id";
+                                                    $query_pos = mysqli_query($conn, $sql_pos) or die(mysqli_error());
+                                                    while ($result_pos = mysqli_fetch_array($query_pos, MYSQLI_ASSOC)) {
+                                                        $pos_id = $result_pos["pos_id"];
+                                                        $pos_desc = $result_pos["pos_desc"];
+                                                        ?>
+                                            <thead>
+                                                <tr class="bg-light-blue-active">
+                                                    <th colspan="5">ระดับ : <?php echo $pos_desc; ?></th>
+                                                </tr>
+                                                <tr>
+                                                    <th>ผู้ประเมิน</th>
+                                                    <th class="text-center">ประเมินแล้ว</th>
+                                                    <th class="text-center">ยังไม่ประเมิน</th>
+                                                    <th class="text-center">ทั้งหมด</th>
+                                                    <th class="text-center">แจ้งเตือน</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="box-padding">
+                                                            <?php
+                                                            $sql_list_manager = "SELECT e.employee_id As emp_id, concat(e.prefix,e.first_name,'  ',e.last_name) As name FROM evaluation_employee ee
+                                                    JOIN employees e ON ee.employee_id = e.employee_id
+                                                    WHERE ee.evaluation_code = '$get_eval_code' AND e.position_level_id = $pos_id ";
+                                                            $query_list_manager = mysqli_query($conn, $sql_list_manager);
+                                                            while($result_list_manager = mysqli_fetch_array($query_list_manager, MYSQLI_ASSOC)) {
+                                                                // Manager_id
+                                                                $man_emp_id = $result_list_manager["emp_id"];
+                                                                    
+                                                                $sql_manager = "SELECT
+                                                                CONCAT(
+                                                                        m.prefix,
+                                                                        m.first_name,
+                                                                        ' ',
+                                                                        m.last_name
+                                                                ) AS name,
+                                                                e.manager_id,
+                                                                (
+                                                                        SELECT
+                                                                                COUNT(e.employee_id)
+                                                                        FROM
+                                                                                evaluation_employee v
+                                                                        JOIN employees e ON v.employee_id = e.employee_id
+                                                                        JOIN employees m ON e.manager_id = m.employee_id
+                                                                        WHERE
+                                                                                e.manager_id = $man_emp_id
+                                                                        AND status_success = 1
+                                                                ) AS count_com,
+                                                                (
+                                                                        SELECT
+                                                                                COUNT(e.employee_id)
+                                                                        FROM
+                                                                                evaluation_employee v
+                                                                        JOIN employees e ON v.employee_id = e.employee_id
+                                                                        JOIN employees m ON e.manager_id = m.employee_id
+                                                                        WHERE
+                                                                                e.manager_id = $man_emp_id
+                                                                        AND status_success = 0
+                                                                ) AS count_uncom,
+                                                                COUNT(e.employee_id) AS count_all
+                                                        FROM
+                                                                employees e
+                                                        JOIN employees m ON e.manager_id = m.employee_id
+                                                        JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                        WHERE ee.evaluation_code = $get_eval_code AND e.manager_id = $man_emp_id";
+                                                                $query_manager = mysqli_query($conn, $sql_manager);
+                                                                    
+                                                                while ($result_manager = mysqli_fetch_array($query_manager, MYSQLI_ASSOC)) {
+                                                                    
+                                                                    //Count 3 แบบ
+                                                                    $count_com = $result_manager["count_com"];
+                                                                    $count_uncom = $result_manager["count_uncom"];
+                                                                    $count_all = $result_manager["count_all"];
+                                                                    ?>
+                                                                        
+                                                <tr>
+                                                    <td><?php echo $result_manager["name"]; ?></td>
+                                                    <td class="text-center"><a href="manage_evaluate_sub_list.php?eval_code=<?php echo $get_eval_code ?>&man_id=<?php echo $man_emp_id; ?>"><?php echo $count_com; ?></a></td>
+                                                    <td class="text-center"><a href="manage_evaluate_sub_list.php?eval_code=<?php echo $get_eval_code ?>&man_id=<?php echo $man_emp_id; ?>"><?php echo $count_uncom; ?></a></td>
+                                                    <td class="text-center"><a href="manage_evaluate_sub_list.php?eval_code=<?php echo $get_eval_code ?>&man_id=<?php echo $man_emp_id; ?>"><?php echo $count_all; ?></a></td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-info btn-sm" href="sendmail/sendmail.php">
+                                                            <i class="glyphicon glyphicon-envelope"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                
+                                                                    <?php
+                                                                } //Loop สำหรับเอา Manager_id มา Count ลูกน้อง
+                                                            } //Loop เพื่อเอา Manager_id
+                                                            ?>
+                                                <!-- แทบสีขาว ไว้สำหรับแบ่งระดับ-->
+                                                <tr class="table-active">
+                                                    <td colspan="5"></td>
+                                                </tr>
+                                                <!-- /แทบสีขาว ไว้สำหรับแบ่งระดับ-->
+                                            </tbody>
+                                            
+                                                        <?php
+                                                    } //Loop สำหรับระดับ ตั้งแต่ระดับ 2-3
+                                                    ?>
+                                            <tfoot>
+                                                
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                                
+                                <!-- เก่า OLD VERSION -->
+                                <!--                                <div class="box-body">
                                   <div class="col-md-offset-1 col-md-10 ">
-                                        <?php   $sql_mail = "SELECT
+                                        <?php   
+                                        $sql_mail = "SELECT
                                                     m.prefix As prefix,
                                                     m.first_name As first_name,
                                                     m.last_name As last_name,
@@ -348,47 +478,14 @@
                                        </tr>
                                        </thead>
                                        <?php 
-                                        $sql_meval = "SELECT
-                                                            CONCAT(
-                                                                    m.prefix,
-                                                                    m.first_name,
-                                                                    ' ',
-                                                                    m.last_name
-                                                            ) AS name,
-                                                            e.manager_id,
-                                                            (
-                                                                    SELECT
-                                                                            COUNT(e.employee_id)
-                                                                    FROM
-                                                                            evaluation_employee v
-                                                                    JOIN employees e ON v.employee_id = e.employee_id
-                                                                    JOIN employees m ON e.manager_id = m.employee_id
-                                                                    WHERE
-                                                                            e.manager_id = 10002
-                                                                    AND status_success = 1
-                                                            ) AS 'Completed_evaluate',
-                                                            COUNT(e.employee_id) - (
-                                                                    SELECT
-                                                                            COUNT(e.employee_id)
-                                                                    FROM
-                                                                            evaluation_employee v
-                                                                    JOIN employees e ON v.employee_id = e.employee_id
-                                                                    JOIN employees m ON e.manager_id = m.employee_id
-                                                                    WHERE
-                                                                            e.manager_id = 10002
-                                                                    AND status_success = 0
-                                                            ) AS 'Uncompleted_evaluate',
-                                                            COUNT(e.employee_id) AS 'All_subordinate'
-                                                    FROM
-                                                            employees e
-                                                    JOIN employees m ON e.manager_id = m.employee_id
-                                                    JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
-                                                    WHERE
-                                                            e.manager_id = 10002";
+                                        $sql_meval = "call getNoOfAssessor(3)";
                                         $query_meval= mysqli_query($conn, $sql_meval);
+                                        
                                     ?>
                                     <tbody>
-                                    <?php while($result_meval = mysqli_fetch_array($query_meval,MYSQLI_ASSOC)) { 
+                                    <?php 
+                                        while($result_meval = mysqli_fetch_array($query_meval,MYSQLI_ASSOC)) {
+                                        
                                         $name=$result_meval['name'];
                                         $completed=$result_meval['Completed_evaluate'];
                                         $uncompleted=$result_meval['Uncompleted_evaluate'];
@@ -409,16 +506,19 @@
                                            </td>
                                        </tr>
 
-                                       <?php }?>
+                                       <?php } ?>
                                     </tbody>
                                    </table>
                                    </div>
-                                </div>
+                                </div>-->
+                                <!-- /เก่า OLD VERSION -->
                             </div>                                                             
                         </div>
 
                     </div>
-                
+                    
+                    
+                    <!-- Email -->
                    <div class="tab-pane col-md-12" id="editEmp">
                         <div class="row box-padding">                  
                             <div class="box box-primary">
@@ -499,7 +599,7 @@
                         </div>
 
                     </div> 
-
+                    <!-- /Email -->
                 </div>
                 <!-- /.content -->
             </div>
@@ -518,8 +618,7 @@
         <!-- ./wrapper -->
 
     </body>
-    <!-- SCRIPT PACKS -->
-    <?php include ('./script_packs.html'); ?>
+    
 </html>
             <?php
         }

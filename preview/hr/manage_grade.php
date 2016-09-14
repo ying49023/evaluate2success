@@ -120,7 +120,7 @@
                     <div class="box box-primary">
                          <div class="box-header with-border">
                 <h3 class="box-title">ตารางแสดงเกณฑ์การตัดเกรด</h3>
-                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-primary">เพิ่มเกรด
+                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-success">เพิ่มเกรด
                 </button></a>
              </div>
                    <div class="box-body">
@@ -150,10 +150,10 @@
                       </div>
                         
                         <div class="box-body ">    
-                            <table  class="table table-bordered table-condensed" >
+                            <table  class="table table-bordered table-hover table-striped" >
                                 <thead>
                                
-                                    <tr class="bg-gray-light">
+                                    <tr class="table-active">
                                         <th class="text-center">เกรด</th>
                                         <th class="text-center">เกณฑ์ต่ำสุด</th>
                                         <th class="text-center">เกณฑ์สูงสุด</th>
@@ -183,13 +183,13 @@
                                     <td class="text-center" style="width: 200px"><?php echo $minpoint; ?></td>
                                     <td class="text-center" style="width: 200px"><?php echo $maxpoint; ?></td>
                                      <td class="text-center" style="width: 200px">
-                                                    <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
-                                                        <i class="glyphicon glyphicon-pencil" ></i>
+                                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
+                                                        <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                                     </button>                                                   
                                                     |
                                                     <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>_delete">
                                                    
-                                                        <i class="glyphicon glyphicon-remove" ></i>
+                                                        <i class="glyphicon glyphicon-remove" ></i>ลบ
                                                     </button>
                                                 </td>
                                 </tr>
@@ -229,7 +229,7 @@
 
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">บันทึก</button>
+                                                        <button type="submit" class="btn btn-success">บันทึก</button>
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         
                                                     </div>

@@ -167,12 +167,12 @@
                                         <td style="width: 300px">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
                                         <td class="text-center" style="width: 200px">
                                             <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
-                                                <i class="glyphicon glyphicon-pencil" ></i>
+                                                <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                             </button>                                                   
                                             |
 
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
-                                                <i class="glyphicon glyphicon-remove" ></i>
+                                                <i class="glyphicon glyphicon-remove" ></i>ลบ
                                             </button>
                                         </td>
                                     </tr>

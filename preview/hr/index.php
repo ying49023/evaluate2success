@@ -243,7 +243,7 @@
                             </div>
                         </td>
                         <td>
-                            <span class="badge bg-green"><?php echo (int)$percent_completed."%" ; ?></span>
+                            <span class="badge <?php if($percent_completed <= 40){ echo 'bg-red' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'bg-blue' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'bg-light-blue' ;}else if($percent_completed > 75){ echo 'bg-green' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>"><?php echo (int)$percent_completed."%" ; ?></span>
                         </td>
                     </tr>
                     <?php } ?>

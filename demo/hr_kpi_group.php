@@ -157,7 +157,7 @@
                                             <td class="kpi_group_name"><?php echo $result_kpi_group["kpi_group_name"]; ?></td>
                                             <td class="edit_delete" style="text-align: center;">
 
-                                                <a class="btn btn-default btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
+                                                <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
 
                                                   <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="hr_kpi_group.php?kpi_group_id=<?php echo $result_kpi_group["kpi_group_id"]; ?>&delete_group=1">
                                                           <i class="glyphicon glyphicon-remove"></i>ลบ</a>

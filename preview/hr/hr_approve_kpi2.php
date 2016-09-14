@@ -404,7 +404,7 @@
                                 <td><?php echo $result_next_kpi["goal"].$result_next_kpi["unit"];?></td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit_<?php echo $result_next_kpi["kpi_id"]; ?>">
-                                        <i class="glyphicon glyphicon-pencil" ></i>
+                                        <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                     </button> 
                                     |
                                     <a class="btn btn-danger btn-sm" href="delete_next_kpi.php?emp_id=<?php echo $emp_id; ?>&next_responsible_kpi_id=<?php echo $result_next_kpi["next_responsible_kpi_id"];?>">

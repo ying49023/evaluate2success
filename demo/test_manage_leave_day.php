@@ -104,7 +104,7 @@
                                                     |
                                                     <button type="button" class="btn btn-danger btn-sm">
                                                    
-                                                        <i class="glyphicon glyphicon-remove" ></i>
+                                                        <i class="glyphicon glyphicon-remove" ></i>ลบ
                                                     </button>
                                                 </td>
                                 </tr>

@@ -71,6 +71,7 @@
             </div>
                 
             </div>
+            
 
             <!-- /.content --> </div>
         <!-- /.content-wrapper -->

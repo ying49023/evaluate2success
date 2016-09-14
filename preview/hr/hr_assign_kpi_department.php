@@ -306,12 +306,12 @@
                                                     <td><?php echo $kpi_default_weight; ?></td>
                                                     <td class="text-center">
                                                                                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $kpi_id; ?>_update">
-                                                                                    <i class="glyphicon glyphicon-pencil" ></i>
+                                                                                    <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                                                                 </button>                                                   
                                                                                 |
 
                                                                                 <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $kpi_id; ?>_delete">
-                                                                                    <i class="glyphicon glyphicon-remove" ></i>
+                                                                                    <i class="glyphicon glyphicon-remove" ></i>ลบ
                                                                                 </button>
                                                                                 <!--Edit Modal -->
 

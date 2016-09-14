@@ -175,7 +175,7 @@
                                         |
                                             
                                         <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
-                                            <i class="glyphicon glyphicon-remove" ></i>
+                                            <i class="glyphicon glyphicon-remove" ></i>ลบ
                                         </button>
                                         <!--Edit Modal -->
                                             <form class="form-horizontal" name="frmMain" method="post" action="company_table.php?erp=update&id=<?php echo $id; ?>" >
