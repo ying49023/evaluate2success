@@ -20,12 +20,101 @@
     <head>
     <?php include ('./classes/connection_mysqli.php'); 
     
-        //Get Position Level
+        
+         
+    ?>
+        <?php 
+        //Get evalcode
+            $eval_code = '';
+            if (isset($_GET["eval_code"])) {
+                $eval_code = $_GET["eval_code"];
+            }
+            //Get Position Level
         if(isset($_GET["position_level_id"])){
             $level = $_GET["position_level_id"];
         }
-         
-    ?>
+        /*if (isset($_GET['level'])) {
+        $level = $_GET['level'];
+        }*/
+        if (isset($_GET['level_name'])) {
+            $level_name = $_GET['level_name'];
+        }
+
+        //Insert Detail
+        if(isset($_GET["submit_insert"])){
+            $level_name=$_GET['name'];
+            $detail=$_GET["competency_detail"];
+            $title = $_GET["competency_title"];
+            $status=1;
+            $position=$level; 
+            $weight=$_GET["t_weight"];
+            $sql_insert_group = "INSERT INTO manage_competency(competency_id,status,position_level_id,weight,evaluation_code) VALUES($detail,$status,$position,$weight,$eval_code)";
+            if (mysqli_query($conn, $sql_insert_group)) {
+                    echo "Record new successfully";
+                    echo $sql_insert_group;
+                } else {
+                    echo "Error new record: " . mysqli_error($conn);
+                    echo $sql_insert_group;
+                }
+                    
+                header("Location:evaluation_section_2.php?position_level_id=$level&eval_code=$eval_code");
+            }
+        //Edit
+        if(isset($_GET["submit_edit"])){
+            
+            $e_title=$_GET["edit_title"];
+            $e_weight= $_GET["edit_weight"];
+            $e_id=$_GET["edit_id"];
+            $e_detail=$_GET["competency_id"];
+            
+            $level_name=$_GET['name'];
+            $level=$_GET['position_level_id'];
+            
+            $sql_edit_group = "UPDATE manage_competency SET competency_id='$e_detail', weight='$e_weight', status=1 WHERE manage_comp_id='$e_id' and position_level_id = '$level' ";
+            if (mysqli_query($conn, $sql_edit_group)) {
+                    echo "Record edit successfully";
+                    echo $sql_edit_group;
+                } else {
+                    echo "Error edit record: " . mysqli_error($conn);
+                    echo $sql_edit_group;
+                }
+                    
+                header("Location:evaluation_section_2.php?position_level_id=$level&eval_code=$eval_code");
+            }
+        //Delete หัวข้อ
+        if(isset($_GET["delete_title"])){
+            $title_id=$_GET["title_id"];
+            $level_name=$_GET['level_name'];
+            $level=$_GET['position_level_id'];
+            $sql_delete_title = "UPDATE manage_competency SET status=0 WHERE title_id = $title_id";
+            if (mysqli_query($conn, $sql_delete_title)) {
+                    echo "Record new successfully";
+                    echo $sql_delete_title;
+                } else {
+                    echo "Error new record: " . mysqli_error($conn);
+                    echo $sql_delete_title;
+                }
+                    
+               header("Location:evaluation_section_2.php?position_level_id=$level&eval_code=$eval_code");
+        }
+        //Delete ข้อย่อย
+        if(isset($_GET["delete_group"])){
+            $d_id=$_GET["match_id"];
+            $level_name=$_GET['level_name'];
+            $level=$_GET['position_level_id'];
+            $sql_delete_group = "UPDATE manage_competency SET status=0 WHERE manage_comp_id='$d_id'";
+            if (mysqli_query($conn, $sql_delete_group)) {
+                    echo "Record new successfully";
+                    echo $sql_delete_group;
+                } else {
+                    echo "Error new record: " . mysqli_error($conn);
+                    echo $sql_delete_group;
+                }
+               //evaluation_section_2.php?position_level_id=&eval_code=3
+               header("Location:evaluation_section_2.php?position_level_id=$level&eval_code=$eval_code");
+        }
+                
+        ?>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -73,10 +162,10 @@
                     <div class="box box-success">
                         <div class="box-body">
                             <?php 
-                            $eval_code = '';
+                            /*$eval_code = '';
                             if(isset($_GET["eval_code"])){
                                 $eval_code = $_GET["eval_code"];
-                            }
+                            }*/
                             
                             $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
                             $query_year_term = mysqli_query($conn, $sql_year_term);
@@ -185,8 +274,9 @@
                                     </div>
                                     <div class="form-group col-sm-1">
                                         <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
-                                        <input  type="hidden" name="level" value="<?php echo $level; ?>" >
+                                        <input  type="hidden" name="position_level_id" value="<?php echo $level; ?>" >
                                         <input  type="hidden" name="name" value="<?php echo $level_name; ?>" >
+                                        <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
                                     </div>
                                 </div>
                             </form>
@@ -205,7 +295,7 @@
                                                 JOIN competency c ON c.title_id = t.title_id 
                                                 JOIN manage_competency m ON c.competency_id = m.competency_id
                                                 WHERE
-                                                        m.position_level_id = '$level'
+                                                        m.position_level_id = '$level' and m.evaluation_code='$eval_code'
                                                 AND m.STATUS = 1 
                                                 GROUP BY t.title_name";
 
@@ -255,8 +345,9 @@
                                                 <div class="form-group col-sm-1">
                                                     <input type="hidden" name="competency_title" value="<?php echo $result_title_id ?>" >
                                                     <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
-                                                    <input  type="hidden" name="level" value="<?php echo $level; ?>" >
+                                                    <input  type="hidden" name="position_level_id" value="<?php echo $level; ?>" >
                                                     <input  type="hidden" name="name" value="<?php echo $level_name; ?>" >
+                                                    <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
                                                 </div>
                                             </div>
                                         </form>
@@ -279,7 +370,7 @@
                                             JOIN competency c ON m.competency_id=c.competency_id 
                                             JOIN competency_title t ON c.title_id=t.title_id 
                                             JOIN position_level p ON p.position_level_id=m.position_level_id 
-                                            WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1 ";
+                                            WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1 and m.evaluation_code='$eval_code'";
                                 $query_mng= mysqli_query($conn, $sql_mng);
                                 $no=0;
                                 ?>
@@ -333,7 +424,7 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1 and mc.evaluation_code='$eval_code'";
                                                     $query_score1= mysqli_query($conn, $sql_score1);
                                                             ?>
                                                             <select class="form-control" name="position_level_id" >
@@ -361,7 +452,7 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1 and mc.evaluation_code='$eval_code'";
                                                     $query_score2= mysqli_query($conn, $sql_score2);
                                                             ?>
                                                             <select class="form-control" name="position_level_id" >
@@ -389,7 +480,7 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1 and mc.evaluation_code='$eval_code'";
                                                     $query_pointdetail= mysqli_query($conn, $sql_pointdetail);
 
                                                     ?>
@@ -441,7 +532,8 @@
                                                                                 WHERE
                                                                                         mc.competency_id = '$m_com'
                                                                                 AND mc.position_level_id = '$level'
-                                                                                AND mc. STATUS = 1";
+                                                                                AND mc. STATUS = 1
+                                                                                and mc.evaluation_code='$eval_code'";
                                                                             $query_pointdetail_sub= mysqli_query($conn, $sql_pointdetail_sub);
                                                                             ?>
                                                                             <tbody>
@@ -475,7 +567,7 @@
 
                                                     <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit__manage_competency_<?php echo $m_id; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
                                                     
-                                                    <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="competency_match.php?match_id=<?php  echo $m_id; ; ?>&delete_group=1&level=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ; ?>">
+                                                    <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" datahref="evaluation_section_2.php?match_id=<?php  echo $m_id; ; ?>&delete_group=1&position_level_id=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ?>&eval_code=<?php  echo $eval_code; ?>">
                                                               <i class="glyphicon glyphicon-remove"></i>ลบ</a>
                                                     <?php include('./modal_delete.php'); ?>
                                                     <form action method="get" >
@@ -540,7 +632,8 @@
                                                                 </div>
                                                                 <div class="modal-footer">                                                                    
                                                                     <input type="hidden" name="edit_id" value="<?php echo $result_mng["manage_comp_id"]; ?>" >
-                                                                    <input  type="hidden" name="level" value="<?php echo $level; ?>" >
+                                                                    <input  type="hidden" name="position_level_id" value="<?php echo $level; ?>" >
+                                                                    <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
                                                                     <input  type="hidden" name="name" value="<?php echo $level_name; ?>" >
                                                                     <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
