@@ -186,11 +186,22 @@
             <!-- /Report Doc-->
             
             <!-- Assign KPI -->
-            <li class="<?php if($page == 'hr_assign_kpi.php' || $page == 'hr_manage_kpi.php'){ echo "active" ; } ?>">
-                <a href="hr_assign_kpi.php">
+            <li class="<?php if($page == 'hr_assign_kpi.php' || $page == 'hr_manage_kpi.php'|| $page=='hr_assign_kpi_department.php'){ echo "active" ; } ?>">
+                <a href="">
                     <i class="glyphicon glyphicon-check"></i> <span>การกำหนดKPIs</span>
+                    <i class="fa fa-angle-left pull-right"></i>
 
                 </a>
+                <ul class="treeview-menu">
+                    
+                    <li class="<?php if($page == 'hr_assign_kpi.php'){ echo "active" ; } ?>">
+                        <a href="hr_assign_kpi.php"><i class="fa fa-circle-o"></i>รายบุคคล</a>
+                    </li>
+                    <li class="<?php if($page == 'hr_assign_kpi_department.php' || $page=='hr_assign_kpi_department.php'){ echo "active" ; } ?>">
+                        <a href="hr_assign_kpi_department.php"><i class="fa fa-circle-o"></i>รายแผนก/ตำแหน่ง</a>
+                    </li>
+					
+                </ul>
             </li>
             <!-- Assign KPI -->
             
