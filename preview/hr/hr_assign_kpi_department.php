@@ -20,6 +20,7 @@
     <head>
         <?php include ('./classes/connection_mysqli.php');?>
        <?php
+        $eval_code='';
         $get_department_id = '';
         if (isset($_GET["department_id"])) {
             $get_department_id = $_GET["department_id"];
@@ -58,8 +59,8 @@
                $time_period =$_POST['time_period'];
                $default_weight =$_POST['default_weight'];
                $hidden_group_id=$_POST['hidden_group_id'];
-               $strSQL =" INSERT INTO kpi(kpi_group_id,kpi_code,kpi_name,kpi_description,measure_symbol,measure_desc,unit,time_period,default_weight) "
-                       . "VALUES($hidden_group_id,'$kpicode','$kpiname','$kpi_desc','$measure_symbol','$measure_desc','$unit',$time_period,$default_weight) ";
+               $strSQL =" INSERT INTO kpi(kpi_group_id,kpi_code,kpi_name,kpi_description,measure_symbol,measure_desc,unit,time_period,default_weight,current_kpi) "
+                       . "VALUES($hidden_group_id,'$kpicode','$kpiname','$kpi_desc','$measure_symbol','$measure_desc','$unit',$time_period,$default_weight,1) ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
@@ -107,7 +108,7 @@
                $d_dept_id=$_POST['d_dept_id'];
                $d_job_id=$_POST['d_job_id'];
                $id=$_GET['id'];
-               $strSQL =" DELETE FROM kpi WHERE kpi_id=$id ";
+               $strSQL =" UPDATE kpi SET current_kpi = 0 WHERE kpi_id=$id ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
@@ -117,6 +118,25 @@
                } else {
 
                    echo "Error Save [" . $strSQL . "]";
+               }
+
+           }
+           
+           //++++++++++++++++++submit+++++++++++++
+           if($erp=='submit'){        
+               $s_dept_id=$_POST['hidden_dept'];
+               $s_job_id=$_POST['hidden_job'];
+               $s_eval=$_POST['hidden_eval'];               
+               $sql_submit = "call auto_assign_kpi($s_dept_id,$s_job_id,$s_eval)";
+               $objQuery = mysqli_query($conn,$sql_submit);
+               if ($objQuery) {
+
+                   header ("location:hr_assign_kpi_department.php?department_id=$s_dept_id&job_id=$s_job_id");
+
+
+               } else {
+
+                   echo "Error Save [" . $sql_submit . "]";
                }
 
            }
@@ -145,12 +165,21 @@
 
             <!-- Content Wrapper. Contains page content แก้เนื้อหาแต่ละหน้าตรงนี้นะ -->
             <div class="content-wrapper">
-
+                <?php 
+                    $sql_eval = "select * from evaluation where current_eval = 1 and company_id=1";
+                    $query_eval = mysqli_query($conn, $sql_eval);
+                ?>
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        กำหนดKPIs
-                        <small></small>
+                        กำหนดKPIs ตามแผนก และ ตำแหน่ง
+                        <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) {
+                            $eval_code = $result_eval['evaluation_code'];
+                            $term_id = $result_eval['term_id'];
+                            $year = $result_eval['year'];
+                        ?>
+                        <small>รอบการประเมินที่ <?php echo $term_id.' / '.$year ;?></small>
+                        <?php } ?>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -211,7 +240,7 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h4>ตารางรายชื่อแผนกและตำแหน่ง</h4>
+                            <h4>ตารางแสดงตัวชี้วัดตามแผนกและตำแหน่ง</h4>
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
@@ -231,7 +260,7 @@
                                                         $group_id = $result_kpi_group['kpi_group_id'];
                                                         $group_name = $result_kpi_group['kpi_group_name'];
                                         if($group_id!=''){
-                                        $sql_kpi = "select * from kpi where kpi_group_id = '$group_id'";
+                                        $sql_kpi = "select * from kpi where current_kpi = 1 and kpi_group_id = '$group_id'";
                                         $query_kpi= mysqli_query($conn, $sql_kpi);     
                                         
                                        
@@ -414,7 +443,7 @@
                               </div>
                                 
                             <div class="col-md-12 bg-black-active">
-                                    <h4 style=" font: bold">เพิ่ม/แก้ไข</h4>
+                                    <h4 style=" font: bold">เพิ่มข้อมูลใหม่</h4>
                                    
                             </div>
                             <form action="hr_assign_kpi_department.php?erp=insert" method="post">        
@@ -486,12 +515,27 @@
                                 <br>
                             </div>  
                         </form>
+                            
+                            <div class="col-md-12">
+                            <br>
+                            <h4 style="font: bold;">ยืนยันการกำหนด KPIs </h4>                                        
+                            <b>คำอธิบาย</b><br>
+                            <p>เมื่อกดปุ่มยืนยัน KPIs ที่แสดงในตารางข้างบนทั้งหมดจะถูกนำไปใช้ในรอบการประเมินปัจจุบัน</p>
+                            <form action="hr_assign_kpi_department.php?erp=submit" method="post" >
+                            <button class="btn-primary btn-lg" type="submit">ยืนยันKPIs</button>
+                            <input type="hidden" value="<?php echo $get_department_id;?>" name="hidden_dept">
+                            <input type="hidden" value="<?php echo $get_job_id;?>" name="hidden_job">
+                            <input type="hidden" value="<?php echo $eval_code;?>" name="hidden_eval">
+                            </form>
+                    </div>
                                     
             <?php } } ?>
                         </div>
 
                     </div>
                 </div>
+                                
+                
 
                 <!-- /.content -->
             </div>
