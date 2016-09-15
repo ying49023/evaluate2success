@@ -329,10 +329,11 @@
                                                         ?>
                                             <thead>
                                                 <tr class="bg-light-blue-active">
-                                                    <th colspan="5">ระดับ : <?php echo $pos_desc; ?></th>
+                                                    <th colspan="6">ระดับ : <?php echo $pos_desc; ?></th>
                                                 </tr>
                                                 <tr>
                                                     <th>ผู้ประเมิน</th>
+                                                    <th>แผนก/ฝ่าย</th>
                                                     <th class="text-center">ประเมินแล้ว</th>
                                                     <th class="text-center">ยังไม่ประเมิน</th>
                                                     <th class="text-center">ทั้งหมด</th>
@@ -356,6 +357,7 @@
                                                                         ' ',
                                                                         m.last_name
                                                                 ) AS name,
+                                                                d.department_name As dept_name,
                                                                 e.manager_id,
                                                                 (
                                                                         SELECT
@@ -383,6 +385,7 @@
                                                         FROM
                                                                 employees e
                                                         JOIN employees m ON e.manager_id = m.employee_id
+                                                        JOIN departments d ON m.department_id = d.department_id
                                                         JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
                                                         WHERE ee.evaluation_code = $get_eval_code AND e.manager_id = $man_emp_id";
                                                                 $query_manager = mysqli_query($conn, $sql_manager);
@@ -397,6 +400,7 @@
                                                                         
                                                 <tr>
                                                     <td><?php echo $result_manager["name"]; ?></td>
+                                                    <td><?php echo $result_manager["dept_name"]; ?></td>
                                                     <td class="text-center"><a href="manage_evaluate_sub_list.php?eval_code=<?php echo $get_eval_code ?>&man_id=<?php echo $man_emp_id; ?>"><?php echo $count_com; ?></a></td>
                                                     <td class="text-center"><a href="manage_evaluate_sub_list.php?eval_code=<?php echo $get_eval_code ?>&man_id=<?php echo $man_emp_id; ?>"><?php echo $count_uncom; ?></a></td>
                                                     <td class="text-center"><a href="manage_evaluate_sub_list.php?eval_code=<?php echo $get_eval_code ?>&man_id=<?php echo $man_emp_id; ?>"><?php echo $count_all; ?></a></td>
@@ -413,7 +417,7 @@
                                                             ?>
                                                 <!-- แทบสีขาว ไว้สำหรับแบ่งระดับ-->
                                                 <tr class="table-active">
-                                                    <td colspan="5"></td>
+                                                    <td colspan="6"></td>
                                                 </tr>
                                                 <!-- /แทบสีขาว ไว้สำหรับแบ่งระดับ-->
                                             </tbody>

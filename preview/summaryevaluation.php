@@ -60,23 +60,35 @@
                 <div class="row box-padding">
                     <div class="box box-primary ">
                         <div class="box-body">
-                            <div class="row">
-                                    <div class="box-padding">
+                            <div class="row box-padding">
+                                <?php $sql_emp = "SELECT
+                                                            *
+                                                    FROM
+                                                            employees e
+                                                    JOIN departments d ON e.department_id = d.department_id
+                                                    JOIN position_level p ON p.position_level_id = e.position_level_id
+                                                    JOIN company c ON c.company_id = e.company_id
+                                                    JOIN jobs j ON j.job_id = e.job_id
+                                                    WHERE employee_id = '".$_GET["emp_id"]."' 
+                                                    LIMIT 1";
+                                    $query_emp = mysqli_query($conn, $sql_emp);
+                                    while($result_emp = mysqli_fetch_array($query_emp,MYSQLI_ASSOC)){
+                                ?>
                                         <table class="table table-bordered table-condensed">
                                             <tr>
-                                                <th rowspan="4">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="dist/img/avatar2.png" >
+                                                <th rowspan="4" style="width: 75px;">
+                                                    <img class="circle-thumbnail img-circle img-thumbnail img-md img-center" src="./upload_images/<?php echo $result_emp["profile_picture"]; ?>" >
                                                 </th>
                                                 <th align="center" width="">ชื่อ-นามสกุล</th>
                                                 <th align="center" width="120px">รหัส</th>
                                                 <th align="center" width="">ตำแหน่ง</th>
-                                                <th align="center" width="">แผนก</th>
+                                                <th align="center" width="">แผนก/ฝ่าย</th>
                                             </tr>
                                             <tr>
-                                                <td >น.ส. สมสวย  เห็นงาม</td>
-                                                <td >130911</td>
-                                                <td >พนักงานทั่วไป</td>
-                                                <td >บัญชี</td>
+                                                <td ><?php echo $result_emp["prefix"].$result_emp["first_name"].'  '.$result_emp["last_name"]; ?></td>
+                                                <td ><?php echo $result_emp["employee_id"]; ?></td>
+                                                <td ><?php echo $result_emp["job_name"]; ?></td>
+                                                <td ><?php echo $result_emp["department_name"]; ?></td>
                                             </tr>
                                         </table>
                                         <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
@@ -91,12 +103,12 @@
                                                     </tr>
                                                 </thead>
                                                 <tr>
-                                                    <td colspan="3">12 ธ.ค. 2549</td>
-                                                    <td colspan="3">นาย นภัทร อินทร์ใจเอื้อ</td>
+                                                    <td colspan="3"><?php echo $result_emp["hiredate"]; ?></td>
+                                                    <td colspan="3">???</td>
                                                 </tr>
                                             </table>
+                                    <?php } ?>
                                         </div>
-                                    </div>
                             </div>
                         </div>
                     </div>

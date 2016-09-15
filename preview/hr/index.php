@@ -129,7 +129,7 @@
 
                                 <p class="text-center"> <strong>Sales: 1 Jan, 2014 - 30 Jul, 2014</strong>
                                 </p>
-                                <img src="chart.PNG" width="100%" />
+                                <img src="chart.PNG" width="100%" >
                                 <div class="chart">
                                     <!-- Sales Chart Canvas -->
                                     <!--<canvas id="salesChart" style="height: 180px; width: 703px;" width="703" height="180"></canvas>-->
@@ -202,6 +202,9 @@
             </div>
             <div class="row box-padding">
             <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h4>KPIs ภาพรวมของบริษัท</h4>
+                </div>
                 <div class="box-body">
                     <table class="table table-bordered">
                     <?php
@@ -235,8 +238,8 @@
                     <tr>
                         <td><?php echo $result_kpi_goal["kpi_id"]; ?></td>
                         <td><?php echo $result_kpi_goal["kpi_name"]; ?></td>
-                        <td><?php echo $result_kpi_goal["goal_kpi"]." ".$result_kpi_goal["unit"]; ?></td>
-                        <td><?php echo $result_kpi_goal["completed_kpi"]." ".$result_kpi_goal["unit"] ; ?></td>
+                        <td><?php echo number_format($result_kpi_goal["goal_kpi"])." ".$result_kpi_goal["unit"]; ?></td>
+                        <td><?php echo number_format($result_kpi_goal["completed_kpi"])." ".$result_kpi_goal["unit"] ; ?></td>
                         <td>
                             <div class="progress progress-xs progress-striped active">
                               <div class="progress-bar <?php if($percent_completed <= 40){ echo 'progress-bar-danger' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'progress-bar-warining' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'progress-bar-info' ;}else if($percent_completed > 75){ echo 'progress-bar-success' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>%"></div>

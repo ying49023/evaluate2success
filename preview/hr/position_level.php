@@ -148,6 +148,7 @@
                                         <th class="text-center" style="width: 150px">จัดการ</th>
                                     </tr>
                                 </thead>
+                                <tbody>
                                 <?php
                     
                                 $sql_dept = "SELECT * FROM position_level";
@@ -162,88 +163,89 @@
                                 ?>
                                 
                             
-                                <tr>
+                                    <tr>
                                         <td>&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                        
+                                            
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                                 <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                             </button>                                                   
                                             |
-
+                                                
                                             <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
                                                 <i class="glyphicon glyphicon-remove" ></i>ลบ
                                             </button>
-                                        </td>
-                                    </tr>
-                                
-                                <!--Edit Modal -->
+                                            <!--Edit Modal -->
 
-                                <form class="form-horizontal" name="frmMain" method="post" action="position_level.php?erp=update&id=<?php echo $id; ?>" >
-                                        <div class="modal fade" id="<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-
-                                                        <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="ชื่อระดับ" class="col-sm-4 control-label">ชื่อระดับ:</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["position_description"]; ?>" name='textlevel'   >
+                                            <form class="form-horizontal" name="frmMain" method="post" action="position_level.php?erp=update&id=<?php echo $id; ?>" >
+                                                <div class="modal fade" id="<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                    <div class="modal-dialog" role="document">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                
+                                                                                                                                    <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+                                                                <div class="input-group col-sm-12" >
+                                                                    <label for="ชื่อระดับ" class="col-sm-4 control-label">ชื่อระดับ:</label>
+                                                                    <div class="col-sm-8">               
+                                                                        <input type="text" class="form-control" value="<?php echo $result["position_description"]; ?>" name='textlevel'   >
+                                                                    </div>
+                                                                </div>
+                                                                    
+                                                                    
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="submit" class="btn btn-success">บันทึก</button>
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                    
                                                             </div>
                                                         </div>
-                                                     
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-success">บันทึก</button>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                        
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                            </form>
                                 <!--Edit Modal -->
                                 
                                 <!--Delete Modal -->
 
                                 <form class="form-horizontal" name="frmMain" method="post" action="position_level.php?erp=delete&id=<?php echo $id; ?>" >
-                                        <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
-                                                        <div class="input-group col-sm-12" >
-                                                            <label for="ชื่อระดับ" class="col-sm-4 control-label">ชื่อระดับ:</label>
-                                                            <div class="col-sm-8">               
-                                                                <input type="text" class="form-control" value="<?php echo $result["position_description"]; ?>" name='textlevel' disabled="true"  >
-                                                            </div>
+                                    <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+                                                    <div class="input-group col-sm-12" >
+                                                        <label for="ชื่อระดับ" class="col-sm-4 control-label">ชื่อระดับ:</label>
+                                                        <div class="col-sm-8">               
+                                                            <input type="text" class="form-control" value="<?php echo $result["position_description"]; ?>" name='textlevel' disabled="true"  >
                                                         </div>
-                                                        
-
-
                                                     </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                         
-                                                    </div>
+                                                        
+                                                        
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                        
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </div>
+                                </form>
                                 <!--Delete Modal -->
+                                        </td>
+                                    </tr>
+                                
+                                
                                <?php } ?>
-
+                            </tbody>
                             </table>
                          
                         </div>
