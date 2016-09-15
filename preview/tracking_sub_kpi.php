@@ -199,23 +199,7 @@
                             </div>
                             <div class="box-body" >
                                 <table class="table table-bordered " border="1px">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>KPIs</th>
-                                        <th>
-                                            <center>เป้าหมาย</center>
-                                        </th>
-                                        <th>
-                                            <center>ค่าจริง</center>
-                                        </th>
-                                        <th>
-                                            <center>สถานะ</center>
-                                        </th>
-                                        <th>
-                                            <center>ดูรายละเอียด</center>
-                                        </th>
-
-                                    </tr>
+                                    
                                     <?php  
                
                                         $sql_kpi="SELECT k.unit,k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,kr.kpi_responsible_id,kr.percent_performance 
