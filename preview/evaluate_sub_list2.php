@@ -168,44 +168,30 @@
                                 <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
                                 <input class="search form-control" placeholder="ค้นหา" />
                             </div>
-                                 <?php 
-                                    $sql_eval = "select * from evaluation where current_eval = 1 and company_id=1";
-                                    $query_eval = mysqli_query($conn, $sql_eval);
-                                ?>
-                                 <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) {
-                                    $eval_code = $result_eval['evaluation_code'];
-                                    $term_id = $result_eval['term_id'];
-                                    $year = $result_eval['year'];
-                                 } ?>
                                 <?php 
                                             $sql_emp_list="SELECT
-                                                            ee.employee_id,
-                                                            e.prefix,
-                                                            e.first_name,
-                                                            e.last_name,
-                                                            e.position_level_id,
-                                                            ee.status_success,
-                                                            ee.evaluate_employee_id,
-                                                            d.department_name,
-                                                            j.job_name
-                                                          FROM
-                                                            employees e
-                                                          JOIN
-                                                            evaluation_employee ee
-                                                          ON
-                                                            e.employee_id = ee.employee_id
-                                                          JOIN
-                                                            jobs j
-                                                          ON
-                                                            j.job_id = e.job_id
-                                                          JOIN
-                                                            departments d
-                                                          ON
-                                                            d.department_id = e.department_id
-                                                          WHERE
-                                                            ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code
-                                                          GROUP BY
-                                                            ee.employee_id";
+                                                                    ee.employee_id,
+                                                                    e.prefix,
+                                                                    e.first_name,
+                                                                    e.last_name,
+                                                                    e.position_level_id,
+                                                                    ee.status_success,
+                                                                    ec.evaluate_employee_id,
+                                                                    d.department_name,
+                                                                    j.job_name
+                                                            FROM
+                                                                    employees e
+                                                            JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                            JOIN evaluation ev ON ee.evaluation_code = ev.evaluation_code
+                                                            JOIN evaluation_competency ec ON ec.evaluate_employee_id = ee.evaluate_employee_id
+                                                            JOIN jobs j ON j.job_id = e.job_id
+                                                            JOIN departments d ON d.department_id = e.department_id
+                                                            WHERE
+                                                                    e.manager_id = '$my_emp_id'
+                                                            AND ev.term_id = 1
+                                                            AND ev. YEAR = '2016'
+                                                            GROUP BY
+                                                                    ee.employee_id";
                                             $query_emp_list = mysqli_query($conn, $sql_emp_list);
                                         ?>
 
@@ -238,7 +224,7 @@
                                         <td class="job_name"><?php echo $job_name; ?></td>
                                         <td class="dept_name"><?php echo $department_name; ?></td>
                                         <td class="text-center">
-                                            <a class="btn btn-success " href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=<?php echo $eval_code;?>&eval_emp_id=<?php echo $eval_emp_id; ?>">    
+                                            <a class="btn btn-success " href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=3&eval_emp_id=<?php echo $eval_emp_id; ?>">    
                                                 <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
                                             </a>
                                         </td>
