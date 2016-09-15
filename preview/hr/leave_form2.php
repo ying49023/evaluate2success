@@ -51,8 +51,8 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        แก้ไขข้อมูลพนักงาน
-                        <small></small>
+                        จัดการวันลาของพนักงาน
+                        <small>รอบการประเมินที่........</small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -178,11 +178,11 @@
                                 $query = mysqli_query($conn, $sql_leave_type); 
                                  ?>
                                 <form>
-                                    <table>
+                                    <table class="table table-bordered table-condensed" style="padding: 100px; width: 500px; margin-left: 350px; margin-top: 50px; margin-bottom: 50px;">
                                     
-                                        <tr>
-                                        <th>ประเภทการลา</th>
-                                        <th>จำนวน(วัน)</th>
+                                        <tr style="background-color: #4682b4;">
+                                        <th><center>ประเภทการลา</center></th>
+                                        <th><center>จำนวน(วัน)</center></th>
                                         </tr>
                                     
                                     <?php while($result_leave_type = mysqli_fetch_assoc($query)) {
@@ -191,9 +191,10 @@
                                 $name = $result_leave_type["leave_type_description"];
                              
                              ?>
-                              <tr>      
+                              <tr style="background-color: #A4C8F0;">      
                                         <td><?php echo $name ; ?></td>
-                                        <td><input type="number" min="0" max="200"></td>
+                                        <td align="center"><input type="number" min="0" max="200" name=$leave_id >
+                                        </td>
                                     </tr>
                                 
                             <?php } ?>
