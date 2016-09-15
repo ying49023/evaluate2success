@@ -199,7 +199,7 @@
                             <div class="box-body" >
                                 <?php  
                
-                                        $sql_kpi="SELECT k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol 
+                                        $sql_kpi="SELECT k.unit,k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,kr.kpi_responsible_id,kr.percent_performance 
                                                     FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
                                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
                                                     JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
@@ -235,26 +235,35 @@
                                 $success = $result_kpi["success"];
                                 $term = $result_kpi["term"];
                                 $year = $result_kpi["year"];
-
+                                $kpi_resp = $result_kpi["kpi_responsible_id"];
+                                $progress=$result_kpi['percent_performance'];
+                                $kpi_unit =$result_kpi["unit"];
                              ?>
+                             <?php
+                                $sql_progess = "call getMile_kpi_response($kpi_resp) ";
+                                $query_progess = mysqli_query($conn, $sql_progess);
+                             ?>                
+                    
                                     <tr>
                                         <th><?php echo $kpi_id;?></th>
                                         <th><?php echo $kpi_name;?></th>
                                         <th>
-                                            <center><?php echo $symbol."".$goal;?></center>
+                                            <center><?php echo $symbol."".$goal." ".$kpi_unit;?></center>
                                         </th>
                                         <th>
-                                            <center><?php echo $success;?></center>
+                                        <center><?php echo round($success,2);?></center>
                                         </th>
                                         <th>
-                                            <div class="progress">
+                                            <div class="progress">                                             
                                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-                                                style="width:<?php echo $success;?>%"><?php echo $success;?></div>
+                                                style="width:<?php echo round($progress,2); ?>%"><?php  echo round($progress,2); ?>
+                                                </div>                                                
                                             </div>
                                         </th>
                                         <th>
                                             <center>
-                                                <a href="update_kpi_detail.php?emp_id=<?php echo $employee_id?>&kpi_id=<?php echo $kpi_id;?>">
+                                                
+                                                <a href="update_kpi_detail.php?emp_id=<?php echo $employee_id?>&kpi_id=<?php echo $kpi_id;?>&kpi_responsible_id=<?php echo $kpi_resp;?>">
                                                     <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                                 </a>
                                             </center>

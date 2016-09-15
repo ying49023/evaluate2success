@@ -28,18 +28,23 @@
      if(isset($_GET["kpi_id"])){
      $kpi_id = $_GET["kpi_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
      }
-     
-     if(isset($_POST["update"])){
+      if(isset($_GET["kpi_responsible_id"])){
+     $get_kpi_responsible_id = $_GET["kpi_responsible_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+     }
+     if(isset($_POST["update"])){      
        $resp_id=$_POST["resp_id"];
-       $input_upd=$_POST["udp"];
+       $input_upd=$_POST["upd"];
+       $input_desc=$_POST["upd_desc"];
+       $float_value_of_var = floatval($input_upd);
        $kpicode=$_POST["kpicode"];
        $empid=$_POST["empid"];
+       $get_kpi_responsible_id = $_GET["kpi_responsible_id"]; 
        
-       $sql_submit = "call getMile_kpi_progress($resp_id,'$input_upd')";
+       $sql_submit = "call getMile_kpi_progress($resp_id,$float_value_of_var)";
        $objQuery = mysqli_query($conn,$sql_submit);
                if ($objQuery) {
-
-                   header ("location:update_kpi_detail.php?emp_id=$empid&kpi_id=$kpicode");
+                  
+                   header ("location:update_kpi_detail.php?emp_id=$empid&kpi_id=$kpicode&kpi_responsible_id=$get_kpi_responsible_id");
 
 
                } else {
@@ -66,9 +71,9 @@
         
         <!-- Google Chart Script-->
         <?php
-                                $sql_progess = "SELECT * FROM kpi_progress where kpi_progress_id = 16";
-                                $query_progess = mysqli_query($conn, $sql_progess); 
-        ?>                
+                $sql_progess = "call getCurrentKPIPerformance($get_kpi_responsible_id) ";
+                $query_progess = mysqli_query($conn, $sql_progess);
+                ?>                
                     
                         
         <script>
@@ -82,7 +87,7 @@
                     ['Label', 'Value'],
                     <?php while($result_progess = mysqli_fetch_assoc($query_progess)){
                     ?>
-                    ['Performance', <?php echo $result_progess['performance_mile'] ?>],
+                    ['Performance', <?php if($result_progess!=''){echo $result_progess['performance_mile'];}else{ echo 0;} ?>],
                     <?php } ?>        
                     
                 ]);
@@ -141,7 +146,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        รายละเอียด KPI -2001
+                        รายละเอียด KPI -<?php echo $kpi_id;?>
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -198,7 +203,7 @@
                                     
                                         <tr>
                                             <th rowspan="5">
-                                                <img class=" img-responsive img-thumbnail img-lg"   src="hr/upload_images/<?php echo $picture;?>">
+                                                <img class=" img-responsive img-thumbnail img-lg img-center"   src="upload_images/<?php echo $picture;?>">
                                             </th>
                                             <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
                                             <td  colspan="2" width=""><?php echo $name;?></td>
@@ -291,27 +296,34 @@
                                         <td class="text-center">KPIs</td>
                                         <td class="text-center">เป้าหมาย</td>
                                         <td class="text-center">ค่าจริง</td>
-                                        <td class="text-center">อัพเดท</td>
+                                        <td class="text-center">คำอธิบาย</td>
+                                        <td class="text-center"></td>
+                                        
                                     </tr>
                                     <tr>
                                         <td class="text-center"><?php echo $kpi_id;?></td>
                                         <td class="text-center"><?php echo $kpi_name;?></td>                                        
                                         <td class="text-center"><?php echo $kpi_symbol.''.$kpi_goal.' '.$kpi_unit;?></td>
-                                        <td class="text-center"> </td>
+                                        
                                          <td class="text-center">
-                                             <div class="form-group">
-                                              <input type="text" class="input-md" name="upd" width="200px" >&nbsp;&nbsp;
+                                             
+                                              <input type="text" class="input-md" name="upd" >&nbsp;&nbsp;
+                                             
+                                         </td>
+                                         <td class="text-center"><input type="text" class="input-md" name="upd_desc" ></td>
+                                         <td>
+                                         <div class="form-group">
                                               <button class="btn btn-primary btn-sm" type="submit" name="update">อัพเดท</button>
                                               <input type="hidden" name="resp_id" value="<?php echo $kpi_resp_id ;?>" > 
                                               <input type="hidden" name="empid" value="<?php echo $get_emp_id ;?>" > 
                                               <input type="hidden" name="kpicode" value="<?php echo $kpi_id ;?>" > 
-                                            </div>
-                                         </td>
-                                        
+                                              <input type="hidden" name="kpi_responsible_id" value="<?php echo $get_kpi_responsible_id ;?>" > 
+                                        </div>
+                                        </td>
                                     </tr>
                                     
                                 </table>
-
+                                
                             </div>
                         </form>
                     </div>
@@ -348,8 +360,7 @@
                                         <td class="text-center">วันที่</td>
                                         <td class="text-center">KPIs</td>
                                         <td class="text-center">เป้าหมาย</td>
-                                        <td class="text-center">ค่าจริง</td>
-                                        <td class="text-center">อัพเดท</td>
+                                        <td class="text-center">ค่าจริง</td>                                        
                                         <td class="text-center">คำอธิบาย</td>
                                     </tr>
                                     <?php
@@ -369,7 +380,7 @@
                                         <td class="text-center"><?php echo $kpi_id;?></td>
                                         <td class="text-center"><?php echo $symbol.''.$goal;?></td>
                                         <td class="text-center"><?php echo $kpi_progress_update;?></td>
-                                        <td class="text-center"> </td>
+                                        
                                         <td class="text-center"> </td>
                                     </tr>
                                         <?php } ?>
