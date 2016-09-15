@@ -120,6 +120,8 @@
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
         <!-- CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
+        <!-- SCRIPT PACKS -->
+        <?php include('./script_packs.html') ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
         
@@ -567,7 +569,7 @@
 
                                                     <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit__manage_competency_<?php echo $m_id; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
                                                     
-                                                    <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" datahref="evaluation_section_2.php?match_id=<?php  echo $m_id; ; ?>&delete_group=1&position_level_id=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ?>&eval_code=<?php  echo $eval_code; ?>">
+                                                    <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="evaluation_section_2.php?match_id=<?php  echo $m_id;?>&delete_group=1&position_level_id=<?php  echo $level; ?>&level_name=<?php  echo $level_name; ?>&eval_code=<?php  echo $eval_code; ?>">
                                                               <i class="glyphicon glyphicon-remove"></i>ลบ</a>
                                                     <?php include('./modal_delete.php'); ?>
                                                     <form action method="get" >
@@ -683,8 +685,7 @@
         <!--Finish body content-wrapper-->
         </div><!-- ./wrapper -->   
     </body>
-    <!-- SCRIPT PACKS -->
-<?php include('./script_packs.html') ?>
+    
 </html>
             <?php
         }
