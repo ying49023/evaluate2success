@@ -33,6 +33,8 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
+        <!-- SCRIPT PACKS -->
+        <?php include('./script_packs.html') ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
     </head>
@@ -99,7 +101,20 @@
 
                                  ?>
                                 
-                                <?php  while($result = mysqli_fetch_assoc($query)){ 
+                                
+                                <!--ข้อมูลทั่วไป-->
+                                <table class="table table-bordered table-condensed">
+                                    <tbody>
+                                        <tr>
+                                            <th rowspan="2" style="padding: 10px;width: 90px;">
+                                                <img class="img-circle img-center img-md img-thumbnail"  src="../upload_images/<?php echo $picture;?>">
+                                            </th>
+                                            <th align="center" width="" >ชื่อ-นามสกุล</th>
+                                            <th align="center" width="120px">รหัส</th>
+                                            <th align="center" width="" >ระดับ</th>
+                                            <th align="center" width="" >แผนก</th>
+                                        </tr>
+                                        <?php  while($result = mysqli_fetch_assoc($query)){ 
                                     $emp_id = $result["emp_id"];
                                     $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
                                     $hire = $result["hiredate"];
@@ -114,18 +129,6 @@
                                     $result_manager = mysqli_fetch_array($query_manager);
                                     $manager_name = $result_manager["prefix"].$result_manager["first_name"]." ".$result_manager["last_name"];
                                 ?>
-                                <!--ข้อมูลทั่วไป-->
-                                <table class="table table-bordered table-condensed">
-                                    <tbody>
-                                        <tr>
-                                            <th rowspan="2" style="padding: 10px;width: 90px;">
-                                                <img class="img-circle img-center img-md img-thumbnail"  src="../upload_images/<?php echo $picture;?>">
-                                            </th>
-                                            <th align="center" width="" >ชื่อ-นามสกุล</th>
-                                            <th align="center" width="120px">รหัส</th>
-                                            <th align="center" width="" >ระดับ</th>
-                                            <th align="center" width="" >แผนก</th>
-                                        </tr>
                                         <tr>
                                             <td><?php  echo $name ;?></td>
                                             <td><?php  echo $emp_id ;?></td>
@@ -133,8 +136,10 @@
                                             <td><?php  echo $dept ;?></td>
                                             
                                         </tr>
+                                        <?php }?>
                                     </tbody>
-                                </table><!--/ข้อมูลทั่วไป-->
+                                </table>
+                                <!--/ข้อมูลทั่วไป-->
                                 <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                                     <i class="glyphicon glyphicon-triangle-bottom"></i>รายละเอียดบุคคลเพิ่มเติม
                                 </a>
@@ -163,7 +168,7 @@
                             </div>
 
                             <div class="box-body">
-                             <? $sql_leave_type = "SELECT
+                             <?php $sql_leave_type = "SELECT
                                         
                                         leave_type_id,
                                         leave_type_description
@@ -182,8 +187,8 @@
                                     
                                     <?php while($result_leave_type = mysqli_fetch_assoc($query)) {
                 
-                                $leave_id = $result_kpi["leave_type_id"];
-                                $name = $result_kpi["leave_type_description"];
+                                $leave_id = $result_leave_type["leave_type_id"];
+                                $name = $result_leave_type["leave_type_description"];
                              
                              ?>
                               <tr>      
@@ -231,8 +236,7 @@
         <!-- ./wrapper -->
 
     </body>
-    <!-- SCRIPT PACKS -->
-<?php include('./script_packs.html') ?>
+    
 </html>
   <?php
         }

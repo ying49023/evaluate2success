@@ -29,6 +29,26 @@
      $kpi_id = $_GET["kpi_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
      }
      
+     if(isset($_POST["update"])){
+       $resp_id=$_POST["resp_id"];
+       $input_upd=$_POST["udp"];
+       $kpicode=$_POST["kpicode"];
+       $empid=$_POST["empid"];
+       
+       $sql_submit = "call getMile_kpi_progress($resp_id,'$input_upd')";
+       $objQuery = mysqli_query($conn,$sql_submit);
+               if ($objQuery) {
+
+                   header ("location:update_kpi_detail.php?emp_id=$empid&kpi_id=$kpicode");
+
+
+               } else {
+
+                   echo "Error Save [" . $sql_submit . "]";
+               }
+     }
+     
+     
  ?>    
 <html>
     <head>
@@ -45,6 +65,12 @@
         
         
         <!-- Google Chart Script-->
+        <?php
+                                $sql_progess = "SELECT * FROM kpi_progress where kpi_progress_id = 16";
+                                $query_progess = mysqli_query($conn, $sql_progess); 
+        ?>                
+                    
+                        
         <script>
             google.charts.load('current', {'packages':['gauge','corechart']});
             
@@ -54,7 +80,10 @@
                 
                 var data = google.visualization.arrayToDataTable([
                     ['Label', 'Value'],
-                    ['Performance', 60],
+                    <?php while($result_progess = mysqli_fetch_assoc($query_progess)){
+                    ?>
+                    ['Performance', <?php echo $result_progess['performance_mile'] ?>],
+                    <?php } ?>        
                     
                 ]);
                 
@@ -208,7 +237,7 @@
                 <div class="row box-padding">
                     <div class="box box-primary ">
                         <?php
-                            $sql_kpi_title ="select * from kpi where kpi_code='$kpi_id'";
+                            $sql_kpi_title ="select * from kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id  where kpi_code='$kpi_id'";
                             $query_kpi = mysqli_query($conn, $sql_kpi_title);
                             
                         ?>
@@ -217,7 +246,10 @@
                 
                                 $kpi_id = $result_kpi["kpi_code"];
                                 $kpi_name = $result_kpi["kpi_name"];
-                                
+                                $kpi_goal =$result_kpi["goal"];
+                                $kpi_unit =$result_kpi["unit"];
+                                $kpi_symbol =$result_kpi["measure_symbol"];
+                                $kpi_resp_id =$result_kpi["kpi_responsible_id"];
 
                              ?>
                             <strong><?php echo $kpi_id;?> -<?php echo $kpi_name;?></strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
@@ -250,7 +282,7 @@
                                 <strong>อัพเดต KPIs</strong>
                             </p>
                         </div>  
-                        <form method="get" action="update_kpi_detail.php" >
+                        <form method="POST" action="" >
                             <div class="box-body box-padding-table"> 
 
                                 <table class="table table-bordered ">
@@ -262,14 +294,19 @@
                                         <td class="text-center">อัพเดท</td>
                                     </tr>
                                     <tr>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">ความสามารถในการสรรหาตรงตามเวลาที่กำหนด(60วัน)</td>                                        
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">6 คน</td>
-                                         <td class="text-center"><div class="form-group">
-                                              <input type="text" class="input-md" id="upd" width="200px" >&nbsp;&nbsp;
-                                              <button class="btn btn-primary btn-sm">อัพเดท</button>
-                                        </div></td>
+                                        <td class="text-center"><?php echo $kpi_id;?></td>
+                                        <td class="text-center"><?php echo $kpi_name;?></td>                                        
+                                        <td class="text-center"><?php echo $kpi_symbol.''.$kpi_goal.' '.$kpi_unit;?></td>
+                                        <td class="text-center"> </td>
+                                         <td class="text-center">
+                                             <div class="form-group">
+                                              <input type="text" class="input-md" name="upd" width="200px" >&nbsp;&nbsp;
+                                              <button class="btn btn-primary btn-sm" type="submit" name="update">อัพเดท</button>
+                                              <input type="hidden" name="resp_id" value="<?php echo $kpi_resp_id ;?>" > 
+                                              <input type="hidden" name="empid" value="<?php echo $get_emp_id ;?>" > 
+                                              <input type="hidden" name="kpicode" value="<?php echo $kpi_id ;?>" > 
+                                            </div>
+                                         </td>
                                         
                                     </tr>
                                     
