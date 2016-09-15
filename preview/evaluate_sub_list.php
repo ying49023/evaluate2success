@@ -58,44 +58,6 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                <!--search-->
-                <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <form>
-                                <div class="col-sm-3">
-                                    <label class="col-sm-6 control-label">รหัสพนักงาน</label>
-                                    <div class="col-sm-6">
-                                        <input class="form-control" type="text" name="emp_id">
-                                    </div>
-                                </div> 
-
-                                <div class="col-md-3">
-                                    <label class="col-sm-5 control-label">ชื่อพนักงาน</label>
-                                    <div class="col-sm-7">
-                                        <input class="form-control" type="text" name="emp_id">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-
-                                    <label class="col-sm-4 control-label">แผนก/ฝ่าย</label>
-                                    <div class="col-sm-8">
-                                        <select class="form-control">
-                                            <option>บุคคล/ฝ่ายบุคคล </option>
-                                            <option>บริหาร/การเงิน</option>
-                                            <option>บริหาร/บัญชี</option>
-                                        </select>
-                                    </div>                               
-                                </div>
-                                <div class="col-md-2">
-                                    <button class="btn btn-primary search-button"><i class="glyphicon glyphicon-search"></i></button>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!--/search-->
                 
                 <div class="row box-padding">
                     <!--Style 1 don't delete  อย่าเพิ่งลบ-->
@@ -185,9 +147,9 @@
                 </div>
 
                 <!--list employee-->
-                <div class="row box-padding">
+                <div id="filter" class="row box-padding">
                         <div class="box box-primary">
-
+                            
                             <div class="box-header with-border">
                                 <b>ตารางข้อมูลพนักงาน</b>
                                 <div class="box-tools pull-right">
@@ -201,6 +163,11 @@
                                 </div>
                             </div>
                             <div class="box-body">
+                                <!-- ช่องค้นหา by listJS -->
+                            <div class="form-inline padding-small">
+                                <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                <input class="search form-control" placeholder="ค้นหา" />
+                            </div>
                                 <?php 
                                             $sql_emp_list="SELECT
                                                                     ee.employee_id,
@@ -231,14 +198,15 @@
                                 <table class="table table-bordered table-hover" width="90%" >
                                 <thead>
                                     <tr>
-                                        <th>รหัสพนักงาน</th>
-                                        <th>ชื่อพนักงาน</th>
-                                        <th>ตำแหน่ง</th>
-                                        <th>ฝ่าย/แผนก</th>
+                                        <th><button class="sort" data-sort="emp_id">รหัสพนักงาน</button></th>
+                                        <th><button class="sort" data-sort="emp_name">ชื่อพนักงาน</button></th>
+                                        <th><button class="sort" data-sort="job_name">ตำแหน่ง</button></th>
+                                        <th><button class="sort" data-sort="dept_name">ฝ่าย/แผนก</button></th>
                                         <th><center>ประเมิน</center></th>
                                         <th><center>สถานะ</center></th>
                                     </tr>
                                 </thead>
+                                <tbody class="list">
                                     <?php
                                         while($result_emp_list = mysqli_fetch_assoc($query_emp_list)) {
                 
@@ -251,13 +219,13 @@
                                         $eval_emp_id = $result_emp_list["evaluate_employee_id"];
                                         ?>
                                     <tr>
-                                        <td><?php echo $employee_id; ?></td>
-                                        <td><?php echo $emp_name; ?></td>
-                                        <td> </td>
-                                        <td> </td>
-                                        <td>
-                                            <a href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=3&eval_emp_id=<?php echo $eval_emp_id; ?>">    
-                                            <center><i class="glyphicon glyphicon-book"></i></center>
+                                        <td class="emp_id"><?php echo $employee_id; ?></td>
+                                        <td class="emp_name"><?php echo $emp_name; ?></td>
+                                        <td class="job_name"><?php echo $job_name; ?></td>
+                                        <td class="dept_name"><?php echo $department_name; ?></td>
+                                        <td class="text-center">
+                                            <a class="btn btn-success " href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=3&eval_emp_id=<?php echo $eval_emp_id; ?>">    
+                                                <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
                                             </a>
                                         </td>
                                         <?php if($status==0){
@@ -269,8 +237,14 @@
                                         
                                     </tr>
                                         <?php } ?>
+                                </tbody>
+                                <script>
+                                    var options = {
+                                        valueNames: [ 'emp_id', 'emp_name' , 'job_name' , 'dept_name' ]
+                                    };
                                     
-                                    
+                                    var userList = new List('filter', options);
+                                </script>    
                                     
                                 </table>
 

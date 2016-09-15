@@ -25,6 +25,23 @@
         
         include './classes/connection_mysqli.php';
         
+        if (isset($_GET["emp_id"])) {
+            $get_emp_id = $_GET["emp_id"];
+        }
+        //Get Evaluation employee id
+        if (isset($_GET["eval_emp_id"])) {
+            $get_eval_emp_id = $_GET["eval_emp_id"];
+        }
+        //Get Evaluation code
+        if (isset($_GET["eval_code"])) {
+            $get_eval_code = $_GET["eval_code"];
+        }
+        //Get Position Level
+        if(isset($_GET["position_level_id"])){
+            $level = $_GET["position_level_id"];
+        }
+
+
         if(isset($_POST["submit_comment"])){
             $comment1 = '';
             if(isset($_POST["comment1"])){
@@ -84,72 +101,51 @@
                 
                 <!-- Main content -->
                 <div class="row box-padding">
-                    <!-- search -->
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <?php 
-                            $eval_code = '';
-                            if(isset($_GET["eval_code"])){
-                                $eval_code = $_GET["eval_code"];
-                            }
-                            $get_eval_emp_id = '';
-                            if(isset($_GET["eval_emp_id"])){
-                                $get_eval_emp_id = $_GET["eval_emp_id"];
-                            }
-                            
-                            $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
-                            $query_year_term = mysqli_query($conn, $sql_year_term);
-                            while($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)){
-                                echo "<span style='font-size:18px'><b>ปีการประเมิน ".$year = $result_year_term["year"]."</b></span> | ";
-                                echo "<span style='font-size:18px'>รอบการประเมินที่ ".$term = $result_year_term["term_name"]." : ".$result_year_term["start_month"]."-".$result_year_term["end_month"]."</span>";
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <!--/search -->
+                    <!-- Brief Info Profile Employee  -->
+                    <?php include './breif_info_profile_eval.php'; ?>
+                    <!-- /Brief Info Profile Employee  -->
+                    
                     <!-- Navbar process -->
                     <?php include './navbar_process.php'; ?>
                     <!-- /Navbar process -->
                     <!-- Part 3 -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-
-                            <!--Table Point-->
-                            <form>
-                            <table class="table table-hover">
-                                <thead class="thead-inverse">
-                                    <tr>
-                                        <th colspan="6"><h4><b>3.1 เวลาการทำงาน (Time Attendance)</b></h4></th>
-                                       
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr align="center">
-                                        <td rowspan=2 colspan=4 style="vertical-align: middle;"><b>ประเภทวันลา</b></td>
-                                        <?php
+                            <h4><b>ส่วนที่ 3 : การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท </b></h4>
+                        </div>
+                        <div class="box-body ">
+                            <div class="box-padding-small">
+                                <h4><u>ส่วนที่ 3.1</u> เวลาการทำงาน (Time Attendance)</h4>
+                            </div>
+                            <!--Table leave -->
+                            <div class="row box-padding-small">
+                                <div class="col-sm-offset-1 col-sm-10">
+                            <table class="table table-hover table-striped table-bordered">
+                                <thead class="table-active">
+                                    <?php
                                             $sql_month = "SELECT start_month, end_month FROM term where term_id = 1";
                                             $query = mysqli_query($conn, $sql_month); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                        ?>
-                                        <?php
+
                                             while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
                                                 $start = $result["start_month"];
                                                 $end = $result["end_month"];
-                                         ?>
-                                           
-                                        <td colspan=2 align="center"><b>ระหว่างเดือน</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $start; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>ถึง</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $end?></td>
-                                        <?php } ?>
-                        
-                                        <td rowspan=2 align="center" style="vertical-align: middle;"><b>รวมคะแนนทั้งหมด</b></td>
-                                    </tr>
-                                    <tr align="center">
-                                       <td align="center"><b>รวมจำนวนวัน</b></td>
-                                       <td align="center"><b>ชั่วโมง</b></td>
+                                    ?>
+                                    <tr class="bg-info">
+                                        <th colspan="4">เวลาการทำงาน ระหว่าง <u><?php echo $start; ?></u> ถึง <u><?php echo $end; ?></u></th>
                                        
                                     </tr>
+                                    <?php } ?>
+                                    <tr align="center">
+                                        <th></th>
+                                        <th class="text-center">ประเภทวันลา</th>
+                                        <th class="text-center">จำนวนวันลา</th>
+                                        <th class="text-center">คะแนนวันลา</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     <?php
                                     $sql_levae_type_1 = "SELECT * 
                                                         FROM evaluatation_leave
-
                                                         WHERE
                                                                 evaluate_employee_id = '$get_eval_emp_id'
                                                         AND leave_type_id = '1'";
@@ -157,12 +153,10 @@
                                     $result_leave_type_1 = mysqli_fetch_array($query_leave_type_1);
                                     ?>
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <th scope="row" colspan=2>ลาป่วย</th>
-                                        <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["no_of_day"];} ?>" disabled readonly ></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["no_of_hour"];} ?>" disabled readonly ></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["point_leave"];} ?>" disabled readonly></td>
+                                        <th class="text-center">1</th>
+                                        <th class="text-center">ลาป่วย</th>
+                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["no_of_day"];} ?>" disabled readonly ></td>
+                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["point_leave"];} ?>" disabled readonly></td>
                                     </tr>
                                     <?php
                                     $sql_levae_type_2 = "SELECT * 
@@ -175,12 +169,10 @@
                                     $result_leave_type_2 = mysqli_fetch_array($query_leave_type_2);
                                     ?>
                                     <tr>
-                                        <th scope="row">2</th>
-                                        <th scope="row" colspan=2>ลากิจ</th>
-                                        <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["no_of_day"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["no_of_hour"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["point_leave"];} ?>" disabled readonly></td>
+                                        <th class="text-center">2</th>
+                                        <th class="text-center">ลากิจ</th>
+                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["no_of_day"];} ?>" disabled readonly></td>
+                                        <td class="text-center"><input class="text-center " type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["point_leave"];} ?>" disabled readonly></td>
                                     </tr>
                                     <?php
                                     $sql_levae_type_3 = "SELECT * 
@@ -193,13 +185,10 @@
                                     $result_leave_type_3 = mysqli_fetch_array($query_leave_type_3);
                                     ?>
                                     <tr>
-                                        <th scope="row">3</th>
-                                        <th scope="row">มาสาย</th>
-                                        <td>จำนวนครั้ง</td>
-                                        <td><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["no_of_day"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["no_of_day"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour"  min="1" max="1000" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["no_of_hour"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["point_leave"];} ?>" disabled readonly></td>
+                                        <th class="text-center">3</th>
+                                        <th class="text-center">มาสาย</th>
+                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["no_of_day"];} ?>" disabled readonly></td>
+                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["point_leave"];} ?>" disabled readonly></td>
                                     </tr>
                                     <?php
                                     $sql_levae_type_4 = "SELECT * 
@@ -212,13 +201,13 @@
                                     $result_leave_type_4 = mysqli_fetch_array($query_leave_type_4);
                                     ?>
                                     <tr>
-                                        <th scope="row">4</th>
-                                        <th scope="row" colspan=2>ลาอื่นๆ</th>
-                                        <td></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["no_of_day"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["no_of_hour"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["point_leave"];} ?>" disabled readonly></td>
+                                        <th class="text-center">4</th>
+                                        <th class="text-center">ลาอื่นๆ</th>
+                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["no_of_day"];} ?>" disabled readonly></td>
+                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["point_leave"];} ?>" disabled readonly></td>
                                     </tr>
+                                </tbody>
+                                <tfoot>
                                     <?php
                                     $sql_levae_sum = "SELECT
                                                             SUM(no_of_day) AS sum_day_leave,
@@ -231,21 +220,19 @@
                                     $query_leave_sum = mysqli_query($conn, $sql_levae_sum);
                                     $result_leave_sum = mysqli_fetch_array($query_leave_sum);
                                     ?>
-                                    <tr>
-                                        <td align="right" colspan=4><b>รวม</b></td>
-                                        <td align="center"><input type="number" name="leave" min="1" max="365" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_day_leave"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="hour" min="1" max="1000" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_hour_leave"];} ?>" disabled readonly></td>
-                                        <td align="center"><input type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_point_leave"];} ?>" disabled readonly></td>
+                                    <tr class="bg-info">
+                                        <td class="text-center" colspan="2"><b>รวม</b></td>
+                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_day_leave"];} ?>" disabled readonly></td>
+                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_point_leave"];} ?>" disabled readonly></td>
                                     </tr>
-
-                                </tbody>
+                                </tfoot>
+                                
                             </table>
-                            </form>
-                            <br>
-                            <div class="row">
-                                <div class="box-padding">
-                                    <h4><b>3.2 การพิจารณาความดี ความชอบ และการลงโทษทางวินัย</b></h4>
                                 </div>
+                            </div>
+                            <!--/Table leave -->
+                            <div class="box-padding-small">
+                                <h4><u>ส่วนที่ 3.2</u> การพิจารณาความดี ความชอบ และการลงโทษทางวินัย</h4>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 box-padding-table">
@@ -265,7 +252,7 @@
                                                     $i++;
                                                     ?>
                                         <tr >
-                                            <th style="padding: 10px;" scope="row" style="width: 25px;" ><?php echo $i; ?></th>
+                                            <th style="padding: 10px;" class="text-center" style="width: 25px;" ><?php echo $i; ?></th>
                                             <td><input type="text" name="reward" size="75" value="<?php echo $reault_reward["penalty_reward_name"]; ?>" readonly></td>
                                         </tr>
                                                     <?php
@@ -289,7 +276,7 @@
                                                     $i++;
                                                     ?>
                                         <tr>
-                                            <th style="padding: 10px;" scope="row" style="width: 25px;" ><?php echo $i; ?></th>
+                                            <th style="padding: 10px;" class="text-center" style="width: 25px;" ><?php echo $i; ?></th>
                                             <td><input type="text" name="reward" size="75" value="<?php echo $reault_reward["penalty_reward_name"]; ?>" readonly></td>
                                         </tr>
                                                     <?php
@@ -313,46 +300,46 @@
                                     
                                     <tr>
                                 
-                                       <th scope="row"><?php echo $i; ?></th>
+                                       <th class="text-center"><?php echo $i; ?></th>
                                        <td><input type="text" name="reward" size="40" value="<?php echo $reault_reward["penalty_reward_name"]; ?>" readonly></td>
-                                       <th scope="row">1</th>
+                                       <th class="text-center">1</th>
                                        <td><input type="text" name="penalty" size="40" readonly></td>
                                     </tr>
                                     
                                      <tr>
-                                       <th scope="row">2</th>
+                                       <th class="text-center">2</th>
                                        <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th scope="row">2</th>
+                                       <th class="text-center">2</th>
                                        <td><input type="text" name="penalty" size="40" readonly></td>
                                     </tr>
                                       <tr>
-                                       <th scope="row">3</th>
+                                       <th class="text-center">3</th>
                                        <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th scope="row">3</th>
+                                       <th class="text-center">3</th>
                                        <td><input type="text" name="penalty" size="40" readonly></td>
                                     </tr>
                                      <tr>
-                                       <th scope="row">4</th>
+                                       <th class="text-center">4</th>
                                        <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th scope="row">4</th>
+                                       <th class="text-center">4</th>
                                        <td><input type="text" name="penalty" size="40" readonly></td>
                                     </tr>
                                         <tr>
-                                       <th scope="row">5</th>
+                                       <th class="text-center">5</th>
                                        <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th scope="row">5</th>
+                                       <th class="text-center">5</th>
                                        <td><input type="text" name="penalty" size="40" readonly></td>
                                     </tr>
                                       <tr>
-                                       <th scope="row">6</th>
+                                       <th class="text-center">6</th>
                                        <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th scope="row">6</th>
+                                       <th class="text-center">6</th>
                                        <td><input type="text" name="penalty" size="40" readonly></td>
                                     </tr>
                                       <tr>
-                                       <th scope="row">7</th>
+                                       <th class="text-center">7</th>
                                        <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th scope="row">7</th>
+                                       <th class="text-center">7</th>
                                        <td><input type="text" name="penalty" size="40" readonly></td>
                                     </tr>
 
@@ -366,10 +353,10 @@
 
                                             <tr>
                                                 <td colspan= 2 ><b>ความคิดเห็นของผู้บังคับบัญชาตามสายงาน (ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)</b></td>
-                                                <td align="center" style="background-color:#E6E6FA;"><b>คะแนนที่ได้รับเท่ากับ</b></td>
+                                                <td class="text-center" style="background-color:#E6E6FA;"><b>คะแนนที่ได้รับเท่ากับ</b></td>
                                             </tr>
                                             <tr>
-                                                <th scope="row" style="width: 20px;">1</th>
+                                                <th class="text-center" style="width: 20px;">1</th>
                                                 <td ><input type="text" name="commentpart3" size="60"></td>
                                                 <?php
                                                 $sql_get_score = "SELECT point_leave
@@ -378,13 +365,13 @@
                                                 $query_get_score = mysqli_query($conn, $sql_get_score);
                                                 while($result_get_score = mysqli_fetch_array($query_get_score,MYSQLI_ASSOC)){
                                                 ?>
-                                                <td align="center"   style="background-color:#F5F5F5;width: 80px;"><input type="number" name="point" min="0.5" max="60" value="<?php echo $result_get_score["point_leave"]; ?>" disabled readonly></td>
+                                                <td class="text-center"   style="background-color:#F5F5F5;width: 80px;"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php echo $result_get_score["point_leave"]; ?>" disabled readonly></td>
                                                 <?php } ?>
                                             </tr>
                                              <tr>
-                                                <th scope="row">2</th>
+                                                <th class="text-center">2</th>
                                                 <td><input type="text" name="commentpart3" size="60"></td>
-                                                <td align="center"  style="background-color:#E6E6FA;"><b>คะแนนเต็ม (ระหว่าง 5-20)</b></td>
+                                                <td class="text-center"  style="background-color:#E6E6FA;"><b>คะแนนเต็ม (ระหว่าง 5-20)</b></td>
 
                                             </tr>
                                              <tr>
@@ -399,9 +386,9 @@
                                                  $query_sum_score = mysqli_query($conn, $sql_sum_score);
                                                  while($result_sum_score = mysqli_fetch_array($query_sum_score,MYSQLI_ASSOC)){
                                                  ?>
-                                                <th scope="row">3</th>
+                                                <th class="text-center">3</th>
                                                 <td><input type="text" name="commentpart3" size="60"></td>
-                                                <td align="center"  style="background-color:#F5F5F5;"><input type="number" name="point" min="5" max="20" value="<?php echo $result_sum_score["sum_point_leave"]; ?>" disabled readonly></td>
+                                                <td class="text-center"  style="background-color:#F5F5F5;"><input class="text-center" type="number"  name="point" min="5" max="20" value="<?php echo $result_sum_score["sum_point_leave"]; ?>" disabled readonly></td>
                                                  <?php } ?>
                                              </tr>
 

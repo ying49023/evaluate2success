@@ -22,8 +22,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-    <?php include ('./classes/connection_mysqli.php'); 
-    
+    <?php include ('./classes/connection_mysqli.php');
+        //Get Employee id
+        if (isset($_GET["emp_id"])) {
+            $get_emp_id = $_GET["emp_id"];
+        }
+        //Get Evaluation employee id
+        if (isset($_GET["eval_emp_id"])) {
+            $get_eval_emp_id = $_GET["eval_emp_id"];
+        }
+        //Get Evaluation code
+        if (isset($_GET["eval_code"])) {
+            $get_eval_code = $_GET["eval_code"];
+        }
         //Get Position Level
         if(isset($_GET["position_level_id"])){
             $level = $_GET["position_level_id"];
@@ -87,9 +98,7 @@
                 $sql_max_compId = "select max(evaluate_employee_id) as max_compId from evaluation_competency";  
                 $query_max_compId=  mysqli_query($conn, $sql_max_compId);
                 $max_compId=0;//8
-                if (isset($_GET["eval_emp_id"])) {
-                $get_eval_emp_id = $_GET["eval_emp_id"];
-                } 
+
                 while ($result_max_compId = mysqli_fetch_array($query_max_compId, MYSQLI_ASSOC)) {  
                                         $max_compId = $result_max_compId['max_compId'];
                                       
@@ -178,11 +187,6 @@
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
         
-        <style type="text/css">    
-            table.table tr td,th{
-                text-align: center;
-            }
-        </style>  
             
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -213,25 +217,10 @@
                     
                 <!-- Main content -->
                 <div class="row box-padding ">
-                    <!-- search -->
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <?php 
-                            $eval_code = '';
-                            if(isset($_GET["eval_code"])){
-                                $eval_code = $_GET["eval_code"];
-                            }
-                            
-                            $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
-                            $query_year_term = mysqli_query($conn, $sql_year_term);
-                            while($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)){
-                                echo "<span style='font-size:18px'><b>ปีการประเมิน ".$year = $result_year_term["year"]."</b></span> | ";
-                                echo "<span style='font-size:18px'>รอบการประเมินที่ ".$term = $result_year_term["term_name"]." : ".$result_year_term["start_month"]."-".$result_year_term["end_month"]."</span>";
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <!--/search -->
+                    <!-- Brief Info Profile Employee  -->
+                    <?php include './breif_info_profile_eval.php'; ?>
+                    <!-- /Brief Info Profile Employee  -->
+                    
                     <!-- Navbar process -->
                     <?php include './navbar_process.php'; ?>
                     <!-- /Navbar process -->
@@ -321,7 +310,7 @@
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th rowspan="2" >ข้อที่</th>
+                                                <th rowspan="2" style="width: 50px;">ข้อที่</th>
                                                 <th style="text-align: left;" rowspan="2" >หัวข้อ</th>
                                                 <th   colspan="3" >ผู้ประเมิน1</th>
                                                 <th   colspan="3">ผู้ประเมิน2</th>
@@ -509,21 +498,21 @@
                                                 <input type="hidden" name="comp_id[]" value="<?php echo $comp_id;?>">
                                                 <!-- comp_id loop -->
                                                 <td style="text-align: center;">
-                                                    <a data-toggle="modal" href="#view_point<?php echo $comp_id;?>_<?php echo $level;?>" class="glyphicon glyphicon-eye-open"></a>
+                                                    <a class="btn btn-warning btn-sm" data-toggle="modal" href="#view_point<?php echo $comp_id;?>_<?php echo $level;?>" ><i class="glyphicon glyphicon-eye-open"></i></a>
                                                     <!-- Veiw Score-->   
                                                     <div class="modal animated fade " id="view_point<?php echo $comp_id;?>_<?php echo $level;?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content ">
 
-                                                                <div class="modal-header">
+                                                                <div style="padding: 20px 30px 20px 30px;" class="modal-header bg-yellow box-padding">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                     <h4 class="modal-title" id="myModalLabel">คำอธิบายคะแนน <?php echo $comp_description; ?></h4>
                                                                 </div>
                                                                 <div class="modal-body ">
-                                                                    <div class="row">
+                                                                    <div class="row box-padding">
                                                                         <div class="col-sm-12">
                                                                            
-                                                                            <table class="table table-hover table-responsive table-striped table-bordered">                               
+                                                                            <table class="table table-hover table-responsive table-striped table-bordered table-sm">                               
                                                                             <thead>
                                                                                 <tr>
                                                                                     <th>คะแนน</th>
@@ -568,7 +557,7 @@
                                                                 <div class="modal-footer">                                                            
                                                                     
                                                                     
-                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                    <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
                                                                 </div>                 
                                                             </div>
                                                         </div>  

@@ -20,13 +20,16 @@
     <head>
         <?php 
         include ('./classes/connection_mysqli.php');
+        
         if (isset($_GET["emp_id"])) {
-                $get_emp_id = $_GET["emp_id"];
-            }
+            $get_emp_id = $_GET["emp_id"];
+        }
         if (isset($_GET["eval_emp_id"])) {
-                $get_eval_emp_id = $_GET["eval_emp_id"];
-            }    
-            
+            $get_eval_emp_id = $_GET["eval_emp_id"];
+        }
+        if (isset($_GET["eval_code"])) {
+            $get_eval_code = $_GET["eval_code"];
+        }
         ?>
         
         <meta charset="utf-8">
@@ -65,107 +68,14 @@
                 <!-- Main content -->
                 <!--search-->
                 <div class="row box-padding">
-                    <!-- search -->
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <?php 
-                            $eval_code = '';
-                            if(isset($_GET["eval_code"])){
-                                $eval_code = $_GET["eval_code"];
-                            }
-                            
-                            $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
-                            $query_year_term = mysqli_query($conn, $sql_year_term);
-                            while($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)){
-                                echo "<span style='font-size:18px'><b>ปีการประเมิน ".$year = $result_year_term["year"]."</b></span> | ";
-                                echo "<span style='font-size:18px'>รอบการประเมินที่ ".$term = $result_year_term["term_name"]." : ".$result_year_term["start_month"]."-".$result_year_term["end_month"]."</span>";
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <!--/search -->
+                    <!-- Brief Info Profile Employee  -->
+                    <?php include './breif_info_profile_eval.php'; ?>
+                    <!-- /Brief Info Profile Employee  -->
+                    
                     <!-- Navbar process -->
                     <?php include './navbar_process.php'; ?>
                     <!-- /Navbar process -->
                     
-                    <!-- Employee Profile -->
-                    <div class="box box-primary" >
-                    <div class="box-body">
-                        <div class="row"> 
-                            <div class="box-padding">
-                                <!--ข้อมูลทั่วไป-->
-                                <?php 
-                                $sql_emp = "SELECT
-                                                    GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
-                                                    GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1,
-                                                    GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2
-                                            FROM
-                                                    employees e
-                                            JOIN position_level p ON p.position_level_id = e.position_level_id
-                                            JOIN departments d ON d.department_id = e.department_id
-                                            JOIN jobs j ON j.job_id = e.job_id
-                                            JOIN employees m ON e.manager_id = m.employee_id
-                                            JOIN employees m2 ON m.manager_id = m2.employee_id
-                                            WHERE
-                                                    e.employee_id ='$get_emp_id'";
-                                $query_emp = mysqli_query($conn, $sql_emp);
-                                while($result_emp = mysqli_fetch_array($query_emp,MYSQLI_ASSOC)){
-                                ?>
-                                <table class="table table-responsive ">
-                                    
-                                        <tr>
-                                            <th rowspan="5">
-                                                <img class="circle-thumbnail img-circle img-center img-thumbnail img-lg" style="width: 70px;height: 70px;" src="upload_images/<?php if($result_emp["profile_picture"] == ''){ echo "defalut.png"; }else{ echo $result_emp["profile_picture"]; } ?>">
-                                            </th>
-                                            <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
-                                            <th align="center" colspan="2" width=""><?php echo $result_emp["emp_name"]; ?></th>
-                                            <th align="center" colspan="1" width="">ตำแหน่ง: </th>
-                                            <th align="center" colspan="1" width=""><?php echo $result_emp["job_name"]; ?></th>
-                                            <th align="center" colspan="1" width="">ระดับตำแหน่ง:  </th>
-                                            <th align="center" colspan="1" width=""><?php echo $result_emp["position_description"]; ?></th>
-
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">รหัส: </th>
-                                            <th align="center" colspan="2" width=""><?php echo $result_emp["employee_id"]; ?></th>
-                                            <th align="center" colspan="2" width="">อายุงาน: </th>
-                                            <th align="center" colspan="2" width=""></th>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
-                                            <th align="center" colspan="2" width=""><?php echo $result_emp["hiredate"]; ?></th>
-                                            <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
-                                            <th align="center" colspan="2" width=""><?php echo $result_emp["department_name"]; ?></th>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
-                                            <th align="center" colspan="2" width=""><?php echo $result_emp["manager_name_1"]; ?></th>
-                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
-                                            <th align="center" colspan="2" width=""><?php echo $result_emp["manager_name_2"]; ?></th>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">วันที่ประเมิน : </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            <th align="center" colspan="2" width="">ระยะเวลาประเมินผล </th>
-                                            <th align="center" colspan="2" width=""> ......../ ......... / 25 ......  ถึง ......... / ......... / 25........ </th>
-                                            
-                                        </tr>
-                                    
-                                
-                                
-                                
-                                       
-                                   </table>
-                                <?php } ?>
-                                <!--/ข้อมูลทั่วไป--> 
-                            </div>
-                        </div>  
-                    </div>
-                </div>
-                    <!-- /Employee Profile -->
                     <!-- Part 1 -->
                     <div class="box box-primary ">
                         <div class="box-header with-border">

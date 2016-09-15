@@ -24,6 +24,22 @@
         $msg='';
         
         include './classes/connection_mysqli.php';    
+        
+        if (isset($_GET["emp_id"])) {
+            $get_emp_id = $_GET["emp_id"];
+        }
+        //Get Evaluation employee id
+        if (isset($_GET["eval_emp_id"])) {
+            $get_eval_emp_id = $_GET["eval_emp_id"];
+        }
+        //Get Evaluation code
+        if (isset($_GET["eval_code"])) {
+            $get_eval_code = $_GET["eval_code"];
+        }
+        //Get Position Level
+        if(isset($_GET["position_level_id"])){
+            $level = $_GET["position_level_id"];
+        }
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,25 +83,10 @@
                 <!-- Main content -->
              
                 <div class="row box-padding">
-                    <!-- search -->
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <?php 
-                            $eval_code = '';
-                            if(isset($_GET["eval_code"])){
-                                $eval_code = $_GET["eval_code"];
-                            }
-                            
-                            $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
-                            $query_year_term = mysqli_query($conn, $sql_year_term);
-                            while($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)){
-                                echo "<span style='font-size:18px'><b>ปีการประเมิน ".$year = $result_year_term["year"]."</b></span> | ";
-                                echo "<span style='font-size:18px'>รอบการประเมินที่ ".$term = $result_year_term["term_name"]." : ".$result_year_term["start_month"]."-".$result_year_term["end_month"]."</span>";
-                            }
-                            ?>
-                        </div>
-                    </div>
-                    <!--/search -->
+                    <!-- Brief Info Profile Employee  -->
+                    <?php include './breif_info_profile_eval.php'; ?>
+                    <!-- /Brief Info Profile Employee  -->
+                    
                     <!-- Navbar process -->
                     <?php include './navbar_process.php'; ?>
                     <!-- /Navbar process -->
