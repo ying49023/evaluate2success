@@ -132,9 +132,10 @@
                                             <?php 
                                             while($result_kpi_resp = mysqli_fetch_assoc($query_kpi_resp)) { 
                                             $kpi_resp =$result_kpi_resp['kpi_responsible_id'];
-                                            echo $kpi_resp;
-                                            $sql_kpi="call getPart1_kpi($kpi_resp)";
+                                            
+                                            $sql_kpi="call getPart1_kpi($kpi_resp)";                                            
                                             $query_kpi = mysqli_query($conn,$sql_kpi);
+                                            echo $sql_kpi;
                                             while($result_kpi = mysqli_fetch_assoc($query_kpi)) {               
                                                 
                                                 $kpi_name = $result_kpi["kpi_name"];

@@ -341,7 +341,7 @@
                         
                         <?php 
                         $sql_kpi_history ="
-                            SELECT k.kpi_name, kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol,kp.kpi_comment
+                            SELECT k.kpi_name,kp.kpi_progress_id as kpi_progress_id,kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol,kp.kpi_comment
                             FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id 
                             JOIN kpi k ON ks.kpi_id = k.kpi_id
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
@@ -351,7 +351,7 @@
                         $query_kpi_history = mysqli_query($conn,$sql_kpi_history);
                         $count=0;
                         ?>
-                        <form method="get" action="compareevaluation.php" >
+                        
                             <div class="box-body box-padding-table "> 
 
                                 <table class="table table-bordered table-hover">
@@ -362,6 +362,7 @@
                                         <td class="text-center">เป้าหมาย</td>
                                         <td class="text-center">ค่าจริง</td>                                        
                                         <td class="text-center">คำอธิบาย</td>
+                                        <td class="text-center">แจ้งขอการแก้ไข</td>
                                     </tr>
                                     <?php
                                         while($result_kpi_history = mysqli_fetch_assoc($query_kpi_history)) {
@@ -373,6 +374,8 @@
                                         $comment = $result_kpi_history["kpi_comment"];
                                         $kpi_progress_update = $result_kpi_history["kpi_progress_update"];
                                         $progress_time_update = $result_kpi_history["progress_time_update"];
+                                        $kpi_progress_id = $result_kpi_history["kpi_progress_id"];
+                                        
                                         $count++;
                                     ?>
                                     <tr>
@@ -382,13 +385,94 @@
                                         <td class="text-center"><?php echo $symbol.''.$goal;?></td>
                                         <td class="text-center"><?php echo $kpi_progress_update;?></td>
                                         
-                                        <td class="text-center"><?php echo $comment;?></td>
+                                        <td class="text-center"><?php echo $comment; //href="sendmail/sendmail.php"?></td>
+                                        <td class="text-center">
+                                            <a class="btn btn-info btn-sm"  data-toggle="modal" data-target="#sendmail_<?php echo $kpi_progress_id; ?>">
+                                                
+                                                    <i class="glyphicon glyphicon-envelope"></i>
+                                            </a>
+                                            <!--send mail -->
+                                                        <form class="form-horizontal" name="frmMain" method="post" action="hr/sendmail/kpi_sendmail.php" >
+                                                            <div class="modal fade" id="sendmail_<?php echo $kpi_progress_id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                            <h4 class="modal-title" id="myModalLabel">แจ้งขอการแก้ไข</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">                                                                                                       <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="KPI-CODE" class="col-sm-4 control-label">KPI-CODE</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly type="text" class="form-control"  name="kpi_code" value="<?php echo $kpi_id; ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                           <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_name" class="col-sm-4 control-label">ชื่อตัวชี้วัด</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly type="text" class="form-control" name="kpi_name" value="<?php echo $kpi_name; ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_name" class="col-sm-4 control-label">วันที่</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly type="text" class="form-control" name="date" value="<?php echo $progress_time_update; ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_desc" class="col-sm-4 control-label">เป้าหมาย</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly type="text" style="" class="form-control" name="kpi_goal" value="<?php echo $symbol . '' . $goal; ?>">
+                                                                                </div>
+                                                                            </div>                                                                                                
+
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label disabled="true" for="measure_symbol" class="col-sm-4 control-label">ค่าจริงเดิม</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly type="text" class="form-control" name="old_success" value="<?php echo $kpi_progress_update; ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label disabled="true" for="measure_symbol" class="col-sm-4 control-label">ค่าจริงใหม่</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="new_success" >
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="measure_desc" class="col-sm-4 control-label">คำอธิบาย</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="desc" >
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="measure_desc" class="col-sm-4 control-label">เหตุผลขอการเปลี่ยนแปลง</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="reason" >
+                                                                                </div>
+                                                                            </div>
+
+
+
+                                                                        </div>
+                                                                        <div class="modal-footer">                                                                   
+                                                                            <button type="submit" name="kpi_sendmail" class="btn btn-primary">ส่งคำร้อง</button>                                                                    
+                                                                            <input type="hidden" name="emp_name" value="<?php echo $name; ?>">
+                                                                            <input type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>">
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <!-- send mail-->
+                                        </td>
                                     </tr>
                                         <?php } ?>
                                 </table>
 
                             </div>
-                        </form>
+                        
                     </div>
                 </div>
 

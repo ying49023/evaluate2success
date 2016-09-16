@@ -168,7 +168,9 @@
                                        <?php 
                                        $sql_eval = "SELECT evaluation_code, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where company_id=1 AND current_eval='1' ";
                                        $query_eval= mysqli_query($conn, $sql_eval);
-                                       while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
+                                       while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) {
+                                           $e_year=$result_eval["year"];
+                                           ?>
                                        <tr>
                                            
                                            <td><?php echo $result_eval["term"] ; ?> / <?php echo $result_eval["year"] ; ?></td>
@@ -176,10 +178,10 @@
                                            <td><?php echo $result_eval["close_system_date"] ; ?></td>
                                            <td class="text-center">
                                                <a class="btn btn-primary btn-sm" href="" data-toggle="modal" data-target="#<?php echo $result_eval["evaluation_code"]; ?>">
-                                                   <i class="glyphicon glyphicon-pencil"></i>
+                                                   <i class="glyphicon glyphicon-pencil">แก้ไขรอบประเมิน</i>
                                                </a>
                                                <a class="btn btn-danger btn-sm" href="manage_evaluate.php?erp=delete&eval_code=<?php echo $result_eval["evaluation_code"] ; ?>">
-                                                   <i class="glyphicon glyphicon-remove"></i>
+                                                   <i class="glyphicon glyphicon-remove">ปิดรอบประเมิน</i>
                                                </a>
                                                <!--Edit Modal -->
                                                 <form class="form-horizontal" name="frmMain" method="post" action="manage_evaluate.php?erp=update" >
@@ -194,14 +196,35 @@
 
                                                                     <div class="input-group col-sm-12" >
                                                                         <label for="รอบการประเมิน" class="col-sm-4 control-label">เทอม:</label>
-                                                                        <div class="col-sm-8">               
-                                                                            <input type="text" class="form-control" value="<?php echo $result_eval["term"]; ?>" name='textterm'   >
+                                                                        <div class="col-sm-8">
+                                                                            <?php
+                                                                                $slq_term = "SELECT term_id,term_name,start_month,end_month
+                                                                                            FROM term";
+                                                                                $query_term = mysqli_query($conn, $slq_term);
+                                                                                ?>                                                              
+                                                                            <select class="form-control " name="textterm" disabled="true">
+                                                                                    <option value="">--เลือกรอบการประเมิน--</option>
+                                                                                            <?php
+                                                                                            while ($result_term = mysqli_fetch_array($query_term, MYSQLI_ASSOC)) {
+                                                                                                $term_name = $result_term['term_name'];
+                                                                                                $term_date = $result_term['start_month'] . '-' . $result_term['end_month'];
+                                                                                                $term_id = $result_term['term_id'];
+                                                                                                ?>
+                                                                                    ?>
+                                                                                    <option <?php if($term_name == $result_eval["term"]){ echo "selected";} ?> value="<?php echo $term_name; ?>">เทอม<?php echo $term_name . ' ( '; ?><?php echo $term_date . ' )'; ?></option>
+                                                                                        <?php } ?>
+                                                                                </select>
+                                                                           
                                                                         </div>
                                                                     </div>
                                                                     <div class="input-group col-sm-12" >
                                                                         <label for="รอบการประเมิน" class="col-sm-4 control-label">ปี:</label>
-                                                                        <div class="col-sm-8">               
-                                                                            <input type="text" class="form-control" value="<?php echo $result_eval["year"]; ?>" name='textyear'    >
+                                                                        <div class="col-sm-8">
+                                                                            
+                                                                            <select class="form-control " name="textyear" disabled="true" >
+                                                                                <option value="">--เลือกปี--</option>                                                                                
+                                                                                <?php for($i=2015;$i<=2020;$i++){ ?><option <?php if($i==$e_year){ echo "selected";}?> value="<?php echo $i; ?>"> <?php echo $i; ?> </option><?php } ?>   
+                                                                          </select>
                                                                         </div>
                                                                     </div>
                                                                     <div class="input-group col-sm-12">
@@ -248,12 +271,32 @@
                                               <div class="modal-body">                                                  
                                                       <div class="input-group col-sm-12" >
                                                           <label for="รอบการประเมิน" class="col-sm-4 control-label">รอบการประเมิน:</label>
-                                                          <div class="col-sm-8">               
-                                                              <input type="text" class="form-control" placeholder="รอบการประเมิน" name="add_period"  >
+                                                          <div class="col-sm-8">
+                                                              <?php
+                                                                $slq_term = "SELECT term_id,term_name,start_month,end_month
+                                                                            FROM term";
+                                                                $query_term = mysqli_query($conn, $slq_term);
+                                                                ?>                                                              
+                                                              <select class="form-control " name="add_period" >
+                                                                    <option value="">--เลือกรอบการประเมิน--</option>
+                                                                            <?php
+                                                                            while ($result_term = mysqli_fetch_array($query_term, MYSQLI_ASSOC)) {
+                                                                                $term_name = $result_term['term_name'];
+                                                                                $term_date = $result_term['start_month'] . '-' . $result_term['end_month'];
+                                                                                $term_id = $result_term['term_id'];
+                                                                                ?>
+                                                                    ?>
+                                                                    <option value="<?php echo $term_name; ?>">เทอม<?php echo $term_name . ' ( '; ?><?php echo $term_date . ' )'; ?></option>
+                                                                        <?php } ?>
+                                                                </select>
                                                           </div>
                                                           <label for="ปีการประเมิน" class="col-sm-4 control-label">ปีการประเมิน:</label>
-                                                          <div class="col-sm-8">               
-                                                              <input type="text" class="form-control" placeholder="ปีการประเมิน" name="add_year"  >
+                                                          <div class="col-sm-8">
+                                                              <select class="form-control " name="add_year" >
+                                                                    <option value="">--เลือกปี--</option>
+                                                                    <?php for($i=2015;$i<=2020;$i++){ echo "<option value='$i'>$i</option>" ; } ?>                                         
+                                                              </select>
+                                                              
                                                           </div>
                                                       </div>
                                                       <div class="input-group col-sm-12">
