@@ -76,84 +76,81 @@
             <div class="row box-padding">
                 <div class="box box-success">
                     <div class="box-body">
+                        <!--ข้อมูลทั่วไป-->
                         <?php
-                        $sql_emp = "SELECT
-                                    e.employee_id as employee_id,
-                                    e.prefix as prefix,
-                                    e.first_name as first_name,
-                                    e.last_name as last_name,
-                                    e.profile_picture as profile_picture,
-                                    d.department_name as department_name,
-                                    j.job_name as job_name,
-                                    (sum(kr.success*kr.percent_weight)/sum(kr.success*kr.percent_weight)*100) as target_percent,
-                                    (sum(kr.success*kr.percent_weight)/sum(kr.goal*kr.percent_weight)*100) as actual_percent
-
-                                    FROM
-                                        kpi_responsible kr
-                                    JOIN kpi k ON kr.kpi_id = k.kpi_id
-                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
-                                    JOIN employees e ON ee.employee_id = e.employee_id
-                                    JOIN departments d ON e.department_id = d.department_id
-                                    JOIN jobs j ON e.job_id = j.job_id
-                                    WHERE ee.employee_id = '$get_emp_id';";
-                        $query_emp = mysqli_query($conn, $sql_emp);
-                        while($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
+                            $sql_emp = "SELECT
+                                        emp.employee_id AS emp_id,
+                                        emp.prefix As prefix,
+                                        emp.first_name AS f_name,
+                                        emp.last_name AS l_name,
+                                        emp.hiredate AS hiredate,
+                                        emp.manager_id AS manager_id,
+                                        emp.email AS email,
+                                        emp.telephone_no AS telephone,
+                                        dept.department_name AS dept_name,
+                                        pos.position_description AS pos,
+                                        emp.profile_picture 
+                                FROM
+                                        employees emp
+                                JOIN departments dept ON emp.department_id = dept.department_id
+                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
+                                WHERE
+                                        emp.employee_id = '".$get_emp_id."'
+                                LIMIT 1";
+                                $query = mysqli_query($conn, $sql_emp); 
                         ?>
-                        <table class="table table-bordered table-condensed" align="right" >
-                            
-                            <tr>
-                                <th rowspan="2">
-                                    <img class="img-circle img-thumbnail circle-thumbnail img-center" src="./upload_images/<?php if($result_emp["profile_picture"] == ''){ echo "default.png"; } else { echo $result_emp["profile_picture"]; } ?>" alt="<?php echo $result_emp["profile_picture"]; ?>" style="width: 55px;height: 55px;">
-                                </th>
-                                <th>
-                                    <center>รหัสพนักงาน</center>
-                                </th>
-                                <th>
-                                    <center>ชื่อพนักงาน</center>
-                                </th>
-                                <th>
-                                    <center>ตำแหน่ง</center>
-                                </th>
-                                <th>
-                                    <center>ฝ่าย/แผนก</center>
-                                </th>
-                                <th>
-                                    <center>เป้าหมาย</center>
-                                </th>
-                                <th>
-                                    <center>ค่าจริง</center>
-                                </th>
-                                <th>
-                                    <center>เทียบกับเป้าหมาย</center>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <center><?php echo $result_emp["employee_id"]; ?></center>
-                                </td>
-                                <td>
-                                    <center><?php echo $result_emp["prefix"].$result_emp["first_name"].'  '.$result_emp["last_name"]; ?></center>
-                                </td>
-                                <td>
-                                    <center><?php echo $result_emp["job_name"]; ?></center>
-                                </td>
-                                <td>
-                                    <center><?php echo $result_emp["department_name"]; ?></center>
-                                </td>
-                                <th>
-                                    <center><?php echo number_format($result_emp["target_percent"]).'%'; ?></center>
-                                </th>
-                                <th>
-                                    <center><?php echo number_format($result_emp["actual_percent"],2).'%'; ?></center>
-                                </th>
-                                <th>
-                                    <center></center>
-                                </th>
-                            </tr>
-                        </table>
-                        <?php } ?>
-                    </div>
+                        <?php  while($result = mysqli_fetch_assoc($query)){ 
+                                    $employee_id = $result["emp_id"];
+                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
+                                    $hire = $result["hiredate"];
+                                    $manager_id = $result["manager_id"];
+                                    $dept = $result["dept_name"];
+                                    $pos = $result["pos"];
+                                    $email = $result["email"];
+                                    $tel = $result["telephone"];
+                                    $picture = $result["profile_picture"];
+                                    $sql_manager = "SELECT * from employees where employee_id = '".$manager_id."'" ;
+                                    $query_manager = mysqli_query($conn, $sql_manager);
+                                    $result_manager = mysqli_fetch_array($query_manager);
+                                    $manager_name = $result_manager["prefix"].$result_manager["first_name"]." ".$result_manager["last_name"];
+                        ?>
+                                <table class="table table-responsive ">
+                                    
+                                        <tr>
+                                            <th rowspan="5">
+                                                <img class=" img-responsive img-thumbnail img-lg img-center"   src="./upload_images/<?php echo $picture;?>">
+                                            </th>
+                                            <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
+                                            <td  colspan="2" width=""><?php echo $name;?></td>
+                                            <th align="center" colspan="2" width="">รหัส: </th>
+                                            <td  colspan="2" width=""><?php echo $my_emp_id;?> </td>
 
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
+                                            <td  colspan="2" width=""><?php echo $hire;?></td>
+                                            <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
+                                            <td  colspan="2" width=""><?php echo $pos;?></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
+                                            <td  colspan="2" width=""><?php echo $manager_name;?></td>
+                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
+                                            <td colspan="2" width=""> </td>
+                                            
+                                        </tr>
+                                        
+                                    
+                                
+                                
+                                
+                                       
+                                   </table><!--/ข้อมูลทั่วไป--> 
+                        <?php } ?>
+                        
+                    </div>
                 </div>
 
             </div>
@@ -202,6 +199,18 @@
                             </div>
                             <div class="box-body" >
                                 <table class="table table-bordered " border="1px">
+                                    
+                                    <?php  
+               
+                                        $sql_kpi="SELECT k.unit,k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,kr.kpi_responsible_id,kr.percent_performance 
+                                                    FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
+                                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                                    JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
+                                                    WHERE ee.employee_id = '".$get_emp_id."' ORDER BY kpi_id ";
+                                        $query_kpi = mysqli_query($conn, $sql_kpi);
+                                    ?>
+            
+                                <table class="table table-bordered" width="90%" height="100px" border="1px">
                                     <tr>
                                         <th>No.</th>
                                         <th>KPIs</th>
@@ -215,133 +224,55 @@
                                             <center>สถานะ</center>
                                         </th>
                                         <th>
-                                            <center>ดูรายละเอียด</center>
+                                            <center>อัพเดทKPIs</center>
                                         </th>
 
                                     </tr>
-                                    <?php
-                                    $sql_kpi = "SELECT 
-                                                        k.kpi_id As kpi_id,
-                                                        k.kpi_code AS kpi_code,
-                                                        k.kpi_name As kpi_name,
-                                                        k.measure_symbol As symbol,
-                                                        kr.goal as goal,
-                                                        kr.success as success,
-                                                        eval.year AS year,
-                                                        eval.term_id AS term_id,
-                                                        t.start_month AS start_month,
-                                                        t.end_month AS end_month,
-                                                        e.employee_id As employee_id,
-                                                        (((kr.success*kr.percent_weight)/(kr.goal*kr.percent_weight))*100) as status_percent
-                                                 FROM
-                                                        kpi_responsible kr
-                                                JOIN kpi k ON kr.kpi_id = k.kpi_id
-                                                JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
-                                                JOIN employees e ON ee.employee_id = e.employee_id
-                                                JOIN departments d ON e.department_id = d.department_id
-                                                JOIN jobs j ON e.job_id = j.job_id
-                                                JOIN evaluation eval ON ee.evaluation_code = eval.evaluation_code
-                                                JOIN term t ON t.term_id = eval.term_id
-                                                WHERE ee.employee_id = '$get_emp_id'";
-                                    $query_kpi = mysqli_query($conn, $sql_kpi);
-                                    while($result_kpi = mysqli_fetch_array($query_kpi,MYSQLI_ASSOC)){
-                                    ?>
+                                     <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
+                
+                                $kpi_id = $result_kpi["kpi_id"];
+                                $kpi_name = $result_kpi["kpi_name"];
+                                $weight = $result_kpi["weight"];
+                                $goal = $result_kpi["goal"];
+                                $symbol = $result_kpi["symbol"];
+                                $success = $result_kpi["success"];
+                                $term = $result_kpi["term"];
+                                $year = $result_kpi["year"];
+                                $kpi_resp = $result_kpi["kpi_responsible_id"];
+                                $progress=$result_kpi['percent_performance'];
+                                $kpi_unit =$result_kpi["unit"];
+                             ?>
+                             <?php
+                                $sql_progess = "call getMile_kpi_response($kpi_resp) ";
+                                $query_progess = mysqli_query($conn, $sql_progess);
+                             ?>                
+                    
                                     <tr>
-                                        <th><?php echo $result_kpi["kpi_code"]; ?></th>
-                                        <th><?php echo $result_kpi["kpi_name"]; ?></th>
+                                        <th><?php echo $kpi_id;?></th>
+                                        <th><?php echo $kpi_name;?></th>
                                         <th>
-                                            <center><?php echo $result_kpi["symbol"].$result_kpi["goal"]; ?></center>
+                                            <center><?php echo $symbol."".$goal." ".$kpi_unit;?></center>
                                         </th>
                                         <th>
-                                            <center><?php echo $result_kpi["success"]; ?></center>
+                                        <center><?php echo round($success,2);?></center>
                                         </th>
                                         <th>
-                                            <div class="progress">
+                                            <div class="progress">                                             
                                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-                                                     style="width: <?php echo number_format($result_kpi["status_percent"],0); ?>%;"><?php echo number_format($result_kpi["status_percent"],0)."%"; ?></div>
+                                                style="width:<?php echo round($progress,2); ?>%"><?php  echo round($progress,2); ?>
+                                                </div>                                                
                                             </div>
                                         </th>
                                         <th>
                                             <center>
-                                                <a href="tracking_sub_detail.php?emp_id=<?php echo $result_kpi["employee_id"]; ?>&kpi_id=<?php echo $result_kpi["kpi_id"]; ?>">
+                                                <a href="tracking_sub_detail.php?emp_id=<?php echo $get_emp_id; ?>&kpi_id=<?php echo $kpi_id ?>">
                                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                                 </a>
                                             </center>
                                         </th>
                                     </tr>
                                     <?php } ?>
-                                    <tr>
-                                        <th>1202</th>
-                                        <th>ความสามารถจัดทำอัตราแผนความสามารถกำลังคน</th>
-                                        <th>
-                                            <center>
-                                                <20% </center></th>
-                                                <th>
-                                                    <center>14%</center>
-                                                </th>
-                                                <th>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" aria-valuenow="14" aria-valuemin="0" aria-valuemax="100" 
-                                                style="width: 14%;">14%</div>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <center>
-                                                        <a href="tracking_sub_detail.php">
-                                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                                        </a>
-                                                    </center>
-                                                </th>
-                                            </tr>
-
-                                            <tr>
-                                                <th>1203</th>
-                                                <th>อัตราจำนวนชั่วโมงการฝึกอบรม/คน/ครึ่งปี</th>
-                                                <th>
-                                                    <center>>=6ชั่วโมง</center>
-                                                </th>
-                                                <th>
-                                                    <center>2ชั่วโมง</center>
-                                                </th>
-                                                <th>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" 
-                                                style="width: 33%;">33%</div>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <center>
-                                                        <a href="">
-                                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                                        </a>
-                                                    </center>
-                                                </th>
-                                            </tr>
-
-                                            <tr>
-                                                <th>1204</th>
-                                                <th>การจัดปฐมนิเทศให้กับพนักงานใหม่ภายใน 3 วันทำการ</th>
-                                                <th>
-                                                    <center>100%</center>
-                                                </th>
-                                                <th>
-                                                    <center>35%</center>
-                                                </th>
-                                                <th>
-                                                    <div class="progress">
-                                                        <div class="progress-bar" role="progressbar" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" 
-                                                style="width: 35%;">35%</div>
-                                                    </div>
-                                                </th>
-                                                <th>
-                                                    <center>
-                                                        <a href="">
-                                                            <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                                                        </a>
-                                                    </center>
-                                                </th>
-
-                                            </tr>
+                                    
 
                                         </table>
 

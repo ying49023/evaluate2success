@@ -125,91 +125,104 @@
                 <!-- Main content -->
                 <div class="row box-padding">
                     <div class="box box-success">
-                        <div class="box-body">
+                    <div class="box-body">
+                        <!--ข้อมูลทั่วไป-->
                         <?php
-                        $sql_emp = "SELECT
-                                    e.employee_id as employee_id,
-                                    e.prefix as prefix,
-                                    e.first_name as first_name,
-                                    e.last_name as last_name,
-                                    e.profile_picture as profile_picture,
-                                    d.department_name as department_name,
-                                    j.job_name as job_name,
-                                    (sum(kr.success*kr.percent_weight)/sum(kr.success*kr.percent_weight)*100) as target_percent,
-                                    (sum(kr.success*kr.percent_weight)/sum(kr.goal*kr.percent_weight)*100) as actual_percent
-
-                                    FROM
-                                        kpi_responsible kr
-                                    JOIN kpi k ON kr.kpi_id = k.kpi_id
-                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
-                                    JOIN employees e ON ee.employee_id = e.employee_id
-                                    JOIN departments d ON e.department_id = d.department_id
-                                    JOIN jobs j ON e.job_id = j.job_id
-                                    WHERE ee.employee_id = '$get_emp_id';";
-                        $query_emp = mysqli_query($conn, $sql_emp);
-                        while($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
+                            $sql_emp = "SELECT
+                                        emp.employee_id AS emp_id,
+                                        emp.prefix As prefix,
+                                        emp.first_name AS f_name,
+                                        emp.last_name AS l_name,
+                                        emp.hiredate AS hiredate,
+                                        emp.manager_id AS manager_id,
+                                        emp.email AS email,
+                                        emp.telephone_no AS telephone,
+                                        dept.department_name AS dept_name,
+                                        pos.position_description AS pos,
+                                        emp.profile_picture 
+                                FROM
+                                        employees emp
+                                JOIN departments dept ON emp.department_id = dept.department_id
+                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
+                                WHERE
+                                        emp.employee_id = '".$get_emp_id."'
+                                LIMIT 1";
+                                $query = mysqli_query($conn, $sql_emp); 
                         ?>
-                        <table class="table table-bordered table-condensed" align="right" >
-                            
-                            <tr>
-                                <th rowspan="2">
-                                    <img class="img-circle img-thumbnail circle-thumbnail img-center" src="./upload_images/<?php echo $result_emp["profile_picture"]; ?>" alt="<?php echo $result_emp["profile_picture"]; ?>" style="width: 55px;height: 55px;">
-                                </th>
-                                <th>
-                                    <center>รหัสพนักงาน</center>
-                                </th>
-                                <th>
-                                    <center>ชื่อพนักงาน</center>
-                                </th>
-                                <th>
-                                    <center>ตำแหน่ง</center>
-                                </th>
-                                <th>
-                                    <center>ฝ่าย/แผนก</center>
-                                </th>
-                                <th>
-                                    <center>เป้าหมาย</center>
-                                </th>
-                                <th>
-                                    <center>ค่าจริง</center>
-                                </th>
-                                <th>
-                                    <center>เทียบกับเป้าหมาย</center>
-                                </th>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <center><?php echo $result_emp["employee_id"]; ?></center>
-                                </td>
-                                <td>
-                                    <center><?php echo $result_emp["prefix"].$result_emp["first_name"].'  '.$result_emp["last_name"]; ?></center>
-                                </td>
-                                <td>
-                                    <center><?php echo $result_emp["job_name"]; ?></center>
-                                </td>
-                                <td>
-                                    <center><?php echo $result_emp["department_name"]; ?></center>
-                                </td>
-                                <th>
-                                    <center><?php echo number_format($result_emp["target_percent"]).'%'; ?></center>
-                                </th>
-                                <th>
-                                    <center><?php echo number_format($result_emp["actual_percent"],2).'%'; ?></center>
-                                </th>
-                                <th>
-                                    <center></center>
-                                </th>
-                            </tr>
-                        </table>
+                        <?php  while($result = mysqli_fetch_assoc($query)){ 
+                                    $employee_id = $result["emp_id"];
+                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
+                                    $hire = $result["hiredate"];
+                                    $manager_id = $result["manager_id"];
+                                    $dept = $result["dept_name"];
+                                    $pos = $result["pos"];
+                                    $email = $result["email"];
+                                    $tel = $result["telephone"];
+                                    $picture = $result["profile_picture"];
+                                    $sql_manager = "SELECT * from employees where employee_id = '".$manager_id."'" ;
+                                    $query_manager = mysqli_query($conn, $sql_manager);
+                                    $result_manager = mysqli_fetch_array($query_manager);
+                                    $manager_name = $result_manager["prefix"].$result_manager["first_name"]." ".$result_manager["last_name"];
+                        ?>
+                                <table class="table table-responsive ">
+                                    
+                                        <tr>
+                                            <th rowspan="5">
+                                                <img class=" img-responsive img-thumbnail img-lg img-center"   src="./upload_images/<?php echo $picture;?>">
+                                            </th>
+                                            <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
+                                            <td  colspan="2" width=""><?php echo $name;?></td>
+                                            <th align="center" colspan="2" width="">รหัส: </th>
+                                            <td  colspan="2" width=""><?php echo $my_emp_id;?> </td>
+
+                                        </tr>
+                                        
+                                        <tr>
+                                            <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
+                                            <td  colspan="2" width=""><?php echo $hire;?></td>
+                                            <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
+                                            <td  colspan="2" width=""><?php echo $pos;?></td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
+                                            <td  colspan="2" width=""><?php echo $manager_name;?></td>
+                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
+                                            <td colspan="2" width=""> </td>
+                                            
+                                        </tr>
+                                        
+                                    
+                                
+                                
+                                
+                                       
+                                   </table><!--/ข้อมูลทั่วไป--> 
                         <?php } ?>
-                    </div>
                         
                     </div>
                 </div>
+                </div>
                 <div class="row box-padding">
                     <div class="box box-primary ">
+                        <?php
+                            $sql_kpi_title ="select * from kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id  where kpi_code='$get_kpi_id'";
+                            $query_kpi = mysqli_query($conn, $sql_kpi_title);
+                            
+                        ?>
                         <div class="box-header with-border">
-                            <strong>KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด</strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
+                             <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
+                
+                                $kpi_id = $result_kpi["kpi_code"];
+                                $kpi_name = $result_kpi["kpi_name"];
+                                $kpi_goal =$result_kpi["goal"];
+                                $kpi_unit =$result_kpi["unit"];
+                                $kpi_symbol =$result_kpi["measure_symbol"];
+                                $kpi_resp_id =$result_kpi["kpi_responsible_id"];
+
+                             ?>
+                            <strong><?php echo $kpi_id;?> -<?php echo $kpi_name;?></strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
+                             <?php } ?>
                         </div>
                     </div>
                     <div class="row">
@@ -230,73 +243,62 @@
                         </div>
                     </div>
                 </div>
+                <!-- ประวัติการแก้ไข-->
                 <div class="row box-padding">
                     <div class="box box-default">
                         <div class="box-header">
                             <p class="text-center">
                                 <strong>ประวัติการอัพเดต KPIs</strong>
                             </p>
-                        </div>  
+                        </div> 
+                        
+                        <?php 
+                        $sql_kpi_history ="
+                            SELECT k.kpi_name, kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol
+                            FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id 
+                            JOIN kpi k ON ks.kpi_id = k.kpi_id
+                            JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
+                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                            WHERE ee.employee_id = $get_emp_id  AND
+                            e.term_id=1 AND e.year=2016 AND k.kpi_code='$get_kpi_id'";
+                        $query_kpi_history = mysqli_query($conn,$sql_kpi_history);
+                        $count=0;
+                        ?>
                         <form method="get" action="compareevaluation.php" >
-                            <div class="box-body box-padding-table"> 
-                                
-                                <table class="table table-striped">
+                            <div class="box-body box-padding-table "> 
+
+                                <table class="table table-bordered table-hover">
                                     <tr class="bg-gray-light">
                                         <td class="text-center">ลำดับ</td>
                                         <td class="text-center">วันที่</td>
                                         <td class="text-center">KPIs</td>
                                         <td class="text-center">เป้าหมาย</td>
-                                        <td class="text-center">ค่าจริง</td>
-                                        <td class="text-center">อัพเดท</td>
+                                        <td class="text-center">ค่าจริง</td>                                        
                                         <td class="text-center">คำอธิบาย</td>
                                     </tr>
+                                    <?php
+                                        while($result_kpi_history = mysqli_fetch_assoc($query_kpi_history)) {
+                
+                                        $kpi_id = $result_kpi_history["kpi_id"];
+                                        $kpi_name = $result_kpi_history["kpi_name"];                                        
+                                        $goal = $result_kpi_history["goal"];
+                                        $symbol = $result_kpi_history["symbol"];
+                                        $kpi_progress_update = $result_kpi_history["kpi_progress_update"];
+                                        $progress_time_update = $result_kpi_history["progress_time_update"];
+                                        $count++;
+                                    ?>
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td class="text-center">30 ม.ค. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">1 คน</td>
-                                        <td class="text-center">1 คน</td>
-                                        <td class="text-center"> </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">2</td>
-                                        <td class="text-center">30 ก.พ. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">2 คน</td>
-                                        <td class="text-center">1 คน</td>
-                                        <td class="text-center"> </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">3</td>
-                                        <td class="text-center">30 มี.ค. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">4 คน</td>
-                                        <td class="text-center">2 คน</td>
-                                        <td class="text-center"> </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">4</td>
-                                        <td class="text-center">30 เม.ย. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">5 คน</td>
-                                        <td class="text-center">1 คน</td>
-                                        <td class="text-center"> </td>
-                                    </tr>
-                                    <tr >
+                                        <td class="text-center"><?php echo $count;?></td>
+                                        <td class="text-center"><?php echo $progress_time_update;?></td>
+                                        <td class="text-center"><?php echo $kpi_id;?></td>
+                                        <td class="text-center"><?php echo $symbol.''.$goal;?></td>
+                                        <td class="text-center"><?php echo $kpi_progress_update;?></td>
                                         
-                                        <td class="text-center">5</td>
-                                        <td class="text-center">30 พ.ค. 59</td>
-                                        <td class="text-center">2001</td>
-                                        <td class="text-center">10 คน</td>
-                                        <td class="text-center">6 คน</td>
-                                        <td class="text-center">1 คน</td>
                                         <td class="text-center"> </td>
                                     </tr>
-                                </table>   
+                                        <?php } ?>
+                                </table>
+
                             </div>
                         </form>
                     </div>

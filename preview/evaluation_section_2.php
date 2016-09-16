@@ -51,7 +51,7 @@
             $i=0;
             foreach ($_POST['comp_id'] as $compId){
                 $positionID=$_GET['position_level_id'];
-                $e_code=$_GET['eval_code'];
+                $e_code=$_POST['evalcode'];
                 $emp=$_GET['emp_id'];
                 //echo $compId.' '.$_GET['eval_code'].' '.$_GET['emp_id'].' '.$_GET['position_level_id'].' score '.$array_h[$i].' | ';
                $sql_insert="INSERT INTO evaluation_competency (
@@ -72,7 +72,7 @@
                                                                             evaluation_employee
                                                                     WHERE
                                                                             employee_id = $emp
-                                                                    AND evaluation_code = 3
+                                                                    AND evaluation_code = $e_code
                                                             ),
                                                             $array_h[$i],
                                                             0,
@@ -85,7 +85,7 @@
                                                                     WHERE
                                                                             competency_id = $compId
                                                                     AND position_level_id = $positionID
-                                                                    AND evaluation_code = 3
+                                                                    AND evaluation_code = $e_code
                                                             )
                                                     )";
                $query_insert=  mysqli_query($conn, $sql_insert);
