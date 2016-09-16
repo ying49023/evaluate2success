@@ -578,8 +578,8 @@
                                 </div>
                                 <?php } ?> 
                                 <div class="col-md-12 text-center">
-                                    <button class="btn-success btn-lg" type="submit" >บันทึก</button>  
-                                    <button class="btn-danger btn-lg" >รีเซ็ท</button> 
+                                    <button class="btn btn-success btn-lg search-button" type="submit" >บันทึก</button>  
+                                    <button class="btn btn-danger btn-lg search-button" >รีเซ็ท</button> 
                                     <input type="hidden" name="position_level" value="<?php=$level?>" >
                                     <input type="hidden" name="emp" value="<?php=$my_emp_id?>" >
                                     <input type="hidden" name="evalcode" value="<?php=$eval_code?>" >

@@ -219,6 +219,7 @@
                                                             evaluate_employee_id = '$get_eval_emp_id'";
                                     $query_leave_sum = mysqli_query($conn, $sql_levae_sum);
                                     $result_leave_sum = mysqli_fetch_array($query_leave_sum);
+                                    
                                     ?>
                                     <tr class="bg-info">
                                         <td class="text-center" colspan="2"><b>รวม</b></td>
@@ -235,118 +236,145 @@
                                 <h4><u>ส่วนที่ 3.2</u> การพิจารณาความดี ความชอบ และการลงโทษทางวินัย</h4>
                             </div>
                             <div class="row">
-                                <div class="col-md-6 box-padding-table">
-                                    
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td colspan=2><b><u>ประวัติการได้รับรางวัล / ยกย่อง</u></b></td>
-                                        </tr>
+                                <div class="col-md-offset-1 col-md-10 box-padding-small">
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="bg-success">
+                                            <tr>
+                                                <th colspan=2><u>ประวัติการได้รับรางวัล / ยกย่อง</u></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                                 <?php
                                                 $sql_reward = "SELECT *
                                                     FROM evaluatation_penalty_reward epr 
                                                     JOIN penalty_reward pr ON epr.penalty_reward_id=pr.penalty_reward_id
                                                     WHERE evaluate_employee_id='$get_eval_emp_id' AND pr.penalty_reward_indicated=1";
                                                 $query_reward = mysqli_query($conn, $sql_reward);
+                                                $count_reward = mysqli_num_rows($query_reward);
+                                                if($count_reward == 0){
+                                                    ?>
+                                                <tr >
+                                                    <th  class="text-center" colspan="2">ไม่มีข้อมูลรางวัล </th>
+                                                </tr>
+                                                    <?php
+                                                }else {
                                                 $i = 0;
                                                 while ($reault_reward = mysqli_fetch_array($query_reward, MYSQLI_ASSOC)) {
-                                                    $i++;
-                                                    ?>
-                                        <tr >
-                                            <th style="padding: 10px;" class="text-center" style="width: 25px;" ><?php echo $i; ?></th>
-                                            <td><input type="text" name="reward" size="75" value="<?php echo $reault_reward["penalty_reward_name"]; ?>" readonly></td>
-                                        </tr>
+                                                    $i++; ?>
+                                                    <tr >
+                                                        <th style="padding: 10px;width: 60px" class="text-center" ><?php echo $i; ?></th>
+                                                        <td><?php echo $reault_reward["penalty_reward_name"]; ?></td>
+                                                    </tr>
                                                     <?php
+                                                    }
                                                 }
                                                 ?>
-                                </table>
+                                        </tbody>
+                                    </table>
                                 </div>
-                                <div class="col-md-6 box-padding-table">
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <td colspan=2><b><u>ประวัติการลงโทษทางวินัย</u></b></td>
-                                        </tr>
+                                <div class="col-md-offset-1 col-md-10 box-padding-small">
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="bg-danger">
+                                            <tr>
+                                                <th colspan="2"><u>ประวัติการลงโทษทางวินัย</u></th>
+                                                <th class="text-center">คะแนน</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
                                                 <?php
-                                                $sql_reward = "SELECT *
+                                                $sql_penalty = "SELECT *
                                                     FROM evaluatation_penalty_reward epr 
                                                     JOIN penalty_reward pr ON epr.penalty_reward_id=pr.penalty_reward_id
                                                     WHERE evaluate_employee_id='$get_eval_emp_id' AND pr.penalty_reward_indicated=0";
-                                                $query_reward = mysqli_query($conn, $sql_reward);
+                                                $query_penalty = mysqli_query($conn, $sql_penalty);
                                                 $i = 0;
-                                                while ($reault_reward = mysqli_fetch_array($query_reward, MYSQLI_ASSOC)) {
+                                                $count_penalty = mysqli_num_rows($query_penalty);
+                                                
+                                                if($count_penalty == 0){ ?>
+                                                <tr >
+                                                    <th  class="text-center" colspan="3">ไม่มีข้อมูลรางวัล </th>
+                                                </tr>
+                                                <?php
+                                                }else{
+                                                while ($reault_penalty = mysqli_fetch_array($query_penalty, MYSQLI_ASSOC)) {
                                                     $i++;
                                                     ?>
-                                        <tr>
-                                            <th style="padding: 10px;" class="text-center" style="width: 25px;" ><?php echo $i; ?></th>
-                                            <td><input type="text" name="reward" size="75" value="<?php echo $reault_reward["penalty_reward_name"]; ?>" readonly></td>
-                                        </tr>
+                                                <tr>
+                                                    <th style="padding: 10px;width: 60px" class="text-center" ><?php echo $i; ?></th>
+                                                    <td><?php echo $reault_penalty["penalty_reward_name"]; ?></td>
+                                                    <td class="text-center" style="width: 100px;"><?php echo $reault_penalty["point"]; ?></td>
+                                                </tr>
                                                     <?php
+                                                    }
                                                 }
                                                 ?>
-                                </table>
+                                                <tr class="bg-danger">
+                                                    <th class="text-center" colspan="2"> รวม </th>
+                                                    <th class="text-center">0</th>
+                                                </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-<!--                             <table class="table table-hover">
-                                <thead class="thead-inverse">
-                                    <tr>
-                                        <th colspan="6"><h4><b>3.2 การพิจารณาความดี ความชอบ และการลงโทษทางวินัย</b></h4></th>
-                                       
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td colspan=2><b><u>ประวัติการได้รับรางวัล / ยกย่อง</u></b></td>
-                                        <td colspan=2><b><u>ประวัติการลงโทษทางวินัย</u></b></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                
-                                       <th class="text-center"><?php echo $i; ?></th>
-                                       <td><input type="text" name="reward" size="40" value="<?php echo $reault_reward["penalty_reward_name"]; ?>" readonly></td>
-                                       <th class="text-center">1</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
-                                    </tr>
-                                    
-                                     <tr>
-                                       <th class="text-center">2</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th class="text-center">2</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
-                                    </tr>
-                                      <tr>
-                                       <th class="text-center">3</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th class="text-center">3</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
-                                    </tr>
-                                     <tr>
-                                       <th class="text-center">4</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th class="text-center">4</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
-                                    </tr>
-                                        <tr>
-                                       <th class="text-center">5</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th class="text-center">5</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
-                                    </tr>
-                                      <tr>
-                                       <th class="text-center">6</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th class="text-center">6</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
-                                    </tr>
-                                      <tr>
-                                       <th class="text-center">7</th>
-                                       <td><input type="text" name="reward" size="40" readonly></td>
-                                       <th class="text-center">7</th>
-                                       <td><input type="text" name="penalty" size="40" readonly></td>
-                                    </tr>
-
-                                </tbody>  
-                        </table>-->
+                            <form method="post">
                             <div class="row">
-                                <form action="" method="post">
+                                <div class="col-md-offset-1 col-md-10">
+                                    <table class="table table-striped table-bordered table-info">
+                                        <thead class="bg-light-blue-active">
+                                            <tr>
+                                                <th class="text-center">คะแนนเวลาการทำงาน + คะแนนการลงโทษทางวินัย</th>
+                                                <th class="text-center">คะแนนเต็มรวม</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-info">
+                                            <tr>
+                                                <?php
+                                                $sql_get_score = "SELECT point_leave
+                                                                FROM evaluation_employee
+                                                                WHERE evaluate_employee_id='$get_eval_emp_id'";
+                                                $query_get_score = mysqli_query($conn, $sql_get_score);
+                                                
+                                                $sql_sum_score = "SELECT sum_point_leave
+                                                                    FROM evaluation_sumpoint
+                                                                    WHERE position_level_id=( 	SELECT position_level_id
+                                                                    FROM employees e 
+                                                                    JOIN evaluation_employee ee ON e.employee_id=ee.employee_id
+                                                                                                                    WHERE ee.evaluate_employee_id='$get_eval_emp_id')
+                                                                    ";
+                                                 $query_sum_score = mysqli_query($conn, $sql_sum_score);
+                                                 
+                                                while($result_get_score = mysqli_fetch_array($query_get_score,MYSQLI_ASSOC)){
+                                                ?>
+                                                <td class="text-center"><input class="text-center input-md" type="number"  name="point" min="0.5" max="60" value="<?php echo $result_get_score["point_leave"]; ?>" readonly></td>
+                                                <?php }
+                                                
+                                                while($result_sum_score = mysqli_fetch_array($query_sum_score,MYSQLI_ASSOC)){
+                                                
+                                                ?>
+                                                <td class="text-center"><input class="text-center input-md" type="number"  name="point" min="5" max="20" value="<?php echo $result_sum_score["sum_point_leave"]; ?>" readonly></td>
+                                                <?php } ?>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-offset-2 col-md-8">
+                                    <h4><u>ความคิดเห็นของผู้บังคับบัญชาตามสายงาน (ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)</u></h4>
+                                    <div>
+                                        <textarea class="form-control" name="commentpart3" size="60" rows="5" placeholder="เขียนความเห็น(ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)"></textarea>
+                                    </div>         
+                                            
+                                </div>
+                                <div class="col-md-offset-1 col-md-10">
+                                    <div class="form-group box-padding-small text-center">
+                                        <input class="btn btn-success btn-lg search-button" type="submit" name="submit_comment" value="บันทึก">
+                                        <input class="btn btn-danger btn-lg search-button" type="reset" name="reset" value="รีเซ็ต" >
+                                    </div>  
+                                </div>
+                            </div>
+                            </form>
+<!--                            
+                                
+                                <form action="" method="post"> 
                                 <div class="col-md-6">
                                     <table class="table table-bordered">
                                         <tbody>
@@ -357,7 +385,7 @@
                                             </tr>
                                             <tr>
                                                 <th class="text-center" style="width: 20px;">1</th>
-                                                <td ><input type="text" name="commentpart3" size="60"></td>
+                                                <td ><input type="text" size="60"></td>
                                                 <?php
                                                 $sql_get_score = "SELECT point_leave
                                                                 FROM evaluation_employee
@@ -401,8 +429,8 @@
                                         <input class="btn btn-danger" type="reset" name="reset" value="รีเซ็ต" >
                                     </div>
                                 </div>
-                                </form>
-                            </div>
+                            </form>    
+                            </div>-->
                             
                                         
                         </div>           

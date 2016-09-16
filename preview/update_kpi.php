@@ -112,40 +112,35 @@
                                     $result_manager = mysqli_fetch_array($query_manager);
                                     $manager_name = $result_manager["prefix"].$result_manager["first_name"]." ".$result_manager["last_name"];
                         ?>
-                                <table class="table table-responsive ">
-                                    
-                                        <tr>
-                                            <th rowspan="5">
-                                                <img class=" img-responsive img-thumbnail img-lg img-center"   src="./upload_images/<?php echo $picture;?>">
-                                            </th>
-                                            <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
-                                            <td  colspan="2" width=""><?php echo $name;?></td>
-                                            <th align="center" colspan="2" width="">รหัส: </th>
-                                            <td  colspan="2" width=""><?php echo $my_emp_id;?> </td>
-
-                                        </tr>
-                                        
-                                        <tr>
-                                            <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
-                                            <td  colspan="2" width=""><?php echo $hire;?></td>
-                                            <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
-                                            <td  colspan="2" width=""><?php echo $pos;?></td>
+                        <table class="table table-responsive ">
+                            
+                            <tr>
+                                <th rowspan="5">
+                                    <img class=" img-responsive img-thumbnail img-lg img-center"   src="./upload_images/<?php echo $picture; ?>">
+                                </th>
+                                <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
+                                <td  colspan="2" width=""><?php echo $name; ?></td>
+                                <th align="center" colspan="2" width="">รหัส: </th>
+                                <td  colspan="2" width=""><?php echo $my_emp_id; ?> </td>
+                                                
+                            </tr>
                                             
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
-                                            <td  colspan="2" width=""><?php echo $manager_name;?></td>
-                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
-                                            <td colspan="2" width=""> </td>
+                            <tr>
+                                <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
+                                <td  colspan="2" width=""><?php echo $hire; ?></td>
+                                <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
+                                <td  colspan="2" width=""><?php echo $pos; ?></td>
+                                                
+                            </tr>
+                            <tr>
+                                <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
+                                <td  colspan="2" width=""><?php echo $manager_name; ?></td>
+                                <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
+                                <td colspan="2" width=""> </td>
+                                                
+                            </tr>
                                             
-                                        </tr>
-                                        
-                                    
-                                
-                                
-                                
-                                       
-                                   </table><!--/ข้อมูลทั่วไป--> 
+                        </table><!--/ข้อมูลทั่วไป--> 
                         <?php } ?>
                         
                     </div>
@@ -223,7 +218,6 @@
                                         <th>
                                             <center>อัพเดทKPIs</center>
                                         </th>
-
                                     </tr>
                                      <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
                 
@@ -244,12 +238,12 @@
                                             <center><?php echo $symbol."".$goal;?></center>
                                         </th>
                                         <th>
-                                            <center><?php echo $success;?></center>
+                                        <center><?php echo number_format($success,2);?></center>
                                         </th>
                                         <th>
                                             <div class="progress">
                                                 <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-                                                style="width:<?php echo $success;?>%"><?php echo $success;?></div>
+                                                style="width:<?php echo $success;?>%"><?php echo number_format($success,2);?></div>
                                             </div>
                                         </th>
                                         <th>

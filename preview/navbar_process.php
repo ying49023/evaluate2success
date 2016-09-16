@@ -38,7 +38,7 @@ if(isset($_GET["eval_emp_id"])){
         <li class="<?php if ($page == 'evaluation_section_4.php') {
         echo "active";
     } ?>">
-            <a href="evaluation_section_4.php?emp_id=<?php echo $emp_id; ?>&position_level_id=<?php echo $position_level; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>"  aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
+            <a  href="evaluation_section_4.php?emp_id=<?php echo $emp_id; ?>&position_level_id=<?php echo $position_level; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>"  aria-expanded="false">ส่วนที่ 4 : ควมคิดเห็นเพิ่มเติม</a>
         </li>        
     </ul>
 </div>

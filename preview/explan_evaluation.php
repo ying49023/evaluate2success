@@ -120,6 +120,21 @@
                                         }
                                         ?>
                             </div>
+                            <script>
+                                $('#check').click(function(){
+                                    if($(this).prop('checked') == true){
+                                        $('input[type="submit"]').prop('disabled', false);
+                                    }else{
+                                        $('input[type="submit"]').prop('disabled', true);
+                                    }
+                                });
+                            </script>
+                            <form action="evaluation_section_1.php" method="post">
+                            <div class="form-group box-padding-small text-center">
+                                <input type='checkbox' name='chk' value='1' id='check'> ยอมรับข้อตกลงและคำชี้แจง <br>
+                                <input class="btn btn-success btn-lg search-button" type="submit" name="submit" value="หน้าถัดไป" >
+                            </div>  
+                            </form>
                         </div>
                     </div>
                     <!--/Explane -->

@@ -92,48 +92,45 @@
                     <!-- /Navbar process -->
                     <!-- Part 4 -->
                     <div class="box box-primary">
-                        <div class="box-header with-border">
-
+                        <div class="box-header "><h4>สรุปคะแนนที่ได้รับจากแต่ละส่วนเพื่อประเมินผลโดยรวม</h4></div>
+                        <div class="box-body">
                             <!--Table Point-->
-                            <table class="table table-hover">
-                                <thead class="thead-inverse">
-                                    <tr>
-                                        <th colspan="5"><h4>สรุปคะแนนที่ได้รับจากแต่ละส่วนเพื่อประเมินผลโดยรวม</h4></th>
-                                       
+                            <table class="table table-bordered table-hover table-striped">
+                                <thead>
+                                    <tr align="center">
+                                        <td rowspan=2 class="bg-inverse" style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
+                                        <td colspan=2 class="bg-orange"><b>ผู้ประเมินที่ 1</b></td>
+                                        <td colspan=2 class="bg-olive"><b>ผู้ประเมินที่ 2</b></td>
+                                    </tr>
+                                    <tr align="center">
+                                       <td class="bg-warning"><b>คะแนนเต็ม</b></td>
+                                       <td class="bg-warning"><b>คะแนนที่ได้รับ</b></td>
+                                       <td class="bg-success"><b>คะแนนเต็ม</b></td>
+                                       <td class="bg-success"><b>คะแนนที่ได้รับ</b></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr align="center">
-                                        <td rowspan=2 style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
-                                        <td colspan=2 style="background-color:#FFCCFF"><b>ผู้ประเมินที่ 1</b></td>
-                                        <td colspan=2 style="background-color:#99FF99"><b>ผู้ประเมินที่ 2</b></td>
-                                    </tr>
-                                    <tr align="center">
-                                       <td><b>คะแนนเต็ม</b></td>
-                                       <td><b>คะแนนที่ได้รับ</b></td>
-                                       <td><b>คะแนนเต็ม</b></td>
-                                       <td><b>คะแนนที่ได้รับ</b></td>
-                                    </tr>
+                                    
                                     <tr>
                                         <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
-                                        <td align="center"><b>60</b></td>
-                                        <td align="center"><input type="number" name="ass1part1point" min="0" max="60" disabled readonly></td>
-                                        <td align="center"><b>60</b></td>
-                                        <td align="center"><input type="number" name="ass2part1point" min="0" max="60" disabled readonly></td>
+                                        <td class="" align="center"><b>60</b></td>
+                                        <td class=""   align="center"><input type="number" name="ass1part1point" min="0" max="60" disabled readonly></td>
+                                        <td class="" align="center"><b>60</b></td>
+                                        <td class="" align="center"><input type="number" name="ass2part1point" min="0" max="60" disabled readonly></td>
                                     </tr>
                                     <tr>
                                         <td><b>คะแนนรวมส่วนที่ 2 : พฤติกรรมการทำงาน</b></td>
-                                        <td style="background-color:rgb(200,200,200);"></td>
-                                        <td style="background-color:rgb(128,128,128);"></td>
-                                        <td style="background-color:rgb(200,200,200);"></td>
-                                        <td style="background-color:rgb(128,128,128);"></td>
+                                        <td class=""></td>
+                                        <td class=""></td>
+                                        <td class="" ></td>
+                                        <td class="" ></td>
                                     </tr>
                                     <tr>
                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
-                                        <td align="center"><b>20</b></td>
-                                        <td align="center"><input type="number" name="ass1part2/1point" min="0" max="20" disabled readonly></td>
-                                        <td align="center"><b>20</b></td>
-                                        <td align="center"><input type="number" name="ass1part2/1point" min="0" max="20" disabled readonly></td>
+                                        <td class="" align="center"><b>20</b></td>
+                                        <td class="" align="center"><input type="number" name="ass1part2/1point" min="0" max="20" disabled readonly></td>
+                                        <td class="" align="center"><b>20</b></td>
+                                        <td class="" align="center"><input type="number" name="ass1part2/1point" min="0" max="20" disabled readonly></td>
                                     </tr>
                                     <tr>
                                          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
@@ -144,9 +141,9 @@
                                     </tr>
                                      <tr>
                                         <td><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
-                                        <td style="background-color:rgb(200,200,200);"></td>
-                                        <td><input type="number" name="part3point" min="0" max="20" disabled readonly></td>
-                                        <td style="background-color:rgb(200,200,200);"></td>
+                                        <td ></td>
+                                        <td class="text-center"><input type="number" name="part3point" min="0" max="20" disabled readonly></td>
+                                        <td ></td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -171,60 +168,62 @@
                                     </tr>
                                 </tbody>
                             </table>
-
-                            <br>
-
-
-
+                        </div>
+                        <br>
+                        <div class="row box-padding">
+                            <div class=""><h4>ความคิดเห็นเพิ่มเติม</h4>   </div>
+                            <div class="col-md-6">
+                                <h5><u>จุดเด่นของผู้ถูกประเมิน</u></h5>
+                                <div class="box box-success box-padding-small">
+                                    <div class="form-group">
+                                       <ol>
+                                           <?php
+                                           $sql_skill = "SELECT
+                                                                *
+                                                        FROM
+                                                                skill_development sd
+                                                        JOIN skill_devlopment_group skg ON skg.skill_dev_group_id = sd.skill_development_id" ;
+                                           $query_skill = mysqli_query($conn, $sql_skill);
+                                           
+                                           for($i = 1;$i<=5;$i++) {
+                                           ?>
+                                                   <li>
+                                                       <select class="form-control" name="good">
+                                                           <?php 
+                                                           foreach ($query_skill as $result_skill){
+                                                                echo $result_skill["skill_development_name"];
+                                                           ?>
+                                                           <option value=""><?php echo $result_skill["skill_development_name"]; ?></option>
+                                                           <?php } ?>
+                                               </select>
+                                                   </li>
+                                           <?php 
+                                           
+                                           } ?>
+                                    </ol> 
+                                    </div>
                                     
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><u>จุดด้อยของผู้ถูกประเมิน</u></h5>
+                                <div class="box box-danger box-padding-small">
+                                    <div class="form-group">
+                                       <ol>
+                                           <?php
+                                           for($i = 1;$i<=5;$i++) {
+                                           ?>
+                                           <li><input class="form-control" type="text" name="bad"></li>
+                                           <?php } ?>
+                                    </ol> 
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+     
                             <!--Table Good Bad-->
-                            <h4>ความคิดเห็นเพิ่มเติม</h4>
-                            <table class="table ">
-                                <thead class="thead-inverse">
-                                    <tr>
-                                        <th colspan="2">จุดเด่นของผู้ถูกประเมิน</th>
-                                        <th colspan="2">จุดด้อยของผู้ถูกประเมิน</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td><input type="text" name="good" size="40"></td>
-                                        <th scope="row">1</th>
-                                        <td><input type="text" name="bad" size="40"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td><input type="text" name="good" size="40"></td>
-                                        <th scope="row">2</th>
-                                        <td><input type="text" name="bad" size="40"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td><input type="text" name="good" size="40"></td>
-                                        <th scope="row">3</th>
-                                        <td><input type="text" name="bad" size="40"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td><input type="text" name="good" size="40"></td>
-                                        <th scope="row">4</th>
-                                        <td><input type="text" name="bad" size="40"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">5</th>
-                                        <td><input type="text" name="good" size="40"></td>
-                                        <th scope="row">5</th>
-                                        <td><input type="text" name="bad" size="40"></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">6</th>
-                                        <td><input type="text" name="good" size="40"></td>
-                                        <th scope="row">6</th>
-                                        <td><input type="text" name="bad" size="40"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+
                             <table class="table">
                                 <thead class="thead-default">
                                     <tr>

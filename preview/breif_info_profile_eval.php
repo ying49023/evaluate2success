@@ -17,14 +17,15 @@
     while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
         ?>
     <div class="box-header">
-        <div class="col-sm-12">
+        <div class="col-md6">
             
             
-            <div style="float: right">
+            <div style="float: right;">
                 <img class='img-circle img-sm img-center' src="./upload_images/<?php echo $result_emp["profile_picture"]; ?>" > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-plus"></i>
                 </button>
             </div>
+                <div col-md-6>
             <div style="float: left;">
                     <?php
                     $eval_code = '';
@@ -42,6 +43,7 @@
             </div>
         </div>
     </div>  
+    </div>
     <div class="box-body">
         <table class="table table-bordered table-striped table-responsive">
             
