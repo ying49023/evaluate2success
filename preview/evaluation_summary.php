@@ -92,7 +92,9 @@
                     <!-- /Navbar process -->
                     <!-- Part 4 -->
                     <div class="box box-primary">
-                        <div class="box-header "><h4>สรุปคะแนนที่ได้รับจากแต่ละส่วนเพื่อประเมินผลโดยรวม</h4></div>
+                        <div class="box-header with-border">
+                            <h4>สรุปคะแนนที่ได้รับจากแต่ละส่วนเพื่อประเมินผลโดยรวม</h4>
+                        </div>
                         <div class="box-body">
                             <!--Table Point-->
                             <table class="table table-bordered table-hover table-striped">
@@ -218,212 +220,100 @@
                             </table>
                         </div>
                         <br>
-                        <div class="row box-padding">
-                            <div ><h4>ความคิดเห็นเพิ่มเติม</h4>   </div>
-                            <div class="col-md-6">
-                                <div class="box box-success box-padding-small">
-                                <h5><u>จุดเด่นของผู้ถูกประเมิน</u></h5>
-                                
-                                    <div class="form-group">
-                                       <ol>
-                                           <?php
-                                           $sql_skill = "SELECT
-                                                                *
-                                                        FROM
-                                                                skill_development sd
-                                                        JOIN skill_devlopment_group skg ON skg.skill_dev_group_id = sd.skill_development_id" ;
-                                           $query_skill = mysqli_query($conn, $sql_skill);
-                                           
-                                           for($i = 1;$i<=5;$i++) {
-                                           ?>
-                                                   <li>
-                                                       <select class="form-control" name="good">
-                                                           <option value="">--เลือก--</option>
-                                                           <?php 
-                                                           foreach ($query_skill as $result_skill){
-                                                                echo $result_skill["skill_development_name"];
-                                                           ?>
-                                                           <option value=""><?php echo $result_skill["skill_development_name"]; ?></option>
-                                                           <?php } ?>
-                                               </select>
-                                                   </li>
-                                           <?php 
-                                           
-                                           } ?>
-                                    </ol> 
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="box box-danger box-padding-small">
-                                <h5><u>จุดด้อยของผู้ถูกประเมิน</u></h5>
-                                
-                                    <div class="form-group">
-                                       <ol>
-                                           <?php
-                                           $sql_skill = "SELECT
-                                                                *
-                                                        FROM
-                                                                skill_development sd
-                                                        JOIN skill_devlopment_group skg ON skg.skill_dev_group_id = sd.skill_development_id" ;
-                                           $query_skill = mysqli_query($conn, $sql_skill);
-                                           
-                                           for($i = 1;$i<=5;$i++) {
-                                           ?>
-                                                   <li>
-                                                       <select class="form-control" name="good">
-                                                           <option value="">--เลือก--</option>
-                                                           <?php 
-                                                           foreach ($query_skill as $result_skill){
-                                                                echo $result_skill["skill_development_name"];
-                                                           ?>
-                                                           <option value=""><?php echo $result_skill["skill_development_name"]; ?></option>
-                                                           <?php } ?>
-                                               </select>
-                                                   </li>
-                                           <?php 
-                                           
-                                           } ?>
-                                    </ol> 
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-<!--                        <div class="row box-padding">
-                            <div class="col-md-12">
-                                <div class="box box-warning box-padding-small">
-                                <h5><u>ควรได้รับการพัฒนาด้านใด</u></h5>
-                                
-                                    <div class="form-group">
-                                       <ol>
-                                           <?php
-                                           $sql_skill = "SELECT
-                                                                *
-                                                        FROM
-                                                                skill_development sd
-                                                        JOIN skill_devlopment_group skg ON skg.skill_dev_group_id = sd.skill_development_id" ;
-                                           $query_skill = mysqli_query($conn, $sql_skill);
-                                           
-                                           for($i = 1;$i<=5;$i++) {
-                                           ?>
-                                                   <li>
-                                                       <select class="form-control" name="good">
-                                                           <option value="">--เลือก--</option>
-                                                           <?php 
-                                                           foreach ($query_skill as $result_skill){
-                                                                echo $result_skill["skill_development_name"];
-                                                           ?>
-                                                           <option value=""><?php echo $result_skill["skill_development_name"]; ?></option>
-                                                           <?php } ?>
-                                               </select>
-                                                   </li>
-                                           <?php 
-                                           
-                                           } ?>
-                                    </ol> 
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>-->
-                            <table class="table ">
-                                <thead class="thead-default">
-                                    <tr>
-                                                
-                                        <th colspan="13">การประเมินผลโดยรวม (Overall Rating) </th>
-                                                    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <form>
-                                            
-                                    <tr class="text-center">
-                                                
-                                        <th scope="row" rowspan="3">ผลการปฏิบัติงาน</th>  
-                                        <td><input type="radio" value="A++"  name="grade" disabled></td>
-                                        <td><input type="radio" value="A+" name="grade" disabled></td>
-                                        <td><input type="radio" value="A-" name="grade" disabled></td>
-                                        <td><input type="radio" value="B++" name="grade" disabled></td>
-                                        <td><input type="radio" value="B+" name="grade" disabled></td>
-                                        <td><input type="radio" value="B" name="grade" disabled></td>
-                                        <td><input type="radio" value="B-" name="grade" disabled></td>
-                                        <td><input type="radio" value="C++" name="grade" disabled></td>
-                                        <td><input type="radio" value="C+" name="grade" disabled></td>
-                                        <td><input type="radio" value="C" name="grade" disabled></td>
-                                        <td><input type="radio" value="C-" name="grade" disabled></td>
-                                                    
-                                                    
-                                    </tr>
-                                                
-                                </form>
-                                            
-                                <tr class="text-center">
-                                            
-                                            
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td><?php echo $name; ?></td>
-                                            <?php } ?>
-                                                
-                                </tr>
-                                            
-                                <tr class="text-center">
-                                            
-                                            
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td>(<?php echo $desc; ?>)</td>
-                                            <?php } ?>
-                                                
-                                </tr>
-                                            
-                                            
-                                <tr class="text-center">
-                                    <th scope="row">คะแนน</th>
-                                                
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td><?php echo $minpoint; ?> - <?php echo $maxpoint; ?></td>
-                                            <?php } ?>
-                                </tr>
-                                            
-                                </tbody>
-                            </table>
+                        
+
+<div class="row box-padding">
+    <table class="table ">
+        <thead class="thead-default">
+            <tr>
+                        
+                <th colspan="13">การประเมินผลโดยรวม (Overall Rating) </th>
+                            
+            </tr>
+        </thead>
+        <tbody>
+        <form>
+                    
+            <tr class="text-center">
+                        
+                <th scope="row" rowspan="3">ผลการปฏิบัติงาน</th>  
+                <td><input type="radio" value="A++"  name="grade" disabled></td>
+                <td><input type="radio" value="A+" name="grade" disabled></td>
+                <td><input type="radio" value="A-" name="grade" disabled></td>
+                <td><input type="radio" value="B++" name="grade" disabled></td>
+                <td><input type="radio" value="B+" name="grade" disabled></td>
+                <td><input type="radio" value="B" name="grade" disabled></td>
+                <td><input type="radio" value="B-" name="grade" disabled></td>
+                <td><input type="radio" value="C++" name="grade" disabled></td>
+                <td><input type="radio" value="C+" name="grade" disabled></td>
+                <td><input type="radio" value="C" name="grade" disabled></td>
+                <td><input type="radio" value="C-" name="grade" disabled></td>
+            </tr>
+                        
+        </form>
+                    
+        <tr class="text-center">
+                    
+                    
+                    <?php
+                    $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
+                        
+                    $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                    ?>
+                    <?php
+                    while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                        $name = $result["grade_description"];
+                        $desc = $result["grade_explaned"];
+                        $maxpoint = $result["standard_max_point"];
+                        $minpoint = $result["standard_min_point"];
+                        $id = $result["grade_id"];
+                        ?>
+            <td><?php echo $name; ?></td>
+                    <?php } ?>
+        </tr>
+        <tr class="text-center">
+                    
+                    
+                    <?php
+                    $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
+                        
+                    $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                    ?>
+                    <?php
+                    while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                        $name = $result["grade_description"];
+                        $desc = $result["grade_explaned"];
+                        $maxpoint = $result["standard_max_point"];
+                        $minpoint = $result["standard_min_point"];
+                        $id = $result["grade_id"];
+                        ?>
+            <td>(<?php echo $desc; ?>)</td>
+                    <?php } ?>
+        </tr>
+                    
+        <tr class="text-center">
+            <th scope="row">คะแนน</th>
+                        
+                    <?php
+                    $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
+                        
+                    $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                    ?>
+                    <?php
+                    while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                        $name = $result["grade_description"];
+                        $desc = $result["grade_explaned"];
+                        $maxpoint = $result["standard_max_point"];
+                        $minpoint = $result["standard_min_point"];
+                        $id = $result["grade_id"];
+                        ?>
+            <td><?php echo $minpoint; ?> - <?php echo $maxpoint; ?></td>
+                    <?php } ?>
+        </tr>
+                    
+        </tbody>
+    </table>
+</div>
                                         
                                 
                                         

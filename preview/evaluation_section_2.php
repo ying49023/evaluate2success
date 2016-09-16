@@ -36,8 +36,8 @@
             $get_eval_code = $_GET["eval_code"];
         }
         //Get Position Level
-        if(isset($_GET["position_level_id"])){
-            $level = $_GET["position_level_id"];
+        if(isset($_SESSION["position"])){
+            $level = $_SESSION["position"];
         }
         
         if(isset($_POST['comp_id'])&&isset($_POST['score_huahna1'])){
@@ -50,9 +50,9 @@
             }
             $i=0;
             foreach ($_POST['comp_id'] as $compId){
-                $positionID=$_GET['position_level_id'];
+                $positionID=$_SESSION['position'];
                 $e_code=$_POST['evalcode'];
-                $emp=$_GET['emp_id'];
+                $emp=$_SESSION['emp_id'];
                 //echo $compId.' '.$_GET['eval_code'].' '.$_GET['emp_id'].' '.$_GET['position_level_id'].' score '.$array_h[$i].' | ';
                $sql_insert="INSERT INTO evaluation_competency (
                                                     evaluation_competency_id,
@@ -156,8 +156,6 @@
                                                    WHERE evaluate_employee_id = 9");
                 */
                 
-                
-                
                 $i++;
               
             }
@@ -165,18 +163,17 @@
                         SELECT sum(mc.weight*ec.point_assessor1)
                         FROM manage_competency mc JOIN evaluation_competency ec
                         ON mc.manage_comp_id = ec.manage_comp_id
-                        WHERE ec.evaluate_employee_id=$get_eval_emp_id)
-                        WHERE evaluate_employee_id=$get_eval_emp_id";
+                        WHERE ec.evaluate_employee_id='".$_SESSION["eval_emp_id"]."')
+                        WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."'";
                 $query_update=  mysqli_query($conn, $sql_update);
-               if ($query_update)
-                            echo "Record update successfully";
-                        else {
-                            $msg = 'Error :' . mysql_error();
-                            echo "Error Save [" . $sql_update . "]";
-                        }
-           
-            
-        }
+                if ($query_update) {
+                    echo "Record update successfully";
+                    header("location:evaluation_section_3.php");
+                } else {
+                    $msg = 'Error :' . mysql_error();
+                    echo "Error Save [" . $sql_update . "]";
+                }
+            }
          
     ?>
         <meta charset="utf-8">
@@ -240,7 +237,7 @@
                     <?php
                     if($level != '') {
 
-                        $sql_level = "SELECT * FROM position_level WHERE position_level_id = '$level'" ; 
+                        $sql_level = "SELECT * FROM position_level WHERE position_level_id = '".$_SESSION["position"]."'" ; 
                         $query_level = mysqli_query($conn, $sql_level);
                         $result_level = mysqli_fetch_array($query_level,MYSQLI_ASSOC);
                         $level_name = $result_level["position_description"];
@@ -265,7 +262,7 @@
                                                 JOIN competency c ON c.title_id = t.title_id 
                                                 JOIN manage_competency m ON c.competency_id = m.competency_id
                                                 WHERE
-                                                        m.position_level_id = '$level'
+                                                        m.position_level_id = '".$_SESSION["position"]."'
                                                 AND m.STATUS = 1 
                                                 GROUP BY t.title_name";
 
@@ -303,7 +300,7 @@
                                             JOIN competency c ON m.competency_id=c.competency_id 
                                             JOIN competency_title t ON c.title_id=t.title_id 
                                             JOIN position_level p ON p.position_level_id=m.position_level_id 
-                                            WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1 ";
+                                            WHERE m.position_level_id='".$_SESSION["position"]."' and t.title_id = '$result_title_id' and m.status=1 ";
                                 $query_mng= mysqli_query($conn, $sql_mng);
                                 $no=0;
                                 ?>
@@ -347,7 +344,7 @@
                                                 
                                                 <!-- เช็คคนประเมิน -->
                                                 <?php
-                                                $employee_id_com =$_GET['emp_id'];
+                                                $employee_id_com =$_SESSION["emp_id"];
                                                     $sql_huahna = "
                                                         SELECT
                                                             e.employee_id AS looknong,
@@ -387,13 +384,13 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status= 1";
+                                                            WHERE mc.competency_id = '".$_SESSION["comp_id"]."' AND mc.position_level_id = '".$_SESSION["position"]."' AND mc.status= 1";
                                                     $query_score1= mysqli_query($conn, $sql_score1);
                                                             ?>
                                                 <td style="text-align: center;">
                                                     
                                                     <?php if($my_emp_id==$huahna1){?>
-                                                            <select name="score_huahna1[]" class="form-control" id="score<?=$m_id?>_1" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_1', 'score<?=$m_id?>_1')" >
+                                                    <select name="score_huahna1[]" class="form-control" required id="score<?=$m_id?>_1" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_1', 'score<?=$m_id?>_1')" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score1 = mysqli_fetch_array($query_score1)) { ?>
                                                                 <option value="<?php echo $result_score1["score"]; ?>"  >
@@ -437,12 +434,12 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                            WHERE mc.competency_id = '".$_SESSION["comp_id"]."' AND mc.position_level_id = '".$_SESSION["position"]."' AND mc.status=1";
                                                     $query_score2= mysqli_query($conn, $sql_score2);
                                                             ?>
                                                 <?php if($my_emp_id==$huahna2){?>
                                                 <td style="text-align: center;">                                                    
-                                                            <select class="form-control" id="score<?=$m_id?>_2" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_2', 'score<?=$m_id?>_2')" >
+                                                    <select class="form-control" id="score<?=$m_id?>_2" required onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_2', 'score<?=$m_id?>_2')" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score2 = mysqli_fetch_array($query_score2)) {
                                                                             $score2=$result_score2["score"];
@@ -482,7 +479,7 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                            WHERE mc.competency_id = '".$_SESSION["comp_id"]."' AND mc.position_level_id = '".$_SESSION["position"]."' AND mc.status=1";
                                                     $query_pointdetail= mysqli_query($conn, $sql_pointdetail);
 
                                                     ?>
@@ -535,8 +532,8 @@
                                                                                 JOIN manage_competency mc ON mcp.manage_comp_id = mc.manage_comp_id
                                                                                 JOIN competency c ON c.competency_id = mc.competency_id
                                                                                 WHERE
-                                                                                        mc.competency_id = '$m_com'
-                                                                                AND mc.position_level_id = '$level'
+                                                                                        mc.competency_id = '".$_SESSION["comp_id"]."'
+                                                                                AND mc.position_level_id = '".$_SESSION["position"]."'
                                                                                 AND mc. STATUS = 1";
                                                                             $query_pointdetail_sub= mysqli_query($conn, $sql_pointdetail_sub);
                                                                             ?>
@@ -555,8 +552,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">                                                            
-                                                                    
-                                                                    
                                                                     <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
                                                                 </div>                 
                                                             </div>
@@ -573,16 +568,15 @@
                                         <?php } ?>
                                         </tbody>
                                     </table>
-                                    
-                                    
+
                                 </div>
                                 <?php } ?> 
                                 <div class="col-md-12 text-center">
                                     <button class="btn btn-success btn-lg search-button" type="submit" >บันทึก</button>  
-                                    <button class="btn btn-danger btn-lg search-button" >รีเซ็ท</button> 
+                                    <button class="btn btn-danger btn-lg search-button" type="reset" >รีเซ็ท</button> 
                                     <input type="hidden" name="position_level" value="<?php=$level?>" >
                                     <input type="hidden" name="emp" value="<?php=$my_emp_id?>" >
-                                    <input type="hidden" name="evalcode" value="<?php=$eval_code?>" >
+                                    <input type="hidden" name="evalcode" value="<?php echo $_SESSION["eval_code"];  ?>" >
                                 </div>
                             </div>
                             </form>    

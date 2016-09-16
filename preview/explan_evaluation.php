@@ -47,7 +47,7 @@
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
         <!-- SCRIPT PACKS -->
-        <?php include('./script_packs.html') ?>
+        <?php include('./script_packs.html'); ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
     </head>
@@ -120,20 +120,26 @@
                                         }
                                         ?>
                             </div>
-                            <script>
-                                $('#check').click(function(){
-                                    if($(this).prop('checked') == true){
-                                        $('input[type="submit"]').prop('disabled', false);
-                                    }else{
-                                        $('input[type="submit"]').prop('disabled', true);
-                                    }
-                                });
-                            </script>
+                            
                             <form action="evaluation_section_1.php" method="post">
-                            <div class="form-group box-padding-small text-center">
-                                <input type='checkbox' name='chk' value='1' id='check'> ยอมรับข้อตกลงและคำชี้แจง <br>
-                                <input class="btn btn-success btn-lg search-button" type="submit" name="submit" value="หน้าถัดไป" >
-                            </div>  
+                                <script>
+                                $(function() {
+                                    var chk = $('#check');
+                                    var btn = $('#btncheck');
+
+                                    chk.on('change', function() {
+                                      btn.prop("disabled", !this.checked);//true: disabled, false: enabled
+                                    }).trigger('change'); //page load trigger event
+                                  });
+                                </script>
+
+                                <div class="form-group  text-center">
+                                    <div class="checkbox box-padding-small">
+                                       <input id="check" name="checkbox" type="checkbox" > 
+                                       <label for="check">ยอมรับข้อตกลงและคำชี้แจง</label><!-- for must be the id of input -->
+                                    </div>
+                                    <button class="btn btn-success btn-lg " type="submit" id="btncheck"  name="submit"><i class="glyphicon glyphicon-play-circle"></i> &nbsp; หน้าถัดไป - ส่วนที่ 1 : KPIs</button>
+                                </div>  
                             </form>
                         </div>
                     </div>

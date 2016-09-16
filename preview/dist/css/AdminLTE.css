@@ -2433,6 +2433,27 @@ a:focus {
 .nav-pills > li.active > a {
   font-weight: 600;
 }
+
+/* NAV PILLS BUTTON*/
+.nav-pills > li > button {
+  border-radius: 0;
+  border-top: 3px solid transparent;
+  color: #444;
+}
+.nav-pills > li > button > .fa,
+.nav-pills > li > button > .glyphicon,
+.nav-pills > li > button > .ion {
+  margin-right: 5px;
+}
+.nav-pills > li.active > button,
+.nav-pills > li.active > button:hover,
+.nav-pills > li.active > button:focus {
+  border-top-color: #3c8dbc;
+}
+.nav-pills > li.active > button {
+  font-weight: 600;
+}
+
 /* NAV STACKED */
 .nav-stacked > li > a {
   border-radius: 0;

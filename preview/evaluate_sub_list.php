@@ -162,7 +162,8 @@
                                 </button>
                                 </div>
                             </div>
-                            <div class="box-body">
+                            
+                                <div class="box-body">
                                 <!-- ช่องค้นหา by listJS -->
                             <div class="form-inline padding-small">
                                 <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
@@ -187,7 +188,8 @@
                                                             ee.status_success,
                                                             ee.evaluate_employee_id,
                                                             d.department_name,
-                                                            j.job_name
+                                                            j.job_name,
+                                                            c.company_id
                                                           FROM
                                                             employees e
                                                           JOIN
@@ -202,6 +204,9 @@
                                                             departments d
                                                           ON
                                                             d.department_id = e.department_id
+                                                          JOIN
+                                                            company c
+                                                          ON c.company_id = e.company_id
                                                           WHERE
                                                             ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code
                                                           GROUP BY
@@ -230,6 +235,7 @@
                                         $position=$result_emp_list["position_level_id"];
                                         $job_name = $result_emp_list["job_name"];
                                         $department_name = $result_emp_list["department_name"];
+                                        $comp_id = $result_emp_list["company_id"];
                                         $eval_emp_id = $result_emp_list["evaluate_employee_id"];
                                         ?>
                                     <tr>
@@ -238,9 +244,17 @@
                                         <td class="job_name"><?php echo $job_name; ?></td>
                                         <td class="dept_name"><?php echo $department_name; ?></td>
                                         <td class="text-center">
-                                            <a class="btn btn-success " href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=<?php echo $eval_code;?>&eval_emp_id=<?php echo $eval_emp_id; ?>">    
-                                                <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
-                                            </a>
+                                            <form action="evalaution_start_session.php" method="post">
+                                                <input type="hidden" name="emp_id" value="<?php echo $employee_id; ?>" >
+                                                <input type="hidden" name="position" value="<?php echo $position; ?>" >
+                                                <input type="hidden" name="eval_emp_id" value="<?php echo $eval_emp_id; ?>" >
+                                                <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
+                                                <input type="hidden" name="comp_id" value="<?php echo $comp_id; ?>" >
+                                                <button class="btn btn-success" type="submit" name="submit_eval" ><i class="glyphicon glyphicon-triangle-right"></i>ประเมิน</button>
+<!--                                                <a class="btn btn-success " href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=<?php echo $eval_code;?>&eval_emp_id=<?php echo $eval_emp_id; ?>">    
+                                                    <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
+                                                </a>-->
+                                            </form>
                                         </td>
                                         <?php if($status==0){
                                            echo '<td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>';   
@@ -266,6 +280,7 @@
                                 
                                 <!-- /.chart-responsive -->
                             </div>
+                            
                         </div>
                 </div>
                 <!--/list employee-->

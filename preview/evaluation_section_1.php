@@ -111,7 +111,7 @@
                                                     FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
                                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
                                                     JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
-                                                    WHERE ee.employee_id = '".$get_emp_id."' ORDER BY kpi_id ";
+                                                    WHERE ee.employee_id = '".$_SESSION["emp_id"]."' ORDER BY kpi_id ";
                                         $query_kpi = mysqli_query($conn, $sql_kpi);
                                     ?>
                                     <table class="table table-bordered ">
@@ -177,8 +177,7 @@
                
                                                 $sql_sum_kpi="SELECT (SUM(sum_point)*60)/1000 as sum_point
                                                             FROM kpi_responsible
-                                                            WHERE evaluate_employee_id=$get_eval_emp_id
-                                                            ";
+                                                            WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";
                                                 $query_sum_kpi = mysqli_query($conn, $sql_sum_kpi);
                                                 while($result_sum_kpi = mysqli_fetch_assoc($query_sum_kpi)) {
                                                     $sum_point=$result_sum_kpi['sum_point'];
@@ -197,15 +196,13 @@
                                                 $sql_sum_kpi_total="UPDATE evaluation_employee 
                                                         SET point_kpi=(	  SELECT (SUM(sum_point)*60)/1000
                                                                                     FROM kpi_responsible
-                                                                                    WHERE evaluate_employee_id=$get_eval_emp_id)
-                                                        WHERE evaluate_employee_id=$get_eval_emp_id
-
-                                                            ";
+                                                                                    WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."')
+                                                        WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";
                                                 $query_sum_kpi_total = mysqli_query($conn, $sql_sum_kpi_total);
                                                 ?>
                                                 <th colspan="4" class=""></th>
                                                 <?php 
-                                                $sql_point_kpi="select * from evaluation_employee WHERE evaluate_employee_id=$get_eval_emp_id";
+                                                $sql_point_kpi="select * from evaluation_employee WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";
                                                 $query_point_kpi=  mysqli_query($conn, $sql_point_kpi);
                                                 while($result_point_kpi = mysqli_fetch_assoc($query_point_kpi)) {
                                                     $point_kpi=$result_point_kpi['point_kpi'];
@@ -219,7 +216,12 @@
                                                 
                                 </div>  
                                             
-                                            
+                                <form action="evaluation_section_2.php" method="get">
+                                <div class="form-group box-padding-small text-center">
+                                    <input type="hidden" name="position_level_id" value="<?php echo $_SESSION["position"]; ?>" >
+                                    <button class="btn btn-success btn-lg" type="submit" id="btncheck" name="submit" ><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - ส่วนที่ 2 : Competency</button>
+                                </div>  
+                            </form>                
                             </div>
                         </div>
                     </div>
