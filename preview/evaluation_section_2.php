@@ -46,13 +46,7 @@
                 $sql_update_comp ="call update_point_comp($compId,$e_code,$e_emp_id,$array_h[$i],$emp)";
                 
                 $query_update_comp=  mysqli_query($conn, $sql_update_comp);
-                if ($query_update_comp){
-                            header("location:evaluation_section_3.php");
-                            
-                }else {
-                            $msg = 'Error :' . mysql_error();
-                            echo "Error Save [" . $sql_update_comp. "]";
-                        }
+                
                 
                 
                 
@@ -62,6 +56,18 @@
            
             
         }
+                if ($query_update_comp){
+                            header("location:evaluation_section_3.php");
+                            
+                }else {
+                           
+                           echo '<script>
+                                
+                                
+                                    alert("ทำรายการไม่สำเร็จ! กรุณาทำใหม่อีกครั้ง");
+                                
+                                </script>';
+                        }
         }
         
         if(isset($_POST['comp_id'])&&isset($_POST['score_huahna2'])){
@@ -82,21 +88,28 @@
                 $sql_update_comp ="call update_point_comp($compId,$e_code,$e_emp_id,$array_h[$i],$emp)";
                 
                 $query_update_comp=  mysqli_query($conn,$sql_update_comp);
-                if ($query_update_comp)
-                            echo "Record update successfully";
-                        else {
-                            $msg = 'Error :' . mysql_error();
-                            echo "Error Save [" . $sql_update_comp. "]";
-                        }
+                
                 
                 
                 
                 $i++;
-              
+                
          
            
             
         }
+        if ($query_update_comp){
+                            header("location:evaluation_section_3.php");
+                            
+                }else {
+                           
+                           echo '<script>
+                                
+                                
+                                    alert("ทำรายการไม่สำเร็จ! กรุณาทำใหม่อีกครั้ง");
+                                
+                                </script>';
+                        }
         }
          
     ?>
@@ -314,7 +327,7 @@
                                                 <td style="text-align: center;">
                                                     
                                                     <?php if($my_emp_id==$huahna1){?>
-                                                            <select name="score_huahna1[]" class="form-control" id="score<?=$m_id?>_1" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_1', 'score<?=$m_id?>_1')" >
+                                                    <select name="score_huahna1[]" required="true" class="form-control" id="score<?=$m_id?>_1" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_1', 'score<?=$m_id?>_1')" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score1 = mysqli_fetch_array($query_score1)) { ?>
                                                                 <option value="<?php echo $result_score1["score"]; ?>"  >
@@ -363,7 +376,7 @@
                                                             ?>
                                                 <?php if($my_emp_id==$huahna2){?>
                                                 <td style="text-align: center;">                                                    
-                                                    <select name="score_huahna2[]" class="form-control" id="score<?=$m_id?>_2" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_2', 'score<?=$m_id?>_2')" >
+                                                    <select name="score_huahna2[]" required="true" class="form-control" id="score<?=$m_id?>_2" onchange="show_selected('<?=$m_id?>weight<?=$no?>', 'display<?=$m_id?>_2', 'score<?=$m_id?>_2')" >
                                                                 <option value=""> </option>
                                                                         <?php while ($result_score2 = mysqli_fetch_array($query_score2)) {
                                                                             $score2=$result_score2["score"];
@@ -498,12 +511,30 @@
                                 </div>
                                 <?php } ?> 
                                 <div class="col-md-12 text-center">
-                                    <button class="btn-success btn-lg" type="submit" >บันทึก</button>  
-                                    <button class="btn-danger btn-lg" >รีเซ็ท</button> 
-                                    <input type="hidden" name="position_level" value="<?php=$level;?>" >
-                                    <input type="hidden" name="emp" value="<?php echo $my_emp_id;?>" >
-                                    <input type="hidden" name="evalcode" value="<?php echo $_SESSION['eval_code'];?>" >
+                                    <a class="btn btn-success btn-lg"  data-toggle="modal" data-target="#save_point">บันทึก</a>   
+                                    <button class="btn btn-danger btn-lg" type="reset">รีเซ็ท</button>                                     
                                 </div>
+                                <div class="modal fade" id="save_point" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                            <h4 class="modal-title" id="myModalLabel">ยืนยันการประเมิน</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">                                                                                                      <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+
+                                                                                    เมื่อกดยืนยันคุณจะไม่สามารถกลับมาแก้ไขได้!! ทำรายการต่อไหม?
+
+                                                                        </div>
+                                                                        <div class="modal-footer">                                                                   
+                                                                            <button class="btn-info btn-lg" type="submit" >ยืนยัน</button>                                                                             
+                                                                            <input type="hidden" name="position_level" value="<?php=$level;?>" >
+                                                                            <input type="hidden" name="emp" value="<?php echo $my_emp_id;?>" >
+                                                                            <input type="hidden" name="evalcode" value="<?php echo $_SESSION['eval_code'];?>" >
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                             </div>
                             </form>    
                         </div>

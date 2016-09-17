@@ -254,7 +254,7 @@
                         
                         <?php 
                         $sql_kpi_history ="
-                            SELECT k.kpi_name, kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol
+                            SELECT kp.kpi_comment,k.kpi_name, kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol
                             FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id 
                             JOIN kpi k ON ks.kpi_id = k.kpi_id
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
@@ -283,6 +283,7 @@
                                         $kpi_name = $result_kpi_history["kpi_name"];                                        
                                         $goal = $result_kpi_history["goal"];
                                         $symbol = $result_kpi_history["symbol"];
+                                        $comment = $result_kpi_history["kpi_comment"];
                                         $kpi_progress_update = $result_kpi_history["kpi_progress_update"];
                                         $progress_time_update = $result_kpi_history["progress_time_update"];
                                         $count++;
@@ -294,7 +295,7 @@
                                         <td class="text-center"><?php echo $symbol.''.$goal;?></td>
                                         <td class="text-center"><?php echo $kpi_progress_update;?></td>
                                         
-                                        <td class="text-center"> </td>
+                                        <td class="text-center"><?php echo $comment;?></td>
                                     </tr>
                                         <?php } ?>
                                 </table>
