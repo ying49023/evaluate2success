@@ -28,7 +28,7 @@ and open the template in the editor.
 
         <style>
             .bg1{
-                background-color:#367fa9;
+                background-color:#0A406B;
                 color: #fff;
             }
             .bg1 h1{
@@ -53,9 +53,12 @@ and open the template in the editor.
                 text-align: center;
             }
             .form-signin{
-                max-width: 550px;
+                max-width: 420px;
                 padding: 15px;
                 margin: 0 auto;
+            }
+            .button-padding{
+                padding: 10px 15px 10px 15px;
             }
         </style>
     </head>
@@ -74,41 +77,51 @@ and open the template in the editor.
                 <div class="container">
                     <form action="check_login.php" method="post" class="form-horizontal form-signin">
                         <div class="box-body">
-                            <div class="form-group">
-                                <label for="username" class=" control-label">Username</label>
-
-                                <div class="">
-                                    <input type="text" class="form-control" name="username" placeholder="username" required>
-                                </div>
+                            <label for="username" class=" control-label">Username</label>
+                            <div class="input-group">
+                                    <input type="text" class="form-control" name="username" placeholder="username" required >
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             </div>
-                            <div class="form-group">
-                                <label for="password" class=" control-label">Password</label>
-
-                                <div class=" ">
+                            <label for="password" class=" control-label">Password</label>
+                            <div class="input-group">
+                                
                                     <input type="password" class="form-control" name="password" placeholder="********" required>
-                                </div>
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
                             </div>
                             <p style="color: red;font-weight: 600;text-align: center;"><?php echo $value; ?></p>
+                            <div class="">
+                                <input type="submit" class="btn btn-info button-padding pull-left " style="width: 100%" name="submit_login"  value=" เข้าสู่ระบบ ">
+                            </div>
                         </div>
                         <!-- /.box-body -->
                         <div class=" box-footer">
-                            <div class="">
-                                <input type="submit" class="btn btn-info button-login pull-left " name="submit_login"  value=" เข้าสู่ระบบ ">
+                            <div class="row">
+                                <div class="col-md-12 text-center">
+                                    <span style="color: #9E9E9Eว">เลือก : </span> 
+                                    <a class=" label  label-success" href="login.php" style="color:#4CAF50;font-weight: 700;font-size: 14px; ">General User</a>
+                                    <a class=" label  label-default" href="hr/login.php" style="color:#AD1457;font-weight: 700;font-size: 14px;">Admin User</a>
+                                </div>
                             </div>
-                            <div class="">
-                                <button name="submit_forget" class="btn btn-default button-login pull-right" disabled>ลืมรหัสผ่าน?</button>
-                            </div>
+                            
                         </div>
                         <!-- /.box-footer -->
                     </form>
-                    <div class="form-horizontal form-signin" style="color:green;width: 500px;font-weight: 800;font-style: italic">
-                        <p ><u>หมายเหตุ</u>โปรดLogin โดย username : rose / password : 1234 </p>
-                        <p>ขั้นตอนการ Logout</p>
-                        <ol>
-                            <li>คลิกมุมบนขวาที่แสดงชื่อ</li>
-                            <li>เลือกปุ่ม logout</li>
-                        </ol>
+                    <div class="row">
+                        <div class="col-md-offset-2 col-md-8">
+                            <div class="well">
+                                <div class="form-horizontal form-signin" style="color:green;width: 500px;font-weight: 800;font-style: italic">
+                                    <p ><u>หมายเหตุ</u>โปรด  Login โดย username : ying / password : 4321 </p>
+                                    <p>ขั้นตอนการ Logout</p>
+                                    <ol>
+                                        <li>คลิกมุมบนขวาที่แสดงชื่อ</li>
+                                        <li>เลือกปุ่ม logout</li>
+                                    </ol>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    
+                    
                 </div>
                 
             </div> 

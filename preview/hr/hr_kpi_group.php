@@ -170,7 +170,7 @@
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
 
-                                                            <div class="modal-header">
+                                                            <div class="modal-header bg-blue">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
                                                             </div>
@@ -189,7 +189,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <input class="btn btn-primary" type="submit" name="submit_edit" value="บันทึก" >
+                                                                <input class="btn btn-success" type="submit" name="submit_edit" value="บันทึก" >
                                                                 <input type="hidden" name="kpi_group_id" value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" >
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                             </div>                 

@@ -161,7 +161,7 @@
                                                 <th>รอบการประเมิน</th>
                                                 <th>วันเปิด</th>
                                                 <th>วันปิด</th>
-                                                <th class="text-center">จัดการ</th>
+                                                <th class="text-center" style="max-width: 150px;">จัดการ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -188,7 +188,7 @@
                                                     <div class="modal fade" id="<?php echo $result_eval["evaluation_code"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
-                                                                <div class="modal-header">
+                                                                <div class="modal-header bg-blue">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                     <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
                                                                 </div>
@@ -252,6 +252,7 @@
                                                     </div>
                                                  </form>
                                                <!-- Edit Modal -->
+                                               
                                            </td>
                                        </tr>
                                        <?php } ?>
@@ -259,12 +260,16 @@
                                    </table>
                                       
                                      <?php echo $msg;?> 
+                                      <div class="inline">
+                                      <a class="btn btn-warning " data-toggle="modal" data-target="#history" ><i class="glyphicon glyphicon glyphicon-list"></i> &nbsp; ประวัติย้อนหลัง</a>
+                                      <input type="submit" value="เพิ่มข้อมูล" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModalAdd">
+                                      </div>
                                       <!--Add Modal -->
                                       <form class="form-horizontal" action='manage_evaluate.php?erp=save' method="post">
                                         <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                           <div class="modal-dialog" role="document">
                                             <div class="modal-content">
-                                              <div class="modal-header">
+                                              <div class="modal-header bg-green">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 class="modal-title" id="myModalLabel">เพิ่มข้อมูล</h4>
                                               </div>
@@ -315,8 +320,8 @@
                                                   
                                               </div>
                                               <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary">เพิ่ม</button>
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                <button type="submit" class="btn btn-success">เพิ่ม</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                                                 
                                               </div>
                                             </div>
@@ -324,10 +329,51 @@
                                         </div>
                                        </form>
                                       <!-- Add Modal -->
-                                      
-                                      <br>
-                                      <input type="submit" value="เพิ่มข้อมูล" class="btn btn-success pull-right" data-toggle="modal" data-target="#myModalAdd">
-                                      
+                                      <!--History -->
+                                      <div class="modal fade" id="history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                          <div class="modal-dialog modal-lg" role="document">
+                                              <div class="modal-content">
+                                                  <div class="modal-header bg-yellow">
+                                                      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                      <h4 class="modal-title" id="myModalLabel">ข้อมูลการประเมินย้อนหลัง</h4>
+                                                  </div>
+                                                  <div class="modal-body">                                           
+                                                              <?php
+                                                              $sql_history_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=0  ";
+                                                              $query_history_eval = mysqli_query($conn, $sql_history_eval);
+                                                              ?>    
+                                                      <table class="table table-hover">
+                                                          <tr>
+                                                                      
+                                                              <th>รอบการประเมิน</th>
+                                                              <th>วันเปิด</th>
+                                                              <th>วันปิด</th>
+                                                              <th class="text-center">สถานะ</th>
+                                                                          
+                                                          </tr>
+                                                                  <?php while ($result_history_eval = mysqli_fetch_array($query_history_eval, MYSQLI_ASSOC)) { ?>
+                                                          <tr>
+                                                                          
+                                                              <td><?php echo $result_history_eval["term"]; ?> / <?php echo $result_history_eval["year"]; ?></td>
+                                                              <td><?php echo $result_history_eval["open_system_date"]; ?></td>
+                                                              <td><?php echo $result_history_eval["close_system_date"]; ?></td>
+                                                              <td class="text-center"><span style="color:maroon;">ปิดรอบการประเมิน</span></td>
+                                                          </tr>
+                                                                          
+                                                                          
+                                                                          
+                                                                  <?php } ?>
+                                                      </table>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                              
+                                                      <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
+                                                                  
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <!--/History-->
                                    </div>
                                 </div>
                             </div>                                                             

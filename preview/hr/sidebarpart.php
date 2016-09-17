@@ -125,7 +125,7 @@
             <!--/KPI-->
             
             <!-- Manage Leave date -->
-            <li class="<?php if ($page == 'manage_employee_leave.php' || $page == 'manage_leave_type.php') {
+            <li class="<?php if ($page == 'leave_form.php' || $page == 'leave_form2.php' || $page == 'manage_leave_type.php') {
                     echo "active";
                 } ?>">
                 <a href="">
@@ -134,10 +134,10 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?php if ($page == 'manage_employee_leave.php') {
+                    <li class="<?php if ($page == 'leave_form.php' || $page == 'leave_form2.php') {
                     echo "active";
                 } ?>">
-                        <a href="manage_employee_leave.php"><i class="fa fa-circle-o"></i>จัดการวันลาของพนักงาน(coming..)</a>
+                        <a href="leave_form.php"><i class="fa fa-circle-o"></i>จัดการวันลาของพนักงาน</a>
                     </li>
                     <li class="<?php if ($page == 'manage_leave_type.php') {
                     echo "active";
@@ -169,21 +169,12 @@
             <!-- /Manage employee -->
             
             <!-- Next KPI -->
-            <li class="<?php if($page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php'){ echo "active" ; } ?>">
+<!--            <li class="<?php if($page == 'hr_approve_kpi.php' || $page == 'hr_approve_kpi2.php'){ echo "active" ; } ?>">
                 <a href="hr_approve_kpi.php">
                     <i class="glyphicon glyphicon glyphicon-forward"></i>อนุมัติKPIsครั้งถัดไป
                 </a>
-            </li>
+            </li>-->
             <!-- /Next KPI -->
-            
-            <!-- Report Doc-->
-            <li class="<?php if($page == 'hr_report_page.php' || $page == 'hr_report_grade.php'){ echo "active" ; } ?>">
-                <a href="hr_report_page.php" >
-                    <i class="glyphicon glyphicon-book"></i> <span>ออกรายงาน</span>
-
-                </a>
-            </li>
-            <!-- /Report Doc-->
             
             <!-- Assign KPI -->
             <li class="<?php if($page == 'hr_assign_kpi.php' || $page == 'hr_manage_kpi.php'|| $page=='hr_assign_kpi_department.php'){ echo "active" ; } ?>">
@@ -205,19 +196,30 @@
             </li>
             <!-- Assign KPI -->
             
+            <!-- Report Doc-->
+            <li class="<?php if($page == 'hr_report_page.php' || $page == 'hr_report_grade.php'){ echo "active" ; } ?>">
+                <a href="hr_report_page.php" >
+                    <i class="glyphicon glyphicon-book"></i> <span>ออกรายงาน</span>
+
+                </a>
+            </li>
+            <!-- /Report Doc-->
+            
+            
+            
             <!-- Threshold -->
-            <li class="<?php if($page == 'threshold.php'){ echo "active" ; } ?>">
+<!--            <li class="<?php if($page == 'threshold.php'){ echo "active" ; } ?>">
                 <a href="threshold.php">
                     <i class="glyphicon glyphicon-sort-by-attributes-alt"></i> <span>การจัดการการวัดระดับ</span>
 
                 </a>
-            </li>
+            </li>-->
             <!-- /Threshold -->
 
             <!-- Problem/Report -->
             <li class="<?php if($page == 'report.php'){ echo "active" ; } ?>">
                 <a href="report.php">
-                    <i class="glyphicon glyphicon-envelope"></i> <span>แจ้งปัญหา/รายงานข้อผิดพลาด</span>
+                    <i class="glyphicon glyphicon-envelope"></i> <span>แจ้งปัญหา</span>
 
                 </a>
             </li>

@@ -30,15 +30,6 @@
                 $id = $_GET["emp_id"];
             }
 
-            $condition_search = '';
-            if ($get_department_id != '') {
-                $condition_search = " WHERE dept.department_id = '" . $get_department_id . "'";
-            }else if($name != '') {
-                $condition_search = " WHERE emp.first_name = '" . $name. "'";
-            }else if($id != '') {
-                $condition_search = " WHERE emp.employee_id = '" . $id. "'";
-            }
-
 ?>
 <html>
     <head>
@@ -82,55 +73,28 @@
                 <!-- Main content -->
                 <div id="filter" class="row box-padding">
                         <div class="box box-primary">
-                        <div class="box-header with-border">
-                            <h4>รอบการประเมินที่....</h4>                           
+                        <div class="box-header with-border ">
+                            <h4>
+                            <?php
+                            $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '3'";
+                            $query_year_term = mysqli_query($conn, $sql_year_term);
+                            while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
+                                echo "<span style='font-size:18px'><b>ปี : " . $year = $result_year_term["year"] . "</b></span> | ";
+                                echo "<span style='font-size:18px'>รอบการประเมินที่ " . $term = $result_year_term["term_name"] . " : " . $result_year_term["start_month"] . "-" . $result_year_term["end_month"] . "</span>";
+                            }
+                            ?>
+                            </h4>                           
                         </div>                                                                            
                                          <!--edit/remove -->
                                         <div class="row">
                                             <div class="box-padding">
-<!--                                                <div class="row-border with-border">
-                                                    <div class="col-md-offset-1 col-md-10">
-                                                        <div class="box-body ">
-                                                        <form method="get">    
-                                                            <div class="col-sm-3">
-                                                                <label>รหัสพนักงาน</label>
-                                                                <input class="form-control" type="text" name="emp_id" />
-                                                            </div>
-                                                            <div class="col-sm-3">
-                                                                <label>ชื่อพนักงาน</label>
-                                                                <input class="form-control" type="text" name="full_name" />
-                                                            </div>
-                                                            <?php
-                                                            $sql_dept = "SELECT * FROM departments";
-                                                            $query_department = mysqli_query($conn, $sql_dept);
-                                                            
-                                                            ?>
-                                                            <div class="col-sm-4">
-                                                                <label>แผนก</label>
-                                                                 <select class="form-control" name="department">
-                                                                    <option value="">เลือกทั้งหมด</option>
-                                                                    <?php while ($result_department2 = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
-                                                                    <option value="<?php echo $result_department2["department_id"]; ?>" <?php if($get_department_id == $result_department2["department_id"]) { echo "selected"; }  ?> >
-                                                                        <?php echo $result_department2["department_name"]; ?>
-                                                                    </option>
-                                                                    <?php } ?>
-                                                                </select>                                                          
-                                                                
-                                                            </div>
-                                                            <div class="col-sm-2">
-                                                                <input style="margin-top: 25px;" type="submit" class="btn btn-primary btn-md" name="submit_2" />
-                                                            </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>-->
                                                 <!-- ช่องค้นหา by listJS -->
                                                 <div class="form-inline padding-small">
                                                     <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
                                                     <input class="search form-control" placeholder="ค้นหา" />
                                                     
                                                 </div>
-                                                <table id="example" class="table table-hover table-striped "  >
+                                                <table id="example" class="table table-bordered table-hover table-striped "  >
                                                     <thead>
                                                         <tr>
                                                             <th class=""></th>
@@ -138,14 +102,37 @@
                                                             <th><button class="sort" data-sort="emp_name"><b>ชื่อ-นามสกุล</b></button></th>
                                                             <th class="text-center"><button class="sort" data-sort="job_name"><b>ตำแหน่ง</b></button></th>
                                                             <th class="text-center"><button class="sort" data-sort="dept_name"><b>แผนก</b></button></th>
-                                                            <th class="text-center"  style="min-width:100px;"><b>แก้ไข/ลบ</b></th>
+                                                            <th class="text-center" style="min-width:100px;"><button class="sort" data-sort="pos_level_id"><b>ระดับ</b></button></th>
+                                                            <th class="text-center"  style="min-width:80px;"><b>สถานะ</b></th>
+                                                            <th class="text-center"  style="min-width:100px;"><b>แก้ไข</b></th>
                                                         </tr>
                                                     </thead>
                                                     <?php
-                                                        $sql_emp = "SELECT emp.employee_id as emp_id,emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
-                                                                . "dept.department_name as dept_name, j.job_name as job, emp.profile_picture as profile_picture FROM employees emp "
-                                                                . "join departments dept on emp.department_id = dept.department_id join jobs j "
-                                                                . "on emp.job_id = j.job_id ".$condition_search." ORDER BY emp_id ASC";
+                                                        $sql_emp = "SELECT
+                                                                            emp.employee_id AS emp_id,
+                                                                            emp.prefix AS prefix,
+                                                                            emp.first_name AS f_name,
+                                                                            emp.last_name AS l_name,
+                                                                            dept.department_name AS dept_name,
+                                                                            j.job_name AS job,
+                                                                            p.position_description AS position,
+                                                                            emp.profile_picture AS profile_picture,
+                                                                            eval.evaluation_code AS eval_code,
+                                                                            ee.evaluate_employee_id AS eval_emp_id,
+                                                                            ee.point_leave as point_leave
+                                                                    FROM
+                                                                            employees emp
+                                                                    JOIN departments dept ON emp.department_id = dept.department_id
+                                                                    JOIN jobs j ON emp.job_id = j.job_id
+                                                                    JOIN position_level p ON p.position_level_id = emp.position_level_id
+                                                                    JOIN evaluation_employee ee ON emp.employee_id = ee.employee_id
+                                                                    JOIN evaluation eval ON eval.evaluation_code = ee.evaluation_code
+                                                                    WHERE
+                                                                            p.position_level_id >= 1
+                                                                    AND p.position_level_id <= 3
+                                                                    AND eval.evaluation_code = '3'
+                                                                    ORDER BY
+                                                                            emp_id ASC";
                                                         $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
                                                     ?>
                                                     <tbody class="list">
@@ -156,27 +143,29 @@
                                                             $profile_picture = $result["profile_picture"];
                                                             $dept = $result["dept_name"];
                                                             $job = $result["job"];
+                                                            $position = $result["position"];
+                                                            $eval_code = $result["eval_code"];
+                                                            $point_leave = $result["point_leave"];
+                                                            $eval_emp_id = $result["eval_emp_id"];
                                                             ?>
                                                             <tr>
                                                                 <td class="profile_picture"><img class="img-circle img-center" src="../upload_images/<?php if($profile_picture == ''){ echo 'default.png' ;}else { echo $profile_picture;} ?>" style="width: 35px;height: 35px;" alt="<?php echo $profile_picture; ?>" ></td>
-                                                                <td class="emp_id"><?php echo $emp_id; ?></td>
+                                                                <td class="emp_id" style="width: 130px;"><?php echo $emp_id; ?></td>
                                                                 <td class="emp_name"><?php echo $name; ?></td>
                                                                 <td class="job_name text-center"><?php echo $job; ?></td>
                                                                 <td class="dept_name text-center"><?php echo $dept; ?></td>
+                                                                <td class="pos_level_id text-center"><?php echo $position; ?></td>
+                                                                <td class="text-center" ><?php if($point_leave == 0){ echo "<i class='bg-red glyphicon glyphicon-remove'></i>"; }else{ echo "<i class='bg-green glyphicon glyphicon-ok'></i>"; } ?></td>
                                                                 <td class="text-center">
-                                                                    <a class="btn btn-primary btn-sm" href="leave_form2.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-log-out"></i></a>
-                                                                
+                                                                    <a class="btn btn-primary btn-sm" href="leave_form2.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>"><i class="glyphicon glyphicon-log-out"></i></a>
                                                                 </td>
                                                             </tr>
                                                             
-
-                                                          
-
                                                         <?php } ?>
                                                     </tbody>
                                                     <script>
                                                         var options = {
-                                                            valueNames: [ 'emp_id', 'emp_name' , 'job_name' , 'dept_name' ]
+                                                            valueNames: [ 'emp_id', 'emp_name' , 'job_name' , 'dept_name','pos_level_id' ]
                                                         };
                                                         
                                                         var userList = new List('filter', options);

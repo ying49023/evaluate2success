@@ -277,7 +277,7 @@
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <form action="edit_kpi_group.php" method="post">
-                                                            <div class="modal-header">
+                                                            <div class="modal-header bg-blue">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ KPI</h4>
                                                             </div>
@@ -337,7 +337,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" />
+                                                                <input class="btn btn-success" type="submit" name="submit" value="บันทึก" />
                                                                 <input type="hidden" name="manage_kpi_id" value="<?php echo $result_kpi["manage_kpi_id"]; ?>" >
                                                                 <input type="hidden" name="post_department_id" value="<?php echo $get_department_id; ?>" >
                                                                 <input type="hidden" name="post_job_id" value="<?php echo $get_job_id; ?>" >

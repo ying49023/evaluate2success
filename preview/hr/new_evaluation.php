@@ -21,7 +21,8 @@
 
         if ($eval_code != '') {
             echo $eval_code;
-            header("location:explan_evaluation.php?eval_code=$eval_code");
+            header("location:create_evaluation.php");
+//            header("location:explan_evaluation.php?eval_code=$eval_code");
         }
     }
 

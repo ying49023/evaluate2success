@@ -93,8 +93,8 @@
                         <div class="box-header with-border">
                             <h4><i class="glyphicon glyphicon-info-sign"></i> &nbsp; คำชี้แจงแบบประเมินผลการปฏิบัติงาน (Performance Appraisal Guideline) ระดับปฏิบัติการ</h4>
                         </div>
-                        <div class="box-body">
-                            <div class="box-padding">
+                        <div class=" box-body " >
+                            <div class="box-padding"  style="max-height: 450px;overflow-y: auto;background-color:#EEEEEE; ">
                                         
                                         
                                         <?php
@@ -121,6 +121,9 @@
                                         ?>
                             </div>
                             
+                            
+                        </div>
+                        <div class="box-footer">
                             <form action="evaluation_section_1.php" method="post">
                                 <script>
                                 $(function() {
@@ -134,7 +137,7 @@
                                 </script>
 
                                 <div class="form-group  text-center">
-                                    <div class="checkbox box-padding-small">
+                                    <div class="checkbox ">
                                        <input id="check" name="checkbox" type="checkbox" > 
                                        <label for="check">ยอมรับข้อตกลงและคำชี้แจง</label><!-- for must be the id of input -->
                                     </div>

@@ -43,21 +43,33 @@
 
 
         if(isset($_POST["submit_comment"])){
-            $comment1 = '';
-            if(isset($_POST["comment1"])){
-                $comment1 = $_POST["comment1"];
+            if(isset($_POST["eval_emp_id"])){
+                $eval_emp_id = $_POST["eval_emp_id"];
+                $comment1 = '';
+                if (isset($_POST["comment1"])) {
+                    $comment1 = $_POST["comment1"];
+                }
+                //Check record
+                $sql_check = "select * from evaluation_comment where evaluate_employee_id = '$eval_emp_id' ";
+                $query_check = mysqli_query($conn, $sql_check);
+                $count_row = mysqli_fetch_row($query_check);
+                if($count_row == ''){
+                    $sql_insert_com = "INSERT INTO evaluation_comment(evaluate_comment_id, comment1,evaluate_employee_id) 
+                                VALUES (DEFAULT,'$comment1','$eval_emp_id')";
+                    $query_insert_com = mysqli_query($conn, $sql_insert_com);
+                    header("location:evaluation_section_4.php");
+                }else{
+                    $sql_update = "UPDATE evaluation_comment SET comment1 = '$comment1' WHERE evaluate_employee_id = '$eval_emp_id'  ";
+                    $query_update = mysqli_query($conn, $sql_update);
+                    header("location:evaluation_section_4.php");
+                }
             }
-            $comment2 = '';
-            if(isset($_POST["comment2"])){
-                $comment2 = $_POST["comment2"];
-            }
-            $comment3 = '';
-            if(isset($_POST["comment3"])){
-                $comment3 = $_POST["comment3"];
-            }
-            $sql_insert_com = "INSERT INTO evaluation_comment(evaluate_comment_id, comment1, comment2, comment3, evaluate_employee_id) 
-                                VALUES (DEFAULT,'$comment1','$comment2','$comment3',9)";
-            header("location:evaluation_section_4.php");
+           
+            
+            
+            
+            
+            
             
         }
             
@@ -145,76 +157,45 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    $sql_leave_type_1 = "SELECT
-                                                                *
-                                                        FROM
-                                                                evaluatation_leave el
-                                                        JOIN leaves_type lt ON el.leave_type_id = lt.leave_type_id
-                                                        WHERE
-                                                                el.evaluate_employee_id = '".$_SESSION["eval_emp_id"]."'
-                                                        AND el.leave_type_id = '1'";
-                                    $query_leave_type_1 = mysqli_query($conn, $sql_leave_type_1);
-                                    $result_leave_type_1 = mysqli_fetch_array($query_leave_type_1);
-                                    ?>
+                                            <?php
+                                            $sql_leave_type = "SELECT
+                                                                                        lt.leave_type_id AS leave_type_id,
+                                                                                        lt.leave_type_description AS leave_type_description,
+                                                                                        lt.point AS point,
+                                                                                        el.no_of_day as no_of_day,
+                                                                                        el.point_leave as point_leave
+                                                                                FROM
+                                                                                        leaves_type lt
+                                                                                LEFT JOIN evaluatation_leave el ON lt.leave_type_id = el.leave_type_id
+                                                                                AND el.evaluate_employee_id = '" . $_SESSION["eval_emp_id"] . "'";
+                                            $query_leave_type = mysqli_query($conn, $sql_leave_type);
+                                                
+                                            while ($result_leave_type = mysqli_fetch_array($query_leave_type)) {
+                                                ?>
                                     <tr>
-                                        <th class="text-center" >1</th>
-                                        <th class="text-center" >ลาป่วย</th>
-                                        <td class="text-center" ><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["no_of_day"];} ?>" disabled readonly ></td>
-                                        <td class="text-center" ><?php if($result_leave_type_1["point"] != ''){ echo $result_leave_type_1["point"]; }else { echo "0.5"; } ?></td>
-                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_type_1 == ''){ echo '0'; }else{ echo $result_leave_type_1["point_leave"];} ?>" disabled readonly></td>
+                                        <th class="text-center" ><?php echo $result_leave_type["leave_type_id"]; ?></th>
+                                        <th class="text-center" ><?php echo $result_leave_type["leave_type_description"]; ?></th>
+                                        <td class="text-center" >
+                                            <input class="text-center" type="number"  name="no_of_day" min="1" max="365" value="<?php
+                                                        if ($result_leave_type["no_of_day"] == '') {
+                                                            echo '0';
+                                                        } else {
+                                                            echo $result_leave_type["no_of_day"];
+                                                        }
+                                                        ?>" disabled > วัน
+                                        </td>
+                                        <td class="text-center" ><?php echo $result_leave_type["point"]; ?></td>
+                                        <td class="text-center">
+                                            <input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php
+                                                        if ($result_leave_type["point_leave"] == '') {
+                                                            echo '0';
+                                                        } else {
+                                                            echo $result_leave_type["point_leave"];
+                                                        }
+                                                        ?>" disabled > คะแนน
+                                        </td>
                                     </tr>
-                                    <?php
-                                    $sql_levae_type_2 = "SELECT * 
-                                                        FROM evaluatation_leave el 
-                                                        JOIN leaves_type lt ON el.leave_type_id = lt.leave_type_id 
-                                                        WHERE
-                                                                el.evaluate_employee_id = '".$_SESSION["eval_emp_id"]."'
-                                                        AND lt.leave_type_id = '2'";
-                                    $query_leave_type_2 = mysqli_query($conn, $sql_levae_type_2);
-                                    $result_leave_type_2 = mysqli_fetch_array($query_leave_type_2);
-                                    ?>
-                                    <tr>
-                                        <th class="text-center">2</th>
-                                        <th class="text-center">ลากิจ</th>
-                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["no_of_day"];} ?>" disabled readonly></td>
-                                        <td class="text-center"><?php if($result_leave_type_2["point"] != ''){ echo $result_leave_type_2["point"]; }else { echo "0.5"; } ?></td>
-                                        <td class="text-center"><input class="text-center " type="number" name="point" min="0.5" max="60" value="<?php if($result_leave_type_2 == ''){ echo '0'; }else{ echo $result_leave_type_2["point_leave"];} ?>" disabled readonly></td>
-                                    </tr>
-                                    <?php
-                                    $sql_levae_type_3 = "SELECT * 
-                                                        FROM evaluatation_leave el 
-                                                        JOIN leaves_type lt ON el.leave_type_id = lt.leave_type_id
-                                                        WHERE
-                                                                el.evaluate_employee_id = '".$_SESSION["eval_emp_id"]."'
-                                                        AND lt.leave_type_id = '3'";
-                                    $query_leave_type_3 = mysqli_query($conn, $sql_levae_type_3);
-                                    $result_leave_type_3 = mysqli_fetch_array($query_leave_type_3);
-                                    ?>
-                                    <tr>
-                                        <th class="text-center">3</th>
-                                        <th class="text-center">มาสาย</th>
-                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["no_of_day"];} ?>" disabled readonly></td>
-                                        <td class="text-center" ><?php if($result_leave_type_3["point"] != ''){ echo $result_leave_type_3["point"]; }else { echo "0.5"; } ?></td>
-                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_type_3 == ''){ echo '0'; }else{ echo $result_leave_type_3["point_leave"];} ?>" disabled readonly></td>
-                                    </tr>
-                                    <?php
-                                    $sql_levae_type_4 = "SELECT * 
-                                                        FROM evaluatation_leave el 
-                                                        JOIN leaves_type lt ON el.leave_type_id = lt.leave_type_id 
-                                                        WHERE
-                                                                el.evaluate_employee_id = '".$_SESSION["eval_emp_id"]."'
-                                                        AND lt.leave_type_id = '4'";
-                                    $query_leave_type_4 = mysqli_query($conn, $sql_levae_type_4);
-                                    $result_leave_type_4 = mysqli_fetch_array($query_leave_type_4);
-                                    ?>
-                                    <tr>
-                                        <th class="text-center">4</th>
-                                        <th class="text-center">ลาอื่นๆ</th>
-                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["no_of_day"];} ?>" disabled readonly></td>
-                                        <td class="text-center" ><?php if($result_leave_type_4["point"] != ''){ echo $result_leave_type_4["point"]; }else { echo "0.5"; } ?></td>
-                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_type_4 == ''){ echo '0'; }else{ echo $result_leave_type_4["point_leave"];} ?>" disabled readonly></td>
-                                    </tr>
+                                            <?php } ?>
                                 </tbody>
                                 <tfoot>
                                     <?php
@@ -232,9 +213,9 @@
                                     ?>
                                     <tr class="bg-info">
                                         <td class="text-center" colspan="2"><b>รวม</b></td>
-                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_day_leave"];} ?>" disabled readonly></td>
+                                        <td class="text-center"><input class="text-center" type="number"  name="leave" min="1" max="365" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_day_leave"];} ?>" disabled readonly>วัน</td>
                                         <td></td>
-                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_point_leave"];} ?>" disabled readonly></td>
+                                        <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php if($result_leave_sum == ''){ echo '0'; }else{ echo $result_leave_sum["sum_point_leave"];} ?>" disabled readonly>คะแนน</td>
                                     </tr>
                                 </tfoot>
                                 
@@ -313,7 +294,7 @@
                                                 <tr>
                                                     <th style="padding: 10px;width: 60px" class="text-center" ><?php echo $i; ?></th>
                                                     
-                                                    <th><?php echo $reault_penalty["penalty_reward_name"]; ?></th>
+                                                    <td><?php echo $reault_penalty["penalty_reward_name"]; ?></td>
                                                     <td class="text-center" style="width: 100px;"><?php echo $reault_penalty["point"]; ?></td>
                                                 </tr>
                                                     <?php
@@ -336,23 +317,27 @@
                                     </table>
                                 </div>
                             </div>
+                            <hr>
+                            
                             <form method="post">
                             <div class="row">
                                 <div class="col-md-offset-1 col-md-10">
-                                    <table class="table table-striped table-bordered table-info">
+                                    <table class="table table-striped " >
                                         <thead class="bg-light-blue-active">
                                             <tr>
                                                 <th class="text-center">คะแนนเวลาการทำงาน</th>
                                                 <th></th>
                                                 <th class="text-center">คะแนนการลงโทษทางวินัย</th>
+                                                <th></th>
                                                 <th class="text-center">คะแนนเต็มรวม(10 คะแนน)</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="bg-info">
-                                            <tr>
-                                                <td class="text-center"><?php echo $result_leave_sum["sum_point_leave"]; ?></td>
+                                        <tbody class="">
+                                            <tr class="" style="background-color:#E3F2FD ;font-size: 20px;font-weight: 800;padding: 10px;">
+                                                <td class="text-center" ><?php if($result_leave_sum["sum_point_leave"] == ''){ echo '0'; } else{ echo $result_leave_sum["sum_point_leave"]; } ?></td>
                                                 <td class="text-center"> + </td>
-                                                <td class="text-center"><?php echo $result_sum_penalty["sum_penalty_point"]; ?></td>
+                                                <td class="text-center"><?php if($result_sum_penalty["sum_penalty_point"] == ''){ echo '0'; }else{ echo $result_sum_penalty["sum_penalty_point"];} ?></td>
+                                                <td> = </td>
                                                 <td class="text-center" ><?php echo $result_sum_penalty["sum_penalty_point"]+$result_leave_sum["sum_point_leave"]; ?></td>
                                             </tr>
                                         </tbody>
@@ -361,12 +346,13 @@
                                 <div class="col-md-offset-2 col-md-8">
                                     <h4><u>ความคิดเห็นของผู้บังคับบัญชาตามสายงาน (ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)</u></h4>
                                     <div>
-                                        <textarea class="form-control" name="commentpart3" size="60" rows="5" placeholder="เขียนความเห็น(ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)"></textarea>
+                                        <textarea class="form-control" name="comment1" size="60" rows="5" placeholder="เขียนความเห็น(ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)"></textarea>
                                     </div>         
                                             
                                 </div>
                                 <div class="col-md-offset-1 col-md-10">
                                     <div class="form-group box-padding-small text-center">
+                                        <input type="hidden" name="eval_emp_id" value="<?php echo $_SESSION["eval_emp_id"]; ?>" >
                                         <input class="btn btn-success btn-lg search-button" type="submit" name="submit_comment" value="บันทึก">
                                         <input class="btn btn-danger btn-lg search-button" type="reset" name="reset" value="รีเซ็ต" >
                                     </div>  

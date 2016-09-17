@@ -24,7 +24,7 @@
                                 
                                 //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
                                 if(isset($_GET["emp_id"])){
-                                    $get_emp__id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+                                    $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
                                 }?>
     
     <meta charset="utf-8">
@@ -81,7 +81,7 @@
                                             JOIN employees m ON e.manager_id = m.employee_id
                                             JOIN employees m2 ON m.manager_id = m2.employee_id
                                             WHERE
-                                                    e.employee_id ='".$get_emp__id."'";
+                                                    e.employee_id ='".$get_emp_id."'";
     $query_emp = mysqli_query($conn, $sql_emp);
     while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
         ?>
@@ -102,7 +102,7 @@
                         $eval_code = $_GET["eval_code"];
                     }
 
-                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$_SESSION["eval_code"]."'";
+                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
                     $query_year_term = mysqli_query($conn, $sql_year_term);
                     while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
                         echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
@@ -118,7 +118,7 @@
             
             <tr >
                 <th rowspan="4" style="text-align: center;">
-                    <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="upload_images/<?php
+                    <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="../upload_images/<?php
                              if ($result_emp["profile_picture"] == '') {
                                  echo "default.png";
                              } else {
@@ -157,7 +157,7 @@
                 <td><?php echo $result_emp["manager_name_2"]; ?></td>
                 <td>
                     <?php 
-                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '".$_SESSION["eval_code"]."' ";
+                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '$eval_code' ";
                     $query_eval_period = mysqli_query($conn, $sql_eval_period) or die(mysqli_errno());
                     $result_eval_period = mysqli_fetch_array($query_eval_period,MYSQLI_ASSOC);
                     ?>

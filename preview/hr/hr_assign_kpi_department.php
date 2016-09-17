@@ -265,10 +265,10 @@
                                         
                                        
                                 ?>
-                                
+                            <div class="row">     
                             <div class="col-md-12">   
                                 
-                            <table class="table table-bordered">
+                            <table class="table table-hover table-bordered">
                                 <thead class="bg-blue">
                                                 <tr>
                                                     <th>KPI-CODE</th>
@@ -305,149 +305,143 @@
                                                      <td><?php echo $kpi_unit; ?></td>
                                                     <td><?php echo $kpi_default_weight; ?></td>
                                                     <td class="text-center">
-                                                                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $kpi_id; ?>_update">
-                                                                                    <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
-                                                                                </button>                                                   
-                                                                                |
-
-                                                                                <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $kpi_id; ?>_delete">
-                                                                                    <i class="glyphicon glyphicon-remove" ></i>ลบ
-                                                                                </button>
-                                                                                <!--Edit Modal -->
-
-                                                                                <form class="form-horizontal" name="frmMain" method="post" action="hr_assign_kpi_department.php?erp=update&id=<?php echo $kpi_id; ?>" >
-                                                                                    <div class="modal fade" id="<?php echo $kpi_id; ?>_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                                                        <div class="modal-dialog" role="document">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                                                    <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
-                                                                                                </div>
-                                                                                                <div class="modal-body">
-
-                                                                                            <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
-                                                                                                  
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                        <label  for="KPI-CODE" class="col-sm-4 control-label">KPI-CODE</label>
-                                                                                                        <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control" disabled="true" name="u_kpi_code" value="<?php echo $kpi_code ?>">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                        <label  for="kpi_name" class="col-sm-4 control-label">ชื่อตัวชี้วัด</label>
-                                                                                                        <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control" name="u_kpi_name" value="<?php echo $kpi_name ?>">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                         <label  for="kpi_desc" class="col-sm-4 control-label">คำอธิบาย</label>
-                                                                                                         <div class="form-group col-sm-8">                                                                                                            
-                                                                                                             <input type="text" style="" class="form-control" name="u_kpi_desc" value="<?php echo $kpi_description ?>">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                
-                                                                                                
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                        <label  for="measure_symbol" class="col-sm-4 control-label">สัญลักษณ์</label>
-                                                                                                        <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control" name="u_measure_symbol" value="<?php echo $kpi_measure_symbol ?>">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                        <label  for="measure_desc" class="col-sm-4 control-label">คำอธิบายสัญลักษณ์</label>
-                                                                                                        <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control" name="u_measure_desc" value="<?php echo $kpi_measure_desc ?>">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                         <label  for="unit" class="col-sm-4 control-label">หน่วยวัด</label>
-                                                                                                         <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control" name="u_unit" value="<?php echo $kpi_unit ?>">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                        <label  for="time_period" class="col-sm-4 control-label">ระยะเวลา(เดือน)</label>
-                                                                                                         <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control" name="u_time_period" value="<?php echo $kpi_time_period ?>">
-                                                                                                        </div>
-                                                                                                     </div>
-                                                                                                     <div class="input-group col-sm-12">
-                                                                                                         <label  for="default_weight" class="col-sm-4 control-label">น้ำหนัก</label>
-                                                                                                         <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control" name="u_default_weight" value="<?php echo $kpi_default_weight ?>">
-                                                                                                        </div>
-                                                                                                     </div>                                           
-                                                                                                
-
-                                                                                                </div>
-                                                                                                <div class="modal-footer">
-                                                                                                    <button type="submit" class="btn btn-primary">บันทึก</button>
-                                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                                                                    <input type="hidden" value="<?php echo $get_department_id;?>" name="u_dept_id">
-                                                                                                    <input type="hidden" value="<?php echo $get_job_id;?>" name="u_job_id">
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>
-                                                                                <!--Edit Modal -->
-
-                                                                                <!--Delete Modal -->
-
-                                                                                <form class="form-horizontal" name="frmMain" method="post" action="hr_assign_kpi_department.php?erp=delete&id=<?php echo $kpi_id; ?>" >
-                                                                                    <div class="modal fade" id="<?php echo $kpi_id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                                                        <div class="modal-dialog" role="document">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                                                    <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
-                                                                                                </div>
-                                                                                                <div class="modal-body">
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                        <label  for="KPI-CODE" class="col-sm-4 control-label">KPI-CODE</label>
-                                                                                                        <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control" disabled="true"  value="<?php echo $kpi_code ?>">
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                    <div class="input-group col-sm-12">
-                                                                                                        <label  for="kpi_name" class="col-sm-4 control-label">ชื่อตัวชี้วัด</label>
-                                                                                                        <div class="form-group col-sm-8">                                                                                                            
-                                                                                                            <input type="text" class="form-control"  disabled="true" value="<?php echo $kpi_name ?>">
-                                                                                                        </div>
-                                                                                                    </div>
-
-
-                                                                                                </div>
-                                                                                                <div class="modal-footer">
-                                                                                                    <button type="submit" class="btn btn-primary">ยืนยันการลบ</button>
-                                                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                                                                                    <input type="hidden" value="<?php echo $get_department_id;?>" name="d_dept_id">
-                                                                                                    <input type="hidden" value="<?php echo $get_job_id;?>" name="d_job_id">
-
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>
-                                                                                <!--Delete Modal -->
-                                                                            </td>
+                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $kpi_id; ?>_update">
+                                                            <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
+                                                        </button>                                                   
+                                                        |
+                                                                                    
+                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $kpi_id; ?>_delete">
+                                                            <i class="glyphicon glyphicon-remove" ></i>ลบ
+                                                        </button>
+                                                        <!--Edit Modal -->
+                                                        <form class="form-horizontal" name="frmMain" method="post" action="hr_assign_kpi_department.php?erp=update&id=<?php echo $kpi_id; ?>" >
+                                                            <div class="modal fade" id="<?php echo $kpi_id; ?>_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                            <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                                                    
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="KPI-CODE" class="col-sm-4 control-label">KPI-CODE</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" disabled="true" name="u_kpi_code" value="<?php echo $kpi_code ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_name" class="col-sm-4 control-label">ชื่อตัวชี้วัด</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="u_kpi_name" value="<?php echo $kpi_name ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_desc" class="col-sm-4 control-label">คำอธิบาย</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" style="" class="form-control" name="u_kpi_desc" value="<?php echo $kpi_description ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                                                        
+                                                                                                        
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="measure_symbol" class="col-sm-4 control-label">สัญลักษณ์</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="u_measure_symbol" value="<?php echo $kpi_measure_symbol ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="measure_desc" class="col-sm-4 control-label">คำอธิบายสัญลักษณ์</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="u_measure_desc" value="<?php echo $kpi_measure_desc ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="unit" class="col-sm-4 control-label">หน่วยวัด</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="u_unit" value="<?php echo $kpi_unit ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="time_period" class="col-sm-4 control-label">ระยะเวลา(เดือน)</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="u_time_period" value="<?php echo $kpi_time_period ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="default_weight" class="col-sm-4 control-label">น้ำหนัก</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="u_default_weight" value="<?php echo $kpi_default_weight ?>">
+                                                                                </div>
+                                                                            </div>                                           
+                                                                                                        
+                                                                                                        
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit" class="btn btn-success">บันทึก</button>
+                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                                                                            <input type="hidden" value="<?php echo $get_department_id; ?>" name="u_dept_id">
+                                                                            <input type="hidden" value="<?php echo $get_job_id; ?>" name="u_job_id">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <!--Edit Modal -->
+                                                                                    
+                                                        <!--Delete Modal -->
+                                                        <form class="form-horizontal" name="frmMain" method="post" action="hr_assign_kpi_department.php?erp=delete&id=<?php echo $kpi_id; ?>" >
+                                                            <div class="modal fade" id="<?php echo $kpi_id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                            <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="KPI-CODE" class="col-sm-4 control-label">KPI-CODE</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" disabled="true"  value="<?php echo $kpi_code ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_name" class="col-sm-4 control-label">ชื่อตัวชี้วัด</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control"  disabled="true" value="<?php echo $kpi_name ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                                                        
+                                                                                                        
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                            <input type="hidden" value="<?php echo $get_department_id; ?>" name="d_dept_id">
+                                                                            <input type="hidden" value="<?php echo $get_job_id; ?>" name="d_job_id">
+                                                                                                        
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                        <!--Delete Modal -->
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                          <?php } } ?>
 
                                         </table>
-                            
-                            
-                            
-                                
-                              </div>
-                                
-                            <div class="col-md-12 bg-black-active">
-                                    <h4 style=" font: bold">เพิ่มข้อมูลใหม่</h4>
-                                   
+
                             </div>
+                            </div>
+                            <div class="box-body " >
+                            <div class="border-radius row box-padding " > 
+                                <div class="col-md-12 bg-black-active">
+                                    <h4 style=" font: bold">เพิ่มข้อมูลใหม่</h4>               
+                                </div>
                             <form action="hr_assign_kpi_department.php?erp=insert" method="post">        
-                            <div class="col-md-12" style="background-color: #CCCCFF">
+                            <div class="col-md-12" style="background-color: #D1C4E9;">
                                 <br>
                                 <div class="row">
                                     <div class="col-md-offset-1 col-md-1">
@@ -502,9 +496,9 @@
                                      </div>                                           
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-10 text-center" >
-                                        <input type="reset" class="btn-danger btn-lg" value="รีเซ็ท">
-                                        <input type="submit" class="btn-success btn-lg" value="บันทึก">
+                                    <div class="col-md-offset-1 col-md-10 text-center" >
+                                        <input type="reset" class="btn btn-danger btn-lg" value="รีเซ็ท">
+                                        <input type="submit" class="btn btn-success btn-lg" value="บันทึก">
                                         <input type="hidden" value="<?php echo $kpi_group_id;?>" name="hidden_group_id">
                                         <input type="hidden" value="<?php echo $get_department_id;?>" name="hidden_dept_id">
                                         <input type="hidden" value="<?php echo $get_job_id;?>" name="hidden_job_id">
@@ -514,22 +508,28 @@
                                 </div>
                                 <br>
                             </div>  
-                        </form>
+                        </form>    
+                            </div>  
+                            </div>
                             
-                            <div class="col-md-12">
-                            <br>
-                            <h4 style="font: bold;">ยืนยันการกำหนด KPIs </h4>                                        
-                            <b>คำอธิบาย</b><br>
-                            <p>เมื่อกดปุ่มยืนยัน KPIs ที่แสดงในตารางข้างบนทั้งหมดจะถูกนำไปใช้ในรอบการประเมินปัจจุบัน</p>
-                            <form action="hr_assign_kpi_department.php?erp=submit" method="post" >
-                            <button class="btn-primary btn-lg" type="submit">ยืนยันKPIs</button>
-                            <input type="hidden" value="<?php echo $get_department_id;?>" name="hidden_dept">
-                            <input type="hidden" value="<?php echo $get_job_id;?>" name="hidden_job">
-                            <input type="hidden" value="<?php echo $eval_code;?>" name="hidden_eval">
-                            </form>
-                    </div>
+                            
+                            <div class="row box-padding">
+                                <div class="col-md-12">
+                                    <br>
+                                    <h4 style="font: bold;">ยืนยันการกำหนด KPIs </h4>                                        
+                                    <b>คำอธิบาย</b><br>
+                                    <p>เมื่อกดปุ่มยืนยัน KPIs ที่แสดงในตารางข้างบนทั้งหมดจะถูกนำไปใช้ในรอบการประเมินปัจจุบัน</p>
+                                    <form action="hr_assign_kpi_department.php?erp=submit" method="post" >
+                                        <button class="btn btn-primary btn-lg" type="submit">ยืนยันKPIs</button>
+                                        <input type="hidden" value="<?php echo $get_department_id; ?>" name="hidden_dept">
+                                        <input type="hidden" value="<?php echo $get_job_id; ?>" name="hidden_job">
+                                        <input type="hidden" value="<?php echo $eval_code; ?>" name="hidden_eval">
+                                    </form>
+                                </div>
+                            </div>
+                            
                                     
-            <?php } } ?>
+                        <?php } } ?>
                         </div>
 
                     </div>

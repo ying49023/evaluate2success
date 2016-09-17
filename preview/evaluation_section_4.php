@@ -95,7 +95,7 @@
                         <div class="box-header "><h4>สรุปคะแนนที่ได้รับจากแต่ละส่วนเพื่อประเมินผลโดยรวม</h4></div>
                         <div class="box-body">
                             <!--Table Point-->
-                            <table class="table table-bordered table-hover table-striped">
+                            <table class="table table-bordered table-hover ">
                                 <thead>
                                     <tr class="text-center">
                                         <td rowspan=2 class="bg-inverse" style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
@@ -194,27 +194,18 @@
                                         <td class="text-center"><input class="text-center" type="number" name="part3point" value="<?php echo $result_score_3["score_3"]; ?>" min="0" max="20" disabled></td>
                                     </tr>
                                     <?php } ?>
-                                    <tr>
-                                        <td style="padding-left: 40px;">คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</td>
-                                        <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor1"]+$result_score_2_2["sum_2_2_assessor1"]-$result_score_3["score_3"]; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></td>
-                                        <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor2"]+$result_score_2_2["sum_2_2_assessor2"]-$result_score_3["score_3"]; ?>"  name="ass2part1+2point" min="0" max="100" disabled></b></td>
-                                    </tr>
-                                     <tr>
-                                        <td align= right><b>สรุปคะแนนตลอดปี (คะแนนสุทธิผู้ประเมินที่ 1 +  คะแนนสุทธิผู้ประเมินที่ 2) หาร 2</b></td>
-                                        <td colspan=4 class="text-center" style="background-color:#FFEFD5;"><b><input type="number" name="term1+2point" min="0" max="100" disabled></b></td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td align= right><b>สรุปคะแนนพิจารณาบทลงโทษทางวินัย</b></td>
-                                        <td colspan=4 class="text-center" style="background-color:#FAF0E6;"><b><input type="number" name="penaltypoint" min="0" max="100" disabled></b></td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td align= right><b>สรุปคะแนนประเมินผลงานโดยรวม (Overall rating)</b></td>
-                                        <td colspan=4 class="text-center" style="background-color:#F0FFFF;"><b><input type="number" name="allpoint" min="0" max="100" disabled></b></td>
-                                       
-                                    </tr>
+                                    
+                                     
                                 </tbody>
+                                <tfoot>
+                                    <tr class="active">
+                                        <th>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</th>
+                                        <th></th>
+                                        <th class="text-center" style="color: blue;"><b><input class="text-center" type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor1"]+$result_score_2_2["sum_2_2_assessor1"]-$result_score_3["score_3"]; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></th>
+                                        <th></th>
+                                        <th class="text-center" style="color: blue;"><input class="text-center" type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor2"]+$result_score_2_2["sum_2_2_assessor2"]-$result_score_3["score_3"]; ?>"  name="ass2part1+2point" min="0" max="100" disabled></th>
+                                    </tr>
+                                </tfoot>
                             </table>
                         </div>
                         <br>
@@ -328,106 +319,30 @@
                                 </div>
                             </div>
                         </div>-->
-                            <table class="table ">
-                                <thead class="thead-default">
-                                    <tr>
-                                                
-                                        <th colspan="13">การประเมินผลโดยรวม (Overall Rating) </th>
-                                                    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <form>
-                                            
-                                    <tr class="text-center">
-                                                
-                                        <th scope="row" rowspan="3">ผลการปฏิบัติงาน</th>  
-                                        <td><input type="radio" value="A++"  name="grade" disabled></td>
-                                        <td><input type="radio" value="A+" name="grade" disabled></td>
-                                        <td><input type="radio" value="A-" name="grade" disabled></td>
-                                        <td><input type="radio" value="B++" name="grade" disabled></td>
-                                        <td><input type="radio" value="B+" name="grade" disabled></td>
-                                        <td><input type="radio" value="B" name="grade" disabled></td>
-                                        <td><input type="radio" value="B-" name="grade" disabled></td>
-                                        <td><input type="radio" value="C++" name="grade" disabled></td>
-                                        <td><input type="radio" value="C+" name="grade" disabled></td>
-                                        <td><input type="radio" value="C" name="grade" disabled></td>
-                                        <td><input type="radio" value="C-" name="grade" disabled></td>
-                                                    
-                                                    
-                                    </tr>
-                                                
-                                </form>
-                                            
-                                <tr class="text-center">
-                                            
-                                            
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td><?php echo $name; ?></td>
-                                            <?php } ?>
-                                                
-                                </tr>
-                                            
-                                <tr class="text-center">
-                                            
-                                            
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td>(<?php echo $desc; ?>)</td>
-                                            <?php } ?>
-                                                
-                                </tr>
-                                            
-                                            
-                                <tr class="text-center">
-                                    <th scope="row">คะแนน</th>
-                                                
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td><?php echo $minpoint; ?> - <?php echo $maxpoint; ?></td>
-                                            <?php } ?>
-                                </tr>
-                                            
-                                </tbody>
-                            </table>
-                                        
-                                
-                                        
-                        </div>           
+
+                        </div>   
+                            <div class="modal fade" id="save_point" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title" id="myModalLabel">ยืนยันการประเมิน</h4>
+                                        </div>
+                                        <div class="modal-body">                                                                                                      <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+
+                                            เมื่อกดยืนยันคุณจะไม่สามารถกลับมาแก้ไขได้!! ทำรายการต่อไหม?
+
+                                        </div>
+                                        <div class="modal-footer">                                                                   
+                                            <button class="btn-info btn-lg" type="submit" >ยืนยัน</button>                                                                             
+                                            <input type="hidden" name="position_level" value="" >
+                                            <input type="hidden" name="emp" value="" >
+                                            <input type="hidden" name="evalcode" value="" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div> 
                     <!-- /Part 4 -->       
                     <!-- /.content -->

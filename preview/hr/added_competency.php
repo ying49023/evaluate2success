@@ -220,7 +220,7 @@
                                                     <div class="modal-dialog" role="document">
                                                         <form method="GET">
                                                         <div class="modal-content">  
-                                                            <div class="modal-header">
+                                                            <div class="modal-header bg-blue">
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
                                                             </div>
@@ -246,7 +246,7 @@
                                                             <div class="modal-footer">
                                                                 <input type="hidden" name="titleid" value="<?php echo $result_com["title_id"]; ?>" >
                                                                 <input type="hidden" name="competency_id" value="<?php echo $result_com["competency_id"]; ?>" >   
-                                                                <input type="submit" class="btn btn-primary" name="submit_edit" value="บันทึก" >                                                      
+                                                                <input type="submit" class="btn btn-success" name="submit_edit" value="บันทึก" >                                                      
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                             </div>                 
                                                         </div>

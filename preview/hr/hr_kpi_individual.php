@@ -29,16 +29,32 @@
         if (isset($_GET["job_id"])) {
             $get_job_id = $_GET["job_id"];
         }
-
-        $condition_search = '';
-        if ($get_department_id != '' && $get_job_id != '') {
-            $condition_search = " WHERE emp.department_id = '" . $get_department_id . "' AND emp.job_id = '" . $get_job_id . "' ";
-        } else if ($get_department_id != '' || $get_job_id != '') {
+        $eval = ' eval_code = 3';
+        $get_eval_code = '3';
+        if(isset($_GET["eval_code"])){
+            $get_eval_code = $_GET["eval_code"];
+            $eval = " eval.evaluation_code = '".$get_eval_code ."'";
+        }
+        
+        $condition = 'WHERE eval.evaluation_code = 3 ';
+        if ($get_department_id != '' && $get_job_id != '' && $get_eval_code != '') {
+            $condition = " WHERE e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
+        } else if ($get_department_id != '' && $get_job_id != '') {
+            $condition = " WHERE  e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' ";
+        }else if($get_job_id != '' && $get_eval_code != ''){
+            $condition = " WHERE  e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
+        }else if($get_department_id != '' && $get_eval_code != ''){
+            $condition = " WHERE e.department_id = '$get_department_id' AND eval.evaluation_code = '$get_eval_code' ";
+        }else if($get_department_id != '' || $get_job_id != '' || $get_eval_code != ''){
             if ($get_department_id != '') {
-                $condition_search = " WHERE emp.department_id = '" . $get_department_id . "' ";
+                $condition = " WHERE e.department_id = '" . $get_department_id . "' ";
             } else if ($get_job_id != '') {
-                $condition_search = " WHERE emp.job_id = '" . $get_job_id . "' ";
+                $condition = " WHERE e.job_id = '" . $get_job_id . "' ";
+            }else if($get_eval_code != ''){
+                $condition = " WHERE eval.evaluation_code = '$get_eval_code' ";
             }
+        }else if($get_department_id == '' && $get_job_id == '' && $get_eval_code == ''){
+            $condition = 'WHERE eval.evaluation_code = 3 ';
         }
 ?>
         
@@ -81,7 +97,24 @@
                     <div class="box box-success">
                         <div class="box-body ">
                             <form method="get">
-                                <div class="col-md-offset-1 col-md-4">
+                                <div class="col-md-3">
+                                    <label class="col-sm-4 control-label">รอบ</label>
+                                    <div class="col-sm-8">
+                                    <?php 
+                                        $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
+                                        $query_eval = mysqli_query($conn, $sql_eval);
+                                    ?>
+                                        <select class="form-control" name="eval_code">
+                                            <option value="">เลือกทั้งหมด</option>
+                                        <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_eval["evaluation_code"]; ?>" <?php if($get_eval_code == $result_eval["evaluation_code"]) { echo "selected"; }  ?> >
+                                                <?php echo 'ปี '.$result_eval["year"]." - ครั้งที่".$result_eval["term_id"]; ?>
+                                            </option>
+                                        <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
                                     <label class="col-sm-4 control-label">แผนก</label>
                                     <div class="col-sm-8">
                                     <?php 
@@ -115,7 +148,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class=" col-md-2">
+                                <div class=" col-md-1">
                                     <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
                                 </div>
 
@@ -159,19 +192,36 @@
                                 </thead>
                                 <?php
                     
-                                $sql_emp = "SELECT emp.employee_id as emp_id, emp.prefix as prefix, emp.first_name as f_name, emp.last_name as l_name, "
-                                                    . "dept.department_name as dept_name, j.job_name as job FROM employees emp "
-                                                    . "join departments dept on emp.department_id = dept.department_id join jobs j "
-                                                    . "on emp.job_id = j.job_id ".$condition_search." ORDER BY emp_id ASC";
+                                $sql_emp = "SELECT
+                                                e.employee_id As emp_id,
+                                                        CONCAT(
+                                                                e.prefix,
+                                                                e.first_name,
+                                                                '  ',
+                                                                e.last_name
+                                                        ) AS name,
+                                                        d.department_name As dept_name,
+                                                        j.job_name As job_name,
+                                                        eval.evaluation_code As eval_code
+
+                                                FROM
+                                                        employees e
+                                                JOIN departments d ON d.department_id = e.department_id
+                                                JOIN jobs j ON j.job_id = e.job_id
+                                                JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                JOIN evaluation eval ON ee.evaluation_code = eval.evaluation_code
+                                                $condition
+                                                ORDER BY
+                                                        e.employee_id ASC";
                                 $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
                                  ?>
                                 <tbody class="list">
                                 <?php  while($result = mysqli_fetch_assoc($query)){ 
                                     $emp_id = $result["emp_id"];
-                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
+                                    $name = $result["name"];
                                     $dept = $result["dept_name"];
-                                    $job = $result["job"];
-                                    
+                                    $job = $result["job_name"];
+                                    $eval_code = $result["eval_code"];
                                 ?>
                                 
                                 <tr>
@@ -179,7 +229,7 @@
                                     <td class="name"><?php echo $name; ?></td>
                                     <td class="job text-center"><?php echo $job; ?></td>
                                     <td class="dept text-center"><?php echo $dept; ?></td>
-                                    <td class="text-center"><a class="btn btn-primary" href="hr_kpi_individual_resp.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; ดู</a></td>
+                                    <td class="text-center"><a class="btn btn-primary" href="hr_kpi_individual_resp.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; ดู</a></td>
                                 </tr>
                                 <?php } ?>
                                 </tbody>

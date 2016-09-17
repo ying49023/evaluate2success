@@ -116,7 +116,7 @@
              
                 <div class="row box-padding">
                     <div class="box box-primary">
-                        <div class="box-header with-border">
+                        <div class="box-header with-border ">
                             <h3 class="box-title">ตารางแสดงประเภทวันลา</h3>
                             <a class="pull-right " data-toggle="collapse" href="#strenghtPoint">
                                 <button type="button" class="btn btn-success">เพิ่มประเภทวันลา</button>

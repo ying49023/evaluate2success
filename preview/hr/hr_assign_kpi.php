@@ -157,7 +157,7 @@
                                     <td><?php echo $name; ?></td>
                                     <td class="text-center"><?php echo $job; ?></td>
                                     <td class="text-center"><?php echo $dept; ?></td>
-                                    <td class="text-center"><a href="hr_manage_kpi.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-folder-open"></i></a></td>
+                                    <td class="text-center"><a class="btn btn-primary" href="hr_manage_kpi.php?emp_id=<?php echo $emp_id; ?>"><i class="glyphicon glyphicon-log-out"></i></a></td>
                                 </tr>
                                 <?php } ?>
                             </table>

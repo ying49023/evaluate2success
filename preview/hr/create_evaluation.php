@@ -116,7 +116,7 @@
                                 <div class="row box-padding" style="margin-top: 20px;">
                                     <div class="col-md-2"></div>
                                     <div class=" col-md-4" >
-                                        <a class="btn btn-primary " data-toggle="modal" data-target="#history" style="width: 100%;" ><i class="glyphicon glyphicon glyphicon-list"></i> &nbsp; ประวัติย้อนหลัง</a>
+                                        <a class="btn btn-warning " data-toggle="modal" data-target="#history" style="width: 100%;" ><i class="glyphicon glyphicon glyphicon-list"></i> &nbsp; ประวัติย้อนหลัง</a>
                                     </div>
                                     <div class=" col-md-4" >
                                         <button  type="submit" class="btn btn-success " style="width: 100%;" ><i class="glyphicon glyphicon glyphicon-triangle-right"></i> &nbsp; สร้างแบบประเมิน</button>
@@ -141,7 +141,7 @@
                                     </thead>
                                     <tbody>
                                     <?php 
-                                    $sql_active_eval = "SELECT evaluation_code,current_eval, count(current_eval) as count, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=1  ";
+                                    $sql_active_eval = "SELECT evaluation_code,current_eval, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=1  ";
                                     $query_active_eval = mysqli_query($conn, $sql_active_eval);
                                     
                                     while ($result_active_eval = mysqli_fetch_array($query_active_eval, MYSQLI_ASSOC)) {                                    
@@ -166,7 +166,7 @@
                             <div class="modal fade" id="history" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog modal-lg" role="document">
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header bg-yellow">
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="myModalLabel">ข้อมูลการประเมินย้อนหลัง</h4>
                                         </div>
@@ -200,8 +200,8 @@
                                                     </table>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary">บันทึก</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                            
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
                                                         
                                         </div>
                                     </div>

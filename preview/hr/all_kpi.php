@@ -203,7 +203,7 @@
                                                 <th><button class="sort" data-sort="kpi_desc">คำอธิบาย</button></th>
                                                 <th style="width: 75px;text-align: center;"><button class="sort" data-sort="unit">หน่วย</button></th>
                                                 <th style="width: 145px;text-align: center;"><button class="sort" data-sort="period">ระยะเวลา(เดือน)</button></th> 
-                                                <th style="width: 150px;"><button class="sort" data-sort="group">กลุ่มหมวดหมู่</button></th>
+                                                <th style="width: 150px;text-align: center;"><button class="sort" data-sort="group">กลุ่มหมวดหมู่</button></th>
                                                 <th style="width: 135px;text-align: center;">แก้ไข/ลบ</th>
                                             </tr>
                                         </thead>
@@ -213,9 +213,9 @@
                                             <td class="id" ><b><?php echo $result_kpi["kpi_id"]; ?></b></td>
                                             <td class="kpi_name" ><?php echo $result_kpi["kpi_name"]; ?></td>
                                             <td class="kpi_desc" ><?php echo $result_kpi["kpi_description"]; ?></td>
-                                            <td class="unit" class="text-center"><?php echo $result_kpi["unit"]; ?></td>
-                                            <td class="period" class="text-center"><?php echo $result_kpi["time_period"]; ?></td>
-                                            <td class="group" ><?php echo $result_kpi["kpi_group_name"]; ?></td>
+                                            <td class="unit text-center"><?php echo $result_kpi["unit"]; ?></td>
+                                            <td class="period text-center" class="text-center"><?php echo $result_kpi["time_period"]; ?></td>
+                                            <td class="group text-center" ><?php echo $result_kpi["kpi_group_name"]; ?></td>
                                             <td>
                                                 <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit_kpi_<?php echo $result_kpi["kpi_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
                                                 <a class="btn btn-danger btn-sm" href="#" data-toggle="modal" data-target="#confirm-delete" data-href="delete_kpi.php?kpi_id=<?php echo $result_kpi["kpi_id"]; ?>&kpi_group_id=<?php echo $get_kpi_group_id; ?>">
