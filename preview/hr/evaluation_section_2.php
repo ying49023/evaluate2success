@@ -49,6 +49,8 @@
             $position=$level; 
             $weight=$_GET["t_weight"];
             $sql_insert_group = "INSERT INTO manage_competency(competency_id,status,position_level_id,weight,evaluation_code) VALUES($detail,$status,$position,$weight,$eval_code)";
+            $sql_genpoint ="call autoGen_comp_point($detail,$position,$eval_code)";
+            $query_genpoint= mysqli_query($conn, $sql_genpoint);
             if (mysqli_query($conn, $sql_insert_group)) {
                     echo "Record new successfully";
                     echo $sql_insert_group;
