@@ -139,7 +139,7 @@
                                     <td class="job_name"><?php echo $job_name; ?></td>
                                     <td class="dept_name"><?php echo $department_name; ?></td>
                                     <td class="text-center">
-                                        <a class="btn btn-info btn-md" href="summaryevaluation.php?emp_id=<?php echo $employee_id; ?>&position_level_id=<?php echo $position; ?>&eval_code=3&eval_emp_id=<?php echo $eval_emp_id; ?>">    
+                                        <a class="btn btn-info btn-md" href="summaryevaluation.php?emp_id=<?php echo $employee_id; ?>&position_level_id=<?php echo $position; ?>&eval_code=<?php echo $my_eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>">    
                                             <i class="glyphicon glyphicon-eye-open"></i>&nbsp;ดูผล
                                         </a>
                                     </td>

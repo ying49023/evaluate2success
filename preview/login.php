@@ -67,7 +67,7 @@ and open the template in the editor.
 
             <div class="row bg1">
                 <div class="container">
-                    <h1>ATL</h1>
+                    <h1>ALT</h1>
                     <hr>
                     <h3>Telecom Public Company Limited</h3>
                 </div>

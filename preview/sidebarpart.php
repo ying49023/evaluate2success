@@ -36,14 +36,14 @@
                     </li>
                 </ul>
             </li>
-            <li class="treeview <?php if($page == 'evaluate_sub_list.php' || $page == 'search_summaryeval.php' || $page == 'my_summaryevaluation.php'){ echo "active" ; } ?>" >
+            <li class="treeview <?php if($page == 'explan_evaluation.php'  || $page == 'evaluation_section_1.php'  || $page == 'evaluation_section_2.php'  || $page == 'evaluation_section_3.php'   || $page == 'evaluation_section_4.php'  || $page == 'evaluate_sub_list.php' || $page == 'search_summaryeval.php' || $page == 'my_summaryevaluation.php'){ echo "active" ; } ?>" >
                 <a href="#">
                     <i class="glyphicon glyphicon-file"></i>
                     <span>การประเมิน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?php if($page == 'evaluate_sub_list.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'evaluate_sub_list.php' || $page == 'explan_evaluation.php'  || $page == 'evaluation_section_1.php'  || $page == 'evaluation_section_2.php'  || $page == 'evaluation_section_3.php'   || $page == 'evaluation_section_4.php' || $page == 'evaluation_summary.php'){ echo "active" ; } ?>">
                         <a href="evaluate_sub_list.php"><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a>
                     </li>
                     <li class="<?php if($page == 'search_summaryeval.php'){ echo "active" ; } ?>">

@@ -40,6 +40,41 @@
         if(isset($_GET["position_level_id"])){
             $level = $_GET["position_level_id"];
         }
+        
+        if(isset($_POST["submit_skill"])){
+            if(isset($_POST["skill_dev_id"])){
+                $array_sk[] = array();
+                $c_skill_id = 0;
+                foreach ($_POST["skill_dev_id"] as $skill_dev_id) {
+                    $array_sk[$c_skill_id] = $skill_dev_id;
+                    //echo 'array : '.$c_skill_id.' -->'.$skill_dev_id.', ';
+                    $c_skill_id++;
+                }
+            
+                $array_p[] = array();
+                $c_prominent = 0;
+                foreach ($_POST["prominent_dev"] as $prominent_dev) {
+                    $array_p[$c_prominent] = $prominent_dev;
+                    $c_prominent++;
+                }
+                    
+                    
+                $i= 0 ;
+                foreach ($_POST["skill_dev_id"] as $skill_dev_id){
+                    $eval_emp_id = $_SESSION["eval_emp_id"];
+                    
+                    $sql_insert_skill = 'CALL insert_develop('.$eval_emp_id.','.$array_sk[$i].','.$array_p[$i].')';
+                    $query_insert_skill = mysqli_query($conn, $sql_insert_skill);
+                    echo '<br>'.$sql_insert_skill;
+                    $i++;
+
+                }
+                header("location:evaluation_summary.php");
+
+                
+            }
+            
+        }
 ?>
 <!DOCTYPE html>
 <html>
@@ -114,6 +149,7 @@
                                     $sql_kpi_score = "SELECT * FROM evaluation_employee WHERE evaluate_employee_id = '".$_SESSION["eval_emp_id"]."'";
                                     $query_kpi_score = mysqli_query($conn, $sql_kpi_score);
                                     while($result_kpi_score = mysqli_fetch_array($query_kpi_score)){
+                                        $score_1 = $result_kpi_score["point_kpi"];
                                     ?>
                                     <tr>
                                         <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
@@ -144,6 +180,8 @@
                                                             ct.title_id = 1 AND ee.evaluate_employee_id='".$_SESSION["eval_emp_id"]."'";
                                     $query_score_2_1 = mysqli_query($conn, $sql_score_2_1);
                                     while($result_score_2_1 = mysqli_fetch_array($query_score_2_1)) {
+                                        $score_2_1_accessor1 = $result_score_2_1["sum_2_1_assessor1"];
+                                        $score_2_1_accessor2 = $result_score_2_1["sum_2_1_assessor2"];
                                     ?>
                                     <tr>
                                         <td style="padding-left: 40px;">ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
@@ -167,13 +205,15 @@
                                                             ct.title_id = 2 AND ee.evaluate_employee_id='".$_SESSION["eval_emp_id"]."'";
                                     $query_score_2_2 = mysqli_query($conn, $sql_score_2_2);
                                     while($result_score_2_2 = mysqli_fetch_array($query_score_2_2)) {
+                                        $score2_2_accessor_1 = $result_score_2_2["sum_2_2_assessor1"];
+                                        $score2_2_accessor_2 = $result_score_2_2["sum_2_2_assessor2"];
                                     ?>
                                     <tr>
                                         <td style="padding-left: 40px;">ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
                                         <td class="text-center"><b>20</b></td>
-                                        <td class="text-center"><input type="number" name="ass1part2/2point" value="<?php echo $result_score_2_2["sum_2_2_assessor1"]; ?>" min="0" max="20" disabled></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="ass1part2/2point" value="<?php echo $result_score_2_2["sum_2_2_assessor1"]; ?>" min="0" max="20" disabled></td>
                                         <td class="text-center"><b>20</b></td>
-                                        <td class="text-center"><input type="number" name="ass2part2/1point" value="<?php echo $result_score_2_2["sum_2_2_assessor_2"]; ?>" min="0" max="20" disabled></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="ass2part2/1point" value="<?php echo $result_score_2_2["sum_2_2_assessor_2"]; ?>" min="0" max="20" disabled></td>
                                     </tr>
                                     <?php } ?>
                                     <?php
@@ -185,6 +225,7 @@
                                                           evaluate_employee_id='".$_SESSION["eval_emp_id"]."'";
                                     $query_score_3 = mysqli_query($conn, $sql_score_3);
                                     while($result_score_3 = mysqli_fetch_array($query_score_3)) {
+                                        $score_3 = $result_score_3["score_3"];
                                     ?>
                                      <tr>
                                         <td ><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
@@ -198,90 +239,124 @@
                                      
                                 </tbody>
                                 <tfoot>
+                                    <?php 
+                                        $sum_score_accessor_1 = ($score_1 + $score_2_1_accessor1 + $score2_2_accessor_1) - $score_3;
+                                        $sum_score_accessor_2 = ($score_1 + $score_2_1_accessor2 + $score2_2_accessor_2) - $score_3;
+                                    ?>
                                     <tr class="active">
                                         <th>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</th>
                                         <th></th>
-                                        <th class="text-center" style="color: blue;"><b><input class="text-center" type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor1"]+$result_score_2_2["sum_2_2_assessor1"]-$result_score_3["score_3"]; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></th>
+                                        <th class="text-center" style="color: blue;"><b><input class="text-center" type="number" value="<?php echo $sum_score_accessor_1; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></th>
                                         <th></th>
-                                        <th class="text-center" style="color: blue;"><input class="text-center" type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor2"]+$result_score_2_2["sum_2_2_assessor2"]-$result_score_3["score_3"]; ?>"  name="ass2part1+2point" min="0" max="100" disabled></th>
+                                        <th class="text-center" style="color: blue;"><input class="text-center" type="number" value="<?php echo $sum_score_accessor_2; ?>"  name="ass2part1+2point" min="0" max="100" disabled></th>
                                     </tr>
                                 </tfoot>
                             </table>
                         </div>
                         <br>
+                        <form method="post">
                         <div class="row box-padding">
                             <div ><h4>ความคิดเห็นเพิ่มเติม</h4>   </div>
                             <div class="col-md-6">
                                 <div class="box box-success box-padding-small">
-                                <h5><u>จุดเด่นของผู้ถูกประเมิน</u></h5>
+                                    <div class="box-body">
+                                        <h5><u>จุดเด่นของผู้ถูกประเมิน</u></h5>
                                 
                                     <div class="form-group">
                                        <ol>
                                            <?php
                                            $sql_skill = "SELECT
-                                                                *
+                                                                sd.skill_development_id,
+                                                                sd.skill_development_name
                                                         FROM
                                                                 skill_development sd
-                                                        JOIN skill_devlopment_group skg ON skg.skill_dev_group_id = sd.skill_development_id" ;
+                                                        JOIN skill_devlopment_group sdg ON sd.skill_dev_group_id = sdg.skill_dev_group_id
+                                                        ORDER BY sd.skill_development_id ASC;" ;
                                            $query_skill = mysqli_query($conn, $sql_skill);
                                            
                                            for($i = 1;$i<=5;$i++) {
                                            ?>
                                                    <li>
-                                                       <select class="form-control" name="good">
+                                                        <select class="form-control" name="skill_dev_id[]">
                                                            <option value="">--เลือก--</option>
                                                            <?php 
+                                                           $j=0;
                                                            foreach ($query_skill as $result_skill){
+                                                               $j++;
                                                                 echo $result_skill["skill_development_name"];
                                                            ?>
-                                                           <option value=""><?php echo $result_skill["skill_development_name"]; ?></option>
-                                                           <?php } ?>
-                                               </select>
+                                                           <option value="<?php echo $result_skill["skill_development_id"]; ?>"><?php echo $j.' : '.$result_skill["skill_development_name"]; ?></option>
+                                                           
+                                                            <?php } ?>
+                                                        </select>
                                                    </li>
+                                                   
+                                                   <input type="hidden" name="prominent_dev[]" value="1" >
                                            <?php 
                                            
                                            } ?>
                                     </ol> 
                                     </div>
+                                    </div>
+                                    
                                     
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="box box-danger box-padding-small">
-                                <h5><u>จุดด้อยของผู้ถูกประเมิน</u></h5>
+                                    <div class="box-body ">
+                                        <h5><u>จุดด้อยของผู้ถูกประเมิน</u></h5>
                                 
                                     <div class="form-group">
                                        <ol>
                                            <?php
                                            $sql_skill = "SELECT
-                                                                *
+                                                                sd.skill_development_name,sd.skill_development_id
                                                         FROM
                                                                 skill_development sd
-                                                        JOIN skill_devlopment_group skg ON skg.skill_dev_group_id = sd.skill_development_id" ;
+                                                        JOIN skill_devlopment_group sdg ON sd.skill_dev_group_id = sdg.skill_dev_group_id
+                                                        ORDER BY sd.skill_development_id ASC;" ;
                                            $query_skill = mysqli_query($conn, $sql_skill);
                                            
                                            for($i = 1;$i<=5;$i++) {
                                            ?>
                                                    <li>
-                                                       <select class="form-control" name="good">
+                                                        <select class="form-control" name="skill_dev_id[]">
                                                            <option value="">--เลือก--</option>
                                                            <?php 
+                                                           $j=0;
                                                            foreach ($query_skill as $result_skill){
+                                                               $j++;
                                                                 echo $result_skill["skill_development_name"];
                                                            ?>
-                                                           <option value=""><?php echo $result_skill["skill_development_name"]; ?></option>
-                                                           <?php } ?>
-                                               </select>
+                                                           <option value="<?php echo $result_skill["skill_development_id"]; ?>"><?php echo $j.' : '.$result_skill["skill_development_name"]; ?></option>
+                                                            <?php } ?>
+                                                        </select>
                                                    </li>
+                                                 <input type="hidden" name="prominent_dev[]" value="0" >
+                                                        
                                            <?php 
                                            
                                            } ?>
-                                    </ol> 
+                                    </ol>  
                                     </div>
+                                    </div>
+                                    
                                     
                                 </div>
                             </div>
                         </div>
+                            <div class="box-footer">
+                                <div class="row box-padding text-center">
+                                    <button class="btn btn-success btn-lg" type="submit" name="submit_skill">บันทึก</button>
+                                    <input class="btn btn-danger btn-lg" type="reset" value="รีเซ็ต" >
+                                </div>
+                            </div>
+                            
+                            
+                            
+                        </form>
+                        
 <!--                        <div class="row box-padding">
                             <div class="col-md-12">
                                 <div class="box box-warning box-padding-small">

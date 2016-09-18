@@ -107,7 +107,7 @@
                         $eval_code = $_GET["eval_code"];
                     }
 
-                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$_SESSION["eval_code"]."'";
+                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$my_eval_code'";
                     $query_year_term = mysqli_query($conn, $sql_year_term);
                     while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
                         echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
@@ -162,7 +162,7 @@
                 <td><?php echo $result_emp["manager_name_2"]; ?></td>
                 <td>
                     <?php 
-                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '".$_SESSION["eval_code"]."' ";
+                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '$my_eval_code' ";
                     $query_eval_period = mysqli_query($conn, $sql_eval_period) or die(mysqli_errno());
                     $result_eval_period = mysqli_fetch_array($query_eval_period,MYSQLI_ASSOC);
                     ?>

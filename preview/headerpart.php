@@ -1,6 +1,6 @@
 <?php include ('./classes/connection_mysqli.php'); ?>
 <?php  
-        $sql = "SELECT
+        /*$sql = "SELECT
                         *
                 FROM
                         employees e
@@ -9,7 +9,20 @@
                 JOIN company c ON c.company_id = e.company_id
                 JOIN jobs j ON j.job_id = e.job_id
                 WHERE username = '".$_SESSION["username"]."' 
-                LIMIT 1" ;
+                LIMIT 1 " ;*/
+        $sql = "SELECT
+                        *
+                FROM
+                        evaluation e
+                RIGHT JOIN evaluation_employee ee ON ee.evaluation_code = e.evaluation_code
+                RIGHT JOIN employees emp ON emp.employee_id = ee.employee_id 
+                JOIN company c ON c.company_id = emp.company_id 
+                JOIN jobs j ON j.job_id = emp.job_id
+                JOIN position_level p ON p.position_level_id = emp.position_level_id
+                JOIN departments d ON d.department_id = emp.department_id
+                WHERE
+                        emp.username = '".$_SESSION["username"]."'
+                AND e.current_eval = 1";
         $query = mysqli_query($conn, $sql);
         while($result = mysqli_fetch_array($query)){
         $my_emp_id = $result["employee_id"];
@@ -24,6 +37,9 @@
         $my_company = $result["company_name"];
         $my_position = $result["position_description"];
         $my_hiredate = $result["hiredate"];
+        $my_eval_code = $result["evaluation_code"];
+        
+        
     ?>
 <header class="main-header">
     <!-- Logo -->
