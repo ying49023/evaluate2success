@@ -183,11 +183,13 @@
                                 <thead>
                                
                                     <tr class="">
+                                        <th class="text-center"></th>
                                         <th class="text-center"><button class="sort" data-sort="id">ID</button></th>
                                         <th ><button class="sort" data-sort="name">ชื่อ-นามสกุล</button></th>
                                         <th class="text-center"><button class="sort" data-sort="job">ตำแหน่ง</button></th>
                                         <th class="text-center"><button class="sort" data-sort="dept">แผนก</button></th>
-                                        <th class="text-center">KPI ที่รับผิดชอบ</th>
+                                        <th class="text-center"><button class="sort" data-sort="kpi_count">จำนวน KPI ที่รับผิดชอบ</button></th>
+                                        <th class="text-center">ดู</th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -200,6 +202,7 @@
                                                                 '  ',
                                                                 e.last_name
                                                         ) AS name,
+                                                        e.profile_picture,
                                                         d.department_name As dept_name,
                                                         j.job_name As job_name,
                                                         eval.evaluation_code As eval_code
@@ -222,20 +225,34 @@
                                     $dept = $result["dept_name"];
                                     $job = $result["job_name"];
                                     $eval_code = $result["eval_code"];
-                                ?>
+                                    $profile_picture = $result["profile_picture"];
+                                    $sql_count_kpi = "SELECT
+                                                            *
+                                                    FROM
+                                                            kpi k
+                                                    JOIN kpi_responsible kr ON k.kpi_id = kr.kpi_id
+                                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                                    JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                                                    WHERE
+                                                            ee.employee_id = '".$emp_id."' AND e.evaluation_code = ".$get_eval_code;
+                                    $query_count_kpi = mysqli_query($conn, $sql_count_kpi);
+                                    $count_kpi = mysqli_num_rows($query_count_kpi);
+                                    ?>
                                 
-                                <tr>
+                                <tr >
+                                    <td class="text-center"><img class="img-circle img-center img-sm" src="../upload_images/<?php if($profile_picture ==''){ echo "default.png";} else { echo $profile_picture; } ?>" ></td>
                                     <td class="id text-center"><?php  echo $emp_id; ?></td>
                                     <td class="name"><?php echo $name; ?></td>
                                     <td class="job text-center"><?php echo $job; ?></td>
                                     <td class="dept text-center"><?php echo $dept; ?></td>
+                                    <td class="kpi_count text-center"><span style="color: #000080;font-size: 18px;"><?php echo $count_kpi; ?></span></td>
                                     <td class="text-center"><a class="btn btn-primary" href="hr_kpi_individual_resp.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; ดู</a></td>
                                 </tr>
                                 <?php } ?>
                                 </tbody>
                                 <script>
                                         var options = {
-                                            valueNames: [ 'id', 'name' , 'job' , 'dept' ]
+                                            valueNames: [ 'id', 'name' , 'job' , 'dept','kpi_count' ]
                                         };
                                         
                                         var userList = new List('filter', options);

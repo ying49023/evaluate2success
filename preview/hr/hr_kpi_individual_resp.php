@@ -20,12 +20,17 @@
 <head>
     <?php include ('./classes/connection_mysqli.php'); 
      
-                                $get_emp_id = "1"; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
-                                
-                                //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
-                                if(isset($_GET["emp_id"])){
-                                    $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
-                                }?>
+        $get_emp_id = "1"; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
+        //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
+        if (isset($_GET["emp_id"])) {
+            $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+        }
+        $get_eval_code = ''; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
+        //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
+        if (isset($_GET["eval_code"])) {
+            $get_eval_code = $_GET["eval_code"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+        }
+        ?>
     
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -95,21 +100,23 @@
                 </button>
             </div>
                 <div col-md-6>
-            <div style="float: left;">
-                    <?php
-                    $eval_code = '';
-                    if (isset($_GET["eval_code"])) {
-                        $eval_code = $_GET["eval_code"];
-                    }
-
-                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
-                    $query_year_term = mysqli_query($conn, $sql_year_term);
-                    while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
-                        echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
-                        echo "<span style='font-size:18px'>รอบการประเมินที่ " . $term = $result_year_term["term_name"] . " : " . $result_year_term["start_month"] . "-" . $result_year_term["end_month"] . "</span>";
-                    }
-                    ?>
-            </div>
+                    <div style="float: left;">
+                                    <?php
+                                    $eval_code = '';
+                                    if (isset($_GET["eval_code"])) {
+                                        $eval_code = $_GET["eval_code"];
+                                    }
+                                        
+                                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
+                                    $query_year_term = mysqli_query($conn, $sql_year_term);
+                                    while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
+                                        $eval_year = $result_year_term["year"];
+                                        $eval_term = $result_year_term["term_name"] . " : " . $result_year_term["start_month"] . "-" . $result_year_term["end_month"];
+                                        echo "<span style='font-size:18px'><b>ปีการประเมิน " . $eval_year . "</b></span> | ";
+                                        echo "<span style='font-size:18px'>รอบการประเมินที่ " . $eval_term . "</span>";
+                                    }
+                                    ?>
+                    </div>
         </div>
     </div>  
     </div>
@@ -175,23 +182,6 @@
             <div class="row box-padding" style="margin-top:-20px;">
                 <h3>KPIs ที่รับผิดชอบทั้งหมด</h3>
             </div>
-            <?php  
-                /*$sql_kpi = "SELECT kpi_resp.kpi_id as kpi_id , kpi.kpi_name as kpi_name , kpi_resp.percent_weight as weight , "
-                    ." kpi_resp.goal as goal , kpi_resp.success as success, eval.term as term , eval.year as year "
-                    ." FROM employees emp " 
-                    ." JOIN evaluation_employee eval_emp on eval_emp.employee_id = emp.employee_id "
-                    ." JOIN evaluation eval on eval_emp.evaluation_code = eval.evaluation_code "
-                    ." JOIN kpi_responsible kpi_resp on eval_emp.evaluate_employee_id = kpi_resp.evaluate_employee_id "
-                    ." JOIN kpi on kpi_resp.kpi_id = kpi.kpi_id "
-                    ." WHERE eval_emp.employee_id = '".$emp_id."' ORDER BY kpi_id ";*/
-                $sql_kpi="SELECT k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,k.unit
-                            FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
-                            JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
-                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
-                            WHERE ee.employee_id = '".$emp_id."' ORDER BY kpi_id ";
-                $query_kpi = mysqli_query($conn, $sql_kpi);
-            ?>
-            
             <div class="row box-padding">
                 <div class="box box-primary">
                     <div class="box-body">
@@ -204,8 +194,49 @@
                                 <td width="120px" class="text-center">ที่ทำได้จริง</td>
                                 <td width="300px" class="text-center">รอบการประเมิน</td>
                             </tr>
+                                    <?php
+                                    /* $sql_kpi = "SELECT kpi_resp.kpi_id as kpi_id , kpi.kpi_name as kpi_name , kpi_resp.percent_weight as weight , "
+                                      ." kpi_resp.goal as goal , kpi_resp.success as success, eval.term as term , eval.year as year "
+                                      ." FROM employees emp "
+                                      ." JOIN evaluation_employee eval_emp on eval_emp.employee_id = emp.employee_id "
+                                      ." JOIN evaluation eval on eval_emp.evaluation_code = eval.evaluation_code "
+                                      ." JOIN kpi_responsible kpi_resp on eval_emp.evaluate_employee_id = kpi_resp.evaluate_employee_id "
+                                      ." JOIN kpi on kpi_resp.kpi_id = kpi.kpi_id "
+                                      ." WHERE eval_emp.employee_id = '".$emp_id."' ORDER BY kpi_id ";
+                                      $sql_kpi="SELECT k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,k.unit
+                                      FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id
+                                      JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                      JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                                      WHERE ee.employee_id = '".$emp_id."' ORDER BY kpi_id "; */
+                                    $sql_kpi = "SELECT
+                                    k.kpi_code AS kpi_id,
+                                    k.kpi_name AS kpi_name,
+                                    k.unit As unit,
+                                    kr.percent_weight AS weight,
+                                    kr.goal AS goal,
+                                    kr.success AS success,
+                                    e.term_id AS term,
+                                    e.YEAR AS year,
+                                    k.measure_symbol AS symbol,
+                                    kr.percent_performance,
+                                    kr.kpi_responsible_id
+                            FROM
+                                    kpi k
+                            JOIN kpi_responsible kr ON k.kpi_id = kr.kpi_id
+                            JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                            WHERE
+                                    ee.employee_id = '$get_emp_id' AND e.evaluation_code = '$get_eval_code'
+                            ORDER BY
+                                    kpi_id";
+                                    $query_kpi = mysqli_query($conn, $sql_kpi);
+                                    $count = mysqli_num_rows($query_kpi);
+                                    if ($count == 0) {
+                                        echo "<th class='text-center' colspan='6'> ไม่มีการกำหนด KPI สำหรับปีการประเมิน " . $eval_year . ' รอบการประเมินที่ ' . $eval_term . " </th>";
+                                    }
+                                    ?>
                             <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
-                
+                                
                                 $kpi_id = $result_kpi["kpi_id"];
                                 $kpi_name = $result_kpi["kpi_name"];
                                 $weight = $result_kpi["weight"];

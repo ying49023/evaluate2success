@@ -20,12 +20,18 @@
 <head>
     <?php
     include ('./classes/connection_mysqli.php');
+    
     $get_emp_id = "1"; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
-    //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
-    if (isset($_GET["emp_id"])) {
-        $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
-    }
-    ?>
+        //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
+        if (isset($_GET["emp_id"])) {
+            $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+        }
+        $get_eval_code = ''; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
+        //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
+        if (isset($_GET["eval_code"])) {
+            $get_eval_code = $_GET["eval_code"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+        }
+        ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -68,249 +74,115 @@
             <!-- Main content -->
             <div class="row box-padding">
                 <div class="box box-success">
-                    <div class="box-body">
-                        <div class="row"> 
-                            <div class="box-padding">
-                                
-                                <?php
-                                                                                   
-                                $sql_emp = "SELECT
-                                        emp.employee_id AS emp_id,
-                                        emp.prefix As prefix,
-                                        emp.first_name AS f_name,
-                                        emp.last_name AS l_name,
-                                        emp.hiredate AS hiredate,
-                                        emp.manager_id AS manager_id,
-                                        emp.email AS email,
-                                        emp.telephone_no AS telephone,
-                                        dept.department_name AS dept_name,
-                                        pos.position_description AS pos
-                                FROM
-                                        employees emp
-                                JOIN departments dept ON emp.department_id = dept.department_id
-                                JOIN position_level pos ON emp.position_level_id = pos.position_level_id
-                                WHERE emp.employee_id = '".$get_emp_id."' LIMIT 1";
-                                
-                                $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-
-                                 ?>
-                                
-                                <?php  while($result = mysqli_fetch_assoc($query)){ 
-                                    $emp_id = $result["emp_id"];
-                                    $name = $result["prefix"].$result["f_name"]."  ".$result["l_name"];
-                                    $hire = $result["hiredate"];
-                                    $manager_id = $result["manager_id"];
-                                    $dept = $result["dept_name"];
-                                    $pos = $result["pos"];
-                                    $email = $result["email"];
-                                    $tel = $result["telephone"];
-                                    $sql_manager = "SELECT * from employees where employee_id = '".$manager_id."'" ;
-                                    $query_manager = mysqli_query($conn, $sql_manager);
-                                    $result_manager = mysqli_fetch_array($query_manager);
-                                    $manager_name = $result_manager["prefix"].$result_manager["first_name"]." ".$result_manager["last_name"];
+                            <?php
+                            $sql_emp = "SELECT
+                                                    GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
+                                                    GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1,
+                                                    GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2
+                                            FROM
+                                                    employees e
+                                            JOIN position_level p ON p.position_level_id = e.position_level_id
+                                            JOIN departments d ON d.department_id = e.department_id
+                                            JOIN jobs j ON j.job_id = e.job_id
+                                            JOIN employees m ON e.manager_id = m.employee_id
+                                            JOIN employees m2 ON m.manager_id = m2.employee_id
+                                            WHERE
+                                                    e.employee_id ='" . $get_emp_id . "'";
+                            $query_emp = mysqli_query($conn, $sql_emp);
+                            while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
                                 ?>
-                                <!--ข้อมูลทั่วไป-->
-                                <table class="table table-bordered table-condensed">
-                                    <tbody>
-                                        <tr>
-                                            <th rowspan="4">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="img/emp1.jpg">
+                                <div class="box-header">
+                                    <div class="col-md6">
+
+
+                                        <div style="float: right;">
+                                            <img class='img-circle img-sm img-center' src="../upload_images/<?php if ($result_emp["profile_picture"] == '') {
+                        echo 'default.png';
+                    } else {
+                        echo $result_emp["profile_picture"];
+                    } ?>"  > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
+                                            <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <div col-md-6>
+                                            <div style="float: left;">
+                                                <?php
+                                                $eval_code = '';
+                                                if (isset($_GET["eval_code"])) {
+                                                    $eval_code = $_GET["eval_code"];
+                                                }
+
+                                                $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$eval_code'";
+                                                $query_year_term = mysqli_query($conn, $sql_year_term);
+                                                while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
+                                                    $eval_year = $result_year_term["year"];
+                                                    $eval_term = $result_year_term["term_name"] . " : " . $result_year_term["start_month"] . "-" . $result_year_term["end_month"];
+                                                    echo "<span style='font-size:18px'><b>ปีการประเมิน " . $eval_year . "</b></span> | ";
+                                                    echo "<span style='font-size:18px'>รอบการประเมินที่ " . $eval_term . "</span>";
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                </div>
+                                <div class="box-body">
+                                    <table class="table table-bordered table-striped table-responsive">
+
+                                        <tr >
+                                            <th rowspan="4" style="text-align: center;">
+                                                <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="../upload_images/<?php
+                                                if ($result_emp["profile_picture"] == '') {
+                                                    echo "default.png";
+                                                } else {
+                                                    echo $result_emp["profile_picture"];
+                                                }
+                                                ?>" >
                                             </th>
-                                            <th align="center" width="" >ชื่อ-นามสกุล</th>
-                                            <th align="center" width="120px">รหัส</th>
-                                            <th align="center" width="" >ระดับ</th>
-                                            <th align="center" width="" >แผนก</th>
+                                            <th>ชื่อ-นามสกุล</th>
+                                            <th>รหัส</th>
+                                            <th>ระดับ</th>
                                         </tr>
                                         <tr>
-                                            <td><?php  echo $name ;?></td>
-                                            <td><?php  echo $emp_id ;?></td>
-                                            <td><?php  echo $pos ;?></td>
-                                            <td><?php  echo $dept ;?></td>
-                                            
+                                            <td><?php echo $result_emp["emp_name"]; ?> </td>
+                                            <td><?php echo $result_emp["employee_id"]; ?></td>
+                                            <td><?php echo $result_emp["position_description"]; ?> </td>
                                         </tr>
-                                    </tbody>
-                                </table><!--/ข้อมูลทั่วไป-->
-                                <a class="" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                                    <i class="glyphicon glyphicon-triangle-bottom"></i>รายละเอียดบุคคลเพิ่มเติม
-                                </a>
-                                <div class="collapse" id="collapseExample" style="margin-top:10px;">
-                                    <table class="table table-responsive table-bordered ">
-                                        <thead>
-                                            <tr class="text-center">
-                                                <td colspan="2">วันที่เริ่มงาน</td>
-                                                <td colspan="2">email</td>
-                                                <td colspan="2">เบอร์โทรศัพท์</td>
-                                                <td colspan="2">ผู้บังคับบัญชา</td>
-                                            </tr>
-                                        </thead>
-                                        <tr class="text-center">
-                                            <td colspan="2"><?php echo $hire ;?></td>
-                                            <td colspan="2"><?php echo $email ;?></td>
-                                            <td colspan="2"><?php echo $tel ;?></td>
-                                            <td colspan="2"><?php echo $manager_name ; ?></td>
+                                        <tr>
+                                            <th>ตำแหน่ง</th>
+                                            <th>สังกัด / ฝ่าย / สายงาน</th>
+                                            <th>วันเริ่มงาน: </th>
                                         </tr>
-                                    </table>
-                                    <table class="table table-responsive table-bordered ">
-                                        <thead>
-                                            <tr class="">
-                                                <th colspan="8">
-                                                    สถิติการมาปฏิบัติงาน
-                                                </th>
-                                            </tr>
-                                            <tr>
-                                                <th>ลาป่วย</th>
-                                                <th>ลากิจ</th>
-                                                <th>ลาอื่นๆ</th>
-                                                <th>ขาดงาน</th>
-                                                <th>มาสาย</th>
-                                                <th>ตักเตือนด้วยวาจา</th>
-                                                <th>ตักเตือนด้วยลายลักษณ์อักษร</th>
-                                                <th>ลงโทษ อื่นๆ</th>
-                                            </tr>
-                                        </thead>
-                                        <TR class="text-center">
-                                            <TD>
-                                                <?php 
-                                                    $sql_leave_type_1 = "SELECT COUNT(L.leave_type_id) as leave_type_1 FROM employees E 
-                                                                        JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                        JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                        WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='1'
-                                                                        GROUP BY T.leave_type_id";
-                                                    $query_leave_type_1 = mysqli_query($conn, $sql_leave_type_1);
-                                                    $result_leave_type_1 = mysqli_fetch_array($query_leave_type_1);
-                                                    
-                                                    if($result_leave_type_1["leave_type_1"] == ''){
-                                                        echo "0 วัน";
-                                                    }else{
-                                                        echo $result_leave_type_1["leave_type_1"]." วัน" ;
-                                                    }
-                                                    
-                                                ?>
-                                            </TD>
-                                            <TD>
-                                                <?php 
-                                                    $sql_leave_type_2 = "SELECT COUNT(L.leave_type_id) as leave_type_2 FROM employees E 
-                                                                        JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                        JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                        WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='2'
-                                                                        GROUP BY T.leave_type_id";
-                                                    $query_leave_type_2 = mysqli_query($conn, $sql_leave_type_2);
-                                                    $result_leave_type_2 = mysqli_fetch_array($query_leave_type_2);
-                                                   
-                                                    if($result_leave_type_2["leave_type_2"] == ''){
-                                                        echo "0 วัน";
-                                                    }else{
-                                                        echo $result_leave_type_2["leave_type_2"]." วัน" ;
-                                                    }
-                                                ?>
-                                            </TD>
-                                            <TD>
-                                                <?php 
-                                                $sql_leave_type_3 = "SELECT COUNT(L.leave_type_id) as leave_type_3 FROM employees E 
-                                                                    JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                    JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='6'
-                                                                    GROUP BY T.leave_type_id";
-                                                $query_leave_type_3 = mysqli_query($conn, $sql_leave_type_3);
-                                                $result_leave_type_3 = mysqli_fetch_row($query_leave_type_3);
-                                                if ($result_leave_type_3["leave_type_3"] == '') {
-                                                    echo "0 วัน";
-                                                } else {
-                                                    echo $result_leave_type_3["leave_type_3"] . " วัน";
-                                                }
-                                            ?>
-                                            </TD>
-                                            <TD>
-                                                <?php 
-                                                $sql_leave_type_4 = "SELECT COUNT(L.leave_type_id) as leave_type_4 FROM employees E 
-                                                                    JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                    JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='4'
-                                                                    GROUP BY T.leave_type_id";
-                                                $query_leave_type_4 = mysqli_query($conn, $sql_leave_type_4);
-                                                $result_leave_type_4 = mysqli_fetch_row($query_leave_type_4);
-                                                
-                                                if ($result_leave_type_4["leave_type_4"] == '') {
-                                                    echo "0 วัน";
-                                                } else {
-                                                    echo $result_leave_type_4["leave_type_4"] . " วัน";
-                                                }
-                                            ?>
-                                            </TD>
-                                            <TD>
-                                                <?php 
-                                                $sql_leave_type_5 = "SELECT COUNT(L.leave_type_id) as leave_type_5 FROM employees E 
-                                                                    JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                    JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='6'
-                                                                    GROUP BY T.leave_type_id";
-                                                $query_leave_type_5 = mysqli_query($conn, $sql_leave_type_5);
-                                                $result_leave_type_5 = mysqli_fetch_row($query_leave_type_5);
-                                                if ($result_leave_type_5["leave_type_5"] == '') {
-                                                    echo "0 วัน";
-                                                } else {
-                                                    echo $result_leave_type_5["leave_type_5"] . " วัน";
-                                                }
-                                            ?>
-                                            </TD>
-                                            <TD>
-                                                <?php 
-                                                $sql_leave_type_6 = "SELECT COUNT(L.leave_type_id) as leave_type_6 FROM employees E 
-                                                                    JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                    JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='6'
-                                                                    GROUP BY T.leave_type_id";
-                                                $query_leave_type_6 = mysqli_query($conn, $sql_leave_type_6);
-                                                $result_leave_type_6 = mysqli_fetch_row($query_leave_type_6);
-                                                if ($result_leave_type_6["leave_type_6"] == '') {
-                                                    echo "0 วัน";
-                                                } else {
-                                                    echo $result_leave_type_6["leave_type_6"] . " วัน";
-                                                }
-                                            ?>
-                                            </TD>
+                                        <tr>
+                                            <td><?php echo $result_emp["job_name"]; ?></td>
+                                            <td><?php echo $result_emp["department_name"]; ?></td>
+                                            <td><?php echo $result_emp["hiredate"]; ?> <span style="color:maroon;"></span> </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">วันที่ประเมิน</th>
+                                            <th>ชื่อ - นามสกุลของผู้ประเมินที่ 1</th>
+                                            <th>ชื่อ - นามสกุลของผู้ประเมินที่ 2</th>
+                                            <th>ระยะเวลาประเมินผล</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center"> - </td>
+                                            <td><?php echo $result_emp["manager_name_1"]; ?></td>
+                                            <td><?php echo $result_emp["manager_name_2"]; ?></td>
                                             <td>
-                                                <?php 
-                                                $sql_leave_type_7 = "SELECT COUNT(L.leave_type_id) as leave_type_7 FROM employees E 
-                                                                    JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                    JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='7'
-                                                                    GROUP BY T.leave_type_id";
-                                                $query_leave_type_7 = mysqli_query($conn, $sql_leave_type_7);
-                                                $result_leave_type_7 = mysqli_fetch_row($query_leave_type_7);
-                                                
-                                                if ($result_leave_type_7["leave_type_7"] == '') {
-                                                    echo "0 วัน";
-                                                } else {
-                                                    echo $result_leave_type_7["leave_type_7"] . " วัน";
-                                                }
+                                                <?php
+                                                $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '$eval_code' ";
+                                                $query_eval_period = mysqli_query($conn, $sql_eval_period) or die(mysqli_errno());
+                                                $result_eval_period = mysqli_fetch_array($query_eval_period, MYSQLI_ASSOC);
                                                 ?>
+            <?php echo $result_eval_period["open_system_date"]; ?>  ถึง <?php echo $result_eval_period["close_system_date"]; ?>
                                             </td>
-                                            <td>
-                                                <?php 
-                                                $sql_leave_type_8 = "SELECT COUNT(L.leave_type_id) as leave_type_8 FROM employees E 
-                                                                    JOIN leaves L ON E.employee_id = L.employee_id 
-                                                                    JOIN leaves_type T ON L.leave_type_id = T.leave_type_id
-                                                                    WHERE E.employee_id = '".$emp_id."' AND T.leave_type_id='8'
-                                                                    GROUP BY T.leave_type_id";
-                                                $query_leave_type_8 = mysqli_query($conn, $sql_leave_type_8);
-                                                $result_leave_type_8 = mysqli_fetch_row($query_leave_type_8);
-                                                
-                                                if ($result_leave_type_8["leave_type_8"] == '') {
-                                                    echo "0 วัน";
-                                                } else {
-                                                    echo $result_leave_type_8["leave_type_8"] . " วัน";
-                                                }
-                                                ?>
-                                            </td>
-                                        </TR>
+                                        </tr>
                                     </table>
                                 </div>
-                                <?php } ?>
-                            </div>
-                        </div>  
-                    </div>
-                </div>
+
+                            <?php
+                        }
+                        ?> 
+                        </div>
             </div>
             <div class="row box-padding" style="margin-top: -20px;">
                 <h3>KPIs สำหรับการประเมินในรอบ ม.ค. - มิ.ย. 59</h3>
@@ -367,15 +239,41 @@
                                 <td width="120px">การจัดการ</td>
                             </tr>
                             <?php
-                            $sql_next_kpi = "SELECT k.kpi_id as kpi_id, k.kpi_name as kpi_name,k.kpi_description as kpi_description, nrk.weight as weight, nrk.goal as goal
-                                            FROM evaluation_next_kpi enk 
-                                            JOIN next_responsible_kpi nrk ON enk.evaluate_next_kpi_id = nrk.evaluate_next_kpi_id 
-                                            JOIN kpi k ON nrk.kpi_id = k.kpi_id
-                                            WHERE nrk.evaluate_next_kpi_id = (SELECT enk.evaluate_next_kpi_id 
-                                                                              FROM evaluation_next_kpi enk 
-                                                                              JOIN evaluation_employee ee ON enk.evaluate_employee_id = ee.evaluate_employee_id 
-                                                                              WHERE ee.employee_id = '".$get_emp_id."')";
+//                            $sql_next_kpi = "SELECT k.kpi_id as kpi_id, k.kpi_name as kpi_name,k.kpi_description as kpi_description, nrk.weight as weight, nrk.goal as goal
+//                                            FROM evaluation_next_kpi enk 
+//                                            JOIN next_responsible_kpi nrk ON enk.evaluate_next_kpi_id = nrk.evaluate_next_kpi_id 
+//                                            JOIN kpi k ON nrk.kpi_id = k.kpi_id
+//                                            WHERE nrk.evaluate_next_kpi_id = (SELECT enk.evaluate_next_kpi_id 
+//                                                                              FROM evaluation_next_kpi enk 
+//                                                                              JOIN evaluation_employee ee ON enk.evaluate_employee_id = ee.evaluate_employee_id 
+//                                                                              WHERE ee.employee_id = '".$get_emp_id."')";
+                            $sql_next_kpi = "SELECT
+                                    k.kpi_code AS kpi_id,
+                                    k.kpi_name AS kpi_name,
+                                    k.kpi_description As kpi_description,
+                                    k.unit As unit,
+                                    kr.percent_weight AS weight,
+                                    kr.goal AS goal,
+                                    kr.success AS success,
+                                    e.term_id AS term,
+                                    e.YEAR AS year,
+                                    k.measure_symbol AS symbol,
+                                    kr.percent_performance,
+                                    kr.kpi_responsible_id
+                            FROM
+                                    kpi k
+                            JOIN kpi_responsible kr ON k.kpi_id = kr.kpi_id
+                            JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                            WHERE
+                                    ee.employee_id = '$get_emp_id' AND e.evaluation_code = '$get_eval_code'
+                            ORDER BY
+                                    kpi_id";
                             $query_next_kpi = mysqli_query($conn, $sql_next_kpi);
+                            $count = mysqli_num_rows($query_next_kpi);
+                            if($count == 0){
+                                echo "<th class='text-center' colspan='6'> ไม่มีการกำหนด KPI สำหรับปีการประเมิน ". $eval_year.' รอบการประเมินที่ '.$eval_term ." </th>";
+                            }
                             while ($result_next_kpi = mysqli_fetch_array($query_next_kpi,MYSQLI_ASSOC)) {
                                 $sql_unit = "SELECT unit FROM kpi WHERE kpi_id = '".$result_next_kpi["kpi_id"]."'" ;
                                 $query_unit = mysqli_query($conn, $sql_unit);
@@ -391,7 +289,7 @@
                                 <td><?php echo $result_next_kpi["goal"]." ".$result_unit["unit"] ; ?></td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit_<?php echo $result_next_kpi["kpi_id"]; ?>">
-                                        <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
+                                        <i class="glyphicon glyphicon-pencil" ></i>
                                     </button> 
                                     |
                                     <a class="btn btn-danger btn-sm" href="delete_assign_kpi.php?kpi_id=<?php echo $result_next_kpi["k.kpi_id"]."&emp_id=". $get_emp_id; ?>" >
@@ -405,7 +303,7 @@
                                 <div class="modal-dialog" role="document">
                                     <form action="update_next_kpi.php" method="post" >
                                         <div class="modal-content">
-                                            <div class="modal-header">
+                                            <div class="modal-header bg-blue">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
                                             </div>
@@ -437,7 +335,7 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <input class="btn btn-primary" type="submit" name="submit" value="บันทึก" >
+                                                <input class="btn btn-success" type="submit" name="submit" value="บันทึก" >
                                                 <input type="hidden" name="emp_id" value="<?php echo $emp_id; ?>" >
                                                 <input type="hidden" name="next_responsible_kpi_id" value="<?php echo $result_next_kpi["next_responsible_kpi_id"]; ?>" >
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
@@ -456,58 +354,58 @@
 
             </div>
             <!--สำรอง-->
-<!--            <div class="row box-padding">
-                <div class="box box-primary">
-                    <div class="box-header with-border"> <b>เพิ่มเติม/แก้ไขKPI</b>
-                    </div>
-                    <div class="box-body box-padding-small">
-                        <form action="">
-                            <div class="row">
-                                <div class="form-group col-sm-7">
-                                    <label class="control-label pull-left">ชื่อ KPI</label>
-                                    <div class="">
-                                    <?php 
-                                      $sql_kpi = "SELECT * FROM kpi"; 
-                                      $query_kpi = mysqli_query($conn, $sql_kpi);
+            <!--            <div class="row box-padding">
+                            <div class="box box-primary">
+                                <div class="box-header with-border"> <b>เพิ่มเติม/แก้ไขKPI</b>
+                                </div>
+                                <div class="box-body box-padding-small">
+                                    <form action="">
+                                        <div class="row">
+                                            <div class="form-group col-sm-7">
+                                                <label class="control-label pull-left">ชื่อ KPI</label>
+                                                <div class="">
+                                                <?php 
+                                                  $sql_kpi = "SELECT * FROM kpi"; 
+                                                  $query_kpi = mysqli_query($conn, $sql_kpi);
 
-                                    ?>
+                                                ?>
 
-                                        <select class="form-control">
+                                                    <select class="form-control">
 
-                                            <option>เลือกkpi </option>
-                                             <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
-                                            <option><?php echo $result_kpi["kpi_name"]; ?></option>
-                                        <?php } ?>
-                                          
-                                        </select>
-                                    </div>
+                                                        <option>เลือกkpi </option>
+                                                         <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
+                                                        <option><?php echo $result_kpi["kpi_name"]; ?></option>
+                                                    <?php } ?>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-2">
+                                                <label class="control-label pull-left">น้ำหนัก(%)</label>
+                                                    <input class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label class="control-label pull-left">เป้าหมาย</label>
+                                                    <input class="form-control" type="text">
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label class="control-label pull-left">หน่วย</label>
+                                                <input class="form-control" type="text" placeholder="(เปลี่ยนตามหัวข้อKPI)" readonly="">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <button class="btn btn-file">เพิ่ม</button>
+                                                <input type="submit" class="btn btn-microsoft" value="บันทึก" />
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="form-group col-sm-2">
-                                    <label class="control-label pull-left">น้ำหนัก(%)</label>
-                                        <input class="form-control" type="text">
-                                </div>
-                                <div class="form-group col-sm-3">
-                                    <label class="control-label pull-left">เป้าหมาย</label>
-                                        <input class="form-control" type="text">
-                                </div>
-                                <div class="form-group col-sm-2">
-                                    <label class="control-label pull-left">หน่วย</label>
-                                    <input class="form-control" type="text" placeholder="(เปลี่ยนตามหัวข้อKPI)" readonly="">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <button class="btn btn-file">เพิ่ม</button>
-                                    <input type="submit" class="btn btn-microsoft" value="บันทึก" />
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
 
-            </div>-->
+                        </div>-->
 
             <!-- /.content --> </div>
         <!-- /.content-wrapper -->
