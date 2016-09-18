@@ -88,8 +88,8 @@
                         <div class="box-header with-border">
                             <h4><i class="glyphicon glyphicon-info-sign"></i> &nbsp; คำชี้แจงแบบประเมินผลการปฏิบัติงาน (Performance Appraisal Guideline) ระดับปฏิบัติการ</h4>
                         </div>
-                        <div class="box-body">
-                            <div class="box-padding">
+                        <div class=" box-body " >
+                            <div class="box-padding"  style="max-height: 450px;overflow-y: auto;background-color:#EEEEEE; ">
                                         
                                         
                                         <?php
@@ -115,6 +115,30 @@
                                         }
                                         ?>
                             </div>
+                            
+                            
+                        </div>
+                        <div class="box-footer">
+                            <form action="evaluation_section_1.php" method="post">
+                                <script>
+                                $(function() {
+                                    var chk = $('#check');
+                                    var btn = $('#btncheck');
+
+                                    chk.on('change', function() {
+                                      btn.prop("disabled", !this.checked);//true: disabled, false: enabled
+                                    }).trigger('change'); //page load trigger event
+                                  });
+                                </script>
+
+                                <div class="form-group  text-center">
+                                    <div class="checkbox ">
+                                       <input id="check" name="checkbox" type="checkbox" > 
+                                       <label for="check">ยอมรับข้อตกลงและคำชี้แจง</label><!-- for must be the id of input -->
+                                    </div>
+                                    <button class="btn btn-success btn-lg " type="submit" id="btncheck"  name="submit"><i class="glyphicon glyphicon-play-circle"></i> &nbsp; หน้าถัดไป - ส่วนที่ 1 : KPIs</button>
+                                </div>  
+                            </form>
                         </div>
                     </div>
                     <!--/Explane -->

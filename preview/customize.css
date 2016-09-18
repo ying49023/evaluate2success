@@ -51,3 +51,7 @@
 .img-center{
     object-fit: cover;
 }
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
