@@ -41,12 +41,12 @@
                         <a href="manage_evaluate.php"><i class="fa fa-circle-o"></i>จัดการระบบประเมิน</a>
                     </li>
                     <li class="<?php if($page == 'create_evaluation.php' || $page == 'explan_evaluation.php' || $page == 'evaluation_section_1.php' || $page == 'evaluation_section_2.php' || $page == 'evaluation_section_3.php' || $page == 'evaluation_section_4.php'){ echo "active" ; } ?>">
-                        <a href="create_evaluation.php"><i class="fa fa-circle-o"></i>แก้ไขแบบประเมิน</a>
+                        <a href="create_evaluation.php"><i class="fa fa-circle-o"></i>สร้าง / แก้ไขแบบประเมิน</a>
                     </li>
 					
-                    <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">
+<!--                    <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">
                         <a href="manage_competency.php"><i class="fa fa-circle-o"></i>จัดการแบบประเมินCompetency</a>
-                    </li>
+                    </li>-->
 
                     <li class="<?php if($page == 'manage_grade.php'){ echo "active" ; } ?>">
                         <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a></li>
@@ -147,6 +147,25 @@
                 </ul>
             </li>
             <!-- /Manage Leave date -->
+            
+            <!-- Manage penalty reward -->
+            <li class="<?php if ($page == 'manage_penalty_reward.php' || $page == 'manage_penalty_reward_detail.php') {
+                    echo "active";
+                } ?>">
+                <a href="">
+                    <i class="glyphicon glyphicon-tower"></i>
+                    <span>จัดการข้อมูลรางวัล / โทษ</span>
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li class="<?php if ($page == 'manage_penalty_reward.php' || $page == 'manage_penalty_reward_detail.php') {
+                    echo "active";
+                } ?>">
+                        <a href="manage_penalty_reward.php"><i class="fa fa-circle-o"></i>จัดการข้อมูลรางวัล / โทษ</a>
+                    </li>
+                </ul>
+            </li>
+            <!-- /Manage penalty reward -->
             
             <!-- Manage employee -->
             <li class="<?php if($page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php' || $page == 'edit_profile.php'){ echo "active" ; } ?>" >    
