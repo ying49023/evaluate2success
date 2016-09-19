@@ -76,64 +76,11 @@
         ?>                
                     
                         
-        <script>
-            google.charts.load('current', {'packages':['gauge','corechart']});
-            
-            google.charts.setOnLoadCallback(drawChart);
-            
-            function drawChart() {
-                
-                var data = google.visualization.arrayToDataTable([
-                    ['Label', 'Value'],
-                    <?php while($result_progess = mysqli_fetch_assoc($query_progess)){
-                    ?>
-                    ['Performance', <?php if($result_progess!=''){echo $result_progess['performance_mile'];}else{ echo 0;} ?>],
-                    <?php } ?>        
-                    
-                ]);
-                
-                var options = {
-                    width: 200, height: 200,
-                    redFrom: 90, redTo: 100,
-                    yellowFrom:75, yellowTo: 90,
-                    minorTicks: 5
-                };
-                
-                var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
-                
-                chart.draw(data, options);
-                
-            }
-            
-            //Colume Chart
-            google.charts.setOnLoadCallback(columnChart);
-            function columnChart() {
-                var data2 = google.visualization.arrayToDataTable([
-                    ['Month', 'value', { role: 'style' }],
-                    ['มกราคม', 1, '#b87333'],
-                    ['กุมพาพันธ์', 2, 'silver'],            
-                    ['มีนาคม', 4, 'gold'],
-                    ['เมษายน', 5, 'color: #e5e4e2' ], 
-                    ['พฤษภาคม', 6, 'color: orange' ],
-                    ['มิถุนายน', 0, 'black' ],
-                ]);
-                
-                
-                var options2 = {
-                    title: 'KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด',
-                    legend: 'none',
-                    bar: {groupWidth: '70%'},
-                    vAxis: { gridlines: { count: 5 } }
-                };
-                
-                var chart = new google.visualization.ColumnChart(document.getElementById('number_format_chart'));
-                chart.draw(data2, options2);
-            };
-            
-        </script>
+        
 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
+        
         <div class="wrapper">
             <!--Header part-->
             <?php include './headerpart.php'; ?>
@@ -178,7 +125,6 @@
         ?>
     <div class="box-header">
         <div class="col-md6">
-            
             
             <div style="float: right;">
                 <img class='img-circle img-sm img-center' src="./upload_images/<?php if($result_emp["profile_picture"]== ''){ echo 'default.png' ;}else { echo  $result_emp["profile_picture"];} ?>"  > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
@@ -267,7 +213,16 @@
                 <div class="row box-padding">
                     <div class="box box-primary ">
                         <?php
-                            $sql_kpi_title ="select * from kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id  where kpi_code='$kpi_id'";
+                            $sql_kpi_title ="SELECT
+                                                    k.*,kr.*
+                                            FROM
+                                                    kpi k
+                                            JOIN kpi_responsible kr ON k.kpi_id = kr.kpi_id
+                                            JOIN evaluation_employee ee ON kr.evaluate_employee_id = ee.evaluate_employee_id
+                                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                                            WHERE
+                                                    k.kpi_code = '$kpi_id'
+                                            AND e.evaluation_code = $my_eval_code";
                             $query_kpi = mysqli_query($conn, $sql_kpi_title);
                             
                         ?>
@@ -516,7 +471,85 @@
             <div class="control-sidebar-bg"></div>
         </div>
         <!-- ./wrapper -->
-
+        <?php
+                $show_date ="SELECT kp.progress_time_update as date_show,kp.kpi_progress_update as success,ks.goal                         
+                            FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id                             
+                            JOIN kpi k ON ks.kpi_id = k.kpi_id
+                            JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
+                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                            WHERE ee.employee_id = $get_emp_id  AND
+                            e.evaluation_code=$my_eval_code AND k.kpi_code='$kpi_id' and e.company_id=1";
+                $query_show_date = mysqli_query($conn, $show_date);
+                $array_date[] = array();
+                $array_goal[] = array();
+                $array_success[] = array();
+                $i=0;
+                
+             
+                
+            ?>
+            
+        <script>
+            google.charts.load('current', {'packages':['gauge','corechart']});
+            
+            google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+                
+                var data = google.visualization.arrayToDataTable([
+                    ['Label', 'Value'],
+                    <?php while($result_progess = mysqli_fetch_assoc($query_progess)){
+                    ?>
+                    ['Performance', <?php if($result_progess!=''){echo $result_progess['performance_mile'];}else{ echo 0;} ?>],
+                    <?php } ?>        
+                    
+                ]);
+                
+                var options = {
+                    width: 200, height: 200,
+                    redFrom: 90, redTo: 100,
+                    yellowFrom:75, yellowTo: 90,
+                    minorTicks: 5
+                };
+                
+                var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+                
+                chart.draw(data, options);
+                
+            }
+            
+            //Colume Chart
+            google.charts.setOnLoadCallback(columnChart);
+            function columnChart() {
+            
+                var data2 = google.visualization.arrayToDataTable([
+                    ['Month', 'value', { role: 'style' }],
+                     <?php 
+                     while($result_show_date=  mysqli_fetch_array($query_show_date)){
+                    $array_date[$i] =date("F",strtotime($result_show_date['date_show']));
+                    $array_goal[$i] =$result_show_date['goal'];
+                    $array_success[$i] =$result_show_date['success'];       
+                    //echo $array_date[$i].' '.$array_goal[$i].' '.$array_success[$i]."<br>";
+                    
+                
+                     ?>          
+                    ['<?php echo $array_date[$i]; ?>',<?php echo $array_success[$i];?>,'gold'],
+                        <?php $i++; } ?>
+                ]);
+                
+                
+                var options2 = {
+                    title: 'KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด',
+                    legend: 'none',
+                    bar: {groupWidth: '70%'},
+                    vAxis: { gridlines: { count: 5 } }
+                };
+                
+                var chart = new google.visualization.ColumnChart(document.getElementById('number_format_chart'));
+                chart.draw(data2, options2);
+            };
+            
+        </script>
     </body>
 </html>
 <?php

@@ -180,7 +180,16 @@
                 <div class="row box-padding">
                     <div class="box box-primary ">
                         <?php
-                            $sql_kpi_title ="select * from kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id  where kpi_code='$get_kpi_id'";
+                            $sql_kpi_title ="SELECT
+                                                    k.*,kr.*
+                                            FROM
+                                                    kpi k
+                                            JOIN kpi_responsible kr ON k.kpi_id = kr.kpi_id
+                                            JOIN evaluation_employee ee ON kr.evaluate_employee_id = ee.evaluate_employee_id
+                                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                                            WHERE
+                                                    k.kpi_code = '$get_kpi_id'
+                                            AND e.evaluation_code = $my_eval_code";
                             $query_kpi = mysqli_query($conn, $sql_kpi_title);
                             
                         ?>
@@ -296,14 +305,31 @@
         <!-- ./wrapper -->
         <!-- Google Chart Script-->
         <?php
+                $show_date ="SELECT kp.progress_time_update as date_show,kp.kpi_progress_update as success,ks.goal                         
+                            FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id                             
+                            JOIN kpi k ON ks.kpi_id = k.kpi_id
+                            JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
+                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                            WHERE ee.employee_id = $get_emp_id  AND
+                            e.evaluation_code=$my_eval_code AND k.kpi_code='$get_kpi_id' and e.company_id=1";
+                $query_show_date = mysqli_query($conn, $show_date);
+                $array_date[] = array();
+                $array_goal[] = array();
+                $array_success[] = array();
+                $i=0;
+                
+             
+                
+            ?>
+        <?php
                 $sql_kpi_responsible_id = "select kr.kpi_responsible_id 
-from kpi k 
-JOIN kpi_responsible kr 
-ON k.kpi_id=kr.kpi_id
-JOIN evaluation_employee ev
-ON ev.evaluate_employee_id = kr.evaluate_employee_id
-JOIN employees e ON e.employee_id=ev.employee_id
-where kpi_code='$get_kpi_id' AND e.employee_id=$get_emp_id and ev.evaluation_code=$my_eval_code";
+                                            from kpi k 
+                                            JOIN kpi_responsible kr 
+                                            ON k.kpi_id=kr.kpi_id
+                                            JOIN evaluation_employee ev
+                                            ON ev.evaluate_employee_id = kr.evaluate_employee_id
+                                            JOIN employees e ON e.employee_id=ev.employee_id
+                                            where kpi_code='$get_kpi_id' AND e.employee_id=$get_emp_id and ev.evaluation_code=$my_eval_code";
                 
                 $query_kpi_responsible_id = mysqli_query($conn,$sql_kpi_responsible_id);
 
@@ -343,16 +369,22 @@ where kpi_code='$get_kpi_id' AND e.employee_id=$get_emp_id and ev.evaluation_cod
             }
             
             //Colume Chart
+            
+            
             google.charts.setOnLoadCallback(columnChart);
             function columnChart() {
-                var data2 = google.visualization.arrayToDataTable([
+               var data2 = google.visualization.arrayToDataTable([
                     ['Month', 'value', { role: 'style' }],
-                    ['มกราคม', 1, '#b87333'],
-                    ['กุมพาพันธ์', 2, 'silver'],            
-                    ['มีนาคม', 4, 'gold'],
-                    ['เมษายน', 5, 'color: #e5e4e2' ], 
-                    ['พฤษภาคม', 6, 'color: orange' ],
-                    ['มิถุนายน', 0, 'black' ],
+                     <?php 
+                     while($result_show_date=  mysqli_fetch_array($query_show_date)){
+                    $array_date[$i] =date("F",strtotime($result_show_date['date_show']));
+                    $array_goal[$i] =$result_show_date['goal'];
+                    $array_success[$i] =$result_show_date['success'];    
+                    
+                                 
+                     ?>          
+                    ['<?php echo $array_date[$i]; ?>',<?php echo $array_success[$i];?>,'gold'],
+                        <?php $i++; } ?>
                 ]);
                 
                 
@@ -368,6 +400,7 @@ where kpi_code='$get_kpi_id' AND e.employee_id=$get_emp_id and ev.evaluation_cod
             };
             
         </script>
+     
         
     </body>
 </html>
