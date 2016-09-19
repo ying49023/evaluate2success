@@ -51,15 +51,9 @@
                 $sql_update_comp ="call update_point_comp($compId,$e_code,$e_emp_id,$array_h[$i],$emp)";
                 
                 $query_update_comp=  mysqli_query($conn, $sql_update_comp);
-                
-                
-                
-                
+
                 $i++;
-              
-         
-           
-            
+
         }
                 if ($query_update_comp){
                             header("location:evaluation_section_3.php");
@@ -94,17 +88,13 @@
                 
                 $query_update_comp=  mysqli_query($conn,$sql_update_comp);
                 
-                
-                
-                
                 $i++;
                 
-         
-           
             
         }
+        $sql_update_comp;
         if ($query_update_comp){
-                            header("location:evaluation_section_3.php");
+                        header("location:evaluation_section_3.php");
                             
                 }else {
                            
@@ -328,7 +318,7 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status= 1 and m.evaluation_code='".$_SESSION["eval_code"]."'";
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status= 1 and mc.evaluation_code='".$_SESSION["eval_code"]."'";
                                                     $query_score1= mysqli_query($conn, $sql_score1);
                                                             ?>
                                                 <td style="text-align: center;">
@@ -378,7 +368,7 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1 and m.evaluation_code='".$_SESSION["eval_code"]."'";
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1 and mc.evaluation_code='".$_SESSION["eval_code"]."'";
                                                     $query_score2= mysqli_query($conn, $sql_score2);
                                                             ?>
                                                 <?php if($my_emp_id==$huahna2){?>
@@ -412,18 +402,25 @@
                                                 
                                                     <?php
                                                     $sql_pointdetail = "
-                                                        SELECT 
-                                                            c.title_id,c.competency_description,mc.weight,mcp.point_id
-                                                            ,cp.point_score, cp.point_description,max(cp.point_score) as maxscore
-                                                            ,c.competency_id
-                                                            FROM  competency_point cp 
-                                                            JOIN match_competency_point mcp 
-                                                            ON cp.point_id = mcp.point_id 
-                                                            JOIN manage_competency mc 
-                                                            ON mcp.manage_comp_id = mc.manage_comp_id 
-                                                            JOIN competency c 
-                                                            ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                        SELECT
+                                                                c.title_id,
+                                                                c.competency_description,
+                                                                mc.weight,
+                                                                mcp.point_id,
+                                                                cp.point_score,
+                                                                cp.point_description,
+                                                                max(cp.point_score) AS maxscore,
+                                                                c.competency_id
+                                                        FROM
+                                                                competency_point cp
+                                                        JOIN match_competency_point mcp ON cp.point_id = mcp.point_id
+                                                        JOIN manage_competency mc ON mcp.manage_comp_id = mc.manage_comp_id
+                                                        JOIN competency c ON c.competency_id = mc.competency_id
+                                                        WHERE
+                                                                mc.competency_id = '$m_com'
+                                                        AND mc.position_level_id = '$level'
+                                                        AND mc.evaluation_code = '$my_eval_code'
+                                                        AND mc. STATUS = 1";
                                                     $query_pointdetail= mysqli_query($conn, $sql_pointdetail);
                                                     ?>
                                                 <?php while($result_pointdetail = mysqli_fetch_array($query_pointdetail, MYSQLI_ASSOC))  {
@@ -460,24 +457,20 @@
                                                                                 </tr>
                                                                             </thead>
                                                                             <?php
-                                                                            $sql_pointdetail_sub = "
-                                                                                SELECT
-                                                                                        c.title_id,
-                                                                                        c.competency_description,
-                                                                                        mc.weight,
-                                                                                        mcp.point_id,
-                                                                                        cp.point_score,
-                                                                                        cp.point_description,
-                                                                                        c.competency_id
-                                                                                FROM
-                                                                                        competency_point cp
-                                                                                JOIN match_competency_point mcp ON cp.point_id = mcp.point_id
-                                                                                JOIN manage_competency mc ON mcp.manage_comp_id = mc.manage_comp_id
-                                                                                JOIN competency c ON c.competency_id = mc.competency_id
-                                                                                WHERE
-                                                                                        mc.competency_id = '$m_com'
-                                                                                AND mc.position_level_id = '$level'
-                                                                                AND mc. STATUS = 1";
+                                                                            
+                                                                            $sql_pointdetail_sub = "SELECT
+                                                                                            *
+                                                                                    FROM
+                                                                                            competency_point cp
+                                                                                    JOIN match_competency_point mcp ON cp.point_id = mcp.point_id
+                                                                                    JOIN manage_competency mc ON mcp.manage_comp_id = mc.manage_comp_id
+                                                                                    JOIN evaluation e ON e.evaluation_code = mc.evaluation_code
+                                                                                    JOIN competency c ON c.competency_id = mc.competency_id
+                                                                                    WHERE
+                                                                                            e.evaluation_code = '$my_eval_code'
+                                                                                    AND mc.competency_id = '$m_com'
+                                                                                    AND mc.position_level_id = '$level'
+                                                                                    AND mc.STATUS = 1";
                                                                             $query_pointdetail_sub= mysqli_query($conn, $sql_pointdetail_sub);
                                                                             ?>
                                                                             <tbody>

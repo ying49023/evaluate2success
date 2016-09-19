@@ -98,6 +98,43 @@
                         <div class="box-body">
                             <!--Table Point-->
                             <table class="table table-bordered table-hover table-striped">
+                                <?php  
+                                //Term 1
+                                $sql_score_term_1 = "SELECT
+                                                            *
+                                                    FROM
+                                                            employees emp
+                                                    JOIN evaluation_employee ee ON emp.employee_id = ee.employee_id
+                                                    JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
+                                                    WHERE
+                                                            emp.employee_id = '".$_SESSION["emp_id"]."' AND term_id = 1";
+                                        $query_score_term_1 = mysqli_query($conn, $sql_score_term_1);
+                                        $result_score_term_1 = mysqli_fetch_array($query_score_term_1);
+                                            
+                                        $score_1_term_1 = $result_score_term_1["point_kpi"];
+                                        $score_2_1_term_1 = ($result_score_term_1["point_com1_part1"] + $result_score_term_1["point_com2_part1"]) / 2;
+                                        $score_2_2_term_1 = ($result_score_term_1["point_com1_part2"] + $result_score_term_1["point_com2_part2"] ) / 2;
+                                        $score_3_term_1 = $result_score_term_1["point_leave"] + $result_score_term_1["point_penalty"];
+                                        $sum_score_term_1 = ($score_1_term_1 + $score_2_1_term_1 + $score_2_2_term_1) - $score_3_term_1;
+                                //Term 2
+                                $sql_score_term_2 = "SELECT
+                                                            *
+                                                    FROM
+                                                            employees emp
+                                                    JOIN evaluation_employee ee ON emp.employee_id = ee.employee_id
+                                                    JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
+                                                    WHERE
+                                                            emp.employee_id = '".$_SESSION["emp_id"]."' AND term_id = 2";
+                                        $query_score_term_2 = mysqli_query($conn, $sql_score_term_2);
+                                        $result_score_term_2 = mysqli_fetch_array($query_score_term_2);
+                                            
+                                        $score_1_term_2 = $result_score_term_2["point_kpi"];
+                                        $score_2_1_term_2 = ($result_score_term_2["point_com1_part1"] + $result_score_term_2["point_com2_part1"]) / 2;
+                                        $score_2_2_term_2 = ($result_score_term_2["point_com1_part2"] + $result_score_term_2["point_com2_part2"] ) / 2;
+                                        $score_3_term_2 = $result_score_term_2["point_leave"] + $result_score_term_2["point_penalty"];
+                                        $sum_score_term_2 = ($score_1_term_2 + $score_2_1_term_2 + $score_2_2_term_2) - $score_3_term_2;
+                                        
+                                ?>
                                 <thead>
                                     <tr class="text-center">
                                         <td rowspan=2 class="bg-inverse" style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
@@ -112,19 +149,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php  
-                                    $score_1_term_1 = '';
-                                    $score_1_term_2 = '';
-                                    
-                                    $sql_kpi_score_term_1 = "SELECT * FROM evaluation_employee WHERE evaluate_employee_id = '".$_SESSION["eval_emp_id"]."'";
-                                    $query_kpi_score_term_1 = mysqli_query($conn, $sql_kpi_score_term_1);
-                                    $result_kpi_score_term_1 = mysqli_fetch_array($query_kpi_score_term_1);
-                                    
-                                    $sql_kpi_score_term_2 = "SELECT * FROM evaluation_employee WHERE evaluate_employee_id = '".$_SESSION["eval_emp_id"]."'";
-                                    $query_kpi_score_term_2 = mysqli_query($conn, $sql_kpi_score_term_2);
-                                    $result_kpi_score_term_2 = mysqli_fetch_array($query_kpi_score_term_2);
-                                    $score_1_term_1 = ($result_kpi_score_term_1["point_kpi"]+$result_kpi_score_term_2["point_kpi"])/2;
-                                    ?>
+
                                     <tr>
                                         <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
                                         <td  class="text-center"><b>60</b></td>
@@ -135,41 +160,7 @@
                                     <tr>
                                         <td colspan="5"><b>คะแนนรวมส่วนที่ 2 : พฤติกรรมการทำงาน</b></td>
                                     </tr>
-                                    <?php  
-                                    $score_2_1_term_1 = '';
-                                    $score_2_1_term_2 = '';
                                     
-                                    $sql_score_2_1_term_1 = "SELECT
-                                                            SUM(point_assessor1) As sum_2_1_assessor1,
-                                                            SUM(point_assessor2)As sum_2_1_assessor2
-                                                    FROM
-                                                            evaluation_employee ee
-                                                    JOIN evaluation_competency ec ON ee.evaluate_employee_id = ec.evaluate_employee_id
-                                                    JOIN manage_competency mc ON ec.manage_comp_id = mc.manage_comp_id
-                                                    JOIN competency c ON mc.competency_id = c.competency_id
-                                                    JOIN competency_title ct ON c.title_id = ct.title_id
-                                                    WHERE
-                                                            ct.title_id = 1 AND ee.evaluate_employee_id='".$_SESSION["eval_emp_id"]."'";
-                                    $query_score_2_1_term_1 = mysqli_query($conn, $sql_score_2_1_term_1);
-                                    $result_score_2_1_term_1 = mysqli_fetch_array($query_score_2_1_term_1);
-                                    
-                                    $sql_score_2_1_term_2 = "SELECT
-                                                            SUM(point_assessor1) As sum_2_1_assessor1,
-                                                            SUM(point_assessor2)As sum_2_1_assessor2
-                                                    FROM
-                                                            evaluation_employee ee
-                                                    JOIN evaluation_competency ec ON ee.evaluate_employee_id = ec.evaluate_employee_id
-                                                    JOIN manage_competency mc ON ec.manage_comp_id = mc.manage_comp_id
-                                                    JOIN competency c ON mc.competency_id = c.competency_id
-                                                    JOIN competency_title ct ON c.title_id = ct.title_id
-                                                    WHERE
-                                                            ct.title_id = 1 AND ee.evaluate_employee_id='99'";
-                                    $query_score_2_1_term_2 = mysqli_query($conn, $sql_score_2_1_term_2);
-                                    $result_score_2_1_term_2 = mysqli_fetch_array($query_score_2_1_term_2);
-                                    
-                                    $score_2_1_term_1 = ($result_score_2_1_term_1["sum_2_1_assessor1"] + $result_score_2_1_term_1["sum_2_1_assessor2"]) /2 ;
-                                    $score_2_1_term_2 = ($result_score_2_1_term_2["sum_2_1_assessor1"] + $result_score_2_1_term_2["sum_2_1_assessor2"]) /2 ;
-                                    ?>
                                     <tr>
                                         <td style="padding-left: 40px;">ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
                                         <td  class="text-center"><b>20</b></td>
@@ -178,77 +169,16 @@
                                         <td  class="text-center"><b><?php echo $score_2_1_term_2; ?></b></td>
                                     </tr>
                                     
-                                    <?php
-                                    $score_2_2_term_1 = '';
-                                    $score_2_2_term_2 = '';
-                                    
-                                    $sql_score_2_2_term_1 = "SELECT
-                                                            SUM(point_assessor1)As sum_2_2_assessor1,
-                                                            SUM(point_assessor2)As sum_2_2_assessor2
-                                                    FROM
-                                                            evaluation_employee ee
-                                                    JOIN evaluation_competency ec ON ee.evaluate_employee_id = ec.evaluate_employee_id
-                                                    JOIN manage_competency mc ON ec.manage_comp_id = mc.manage_comp_id
-                                                    JOIN competency c ON mc.competency_id = c.competency_id
-                                                    JOIN competency_title ct ON c.title_id = ct.title_id
-                                                    WHERE
-                                                            ct.title_id = 2 AND ee.evaluate_employee_id='".$_SESSION["eval_emp_id"]."'";
-                                    $query_score_2_2_term_1 = mysqli_query($conn, $sql_score_2_2_term_1);
-                                    $result_score_2_2_term_1 = mysqli_fetch_array($query_score_2_2_term_1);
-                                    
-                                    $sql_score_2_2_term_2 = "SELECT
-                                                            SUM(point_assessor1)As sum_2_2_assessor1,
-                                                            SUM(point_assessor2)As sum_2_2_assessor2
-                                                    FROM
-                                                            evaluation_employee ee
-                                                    JOIN evaluation_competency ec ON ee.evaluate_employee_id = ec.evaluate_employee_id
-                                                    JOIN manage_competency mc ON ec.manage_comp_id = mc.manage_comp_id
-                                                    JOIN competency c ON mc.competency_id = c.competency_id
-                                                    JOIN competency_title ct ON c.title_id = ct.title_id
-                                                    WHERE
-                                                            ct.title_id = 2 AND ee.evaluate_employee_id='99'";
-                                    $query_score_2_2_term_2 = mysqli_query($conn, $sql_score_2_2_term_2);
-                                    $result_score_2_2_term_2 = mysqli_fetch_array($query_score_2_2_term_2);
-                                    
-                                    $score_2_2_term_1 = ($result_score_2_2_term_1["sum_2_2_assessor1"] + $result_score_2_2_term_1["sum_2_2_assessor2"])/2;
-                                    $score_2_2_term_2 = ($result_score_2_2_term_2["sum_2_2_assessor1"] + $result_score_2_2_term_2["sum_2_2_assessor2"])/2;
-                                    
-                                    ?>
+
                                     <tr>
                                         <td style="padding-left: 40px;">ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
-                                        <td class="text-center"><b>10</b></td>
+                                        <td class="text-center"><b>20</b></td>
                                         <td class="text-center"><b><?php echo $score_2_2_term_1 ; ?></b></td>
-                                        <td class="text-center"><b>10</b></td>
+                                        <td class="text-center"><b>20</b></td>
                                         <td class="text-center"><b><?php echo $score_2_2_term_2; ?></b></td>
                                     </tr>
 
-                                    <?php
-                                    $score_3_term_1 = '';
-                                    $score_3_term_2 = '';
                                     
-                                    
-                                    $sql_score_3_term_1 = "SELECT
-                                                    point_leave + point_penalty As score_3
-                                                  FROM
-                                                          evaluation_employee
-                                                  WHERE
-                                                          evaluate_employee_id='".$_SESSION["eval_emp_id"]."'";
-                                    $query_score_3_term_1 = mysqli_query($conn, $sql_score_3_term_1);
-                                    $result_score_3_term_1 = mysqli_fetch_array($query_score_3_term_1);
-                                    
-                                    
-                                    $sql_score_3_term_2 = "SELECT
-                                                    point_leave + point_penalty As score_3
-                                                  FROM
-                                                          evaluation_employee
-                                                  WHERE
-                                                          evaluate_employee_id='99'";
-                                    $query_score_3_term_2 = mysqli_query($conn, $sql_score_3_term_2);
-                                    $result_score_3_term_2 = mysqli_fetch_array($query_score_3_term_2);
-                                    
-                                    $score_3_term_1 = $result_score_3_term_1["score_3"];
-                                    $score_3_term_2 = $result_score_3_term_2["score_3"];
-                                    ?>
                                      <tr>
                                         <td ><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
                                         <td class="text-center"><b>10</b></td>
@@ -258,7 +188,7 @@
                                     </tr>
                                     <tr class="bg-blue">
                                         <td style="padding-left: 40px;">คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</td>
-                                        <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor1"]+$result_score_2_2["sum_2_2_assessor1"]-$result_score_3["score_3"]; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></td>
+                                        <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $sum_score_term_1; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></td>
                                         <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor2"]+$result_score_2_2["sum_2_2_assessor2"]-$result_score_3["score_3"]; ?>"  name="ass2part1+2point" min="0" max="100" disabled></b></td>
                                     </tr>
                                     <tr class="active">
@@ -288,101 +218,119 @@
                         <br>
                         
 
-<div class="row box-padding">
-    <table class="table ">
-        <thead class="thead-default">
-            <tr>
-                        
-                <th colspan="13">การประเมินผลโดยรวม (Overall Rating) </th>
+                            <div class="row box-padding">
+                                <table class="table ">
+                                    <thead class="thead-default">
+                                        <tr>
+
+                                            <th colspan="13">การประเมินผลโดยรวม (Overall Rating) </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <form>
+
+                                        <tr class="text-center">
+
+                                            <th scope="row" rowspan="3">ผลการปฏิบัติงาน</th>  
+                                            <td><input type="radio" value="A++"  name="grade" disabled></td>
+                                            <td><input type="radio" value="A+" name="grade" disabled></td>
+                                            <td><input type="radio" value="A-" name="grade" disabled></td>
+                                            <td><input type="radio" value="B++" name="grade" disabled></td>
+                                            <td><input type="radio" value="B+" name="grade" disabled></td>
+                                            <td><input type="radio" value="B" name="grade" disabled></td>
+                                            <td><input type="radio" value="B-" name="grade" disabled></td>
+                                            <td><input type="radio" value="C++" name="grade" disabled></td>
+                                            <td><input type="radio" value="C+" name="grade" disabled></td>
+                                            <td><input type="radio" value="C" name="grade" disabled></td>
+                                            <td><input type="radio" value="C-" name="grade" disabled></td>
+                                        </tr>
+
+                                    </form>
+
+                                    <tr class="text-center">
+
+
+                                                <?php
+                                                $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
+
+                                                $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                                ?>
+                                                <?php
+                                                while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                                                    $name = $result["grade_description"];
+                                                    $desc = $result["grade_explaned"];
+                                                    $maxpoint = $result["standard_max_point"];
+                                                    $minpoint = $result["standard_min_point"];
+                                                    $id = $result["grade_id"];
+                                                    ?>
+                                        <td><?php echo $name; ?></td>
+                                                <?php } ?>
+                                    </tr>
+                                    <tr class="text-center">
+
+
+                                                <?php
+                                                $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
+
+                                                $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                                ?>
+                                                <?php
+                                                while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                                                    $name = $result["grade_description"];
+                                                    $desc = $result["grade_explaned"];
+                                                    $maxpoint = $result["standard_max_point"];
+                                                    $minpoint = $result["standard_min_point"];
+                                                    $id = $result["grade_id"];
+                                                    ?>
+                                        <td>(<?php echo $desc; ?>)</td>
+                                                <?php } ?>
+                                    </tr>
+
+                                    <tr class="text-center">
+                                        <th scope="row">คะแนน</th>
+
+                                                <?php
+                                                $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
+
+                                                $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                                ?>
+                                                <?php
+                                                while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                                                    $name = $result["grade_description"];
+                                                    $desc = $result["grade_explaned"];
+                                                    $maxpoint = $result["standard_max_point"];
+                                                    $minpoint = $result["standard_min_point"];
+                                                    $id = $result["grade_id"];
+                                                    ?>
+                                        <td><?php echo $minpoint; ?> - <?php echo $maxpoint; ?></td>
+                                                <?php } ?>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                         <?php 
+                         if(isset($_POST["status_success"])){
+                             $status = $_POST["status_success"];
+                             $eval_emp_id = $_POST["eval_emp_id"];
+                             $sql_update_success = "update evaluation_employee SET status_success = 1  where evaluate_employee_id = '$eval_emp_id' ";
+                             $query_update_success = mysqli_query($conn, $sql_update_success);
+                             
+                             if($query_update_success){
+                                 ?>
+                                 <meta http-equiv="refresh" content="0; url=evaluate_sub_list.php" />
+                             <?php }
+                         }
+                         ?>  
+                        <form method="post">
+                            <div class="box-footer text-center">
+                                <input type="hidden" name="eval_emp_id" value="<?php echo $_SESSION["eval_emp_id"]; ?>" >
+                                <button class="btn btn-success btn-lg" name="status_success" value="1">เสร็จสิ้นการประเมิน</button>
+                            </div>
                             
-            </tr>
-        </thead>
-        <tbody>
-        <form>
-                    
-            <tr class="text-center">
-                        
-                <th scope="row" rowspan="3">ผลการปฏิบัติงาน</th>  
-                <td><input type="radio" value="A++"  name="grade" disabled></td>
-                <td><input type="radio" value="A+" name="grade" disabled></td>
-                <td><input type="radio" value="A-" name="grade" disabled></td>
-                <td><input type="radio" value="B++" name="grade" disabled></td>
-                <td><input type="radio" value="B+" name="grade" disabled></td>
-                <td><input type="radio" value="B" name="grade" disabled></td>
-                <td><input type="radio" value="B-" name="grade" disabled></td>
-                <td><input type="radio" value="C++" name="grade" disabled></td>
-                <td><input type="radio" value="C+" name="grade" disabled></td>
-                <td><input type="radio" value="C" name="grade" disabled></td>
-                <td><input type="radio" value="C-" name="grade" disabled></td>
-            </tr>
-                        
-        </form>
-                    
-        <tr class="text-center">
-                    
-                    
-                    <?php
-                    $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                        
-                    $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                    ?>
-                    <?php
-                    while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                        $name = $result["grade_description"];
-                        $desc = $result["grade_explaned"];
-                        $maxpoint = $result["standard_max_point"];
-                        $minpoint = $result["standard_min_point"];
-                        $id = $result["grade_id"];
-                        ?>
-            <td><?php echo $name; ?></td>
-                    <?php } ?>
-        </tr>
-        <tr class="text-center">
-                    
-                    
-                    <?php
-                    $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                        
-                    $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                    ?>
-                    <?php
-                    while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                        $name = $result["grade_description"];
-                        $desc = $result["grade_explaned"];
-                        $maxpoint = $result["standard_max_point"];
-                        $minpoint = $result["standard_min_point"];
-                        $id = $result["grade_id"];
-                        ?>
-            <td>(<?php echo $desc; ?>)</td>
-                    <?php } ?>
-        </tr>
-                    
-        <tr class="text-center">
-            <th scope="row">คะแนน</th>
-                        
-                    <?php
-                    $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                        
-                    $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                    ?>
-                    <?php
-                    while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                        $name = $result["grade_description"];
-                        $desc = $result["grade_explaned"];
-                        $maxpoint = $result["standard_max_point"];
-                        $minpoint = $result["standard_min_point"];
-                        $id = $result["grade_id"];
-                        ?>
-            <td><?php echo $minpoint; ?> - <?php echo $maxpoint; ?></td>
-                    <?php } ?>
-        </tr>
-                    
-        </tbody>
-    </table>
-</div>
-                                        
-                                
-                                        
+                        </form>
+         
                         </div>           
                     </div> 
                     <!-- /Part 4 -->       

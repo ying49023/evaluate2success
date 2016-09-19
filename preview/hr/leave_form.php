@@ -17,20 +17,19 @@
             ?>
 <!DOCTYPE html>
 <?php include('./classes/connection_mysqli.php');
-    $get_department_id = '';
-    $name='';
-    $id='';
-            if (isset($_GET["department"])) {
-                $get_department_id = $_GET["department"];
-            }
-            if (isset($_GET["full_name"])) {
-                $name = $_GET["full_name"];
-            }
-            if (isset($_GET["emp_id"])) {
-                $id = $_GET["emp_id"];
-            }
-
-?>
+        $get_department_id = '';
+        $name = '';
+        $id = '';
+        if (isset($_GET["department"])) {
+            $get_department_id = $_GET["department"];
+        }
+        if (isset($_GET["full_name"])) {
+            $name = $_GET["full_name"];
+        }
+        if (isset($_GET["emp_id"])) {
+            $id = $_GET["emp_id"];
+        }
+        ?>
 <html>
     <head>
         <?php include ('./classes/connection_mysqli.php'); ?>
@@ -76,7 +75,15 @@
                         <div class="box-header with-border ">
                             <h4>
                             <?php
-                            $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '3'";
+                            $sql_year_term = "SELECT
+                                                    year, term_name, start_month , end_month
+                                            FROM
+                                                    evaluation e
+                                            JOIN term t ON e.term_id = t.term_id
+                                            JOIN evaluation_employee ee ON ee.evaluation_code = e.evaluation_code
+                                            JOIN employees emp ON emp.employee_id = ee.employee_id
+                                            WHERE
+                                                    ee.evaluation_code = '".$my_eval_code."' Limit 1";
                             $query_year_term = mysqli_query($conn, $sql_year_term);
                             while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
                                 echo "<span style='font-size:18px'><b>ปี : " . $year = $result_year_term["year"] . "</b></span> | ";
@@ -130,7 +137,7 @@
                                                                     WHERE
                                                                             p.position_level_id >= 1
                                                                     AND p.position_level_id <= 3
-                                                                    AND eval.evaluation_code = '3'
+                                                                    AND eval.evaluation_code = '".$my_eval_code."'
                                                                     ORDER BY
                                                                             emp_id ASC";
                                                         $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB

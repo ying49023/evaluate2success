@@ -30,8 +30,7 @@
     <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
     
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
+    
             <?php include ('./classes/connection_mysqli.php');?>
         <?php
         
@@ -415,6 +414,8 @@
   });
 </script>
 </body>
+<!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
 </html>
 <?php
         }

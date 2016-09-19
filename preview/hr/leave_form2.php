@@ -33,7 +33,7 @@
             $get_eval_code = $_GET["eval_code"];
         }
         
-        //Update leave date
+        //Insert leave date
         if (isset($_POST["submit_leave"])) {
             if (isset($_POST["leave_type_id"])) {
                 $array_day = array();
@@ -54,12 +54,13 @@
                 foreach ($_POST["leave_type_id"] as $leave_type_id) {
                     $eval_emp_id = $_GET["eval_emp_id"];
                     
-                    
                     $sql_insert_leave = "CALL insert_eval_leave ($eval_emp_id , $leave_type_id , $array_day[$i])";
                     $i++;
-                    echo $sql_insert_leave;
+                    $sql_insert_leave;
                     $query_insert_leave = mysqli_query($conn, $sql_insert_leave);
+                    
                 }
+//                header("location:leave_form2.php");
             }
         }
         ?>
@@ -312,7 +313,7 @@
                                             </div>
                                         </div>
                                         <div class="box-footer text-center">
-                                            <button class="btn btn-danger search-button" onclick="goBack()">ย้อนกลับ</button>     
+                                            <a class="btn btn-danger search-button" href="leave_form.php">ย้อนกลับ</a>     
                                         </div>
                                                             
                                     </div>

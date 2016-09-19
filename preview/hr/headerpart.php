@@ -252,18 +252,18 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="../upload_images/<?php echo $picture; ?>" class="user-image img-center" alt="<?php echo $name ?>">
-                        <span class="hidden-xs"><?php echo $name; ?></span>
+                        <img src="../upload_images/<?php echo $my_picture; ?>" class="user-image img-center" alt="<?php echo $my_name; ?>">
+                        <span class="hidden-xs"><?php echo $my_name; ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="../upload_images/<?php echo $picture; ?>" class="img-circle img-center" alt="User Image">
+                            <img src="../upload_images/<?php echo $my_picture; ?>" class="img-circle img-center" alt="User Image">
 
                             <p>
-                                <?php echo $name; ?>
+                                <?php echo $my_name; ?>
                                 <br>
-                                <small><?php echo $department ?></small>
+                                <small><?php echo $my_department; ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->

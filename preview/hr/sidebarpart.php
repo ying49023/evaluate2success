@@ -7,17 +7,17 @@
         <!-- Sidebar user panel -->
         <div class="user-panel" style="white-space:normal;max-width: 230px;">
             <div class="pull-left image">
-                <img style="height: 45px;max-width: 45px;" src="../upload_images/<?php echo $picture; ?>" class="img-circle img-center " alt="<?php echo $name; ?>">
+                <img style="height: 45px;max-width: 45px;" src="../upload_images/<?php echo $my_picture; ?>" class="img-circle img-center " alt="<?php echo $my_name; ?>">
             </div>
             <div class="pull-left info" >
-                <p><?php echo $name; ?></p>
-                <p>ตำแหน่ง: <?php echo $job; ?></p>
+                <p><?php echo $my_name; ?></p>
+                <p>ตำแหน่ง: <?php echo $my_job; ?></p>
                 <!--
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
             </div>
         </div>     
         <ul class="sidebar-menu">
-            <li class="header" style="color:white;font-size: 14px;" >เมนูสำหรับระดับ<?php echo $position; ?></li>
+            <li class="header" style="color:white;font-size: 14px;" >เมนูสำหรับระดับ<?php echo $my_position; ?></li>
             <!-- เมนูsubordinate-->
 
             <!-- Dashboard menu -->
@@ -30,7 +30,7 @@
             <!-- / Dashboard menu -->
 
             <!-- Evaluation menu -->
-            <li class="<?php if($page == 'create_evaluation.php' || $page == 'manage_evaluate_sub_list.php' || $page == 'manage_grade.php' || $page == 'edit_weight_eval.php'  || $page == 'competency.php'|| $page == 'manage_evaluate.php' || $page == 'grade_management.php'|| $page == 'manage_competency.php' || $page == 'explan_evaluation.php' || $page == 'evaluation_section_1.php' || $page == 'evaluation_section_2.php' || $page == 'evaluation_section_3.php' || $page == 'evaluation_section_4.php' ){ echo "active" ; } ?>">
+            <li class="<?php if($page == 'create_evaluation.php' || $page == 'manage_evaluate_sub_list.php' || $page == 'manage_grade.php' || $page == 'edit_weight_eval.php'  || $page == 'competency.php'|| $page == 'manage_evaluate.php' || $page == 'grade_management.php'|| $page == 'manage_competency.php' || $page == 'explan_evaluation.php' || $page == 'evaluation_section_1.php' || $page == 'evaluation_section_2.php' || $page == 'evaluation_section_3.php' || $page == 'evaluation_section_4.php' ){ echo "active" ; } ?>" >
                 <a href="">
                     <i class="glyphicon glyphicon-list-alt"></i>
                         <span>แบบประเมิน</span>
@@ -43,14 +43,9 @@
                     <li class="<?php if($page == 'create_evaluation.php' || $page == 'explan_evaluation.php' || $page == 'evaluation_section_1.php' || $page == 'evaluation_section_2.php' || $page == 'evaluation_section_3.php' || $page == 'evaluation_section_4.php'){ echo "active" ; } ?>">
                         <a href="create_evaluation.php"><i class="fa fa-circle-o"></i>สร้าง / แก้ไขแบบประเมิน</a>
                     </li>
-					
-<!--                    <li class="<?php if($page == 'manage_competency.php' || $page == 'competency_match.php' ){ echo "active" ; } ?>">
-                        <a href="manage_competency.php"><i class="fa fa-circle-o"></i>จัดการแบบประเมินCompetency</a>
-                    </li>-->
-
                     <li class="<?php if($page == 'manage_grade.php'){ echo "active" ; } ?>">
-                        <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a></li>
-
+                        <a href="manage_grade.php"><i class="fa fa-circle-o"></i>เกณฑ์การตัดเกรด</a>
+                    </li>
                 </ul>
             </li>
             <!-- /Evaluation menu -->
@@ -216,12 +211,12 @@
             <!-- Assign KPI -->
             
             <!-- Report Doc-->
-            <li class="<?php if($page == 'hr_report_page.php' || $page == 'hr_report_grade.php'){ echo "active" ; } ?>">
+<!--            <li class="<?php if($page == 'hr_report_page.php' || $page == 'hr_report_grade.php'){ echo "active" ; } ?>">
                 <a href="hr_report_page.php" >
                     <i class="glyphicon glyphicon-book"></i> <span>ออกรายงาน</span>
 
                 </a>
-            </li>
+            </li>-->
             <!-- /Report Doc-->
             
             
@@ -236,12 +231,12 @@
             <!-- /Threshold -->
 
             <!-- Problem/Report -->
-            <li class="<?php if($page == 'report.php'){ echo "active" ; } ?>">
+<!--            <li class="<?php if($page == 'report.php'){ echo "active" ; } ?>">
                 <a href="report.php">
                     <i class="glyphicon glyphicon-envelope"></i> <span>แจ้งปัญหา</span>
 
                 </a>
-            </li>
+            </li>-->
             <!-- /Problem/Report -->
         </ul>
     </section>

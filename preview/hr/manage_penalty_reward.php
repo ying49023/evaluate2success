@@ -19,7 +19,26 @@
 <html>
     <head>
         <?php include ('./classes/connection_mysqli.php');?>
-        <?php
+        
+        
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <!--CSS PACKS -->
+        <?php include ('./css_packs.html'); ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        
+    </head>
+    <body class="hold-transition skin-blue sidebar-mini">
+        <div class="wrapper">
+            <!--Header part-->
+            <?php include './headerpart.php'; ?>
+            <!-- Left side column. contains the logo and sidebar -->
+            <?php include './sidebarpart.php'; ?>
+            <?php
         
         $get_department_id = '';
         if (isset($_GET["department_id"])) {
@@ -29,14 +48,14 @@
         if (isset($_GET["job_id"])) {
             $get_job_id = $_GET["job_id"];
         }
-        $eval = ' eval_code = 3';
-        $get_eval_code = '3';
+        
+        $get_eval_code = $my_eval_code;
         if(isset($_GET["eval_code"])){
             $get_eval_code = $_GET["eval_code"];
             $eval = " eval.evaluation_code = '".$get_eval_code ."'";
         }
         
-        $condition = 'WHERE eval.evaluation_code = 3 ';
+        $condition = " WHERE eval.evaluation_code = '".$my_eval_code."' ";
         if ($get_department_id != '' && $get_job_id != '' && $get_eval_code != '') {
             $condition = " WHERE e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
         } else if ($get_department_id != '' && $get_job_id != '') {
@@ -57,24 +76,6 @@
             $condition = 'WHERE eval.evaluation_code = 3 ';
         }
 ?>
-        
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
-        <!-- Tell the browser to be responsive to screen width -->
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <!--CSS PACKS -->
-        <?php include ('./css_packs.html'); ?>
-        <!--ListJS-->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
-        
-    </head>
-    <body class="hold-transition skin-blue sidebar-mini">
-        <div class="wrapper">
-            <!--Header part-->
-            <?php include './headerpart.php'; ?>
-            <!-- Left side column. contains the logo and sidebar -->
-            <?php include './sidebarpart.php'; ?>
 
             <!-- Content Wrapper. Contains page content แก้เนื้อหาแต่ละหน้าตรงนี้นะ -->
             <div class="content-wrapper">
@@ -97,7 +98,7 @@
                     <div class="box box-success">
                         <div class="box-body ">
                             <form method="get">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <label class="col-sm-4 control-label">รอบ</label>
                                     <div class="col-sm-8">
                                     <?php 

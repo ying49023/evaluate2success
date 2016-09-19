@@ -187,7 +187,7 @@
                                     <th><button class="sort" data-sort="job_name">ตำแหน่ง</button></th>
                                     <th><button class="sort" data-sort="dept_name">ฝ่าย/แผนก</button></th>
                                     <th><center>ดูผลการประเมิน</center></th>
-                            <th><center>สถานะ</center></th>
+                            
                             </tr>
                             </thead>
                             <tbody class="list">
@@ -212,15 +212,7 @@
                                             <i class="glyphicon glyphicon-eye-open"></i>&nbsp;ดูผล
                                         </a>
                                     </td>
-                                                <?php
-                                                if ($status == 0) {
-                                                    echo '<td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>';
-                                                } else {
-                                                    echo '<td ><center><font color="green" >ประเมินแล้ว</font></center></td>';
-                                                }
-                                                ?>
-                                                    
-                                                    
+                                                           
                                 </tr>
         <?php } ?>
                             </tbody>
