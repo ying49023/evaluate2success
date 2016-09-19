@@ -234,7 +234,7 @@
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
                             JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
                             WHERE ee.employee_id = $get_emp_id  AND
-                            e.term_id=1 AND e.year=2016 AND k.kpi_code='$get_kpi_id'";
+                            e.evaluation_code=$my_eval_code AND k.kpi_code='$get_kpi_id'";
                         $query_kpi_history = mysqli_query($conn,$sql_kpi_history);
                         $count=0;
                         ?>
@@ -296,7 +296,14 @@
         <!-- ./wrapper -->
         <!-- Google Chart Script-->
         <?php
-                $sql_kpi_responsible_id = "select kr.kpi_responsible_id from kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id  where kpi_code='$get_kpi_id'";
+                $sql_kpi_responsible_id = "select kr.kpi_responsible_id 
+from kpi k 
+JOIN kpi_responsible kr 
+ON k.kpi_id=kr.kpi_id
+JOIN evaluation_employee ev
+ON ev.evaluate_employee_id = kr.evaluate_employee_id
+JOIN employees e ON e.employee_id=ev.employee_id
+where kpi_code='$get_kpi_id' AND e.employee_id=$get_emp_id and ev.evaluation_code=$my_eval_code";
                 
                 $query_kpi_responsible_id = mysqli_query($conn,$sql_kpi_responsible_id);
 
@@ -318,7 +325,7 @@
                     ['Label', 'Value'],
                     <?php while($result_progess = mysqli_fetch_assoc($query_progess)){
                     ?>
-                    ['Performance', <?php if($result_progess['performance_mile']!=''){echo $result_progess['performance_mile'];}else{ echo 0;} ?>],
+                    ['Performance', <?php if($result_progess!=''){echo $result_progess['performance_mile'];}else{ echo 0;} ?>],
                     <?php } ?>     
                 ]);
                 

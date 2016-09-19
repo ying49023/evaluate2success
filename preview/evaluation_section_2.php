@@ -27,6 +27,11 @@
         //Get Position Level
         
             $level = $_SESSION["position"];
+            $eval_code = '';
+            if (isset($_SESSION["eval_code"])) {
+                $eval_code = $_SESSION["eval_code"];
+            }
+            
         
         if(isset($_POST['comp_id'])&&isset($_POST['score_huahna1'])){
             //$pdo = new PDO('mysql:host=103.27.202.37;dbname=prasukrit_evaluate2success', "prasukrit_alt", "13579alt");           
@@ -126,7 +131,7 @@
                 text-align: center;
             }
         </style>  
-            
+       
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -134,6 +139,7 @@
         <?php include './headerpart.php'; ?>
             <!-- Left side column. contains the logo and sidebar -->
         <?php include './sidebarpart.php'; ?>
+            
             
             <!-- Content Wrapper. Contains page content แก้เนื้อหาแต่ละหน้าตรงนี้นะ -->
             <div class="content-wrapper">
@@ -201,12 +207,13 @@
                                                 JOIN manage_competency m ON c.competency_id = m.competency_id
                                                 WHERE
                                                         m.position_level_id = '$level'
-                                                AND m.STATUS = 1 
+                                                AND m.STATUS = 1 and m.evaluation_code='".$_SESSION["eval_code"]."'
                                                 GROUP BY t.title_name";
                                 $query_title= mysqli_query($conn, $sql_title);
                                 
                                 while ($result_title = mysqli_fetch_array($query_title, MYSQLI_ASSOC))  {
-                                        $result_title_id = $result_title["title_id"];
+                                    
+                                        $result_title_id = $result_title["title_id"];                                        
                                         $result_title_name = $result_title["title_name"];
                                         $result_title_sum = $result_title["sumweight"];
                                     
@@ -237,7 +244,7 @@
                                             JOIN competency c ON m.competency_id=c.competency_id 
                                             JOIN competency_title t ON c.title_id=t.title_id 
                                             JOIN position_level p ON p.position_level_id=m.position_level_id 
-                                            WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1 ";
+                                            WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1 and m.evaluation_code='".$_SESSION["eval_code"]."' ";
                                 $query_mng= mysqli_query($conn, $sql_mng);
                                 $no=0;
                                 ?>
@@ -321,7 +328,7 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status= 1";
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status= 1 and m.evaluation_code='".$_SESSION["eval_code"]."'";
                                                     $query_score1= mysqli_query($conn, $sql_score1);
                                                             ?>
                                                 <td style="text-align: center;">
@@ -371,7 +378,7 @@
                                                             ON mcp.manage_comp_id = mc.manage_comp_id 
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
-                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1";
+                                                            WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status=1 and m.evaluation_code='".$_SESSION["eval_code"]."'";
                                                     $query_score2= mysqli_query($conn, $sql_score2);
                                                             ?>
                                                 <?php if($my_emp_id==$huahna2){?>

@@ -171,7 +171,7 @@
                                 <?php
                                     $sql_mile ="select SUM(r.percent_weight*r.percent_performance)/ (SELECT SUM(percent_weight) FROM kpi_responsible er
                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = er.evaluate_employee_id
-                                    WHERE ee.employee_id=$my_emp_id  ) as mile_percent
+                                    WHERE ee.employee_id=$my_emp_id and ee.evaluation_code =$get_eval_code ) as mile_percent
                                     FROM kpi_responsible r
                                     JOIN evaluation_employee e ON e.evaluate_employee_id = r.evaluate_employee_id
                                     JOIN evaluation ev ON ev.evaluation_code = e.evaluation_code

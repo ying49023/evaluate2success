@@ -185,7 +185,7 @@
                     <div class="col-md-4">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <strong>KPIภาพรวมล่าสุด ประจำเดือน : พฤษภาคม</strong>
+                                <strong>KPIภาพรวมล่าสุด: </strong>
                                 <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
@@ -215,7 +215,7 @@
                                         value :<?php if($mile==''){  echo 0;}else{ echo $mile; }?>,
                                         min: 0,
                                         max: 100,
-                                        title: "เดือนพฤษภาคม",
+                                        title: "",
                                         label: "%",
                                         levelColorsGradient: false
                                       });

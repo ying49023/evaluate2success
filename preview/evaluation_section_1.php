@@ -20,16 +20,11 @@
     <head>
         <?php 
         include ('./classes/connection_mysqli.php');
-        
-        if (isset($_GET["emp_id"])) {
-            $get_emp_id = $_GET["emp_id"];
-        }
-        if (isset($_GET["eval_emp_id"])) {
-            $get_eval_emp_id = $_GET["eval_emp_id"];
-        }
-        if (isset($_GET["eval_code"])) {
-            $get_eval_code = $_GET["eval_code"];
-        }
+     
+         $eval_code = '';
+            if (isset($_SESSION["eval_code"])) {
+                $eval_code = $_SESSION["eval_code"];
+            }
         ?>
         
         <meta charset="utf-8">
@@ -111,7 +106,7 @@
                                                     FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
                                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
                                                     JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
-                                                    WHERE ee.employee_id = '".$_SESSION["emp_id"]."' ORDER BY kpi_id ";
+                                                    WHERE ee.evaluation_code='".$_SESSION['eval_code']."' and ee.employee_id = '".$_SESSION["emp_id"]."' ORDER BY kpi_id ";
                                         $query_kpi = mysqli_query($conn, $sql_kpi);
                                     ?>
                                     <table class="table table-bordered ">

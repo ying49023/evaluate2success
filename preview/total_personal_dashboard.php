@@ -243,7 +243,7 @@
                                     WHERE ee.employee_id=$emp_id and ee.evaluation_code =$get_eval_code  ) as mile_percent
                                     FROM kpi_responsible r
                                     JOIN evaluation_employee e ON e.evaluate_employee_id = r.evaluate_employee_id
-                                    WHERE e.employee_id=$emp_id AND r.percent_performance IS NOT NULL";
+                                    WHERE e.employee_id=$emp_id AND r.percent_performance IS NOT NULL and e.evaluation_code =$get_eval_code";
                                     $query_mile = mysqli_query($conn, $sql_mile);
                                     while ($result_mile = mysqli_fetch_assoc($query_mile)){
                                         $mile = $result_mile['mile_percent'];
