@@ -171,11 +171,21 @@
                                             
                                             <tr class="bg-gray-active"> 
                                                 <th rowspan="1" colspan="2" class="text-right" >รวม</th>
-                                                            
-                                                <th rowspan="1">60</th>
+                                                 <?php                                                 
+               
+                                                $sql_percent_weight="SELECT SUM(percent_weight) as sum_percent_weight
+                                                                    FROM kpi_responsible
+                                                                    WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";
+                                                                    
+                                                $query_percent_weight = mysqli_query($conn, $sql_percent_weight);
+                                                while($result_percent_weight = mysqli_fetch_assoc($query_percent_weight)) {
+                                                    $sum_percent_weight=$result_percent_weight ['sum_percent_weight'];
+                                                 ?>           
+                                                <th rowspan="1"><?php echo $sum_percent_weight;?></th>
+                                                <?php } ?>
                                                 <?php                                                 
                
-                                                $sql_sum_kpi="SELECT (SUM(sum_point)*60)/1000 as sum_point
+                                                $sql_sum_kpi="SELECT SUM(sum_point) as sum_point
                                                             FROM kpi_responsible
                                                             WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";
                                                 $query_sum_kpi = mysqli_query($conn, $sql_sum_kpi);
@@ -186,15 +196,21 @@
                                                
                                                 
                                                 
-                                                <th rowspan="1"><?php echo $sum_point*60;?></th>
+                                                <th rowspan="1"><?php echo $sum_point;?></th>
                                                     <?php } ?>
                                             </tr>
                                             
                                             <tr>
                                                <?php                                                 
-               
-                                                $sql_sum_kpi_total="UPDATE evaluation_employee 
+                                                /* สูตรเขา
+                                                 $sql_sum_kpi_total="UPDATE evaluation_employee 
                                                         SET point_kpi=(	  SELECT (SUM(sum_point)*60)/1000
+                                                                                    FROM kpi_responsible
+                                                                                    WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."')
+                                                        WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";
+                                                 */
+                                                $sql_sum_kpi_total="UPDATE evaluation_employee 
+                                                        SET point_kpi=(	  SELECT (SUM(sum_point)/10)
                                                                                     FROM kpi_responsible
                                                                                     WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."')
                                                         WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";

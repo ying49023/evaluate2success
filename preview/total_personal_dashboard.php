@@ -165,124 +165,123 @@
                 </div>
             </div>
             <!--/header search filer-->
-
-            <!--list employee-->
-                <div class="row box-padding">
-                        <div class="box box-primary">
-
-                            <div class="box-header with-border">
-                                <b>ตารางข้อมูลพนักงาน</b>
-                                <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> 
-                                    <i class="fa fa-minus"></i>
+             <div id="filter" class="row box-padding">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h4>ตารางรายชื่อพนักงาน</h4>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
                                 
                                 <button type="button" class="btn btn-box-tool" data-widget="remove">
                                     <i class="fa fa-times"></i>
                                 </button>
-                                </div>
-                            </div>
-                            <div class="box-body">
-
-                                <table class="table table-bordered table-hover" width="90%" >
-                                <thead>
-                                    <tr>
-                                        <th width="100px">รหัสพนักงาน</th>
-                                        <th>ชื่อพนักงาน</th>
-                                        <th width="150px"><center>ตำแหน่ง</center></th>
-                                        <th width="150px"><center>ฝ่าย/แผนก</center></th>
-                                        <th width="100px"><center>ดูผลงาน</center></th>
-                                        <th width="120px"><center>ความสำเร็จ(%)</center></th>
-                                        <th width="50px">ติดตาม</th>   
-                                    </tr>
-                                </thead>
-                                    <tr>
-                                        <td>123456</td>
-                                        <td>นาย ศตวรรษ วินวิวัฒน์</td>
-                                        <td class="text-center" >พนักงานทั่วไป</td>
-                                        <td class="text-center" >ฝ่ายบัญชี</td>
-                                        <td width="100px">
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar progress-bar-primary" style="width: 35.5%"></div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center" >
-                                            <span class="badge bg-blue ">35.5%</span>
-                                        </td>
-                                        <td>
-                                            <a href="tracking_sub_kpi.php">    
-                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
-                                            </a>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>130911</td>
-                                        <td>น.ส. สมสวย เห็นงาม</td>
-                                        <td class="text-center" >พนักงานทั่วไป</td>
-                                        <td class="text-center" >ฝ่ายบัญชี</td>
-                                        <td width="100px">
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center" >
-                                            <span class="badge bg-green">90%</span>
-                                        </td>
-                                        <td>
-                                            <a href="tracking_sub_kpi.php">    
-                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>130912</td>
-                                        <td>นาย ชัยเดช พ่วงเพชร</td>
-                                        <td class="text-center" >พนักงานทั่วไป</td>
-                                        <td class="text-center" >ฝ่ายบัญชี</td>
-                                        <td width="100px">
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar progress-bar-warning" style="width: 55%"></div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center" >
-                                            <span class="badge bg-orange">55%</span>
-                                        </td>
-                                        <td>
-                                            <a href="tracking_sub_kpi.php">    
-                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>130913</td>
-                                        <td>นาย ศักดิ์ดา เกียรติกมล</td>
-                                        <td class="text-center" >พนักงานทั่วไป</td>
-                                        <td class="text-center" >ฝ่ายบัญชี</td>
-                                        <td width="100px">
-                                            <div class="progress progress-xs progress-striped active">
-                                                <div class="progress-bar progress-bar-primary" style="width: 30%"></div>
-                                            </div>
-                                        </td>
-                                        <td class="text-center" >
-                                            <span class="badge bg-blue ">30%</span>
-                                        </td>
-                                        <td>
-                                            <a href="tracking_sub_kpi.php">    
-                                            <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    
-                                </table>
-
-                                
-                                
-                                <!-- /.chart-responsive -->
                             </div>
                         </div>
+     
+                        <div class="box-body ">    
+                            <!-- ช่องค้นหา by listJS -->
+                            <div class="form-inline padding-small">
+                                <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
+                                <input class="search form-control" placeholder="ค้นหา" />
+                            </div>
+                            <table class="table table-bordered table-striped table-hover">
+                                <thead>
+                               
+                                    <tr class="">
+                                        <th class="text-center"></th>
+                                        <th class="text-center"><button class="sort" data-sort="id">ID</button></th>
+                                        <th ><button class="sort" data-sort="name">ชื่อ-นามสกุล</button></th>
+                                        <th class="text-center"><button class="sort" data-sort="job">ตำแหน่ง</button></th>
+                                        <th class="text-center"><button class="sort" data-sort="dept">แผนก</button></th>
+                                        <th width="100px"><center>ดูผลงาน</center></th>
+                                        <th width="120px"><center>ความสำเร็จ(%)</center></th>
+                                        <th class="text-center">ดู</th>
+                                    </tr>
+                                </thead>
+                                <?php
+                    
+                                $sql_emp = "SELECT
+                                                e.employee_id As emp_id,
+                                                        CONCAT(
+                                                                e.prefix,
+                                                                e.first_name,
+                                                                '  ',
+                                                                e.last_name
+                                                        ) AS name,
+                                                        e.profile_picture,
+                                                        d.department_name As dept_name,
+                                                        j.job_name As job_name,
+                                                        eval.evaluation_code As eval_code
+
+                                                FROM
+                                                        employees e
+                                                JOIN departments d ON d.department_id = e.department_id
+                                                JOIN jobs j ON j.job_id = e.job_id
+                                                JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                JOIN employees m ON e.manager_id = m.employee_id
+                                                JOIN evaluation eval ON ee.evaluation_code = eval.evaluation_code
+                                                JOIN kpi_responsible r ON ee.evaluate_employee_id = r.evaluate_employee_id																								
+                                                $condition and m.employee_id = '$my_emp_id'
+                                                GROUP BY ee.evaluate_employee_id    
+                                                ORDER BY
+                                                        e.employee_id ASC";
+                                $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
+                                 
+                                    
+                                ?>
+                                <tbody class="list">
+                                <?php  while($result = mysqli_fetch_assoc($query)){ 
+                                    $emp_id = $result["emp_id"];
+                                    $name = $result["name"];
+                                    $dept = $result["dept_name"];
+                                    $job = $result["job_name"];
+                                    $eval_code = $result["eval_code"];
+                                    $profile_picture = $result["profile_picture"];
+                                    $sql_mile ="select SUM(r.percent_weight*r.percent_performance)/ (SELECT SUM(percent_weight) FROM kpi_responsible er
+                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = er.evaluate_employee_id
+                                    WHERE ee.employee_id=$emp_id and ee.evaluation_code =$get_eval_code  ) as mile_percent
+                                    FROM kpi_responsible r
+                                    JOIN evaluation_employee e ON e.evaluate_employee_id = r.evaluate_employee_id
+                                    WHERE e.employee_id=$emp_id AND r.percent_performance IS NOT NULL";
+                                    $query_mile = mysqli_query($conn, $sql_mile);
+                                    while ($result_mile = mysqli_fetch_assoc($query_mile)){
+                                        $mile = $result_mile['mile_percent'];
+                                   
+                                    ?>
+                                
+                                <tr >
+                                    <td class="text-center"><img class="img-circle img-center img-sm" src="./upload_images/<?php if($profile_picture ==''){ echo "default.png";} else { echo $profile_picture; } ?>" ></td>
+                                    <td class="id text-center"><?php  echo $emp_id; ?></td>
+                                    <td class="name"><?php echo $name; ?></td>
+                                    <td class="job text-center"><?php echo $job; ?></td>
+                                    <td class="dept text-center"><?php echo $dept; ?></td>
+                                   <td width="100px">
+                                            <div class="progress progress-xs progress-striped active">
+                                                <div class="progress-bar progress-bar-success" style="width:<?php if($mile==''){  echo 0;}else{ echo $mile; }?>%"></div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center" >
+                                            <span class="badge bg-orange "><?php echo round($mile); ?></span>
+                                        </td>
+                                    <td class="text-center"><a class="btn btn-primary" href="total_personal_dashboard_detail.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; ดู</a></td>
+                                </tr>
+                                <?php } } ?>
+                                </tbody>
+                                <script>
+                                        var options = {
+                                            valueNames: [ 'id', 'name' , 'job' , 'dept','kpi_count' ]
+                                        };
+                                        
+                                        var userList = new List('filter', options);
+                                </script>
+                            </table>
+
+                        </div>
+
+                    </div>
                 </div>
-                <!--/list employee-->
+
 
             <!-- /.content --> </div>
         <!-- /.content-wrapper -->

@@ -32,6 +32,47 @@
     
     <!-- SCRIPT PACKS -->
     <?php include('./script_packs.html') ?>
+    <!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
+            <?php include ('./classes/connection_mysqli.php');?>
+        <?php
+        
+        $get_department_id = '';
+        if (isset($_GET["department_id"])) {
+            $get_department_id = $_GET["department_id"];
+        }
+        $get_job_id = '';
+        if (isset($_GET["job_id"])) {
+            $get_job_id = $_GET["job_id"];
+        }
+        $eval = ' eval_code = 3';
+        $get_eval_code = '3';
+        if(isset($_GET["eval_code"])){
+            $get_eval_code = $_GET["eval_code"];
+            $eval = " eval.evaluation_code = '".$get_eval_code ."'";
+        }
+        
+        $condition = 'WHERE eval.evaluation_code = 3 ';
+        if ($get_department_id != '' && $get_job_id != '' && $get_eval_code != '') {
+            $condition = " WHERE e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
+        } else if ($get_department_id != '' && $get_job_id != '') {
+            $condition = " WHERE  e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' ";
+        }else if($get_job_id != '' && $get_eval_code != ''){
+            $condition = " WHERE  e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
+        }else if($get_department_id != '' && $get_eval_code != ''){
+            $condition = " WHERE e.department_id = '$get_department_id' AND eval.evaluation_code = '$get_eval_code' ";
+        }else if($get_department_id != '' || $get_job_id != '' || $get_eval_code != ''){
+            if ($get_department_id != '') {
+                $condition = " WHERE e.department_id = '" . $get_department_id . "' ";
+            } else if ($get_job_id != '') {
+                $condition = " WHERE e.job_id = '" . $get_job_id . "' ";
+            }else if($get_eval_code != ''){
+                $condition = " WHERE eval.evaluation_code = '$get_eval_code' ";
+            }
+        }else if($get_department_id == '' && $get_job_id == '' && $get_eval_code == ''){
+            $condition = 'WHERE eval.evaluation_code = 3 ';
+        }
+?>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -63,37 +104,32 @@
             <!-- Main content -->
             <div class="row box-padding">
                 <div class="box box-success">
-                    <div class="box-body">
-                        <form>
-                            <div class="col-sm-5">
-                                <label class="col-sm-6 control-label">ปีการประเมิน</label>
-                                <div class="col-sm-6">
-                                    <select class="form-control ">
-                                        <option>2013</option>
-                                        <option>2014</option>
-                                        <option>2015</option>
-                                        <option>2016</option>
-                                    </select>
+                     <div class="box-body ">
+                            <form method="get">
+                                <div class="col-md-11">
+                                    <label class="col-sm-2 control-label">รอบ</label>
+                                    <div class="col-sm-8">
+                                    <?php 
+                                        $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
+                                        $query_eval = mysqli_query($conn, $sql_eval);
+                                    ?>
+                                        <select class="form-control" name="eval_code">
+                                            <option value="">เลือกทั้งหมด</option>
+                                        <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_eval["evaluation_code"]; ?>" <?php if($get_eval_code == $result_eval["evaluation_code"]) { echo "selected"; }  ?> >
+                                                <?php echo 'ปี '.$result_eval["year"]." - ครั้งที่".$result_eval["term_id"]; ?>
+                                            </option>
+                                        <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>                                
+                                
+                                <div class=" col-md-1">
+                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
                                 </div>
-                            </div>
 
-                            
-                            <div class="col-md-5">
-
-                                <label class="col-sm-6 control-label">รอบการประเมิน</label>
-                                <div class="col-sm-6">
-                                    <select class="form-control">
-                                        <option>ครั้งที่ 1</option>
-                                        <option>ครั้งที่ 2</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <button class="btn btn-primary search-button" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-                            </div>
-
-                        </form>
-                    </div>
+                            </form>
+                        </div>
                 </div>
             </div>
             <div class="row box-padding">
@@ -123,7 +159,7 @@
                     <div class="col-md-4">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <strong>KPIภาพรวมล่าสุด ประจำเดือน : พฤษภาคม</strong>
+                                <strong>KPIภาพรวม</strong>
                                 <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
@@ -131,16 +167,30 @@
                             </div>
                             </div>
                             <div class="box-body">
+                                <!-- คิวรี่แสดงค่าไมล์รวม -->
+                                <?php
+                                    $sql_mile ="select SUM(r.percent_weight*r.percent_performance)/ (SELECT SUM(percent_weight) FROM kpi_responsible er
+                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = er.evaluate_employee_id
+                                    WHERE ee.employee_id=$my_emp_id  ) as mile_percent
+                                    FROM kpi_responsible r
+                                    JOIN evaluation_employee e ON e.evaluate_employee_id = r.evaluate_employee_id
+                                    JOIN evaluation ev ON ev.evaluation_code = e.evaluation_code
+                                    WHERE e.employee_id=$my_emp_id AND r.percent_performance IS NOT NULL  and ev.evaluation_code =$get_eval_code";
+                                    $query_mile = mysqli_query($conn, $sql_mile);
+                                    while ($result_mile = mysqli_fetch_assoc($query_mile)){
+                                        $mile = $result_mile['mile_percent'];
+                                    }
+                                ?>
                                 <div id="g5" class="200px160px" style="height:220px">
                                     <script>
                                     document.addEventListener("DOMContentLoaded", function(event) {
                                       var g5 = new JustGage({
                                         id: "g5",
                                         //value: getRandomInt(0, 100),
-                                        value : 35.5,
+                                        value : <?php if($mile==''){  echo 0;}else{ echo $mile; }?>,
                                         min: 0,
                                         max: 100,
-                                        title: "เดือนพฤษภาคม",
+                                        title: "สถานะ KPIs",
                                         label: "%",
                                         levelColorsGradient: false
                                       });
@@ -156,77 +206,77 @@
             </div>
             <div class="row box-padding">
             <div class="box box-primary">
-                <div class="box-body">
-                    <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th width="80px" >ID</th>
-                            <th>ชื่อKPIs</th>
-                            <th width="90px">เป้าหมาย</th>
-                            <th width="90px">ทำจริง</th>
-                            <th width="200px">ประสิทธิภาพ</th>
-                            <th width="60" style="text-align:center">%</th>
-                        </tr>
-                    </thead>
-                    <tr>
-                        <td>1201</td>
-                        <td>ความสามารถในการสรรหาตรงตามเวลาที่กำหนด(60วัน)</td>
-                        <td>>=80%</td>
-                        <td>60%</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-success" style="width: 60%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-green">60%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1202</td>
-                        <td>ความสามารถจัดทำอัตราแผนความสามารถกำลังคน</td>
-                        <td>20%</td>
-                        <td>14%</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-primary" style="width: 14%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-blue">14%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1203</td>
-                        <td>อัตราจำนวนชั่วโมงการฝึกอบรม/คน/ครึ่งปี</td>
-                        <td>>=6ชั่วโมง</td>
-                        <td>2ชั่วโมง</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-warning" style="width: 33%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-orange">33%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>1204</td>
-                        <td>การจัดปฐมนิเทศให้กับพนักงานใหม่ภายใน 3 วันทำการ</td>
-                        <td>30 วัน</td>
-                        <td>10 วัน</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-success" style="width: 35%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-green">35%</span>
-                        </td>
-                    </tr>
-                        
-                    </table>
-                </div>
+                <div class="box-body" >
+                                <?php  
+               
+                                        $sql_kpi="SELECT k.unit,k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,kr.kpi_responsible_id,kr.percent_performance 
+                                                    FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
+                                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                                    JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
+                                                    WHERE e.evaluation_code=$get_eval_code and ee.employee_id = '".$my_emp_id."' ORDER BY kpi_id ";
+                                        $query_kpi = mysqli_query($conn, $sql_kpi);
+                                    ?>
+            
+                                <table class="table table-bordered" width="90%" height="100px" border="1px">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>KPIs</th>
+                                        <th>
+                                            <center>เป้าหมาย</center>
+                                        </th>
+                                        <th>
+                                            <center>ค่าจริง</center>
+                                        </th>
+                                        <th>
+                                            <center>สถานะ</center>
+                                        </th>
+                                        
+                                    </tr>
+                                     <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
+                
+                                $kpi_id = $result_kpi["kpi_id"];
+                                $kpi_name = $result_kpi["kpi_name"];
+                                $weight = $result_kpi["weight"];
+                                $goal = $result_kpi["goal"];
+                                $symbol = $result_kpi["symbol"];
+                                $success = $result_kpi["success"];
+                                $term = $result_kpi["term"];
+                                $year = $result_kpi["year"];
+                                $kpi_resp = $result_kpi["kpi_responsible_id"];
+                                $progress=$result_kpi['percent_performance'];
+                                $kpi_unit =$result_kpi["unit"];
+                             ?>
+                             <?php
+                                $sql_progess = "call getMile_kpi_response($kpi_resp) ";
+                                $query_progess = mysqli_query($conn, $sql_progess);
+                             ?>                
+                    
+                                    <tr>
+                                        <th><?php echo $kpi_id;?></th>
+                                        <th><?php echo $kpi_name;?></th>
+                                        <th>
+                                            <center><?php echo $symbol."".$goal." ".$kpi_unit;?></center>
+                                        </th>
+                                        <th>
+                                        <center><?php echo round($success,2);?></center>
+                                        </th>
+                                        <th>
+                                            <div class="progress">                                             
+                                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
+                                                style="width:<?php echo round($progress,2); ?>%"><?php  echo round($progress,2); ?>
+                                                </div>                                                
+                                            </div>
+                                        </th>
+                                        
+
+                                    </tr>
+                                     <?php } ?>
+                                  
+
+                                        </table>
+
+                                    </div>
+                
             </div>
                 
             </div>

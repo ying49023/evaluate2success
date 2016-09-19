@@ -32,6 +32,44 @@
     
     <!-- SCRIPT PACKS -->
     <?php include('./script_packs.html') ?>
+          <?php
+        
+        $get_department_id = '';
+        if (isset($_GET["department_id"])) {
+            $get_department_id = $_GET["department_id"];
+        }
+        $get_job_id = '';
+        if (isset($_GET["job_id"])) {
+            $get_job_id = $_GET["job_id"];
+        }
+        $eval = ' eval_code = 3';
+        $get_eval_code = '3';
+        if(isset($_GET["eval_code"])){
+            $get_eval_code = $_GET["eval_code"];
+            $eval = " eval.evaluation_code = '".$get_eval_code ."'";
+        }
+        
+        $condition = 'WHERE eval.evaluation_code = 3 ';
+        if ($get_department_id != '' && $get_job_id != '' && $get_eval_code != '') {
+            $condition = " WHERE e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
+        } else if ($get_department_id != '' && $get_job_id != '') {
+            $condition = " WHERE  e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' ";
+        }else if($get_job_id != '' && $get_eval_code != ''){
+            $condition = " WHERE  e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
+        }else if($get_department_id != '' && $get_eval_code != ''){
+            $condition = " WHERE e.department_id = '$get_department_id' AND eval.evaluation_code = '$get_eval_code' ";
+        }else if($get_department_id != '' || $get_job_id != '' || $get_eval_code != ''){
+            if ($get_department_id != '') {
+                $condition = " WHERE e.department_id = '" . $get_department_id . "' ";
+            } else if ($get_job_id != '') {
+                $condition = " WHERE e.job_id = '" . $get_job_id . "' ";
+            }else if($get_eval_code != ''){
+                $condition = " WHERE eval.evaluation_code = '$get_eval_code' ";
+            }
+        }else if($get_department_id == '' && $get_job_id == '' && $get_eval_code == ''){
+            $condition = 'WHERE eval.evaluation_code = 3 ';
+        }
+?>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -41,6 +79,7 @@
         <?php include './sidebarpart.php'; ?>
 
         <!-- Content Wrapper. Contains page content แก้เนื้อหาแต่ละหน้าตรงนี้นะ -->
+        
         <div class="content-wrapper">
 
             <!-- Content Header (Page header)  -->
@@ -62,8 +101,39 @@
 
             <!-- Main content -->
             <!--list employee-->
+            <div class="row box-padding">
+                <div class="box box-success">
+                     <div class="box-body ">
+                            <form method="get">
+                                <div class="col-md-11">
+                                    <label class="col-sm-2 control-label">รอบ</label>
+                                    <div class="col-sm-8">
+                                    <?php 
+                                        $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
+                                        $query_eval = mysqli_query($conn, $sql_eval);
+                                    ?>
+                                        <select class="form-control" name="eval_code">
+                                            <option value="">กรุณาเลือก</option>
+                                        <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_eval["evaluation_code"]; ?>" <?php if($get_eval_code == $result_eval["evaluation_code"]) { echo "selected"; }  ?> >
+                                                <?php echo 'ปี '.$result_eval["year"]." - ครั้งที่".$result_eval["term_id"]; ?>
+                                            </option>
+                                        <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>                                
+                                
+                                <div class=" col-md-1">
+                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
+                                </div>
+
+                            </form>
+                        </div>
+                </div>
+            </div>
             <div id="filter" class="row box-padding">
-                <div class="box box-primary">
+                
+                <div class="box box-primary">                   
                     
                     <div class="box-header with-border">
                         <b>ตารางข้อมูลพนักงาน</b>
@@ -103,8 +173,7 @@
                                                             JOIN departments d ON d.department_id = e.department_id
                                                             WHERE
                                                                     e.manager_id = '$my_emp_id'
-                                                            AND ev.term_id = 1
-                                                            AND ev. YEAR = '2016'
+                                                            AND ev.evaluation_code = $get_eval_code
                                                             GROUP BY
                                                                     ee.employee_id";
                                 $query_emp_list = mysqli_query($conn, $sql_emp_list);
@@ -139,7 +208,7 @@
                                     <td class="job_name"><?php echo $job_name; ?></td>
                                     <td class="dept_name"><?php echo $department_name; ?></td>
                                     <td class="text-center">
-                                        <a class="btn btn-info btn-md" href="summaryevaluation.php?emp_id=<?php echo $employee_id; ?>&position_level_id=<?php echo $position; ?>&eval_code=<?php echo $my_eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>">    
+                                        <a class="btn btn-info btn-md" href="summaryevaluation.php?emp_id=<?php echo $employee_id; ?>&position_level_id=<?php echo $position; ?>&eval_code=<?php echo $get_eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>">    
                                             <i class="glyphicon glyphicon-eye-open"></i>&nbsp;ดูผล
                                         </a>
                                     </td>

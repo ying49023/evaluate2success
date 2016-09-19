@@ -193,13 +193,26 @@
                             </div>
                             </div>
                             <div class="box-body">
+                                <!-- คิวรี่แสดงค่าไมล์รวม -->
+                                <?php
+                                    $sql_mile ="select SUM(r.percent_weight*r.percent_performance)/ (SELECT SUM(percent_weight) FROM kpi_responsible er
+                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = er.evaluate_employee_id
+                                    WHERE ee.employee_id=$get_emp_id and ee.evaluation_code =$my_eval_code  ) as mile_percent
+                                    FROM kpi_responsible r
+                                    JOIN evaluation_employee e ON e.evaluate_employee_id = r.evaluate_employee_id
+                                    WHERE e.evaluation_code=$my_eval_code and e.employee_id=$get_emp_id  AND r.percent_performance IS NOT NULL";
+                                    $query_mile = mysqli_query($conn, $sql_mile);
+                                    while ($result_mile = mysqli_fetch_assoc($query_mile)){
+                                        $mile = $result_mile['mile_percent'];
+                                    }
+                                ?>
                                 <div id="g5" class="200px160px" style="height:220px">
                                     <script>
                                     document.addEventListener("DOMContentLoaded", function(event) {
                                       var g5 = new JustGage({
                                         id: "g5",
                                         //value: getRandomInt(0, 100),
-                                        value : 35.5,
+                                        value :<?php if($mile==''){  echo 0;}else{ echo $mile; }?>,
                                         min: 0,
                                         max: 100,
                                         title: "เดือนพฤษภาคม",
@@ -232,7 +245,7 @@
                                                     FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
                                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
                                                     JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
-                                                    WHERE ee.employee_id = '".$get_emp_id."' ORDER BY kpi_id ";
+                                                    WHERE ee.evaluation_code=$my_eval_code and ee.employee_id = '".$get_emp_id."' ORDER BY kpi_id ";
                                         $query_kpi = mysqli_query($conn, $sql_kpi);
                                     ?>
             
@@ -250,7 +263,7 @@
                                             <center>สถานะ</center>
                                         </th>
                                         <th>
-                                            <center>อัพเดทKPIs</center>
+                                            <center>ติดตามสถานะการทำงาน</center>
                                         </th>
 
                                     </tr>

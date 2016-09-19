@@ -97,9 +97,15 @@
                                                             employees e
                                                     JOIN employees m ON e.manager_id = m.employee_id
                                                     JOIN departments d ON e.department_id = d.department_id
+                                                    JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                    JOIN kpi_responsible r ON ee.evaluate_employee_id = r.evaluate_employee_id
                                                     JOIN jobs j ON j.job_id = e.job_id
                                                     WHERE
-                                                            m.employee_id = '$my_emp_id'";
+                                                            ee.evaluation_code=$my_eval_code
+                                                         and   m.employee_id = '$my_emp_id'"
+                                                . "GROUP BY ee.evaluate_employee_id    
+                                                ORDER BY
+                                                        e.employee_id ASC";
                                         $query_emp = mysqli_query($conn, $sql_emp);
                                         while($result_emp = mysqli_fetch_array($query_emp , MYSQLI_ASSOC)){
 

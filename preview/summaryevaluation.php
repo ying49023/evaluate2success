@@ -32,6 +32,20 @@
 
         <!-- SCRIPT PACKS -->
         <?php include('./script_packs.html') ?>
+        <?php 
+             $get_emp_id = '';
+            if(isset($_GET["emp_id"])){
+                $get_emp_id  = $_GET["emp_id"];
+            }
+            $get_eval_code = '';
+            if(isset($_GET["eval_code"])){
+                $get_eval_code  = $_GET["eval_code"];
+            }
+             $get_eval_emp_id = '';
+            if(isset($_GET["eval_emp_id"])){
+                $get_eval_emp_id  = $_GET["eval_emp_id"];
+            }
+        ?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -72,7 +86,7 @@
                                             JOIN employees m ON e.manager_id = m.employee_id
                                             JOIN employees m2 ON m.manager_id = m2.employee_id
                                             WHERE
-                                                    e.employee_id ='".$_GET['emp_id']."'";
+                                                    e.employee_id ='".$get_emp_id."'";
     $query_emp = mysqli_query($conn, $sql_emp);
     while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
         ?>
@@ -93,7 +107,7 @@
                         $eval_code = $_GET["eval_code"];
                     }
 
-                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$_SESSION["eval_code"]."'";
+                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$eval_code."'";
                     $query_year_term = mysqli_query($conn, $sql_year_term);
                     while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
                         echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
@@ -148,7 +162,7 @@
                 <td><?php echo $result_emp["manager_name_2"]; ?></td>
                 <td>
                     <?php 
-                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '".$_SESSION["eval_code"]."' ";
+                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '".$eval_code."' ";
                     $query_eval_period = mysqli_query($conn, $sql_eval_period) or die(mysqli_errno());
                     $result_eval_period = mysqli_fetch_array($query_eval_period,MYSQLI_ASSOC);
                     ?>
@@ -174,82 +188,131 @@
 
                         </div>  
                         <form method="get" action="compareevaluation.php" >
-                            <div class="box-body box-padding-table"> 
-
-                                <table class="table table-bordered">
-                                    <tr class="bg-gray-light">
-                                        <td class="text-center">ส่วน</td>
-                                        <td>หัวข้อการประเมิน</td>
-                                        <td class="text-center">สัดส่วน(%)</td>
-                                        <td class="text-center">คะแนน</td>
+                            <div class="box-body">
+                            <!--Table Point-->
+                            <table class="table table-bordered table-hover ">
+                                <thead>
+                                    <tr class="text-center">
+                                        <td rowspan=2 class="bg-inverse" style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
+                                        <td colspan=2 class="bg-orange"><b>ผู้ประเมินที่ 1</b></td>
+                                        <td colspan=2 class="bg-olive"><b>ผู้ประเมินที่ 2</b></td>
                                     </tr>
+                                    <tr class="text-center">
+                                       <td class="bg-warning"><b>คะแนนเต็ม</b></td>
+                                       <td class="bg-warning"><b>คะแนนที่ได้รับ</b></td>
+                                       <td class="bg-success"><b>คะแนนเต็ม</b></td>
+                                       <td class="bg-success"><b>คะแนนที่ได้รับ</b></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php  
+                                    $sql_kpi_score = "SELECT * FROM evaluation_employee WHERE evaluate_employee_id = '".$get_eval_emp_id."'";
+                                    $query_kpi_score = mysqli_query($conn, $sql_kpi_score);
+                                    while($result_kpi_score = mysqli_fetch_array($query_kpi_score)){
+                                        $score_1 = $result_kpi_score["point_kpi"];
+                                    ?>
                                     <tr>
-                                        <td class="text-center">1</td>
-                                        <td>คะแนนวันลา</td>
-                                        <td class="text-center">10%</td>
-                                        <td class="text-center">1.5</td>
+                                        <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
+                                        <td  class="text-center"><b>60</b></td>
+                                        <td    class="text-center"><input class="text-center" type="number" name="ass1part1point" min="0" max="60" value="<?php echo $result_kpi_score["point_kpi"]; ?>" disabled></td>
+                                        <td  class="text-center"><b>60</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass2part1point" min="0" max="60" value="<?php echo $result_kpi_score["point_kpi"]; ?>" disabled></td>
                                     </tr>
+                                    <?php } ?>
                                     <tr>
-                                        <td class="text-center">2</td>
-                                        <td>การประเมินประสิทธิภาพส่วนบุคคล</td>
-                                        <td class="text-center">40%</td>
-                                        <td class="text-center">4</td>
+                                        <td><b>คะแนนรวมส่วนที่ 2 : พฤติกรรมการทำงาน</b></td>
+                                        <td ></td>
+                                        <td ></td>
+                                        <td  ></td>
+                                        <td  ></td>
                                     </tr>
+                                    <?php  
+                                    $sql_score_2_1 = "SELECT
+                                                            SUM(point_assessor1) As sum_2_1_assessor1,
+                                                            SUM(point_assessor2)As sum_2_1_assessor2
+                                                    FROM
+                                                            evaluation_employee ee
+                                                    JOIN evaluation_competency ec ON ee.evaluate_employee_id = ec.evaluate_employee_id
+                                                    JOIN manage_competency mc ON ec.manage_comp_id = mc.manage_comp_id
+                                                    JOIN competency c ON mc.competency_id = c.competency_id
+                                                    JOIN competency_title ct ON c.title_id = ct.title_id
+                                                    WHERE
+                                                            ct.title_id = 1 AND ee.evaluate_employee_id='".$get_eval_emp_id."'";
+                                    $query_score_2_1 = mysqli_query($conn, $sql_score_2_1);
+                                    while($result_score_2_1 = mysqli_fetch_array($query_score_2_1)) {
+                                        $score_2_1_accessor1 = $result_score_2_1["sum_2_1_assessor1"];
+                                        $score_2_1_accessor2 = $result_score_2_1["sum_2_1_assessor2"];
+                                    ?>
                                     <tr>
-                                        <td class="text-center">3</td>
-                                        <td>คะแนนดัชนีชี้วัดKPIs</td>
-                                        <td class="text-center">50%</td>
-                                        <td class="text-center">5</td>
+                                        <td style="padding-left: 40px;">ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
+                                        <td  class="text-center"><b>20</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass1part2/1point" value="<?php echo $result_score_2_1["sum_2_1_assessor1"]; ?>" min="0" max="20" disabled></td>
+                                        <td  class="text-center"><b>20</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass1part2/1point" value="<?php echo $result_score_2_1["sum_2_1_assessor2"]; ?>" min="0" max="20" disabled></td>
                                     </tr>
+                                    <?php } ?>
+                                    <?php
+                                    $sql_score_2_2 = "SELECT
+                                                            SUM(point_assessor1)As sum_2_2_assessor1,
+                                                            SUM(point_assessor2)As sum_2_2_assessor2
+                                                    FROM
+                                                            evaluation_employee ee
+                                                    JOIN evaluation_competency ec ON ee.evaluate_employee_id = ec.evaluate_employee_id
+                                                    JOIN manage_competency mc ON ec.manage_comp_id = mc.manage_comp_id
+                                                    JOIN competency c ON mc.competency_id = c.competency_id
+                                                    JOIN competency_title ct ON c.title_id = ct.title_id
+                                                    WHERE
+                                                            ct.title_id = 2 AND ee.evaluate_employee_id='".$get_eval_emp_id."'";
+                                    $query_score_2_2 = mysqli_query($conn, $sql_score_2_2);
+                                    while($result_score_2_2 = mysqli_fetch_array($query_score_2_2)) {
+                                        $score2_2_accessor_1 = $result_score_2_2["sum_2_2_assessor1"];
+                                        $score2_2_accessor_2 = $result_score_2_2["sum_2_2_assessor2"];
+                                    ?>
+                                    <tr>
+                                        <td style="padding-left: 40px;">ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
+                                        <td class="text-center"><b>20</b></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="ass1part2/2point" value="<?php echo $result_score_2_2["sum_2_2_assessor1"]; ?>" min="0" max="20" disabled></td>
+                                        <td class="text-center"><b>20</b></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="ass2part2/1point" value="<?php echo $result_score_2_2["sum_2_2_assessor_2"]; ?>" min="0" max="20" disabled></td>
+                                    </tr>
+                                    <?php } ?>
+                                    <?php
+                                    $sql_score_3 = "SELECT
+                                                    point_leave + point_penalty As score_3
+                                                  FROM
+                                                          evaluation_employee
+                                                  WHERE
+                                                          evaluate_employee_id='".$get_eval_emp_id."'";
+                                    $query_score_3 = mysqli_query($conn, $sql_score_3);
+                                    while($result_score_3 = mysqli_fetch_array($query_score_3)) {
+                                        $score_3 = $result_score_3["score_3"];
+                                    ?>
+                                     <tr>
+                                        <td ><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
+                                        <td ></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="part3point" value="<?php echo $result_score_3["score_3"]; ?>" min="0" max="20" disabled></td>
+                                        <td ></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="part3point" value="<?php echo $result_score_3["score_3"]; ?>" min="0" max="20" disabled></td>
+                                    </tr>
+                                    <?php } ?>
+                                    
+                                     
+                                </tbody>
+                                <tfoot>
+                                    <?php 
+                                        $sum_score_accessor_1 = ($score_1 + $score_2_1_accessor1 + $score2_2_accessor_1) - $score_3;
+                                        $sum_score_accessor_2 = ($score_1 + $score_2_1_accessor2 + $score2_2_accessor_2) - $score_3;
+                                    ?>
                                     <tr class="active">
-                                        <td colspan="2">คะแนนรวม</td>
-                                        <td class="text-center">100%</td>
-                                        <td class="text-center">4.35</td>
+                                        <th>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</th>
+                                        <th></th>
+                                        <th class="text-center" style="color: blue;"><b><input class="text-center" type="number" value="<?php echo $sum_score_accessor_1; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></th>
+                                        <th></th>
+                                        <th class="text-center" style="color: blue;"><input class="text-center" type="number" value="<?php echo $sum_score_accessor_2; ?>"  name="ass2part1+2point" min="0" max="100" disabled></th>
                                     </tr>
-                                    <tr class="bg-green">
-
-                                        <td colspan="3"><strong>ผลการประเมิน</strong></td>
-                                        <td class=" text-center"><strong>A+</strong></td>
-                                    </tr>
-                                </table>
-                                <div class="row box-padding">
-                                    <div class="content-header">
-                                        <h1 class="text-center box-padding-small">
-                                            คำแนะนำของผู้บังคับบัญชา
-                                        </h1>
-                                        <div class="well well-sm">
-                                            <div class="row">
-                                                <div class="col-sm-4" >
-                                                    <ul>
-                                                        <li style="list-style: none;"><strong>จุดเด่นผู้ถูกประเมิน</strong></li>
-                                                        <li>การวางแผน</li>
-                                                        <li>การแก้ไขปัญหาและการตัดสินใจ</li>
-                                                        <li>การดำเนินตามแผนและติดตามผลงาน</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-sm-4" >
-                                                    <ul>
-                                                        <li style="list-style: none;"><strong>จุดที่ควรพัฒนาปรับปรุงผู้ถูกประเมิน</strong></li>
-                                                        <li>การวางแผน</li>
-                                                        <li>การแก้ไขปัญหาและการตัดสินใจ</li>
-                                                        <li>การดำเนินตามแผนและติดตามผลงาน</li>
-                                                    </ul>
-                                                </div>
-                                                <div class="col-sm-4" >
-                                                    <ul>
-                                                        <li style="list-style: none;"><strong>หลักสูตรการอบรมหรือแนวทางที่ควรพัฒนา</strong></li>
-                                                        <li>การวางแผน</li>
-                                                        <li>การแก้ไขปัญหาและการตัดสินใจ</li>
-                                                        <li>การดำเนินตามแผนและติดตามผลงาน</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
+                                </tfoot>
+                            </table>
+                        </div>
                             <div class="box-footer">
                                 <div class="pull-right box-padding">
                                     <button class="btn btn-foursquare" type="submit" onclick="window.location.href='compareevaluation.php'"  >เปรียบเทียบย้อนหลัง</button>

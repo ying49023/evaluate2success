@@ -24,6 +24,10 @@
     if(isset($_GET["emp_id"])){
         $get_emp_id  = $_GET["emp_id"];
     }
+    $get_eval_code = '';
+    if(isset($_GET["eval_code"])){
+        $get_eval_code  = $_GET["eval_code"];
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -58,8 +62,8 @@
             <!-- Content Header (Page header)  -->
             <section class="content-header">
                 <h1>
-                    ติดตามสถานะการทำงาน
-                    <small></small>
+                    ดูภาพรวมรายบุคคล 
+                    <small>แดชบอร์ด</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li>
@@ -109,7 +113,7 @@
                         $eval_code = $_GET["eval_code"];
                     }
 
-                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$my_eval_code."'";
+                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$get_eval_code."'";
                     $query_year_term = mysqli_query($conn, $sql_year_term);
                     while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
                         echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
@@ -164,7 +168,7 @@
                 <td><?php echo $result_emp["manager_name_2"]; ?></td>
                 <td>
                     <?php 
-                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '".$my_eval_code."' ";
+                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '".$get_eval_code."' ";
                     $query_eval_period = mysqli_query($conn, $sql_eval_period) or die(mysqli_errno());
                     $result_eval_period = mysqli_fetch_array($query_eval_period,MYSQLI_ASSOC);
                     ?>
@@ -185,7 +189,7 @@
                     <div class="col-md-4">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                <strong>KPIภาพรวมล่าสุด ประจำเดือน : พฤษภาคม</strong>
+                                <strong>KPIภาพรวมล่าสุด</strong>
                                 <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
@@ -193,16 +197,30 @@
                             </div>
                             </div>
                             <div class="box-body">
+                                <!-- คิวรี่แสดงค่าไมล์รวม -->
+                                <?php
+                                    $sql_mile ="select SUM(r.percent_weight*r.percent_performance)/ (SELECT SUM(percent_weight) FROM kpi_responsible er
+                                    JOIN evaluation_employee ee ON ee.evaluate_employee_id = er.evaluate_employee_id
+                                    WHERE ee.employee_id=$get_emp_id  ) as mile_percent
+                                    FROM kpi_responsible r
+                                    JOIN evaluation_employee e ON e.evaluate_employee_id = r.evaluate_employee_id
+                                    JOIN evaluation ev ON ev.evaluation_code = e.evaluation_code
+                                    WHERE e.employee_id=$get_emp_id  AND r.percent_performance IS NOT NULL and ev.evaluation_code =$get_eval_code ";
+                                    $query_mile = mysqli_query($conn, $sql_mile);
+                                    while ($result_mile = mysqli_fetch_assoc($query_mile)){
+                                        $mile = $result_mile['mile_percent'];
+                                    }
+                                ?>
                                 <div id="g5" class="200px160px" style="height:220px">
                                     <script>
                                     document.addEventListener("DOMContentLoaded", function(event) {
                                       var g5 = new JustGage({
                                         id: "g5",
                                         //value: getRandomInt(0, 100),
-                                        value : 35.5,
+                                        value : <?php echo $mile; ;?>,
                                         min: 0,
                                         max: 100,
-                                        title: "เดือนพฤษภาคม",
+                                        title: "สถานะKPIs",
                                         label: "%",
                                         levelColorsGradient: false
                                       });
@@ -232,7 +250,7 @@
                                                     FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
                                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
                                                     JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
-                                                    WHERE ee.employee_id = '".$get_emp_id."' ORDER BY kpi_id ";
+                                                    WHERE e.evaluation_code =$get_eval_code and ee.employee_id = '".$get_emp_id."' ORDER BY kpi_id ";
                                         $query_kpi = mysqli_query($conn, $sql_kpi);
                                     ?>
             
@@ -250,8 +268,9 @@
                                             <center>สถานะ</center>
                                         </th>
                                         <th>
-                                            <center>อัพเดทKPIs</center>
+                                            <center>ติดตามสถานะการทำงาน</center>
                                         </th>
+                                        
 
                                     </tr>
                                      <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
@@ -291,11 +310,12 @@
                                         </th>
                                         <th>
                                             <center>
-                                                <a href="tracking_sub_detail.php?emp_id=<?php echo $get_emp_id; ?>&kpi_id=<?php echo $kpi_id ?>">
+                                                <a href="total_personal_dashboard_detail2.php?emp_id=<?php echo $get_emp_id; ?>&kpi_id=<?php echo $kpi_id ?>&eval_code=<?php echo $eval_code; ?>">
                                                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                                                 </a>
                                             </center>
                                         </th>
+                                        
                                     </tr>
                                     <?php } ?>
                                     

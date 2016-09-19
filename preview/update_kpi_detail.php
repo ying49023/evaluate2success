@@ -73,7 +73,7 @@
         <?php
                 $sql_progess = "call getCurrentKPIPerformance($get_kpi_responsible_id) ";
                 $query_progess = mysqli_query($conn, $sql_progess);
-                ?>                
+        ?>                
                     
                         
         <script>
@@ -372,7 +372,7 @@
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
                             JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
                             WHERE ee.employee_id = $get_emp_id  AND
-                            e.current_eval=1 AND k.kpi_code='$kpi_id' and e.company_id=1";
+                            e.evaluation_code=$my_eval_code AND k.kpi_code='$kpi_id' and e.company_id=1";
                         $query_kpi_history = mysqli_query($conn,$sql_kpi_history);
                         $count=0;
                         ?>
