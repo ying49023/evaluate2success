@@ -168,7 +168,7 @@
                 <th>ระดับ</th>
             </tr>
             <tr>
-                <td><?php echo $result_emp["emp_name"]; ?> </td>
+                <td><?php $name=$result_emp["emp_name"]; echo $result_emp["emp_name"]; ?> </td>
                 <td><?php echo $result_emp["employee_id"]; ?></td>
                 <td><?php echo $result_emp["position_description"]; ?> </td>
             </tr>
