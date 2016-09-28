@@ -539,7 +539,7 @@
                 
                 
                 var options2 = {
-                    title: 'KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด',
+                    title: '<?php echo $kpi_id;?> - <?php echo $kpi_name ?>',
                     legend: 'none',
                     bar: {groupWidth: '70%'},
                     vAxis: { gridlines: { count: 5 } }

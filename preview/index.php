@@ -27,8 +27,9 @@
     <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- CSS PACKS -->
-    <?php include ('./css_packs.html'); ?>
+            <!-- CSS PACKS -->
+            <?php include ('./css_packs.html'); ?>
+            
     
     
             <?php include ('./classes/connection_mysqli.php');?>
@@ -314,16 +315,9 @@
     <!-- ./wrapper -->
     <!-- jQuery 2.2.0 -->
 <script src="./plugins/jQuery/jQuery-2.2.0.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="./bootstrap/js/bootstrap.min.js"></script>
 <!-- ChartJS 1.0.1 -->
 <script src="./plugins/chartjs/Chart.min.js"></script>
-<!-- FastClick -->
-<script src="./plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="./dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="./dist/js/demo.js"></script>
+
 <!-- page script -->
     <script>
   $(function () {
@@ -413,9 +407,11 @@
     
   });
 </script>
+
 </body>
 <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
+<?php include('./script_packs.html') ?>
+
 </html>
 <?php
         }

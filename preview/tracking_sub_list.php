@@ -46,8 +46,8 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        การประเมินสมรรถนะ
-                        <small>ค้นหาพนักงาน</small>
+                        การติดตามสถานะการทำงาน
+                        <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -98,10 +98,11 @@
                                                     JOIN employees m ON e.manager_id = m.employee_id
                                                     JOIN departments d ON e.department_id = d.department_id
                                                     JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                    JOIN evaluation eval ON eval.evaluation_code = ee.evaluation_code 
                                                     JOIN kpi_responsible r ON ee.evaluate_employee_id = r.evaluate_employee_id
                                                     JOIN jobs j ON j.job_id = e.job_id
                                                     WHERE
-                                                            ee.evaluation_code=$my_eval_code
+                                                            eval.evaluation_code=$my_eval_code 
                                                          and   m.employee_id = '$my_emp_id'"
                                                 . "GROUP BY ee.evaluate_employee_id    
                                                 ORDER BY
@@ -115,8 +116,8 @@
                                             <td class="emp_name"><?php echo $result_emp["prefix"].$result_emp["first_name"]."  ".$result_emp["last_name"]; ?></td>
                                             <td class="job_name"><?php echo $result_emp["job_name"]; ?></td>
                                             <td class="department_name"><?php echo $result_emp["department_name"]; ?></td>
-                                            <td>
-                                                <a href="tracking_sub_kpi.php?emp_id=<?php echo $result_emp["employee_id"]; ?>">    
+                                            <td class="text-center">
+                                                <a class=" btn btn-dropbox btn-sm" href="tracking_sub_kpi.php?emp_id=<?php echo $result_emp["employee_id"]; ?>">    
                                                 <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
                                                 </a>
                                             </td>

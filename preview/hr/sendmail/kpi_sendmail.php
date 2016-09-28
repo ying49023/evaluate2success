@@ -83,6 +83,7 @@
 	$mail->Send(); 
         if($mail->Send()){
             echo 'Email Sending.';
+            
         }else{
             echo 'Email Can Not Send.';
         }

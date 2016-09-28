@@ -266,7 +266,8 @@
                             <p>
                                 <?php echo $my_name; ?>
                                 <br>
-                                <small><?php echo $my_department ?></small>
+                                <small>รหัส : <?php echo $my_emp_id; ?></small>
+                                <small>แผนก/ฝ่าย : <?php echo $my_department; ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -287,7 +288,7 @@
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat" disable >Profile</a>
+                                <a href="edit_profile.php?emp_id=<?php echo $my_emp_id; ?>" class="btn btn-default btn-flat" >แก้ไขข้อมูลส่วนตัว</a>
                             </div>
                             <div class="pull-right">
                                 <a href="logout.php" class="btn btn-default btn-flat">Logout</a>

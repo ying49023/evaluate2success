@@ -30,11 +30,8 @@
     <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
     
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
-            <?php include ('./classes/connection_mysqli.php');?>
+    
+    <?php include ('./classes/connection_mysqli.php');?>
         <?php
         
         $get_department_id = '';
@@ -114,7 +111,7 @@
                                         $query_eval = mysqli_query($conn, $sql_eval);
                                     ?>
                                         <select class="form-control" name="eval_code">
-                                            <option value="">เลือกทั้งหมด</option>
+                                            <!--<option value="">เลือกทั้งหมด</option>-->
                                         <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
                                             <option value="<?php echo $result_eval["evaluation_code"]; ?>" <?php if($get_eval_code == $result_eval["evaluation_code"]) { echo "selected"; }  ?> >
                                                 <?php echo 'ปี '.$result_eval["year"]." - ครั้งที่".$result_eval["term_id"]; ?>
@@ -206,76 +203,89 @@
             </div>
             <div class="row box-padding">
             <div class="box box-primary">
+                <div class="box-header">
+                    <div style="float: left;">
+                        <?php
+                        $eval_code = $my_eval_code;
+                        if (isset($_GET["eval_code"])) {
+                            $eval_code = $_GET["eval_code"];
+                        }
+
+                        $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$eval_code."'";
+                        $query_year_term = mysqli_query($conn, $sql_year_term);
+                        while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
+                            echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
+                            echo "<span style='font-size:18px'>รอบการประเมินที่ " . $term = $result_year_term["term_name"] . " : " . $result_year_term["start_month"] . "-" . $result_year_term["end_month"] . "</span>";
+                        }
+                        ?>
+                    </div>
+                </div>
                 <div class="box-body" >
-                                <?php  
-               
-                                        $sql_kpi="SELECT k.unit,k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,kr.kpi_responsible_id,kr.percent_performance 
+                    
+                    <table class="table table-bordered" width="90%" border="1px">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>KPIs</th>
+                                <th class="text-center">เป้าหมาย</th>
+                                <th class="text-center">ค่าจริง</th>
+                                <th class="text-center">สถานะ</th>   
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <?php
+                            $sql_kpi = "SELECT k.unit,k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,kr.kpi_responsible_id,kr.percent_performance 
                                                     FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
                                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
                                                     JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
-                                                    WHERE e.evaluation_code=$get_eval_code and ee.employee_id = '".$my_emp_id."' ORDER BY kpi_id ";
-                                        $query_kpi = mysqli_query($conn, $sql_kpi);
-                                    ?>
-            
-                                <table class="table table-bordered" width="90%" height="100px" border="1px">
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>KPIs</th>
-                                        <th>
-                                            <center>เป้าหมาย</center>
-                                        </th>
-                                        <th>
-                                            <center>ค่าจริง</center>
-                                        </th>
-                                        <th>
-                                            <center>สถานะ</center>
-                                        </th>
+                                                    WHERE e.evaluation_code=$get_eval_code and ee.employee_id = '" . $my_emp_id . "' ORDER BY kpi_id ";
+                            $query_kpi = mysqli_query($conn, $sql_kpi);
+                            $count_kpi = mysqli_num_rows($query_kpi);
+                            if ($count_kpi == '' || $count_kpi == 0) {
+                                echo "<tr class='text-center' ><td  colspan='5'><b>ยังไม่มีข้อมูล KPI ที่รับผิดชอบ</b></td></tr>";
+                            } else {
+                            ?>
+                                    <?php
+                                    while ($result_kpi = mysqli_fetch_assoc($query_kpi)) {
                                         
-                                    </tr>
-                                     <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
-                
-                                $kpi_id = $result_kpi["kpi_id"];
-                                $kpi_name = $result_kpi["kpi_name"];
-                                $weight = $result_kpi["weight"];
-                                $goal = $result_kpi["goal"];
-                                $symbol = $result_kpi["symbol"];
-                                $success = $result_kpi["success"];
-                                $term = $result_kpi["term"];
-                                $year = $result_kpi["year"];
-                                $kpi_resp = $result_kpi["kpi_responsible_id"];
-                                $progress=$result_kpi['percent_performance'];
-                                $kpi_unit =$result_kpi["unit"];
-                             ?>
-                             <?php
-                                $sql_progess = "call getMile_kpi_response($kpi_resp) ";
-                                $query_progess = mysqli_query($conn, $sql_progess);
-                             ?>                
-                    
-                                    <tr>
-                                        <th><?php echo $kpi_id;?></th>
-                                        <th><?php echo $kpi_name;?></th>
-                                        <th>
-                                            <center><?php echo $symbol."".$goal." ".$kpi_unit;?></center>
-                                        </th>
-                                        <th>
-                                        <center><?php echo round($success,2);?></center>
-                                        </th>
-                                        <th>
-                                            <div class="progress">                                             
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
-                                                style="width:<?php echo round($progress,2); ?>%"><?php  echo round($progress,2); ?>
-                                                </div>                                                
-                                            </div>
-                                        </th>
-                                        
-
-                                    </tr>
-                                     <?php } ?>
-                                  
-
-                                        </table>
-
+                                        $kpi_id = $result_kpi["kpi_id"];
+                                        $kpi_name = $result_kpi["kpi_name"];
+                                        $weight = $result_kpi["weight"];
+                                        $goal = $result_kpi["goal"];
+                                        $symbol = $result_kpi["symbol"];
+                                        $success = $result_kpi["success"];
+                                        $term = $result_kpi["term"];
+                                        $year = $result_kpi["year"];
+                                        $kpi_resp = $result_kpi["kpi_responsible_id"];
+                                        $progress = $result_kpi['percent_performance'];
+                                        $kpi_unit = $result_kpi["unit"];
+                                        ?>
+                                        <?php
+                                        $sql_progess = "call getMile_kpi_response($kpi_resp) ";
+                                        $query_progess = mysqli_query($conn, $sql_progess);
+                                        ?>                
+                                            
+                            <tr>
+                                <th><?php echo $kpi_id; ?></th>
+                                <th><?php echo $kpi_name; ?></th>
+                                <th class="text-center"><?php echo $symbol . "" . $goal . " " . $kpi_unit; ?></th>
+                                <th class="text-center"><?php echo round($success, 2); ?></th>
+                                <th>
+                                    <div class="progress">                                             
+                                        <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" 
+                                             style="width:<?php echo round($progress, 2); ?>%"><?php echo round($progress, 2); ?>
+                                        </div>                                                
                                     </div>
+                                </th>
+                            </tr>
+                                    <?php }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                        
+                </div>
                 
             </div>
                 
@@ -296,108 +306,100 @@
         <div class="control-sidebar-bg"></div>
     </div>
     <!-- ./wrapper -->
-        <!-- jQuery 2.2.0 -->
-<script src="./plugins/jQuery/jQuery-2.2.0.min.js"></script>
-<!-- Bootstrap 3.3.6 -->
-<script src="./bootstrap/js/bootstrap.min.js"></script>
-<!-- ChartJS 1.0.1 -->
-<script src="./plugins/chartjs/Chart.min.js"></script>
-<!-- FastClick -->
-<script src="./plugins/fastclick/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="./dist/js/app.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="./dist/js/demo.js"></script>
+    <!-- jQuery 2.2.0 -->
+    <script src="./plugins/jQuery/jQuery-2.2.0.min.js"></script>
+    <!-- ChartJS 1.0.1 -->
+    <script src="./plugins/chartjs/Chart.min.js"></script>
+
 <!-- page script -->
-    <script>
-  $(function () {
-    /* ChartJS
-     * -------
-     * Here we will create a few charts using ChartJS
-     */
-
-    //--------------
-    //- AREA CHART -
-    //--------------
-
-    // Get context with jQuery - using jQuery's .get() method.
-    var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-    // This will get the first returned node in the jQuery collection.
-    var areaChart = new Chart(areaChartCanvas);
-
-    var areaChartData = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
-      datasets: [
-        {
-          label: "Electronics",
-          fillColor: "rgba(210, 214, 222, 1)",
-          strokeColor: "rgba(210, 214, 222, 1)",
-          pointColor: "rgba(210, 214, 222, 1)",
-          pointStrokeColor: "#c1c7d1",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(220,220,220,1)",
-          data: [65, 59, 80, 81, 56, 55, 40]
-        },
-        {
-          label: "Digital Goods",
-          fillColor: "rgba(60,141,188,0.9)",
-          strokeColor: "rgba(60,141,188,0.8)",
-          pointColor: "#3b8bba",
-          pointStrokeColor: "rgba(60,141,188,1)",
-          pointHighlightFill: "#fff",
-          pointHighlightStroke: "rgba(60,141,188,1)",
-          data: [28, 48, 40, 19, 86, 27, 90]
-        }
-      ]
-    };
-
-    var areaChartOptions = {
-      //Boolean - If we should show the scale at all
-      showScale: true,
-      //Boolean - Whether grid lines are shown across the chart
-      scaleShowGridLines: false,
-      //String - Colour of the grid lines
-      scaleGridLineColor: "rgba(0,0,0,.05)",
-      //Number - Width of the grid lines
-      scaleGridLineWidth: 1,
-      //Boolean - Whether to show horizontal lines (except X axis)
-      scaleShowHorizontalLines: true,
-      //Boolean - Whether to show vertical lines (except Y axis)
-      scaleShowVerticalLines: true,
-      //Boolean - Whether the line is curved between points
-      bezierCurve: true,
-      //Number - Tension of the bezier curve between points
-      bezierCurveTension: 0.3,
-      //Boolean - Whether to show a dot for each point
-      pointDot: false,
-      //Number - Radius of each point dot in pixels
-      pointDotRadius: 4,
-      //Number - Pixel width of point dot stroke
-      pointDotStrokeWidth: 1,
-      //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
-      pointHitDetectionRadius: 20,
-      //Boolean - Whether to show a stroke for datasets
-      datasetStroke: true,
-      //Number - Pixel width of dataset stroke
-      datasetStrokeWidth: 2,
-      //Boolean - Whether to fill the dataset with a color
-      datasetFill: true,
-      //String - A legend template
-      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-      //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
-      maintainAspectRatio: true,
-      //Boolean - whether to make the chart responsive to window resizing
-      responsive: true
-    };
-
-    //Create the line chart
-    areaChart.Line(areaChartData, areaChartOptions);
-    
-
-    
-  });
+<script>
+    $(function () {
+        /* ChartJS
+         * -------
+         * Here we will create a few charts using ChartJS
+         */
+        
+        //--------------
+        //- AREA CHART -
+        //--------------
+        
+        // Get context with jQuery - using jQuery's .get() method.
+        var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+        // This will get the first returned node in the jQuery collection.
+        var areaChart = new Chart(areaChartCanvas);
+        
+        var areaChartData = {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [
+                {
+                    label: "Electronics",
+                    fillColor: "rgba(210, 214, 222, 1)",
+                    strokeColor: "rgba(210, 214, 222, 1)",
+                    pointColor: "rgba(210, 214, 222, 1)",
+                    pointStrokeColor: "#c1c7d1",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: "Digital Goods",
+                    fillColor: "rgba(60,141,188,0.9)",
+                    strokeColor: "rgba(60,141,188,0.8)",
+                    pointColor: "#3b8bba",
+                    pointStrokeColor: "rgba(60,141,188,1)",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(60,141,188,1)",
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
+        
+        var areaChartOptions = {
+            //Boolean - If we should show the scale at all
+            showScale: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: false,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - Whether the line is curved between points
+            bezierCurve: true,
+            //Number - Tension of the bezier curve between points
+            bezierCurveTension: 0.3,
+            //Boolean - Whether to show a dot for each point
+            pointDot: false,
+            //Number - Radius of each point dot in pixels
+            pointDotRadius: 4,
+            //Number - Pixel width of point dot stroke
+            pointDotStrokeWidth: 1,
+            //Number - amount extra to add to the radius to cater for hit detection outside the drawn point
+            pointHitDetectionRadius: 20,
+            //Boolean - Whether to show a stroke for datasets
+            datasetStroke: true,
+            //Number - Pixel width of dataset stroke
+            datasetStrokeWidth: 2,
+            //Boolean - Whether to fill the dataset with a color
+            datasetFill: true,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+            maintainAspectRatio: true,
+            //Boolean - whether to make the chart responsive to window resizing
+            responsive: true
+        };
+        
+        //Create the line chart
+        areaChart.Line(areaChartData, areaChartOptions);
+    });
 </script>
 </body>
+<!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
 </html>
 <?php
         }
