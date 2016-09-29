@@ -98,7 +98,8 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">summary evaluation</li>
+                        <li><a href="update_kpi.php">KPIs update</a></li>
+                        <li class="active">KPI detail update</li>
                     </ol>
                 </section>
                 <!--/Page header -->

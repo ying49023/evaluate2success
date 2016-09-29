@@ -176,68 +176,65 @@
                                 <div class="row">
                                     <br>
                                     <table class="table table-bordered ">
-                                        <thead>
+                                        <thead class="bg-gray">
                                             <tr> 
-                                                <th rowspan="2">
+                                                <th rowspan="2" style="vertical-align: middle;">
                                                     วัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน (Performance Objectives / KPIs)
                                                 </th>
-                                                <th rowspan="2">
+                                                <th rowspan="2"  style="vertical-align: middle;">
                                                     ผลการปฏิบัติงานที่เกิดขึ้นจริง (Actual Performance)
                                                 </th>
-                                                <th rowspan="1" colspan="3">ครั้งที่ 1 ม.ค. - มิ.ย. </th>
+                                                <th colspan="3" class="text-center">ครั้งที่ ?  มกราคม -มิถุนายน </th>
                                             </tr>
                                             <tr> 
                                                         
-                                                <th rowspan="1">น้ำหนักรวม</th>
-                                                <th rowspan="1">คะแนน</th>
-                                                <th rowspan="1">คะแนนรวม(น้ำหนัก X คะแนน) </th>
+                                                <th style="width: 80px;vertical-align: middle;text-align: center;">น้ำหนักรวม</th>
+                                                <th style="vertical-align: middle;">คะแนน</th>
+                                                <th style="vertical-align: middle;">คะแนนรวม(น้ำหนัก X คะแนน) </th>
                                             </tr>
                                         </thead>
+
                                         <tbody>
                                             <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
+                                                <td>(ชื่อ KPI) และ เป้าหมาย</td>
+                                                <td>(ผลงานจริง)</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
                                             </tr>
                                             <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
+                                                <td>(ชื่อ KPI) และ เป้าหมาย</td>
+                                                <td>(ผลงานจริง)</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
                                             </tr>
                                             <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
+                                                <td>(ชื่อ KPI) และ เป้าหมาย</td>
+                                                <td>(ผลงานจริง)</td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
+                                                <td class="text-center"></td>
                                             </tr>
-                                            <tr> 
+
+                                            <tr class="bg-gray-active"> 
+                                                <th rowspan="1" colspan="2" class="text-right" >รวม</th>
+        
+                                                <th  class="text-center"></th>
+
                                                 <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
+                                               
+                                                
+                                                
+                                                <th  class="text-center"></th>
                                             </tr>
-                                            <tr> 
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
+                                            
+                                            <tr>
+                                                <th colspan="4"></th>
+                                                <th class="text-center bg-light-blue-active"><b>(คะแนนรวม)</b></th>
+
                                             </tr>
-                                            <tr> 
-                                                <th rowspan="1" colspan="2" class="text-right">รวม</th>
-                                                            
-                                                <th rowspan="1">100</th>
-                                                <th rowspan="1"></th>
-                                                <th rowspan="1"></th>
-                                            </tr>
-                                        </tbody>
-                                                    
+                                        </tbody>      
                                     </table>
                                                 
                                 </div>  

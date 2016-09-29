@@ -20,7 +20,7 @@
         <ul class="sidebar-menu">
             <li class="header" style="color:white;font-size: 14px;" >เมนูสำหรับระดับ<?php echo $my_position; ?></li>
             <!-- Dashboard -->
-            <li class=" <?php if($page == 'index.php' || $page == 'total_personal_dashboard.php' || $page == 'myindex.php'){ echo "active" ; } ?> " >
+            <li class=" <?php if($page == 'index.php' || $page == 'total_personal_dashboard.php' || $page == 'myindex.php' || $page == 'total_personal_dashboard_detail.php'){ echo "active" ; } ?> " >
                 <a href="">
                     <i class="glyphicon glyphicon-dashboard"></i> <span>แดชบอร์ด</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -29,7 +29,7 @@
                     <li class="<?php if($page == 'index.php'){ echo "active" ; } ?>">
                         <a href="index.php"><i class="fa fa-circle-o"></i> ภาพรวม</a>
                     </li>
-                    <li class="<?php if($page == 'total_personal_dashboard.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'total_personal_dashboard.php' || $page == 'total_personal_dashboard_detail.php'){ echo "active" ; } ?>">
                         <a  href="total_personal_dashboard.php"><i class="fa fa-circle-o"></i> รายบุคคล</a>
                     </li>
                     <?php } ?>
@@ -40,7 +40,7 @@
             </li>
             <!--/Dashboard -->
             <!--Evaluation -->
-            <li class=" <?php if($page == 'explan_evaluation.php'  || $page == 'evaluation_section_1.php'  || $page == 'evaluation_section_2.php'  || $page == 'evaluation_section_3.php'   || $page == 'evaluation_section_4.php'  || $page == 'evaluate_sub_list.php' || $page == 'search_summaryeval.php' || $page == 'my_summaryevaluation.php'){ echo "active" ; } ?>" >
+            <li class=" <?php if($page == 'explan_evaluation.php'  || $page == 'summaryevaluation.php' || $page == 'evaluation_section_1.php'  || $page == 'evaluation_section_2.php'  || $page == 'evaluation_section_3.php'   || $page == 'evaluation_section_4.php'  || $page == 'evaluate_sub_list.php' || $page == 'search_summaryeval.php' || $page == 'my_summaryevaluation.php'){ echo "active" ; } ?>" >
                 <a href="#">
                     <i class="glyphicon glyphicon-file"></i>
                     <span>การประเมิน</span>
@@ -52,7 +52,7 @@
                         <a href="evaluate_sub_list.php"><i class="fa fa-circle-o"></i>ประเมินสมรรถนะ</a>
                     </li>
                     
-                    <li class="<?php if($page == 'search_summaryeval.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'search_summaryeval.php' || $page == 'summaryevaluation.php'){ echo "active" ; } ?>">
                         <a href="search_summaryeval.php"><i class="fa fa-circle-o"></i>ดูผลการประเมิน</a>
                     </li>
                     <?php } ?>
@@ -65,14 +65,14 @@
             
             <!--Tracking -->
             <?php if($my_position_level >1 ){ ?>
-            <li class="<?php if($page == 'tracking_sub_list.php'){ echo "active" ; } ?> ">
+            <li class="<?php if($page == 'tracking_sub_list.php' || $page == 'tracking_sub_kpi.php'){ echo "active" ; } ?> ">
                 <a href="">
                     <i class="glyphicon glyphicon-screenshot"></i>
                         <span>ติดตามสถานะการทำงาน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?php if($page == 'tracking_sub_list.php'){ echo "active" ; } ?>"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
+                    <li class="<?php if($page == 'tracking_sub_list.php' || $page == 'tracking_sub_kpi.php'){ echo "active" ; } ?>"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
                     <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
                 </ul>
             </li>
@@ -80,7 +80,7 @@
             <!--/Tracking -->
             
             <!--  Update -->
-            <li class="<?php if($page == 'update_kpi.php'){ echo "active" ; } ?>" >
+            <li class="<?php if($page == 'update_kpi.php' || $page == 'update_kpi_detail.php'){ echo "active" ; } ?>" >
                 <a href="">
                     <i class="glyphicon glyphicon-level-up"></i>
                         <span>อัพเดทสถานะการทำงาน</span>
@@ -88,7 +88,7 @@
                 </a>
                 <ul class="treeview-menu">
 
-                    <li class="<?php if($page == 'update_kpi.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'update_kpi.php' || $page == 'update_kpi_detail.php'){ echo "active" ; } ?>">
                         <a href="update_kpi.php"><i class="fa fa-circle-o"></i>อัพเดทKPIs</a>
                     </li>
                     <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->

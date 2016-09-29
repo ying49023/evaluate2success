@@ -250,7 +250,7 @@
                                                 <input type="hidden" name="eval_emp_id" value="<?php echo $eval_emp_id; ?>" >
                                                 <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
                                                 <input type="hidden" name="comp_id" value="<?php echo $comp_id; ?>" >
-                                                <button class="btn btn-success" type="submit" name="submit_eval" ><i class="glyphicon glyphicon-triangle-right"></i>ประเมิน</button>
+                                                <button class="btn btn-success" type="submit" name="submit_eval" <?php if($status == 1){ echo "disabled"; } ?> ><i class="glyphicon glyphicon-triangle-right"></i>ประเมิน</button>
 <!--                                                <a class="btn btn-success " href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=<?php echo $eval_code;?>&eval_emp_id=<?php echo $eval_emp_id; ?>">    
                                                     <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
                                                 </a>-->

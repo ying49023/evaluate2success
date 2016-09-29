@@ -56,7 +56,7 @@
 
             }
             if ($query_update_comp) {
-                //header("location:evaluation_section_3.php");
+                header("location:evaluation_section_3.php");
             } else {
                 
                 echo '<script> alert("ทำรายการไม่สำเร็จ! กรุณาทำใหม่อีกครั้ง");  </script>';
@@ -308,7 +308,7 @@
                                                             JOIN competency c 
                                                             ON c.competency_id = mc.competency_id
                                                             WHERE mc.competency_id = $m_com AND mc.position_level_id = '$level' AND mc.status= 1 and mc.evaluation_code='".$_SESSION["eval_code"]."' 
-                                                            ORDER BY score ASC";
+                                                            ORDER BY score DESC";
                                                     $query_score1= mysqli_query($conn, $sql_score1);
                                                             ?>
                                                 <td style="text-align: center;">

@@ -67,7 +67,8 @@
                             Home
                         </a>
                     </li>
-                    <li class="active">KPIs</li>
+                    <li><a href="tracking_sub_list.php">Tracking</a></li>
+                    <li class="active">KPIs Tracking</li>
                 </ol>
             </section>
             <!--/Page header -->

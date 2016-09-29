@@ -100,7 +100,26 @@
                                 </div>  
                                 <div class="row">
                                     <br>
-                                    <?php  
+                                    
+                                    <table class="table table-bordered ">
+                                        <thead class="bg-gray">
+                                            <tr> 
+                                                <th rowspan="2" style="vertical-align: middle;">
+                                                    วัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน (Performance Objectives / KPIs)
+                                                </th>
+                                                <th rowspan="2"  style="vertical-align: middle;">
+                                                    ผลการปฏิบัติงานที่เกิดขึ้นจริง (Actual Performance)
+                                                </th>
+                                                <th colspan="3" class="text-center">ครั้งที่ <?php echo $term ;  ?> <?php echo $start_month_name ; ?> -<?php echo $end_month_name; ;  ?> </th>
+                                            </tr>
+                                            <tr> 
+                                                        
+                                                <th style="width: 80px;vertical-align: middle;text-align: center;">น้ำหนักรวม</th>
+                                                <th style="vertical-align: middle;">คะแนน</th>
+                                                <th style="vertical-align: middle;">คะแนนรวม(น้ำหนัก X คะแนน) </th>
+                                            </tr>
+                                        </thead>
+                                        <?php  
                
                                         $sql_kpi="SELECT k.kpi_code as kpi_id, k.kpi_name as kpi_name, kr.percent_weight as weight, kr.goal as goal, kr.success as success, e.term_id as term, e.year as year,k.measure_symbol as symbol,kr.percent_performance,kr.kpi_responsible_id
                                                     FROM kpi k JOIN kpi_responsible kr ON k.kpi_id=kr.kpi_id 
@@ -108,25 +127,11 @@
                                                     JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
                                                     WHERE ee.evaluation_code='".$_SESSION['eval_code']."' and ee.employee_id = '".$_SESSION["emp_id"]."' ORDER BY kpi_id ";
                                         $query_kpi = mysqli_query($conn, $sql_kpi);
-                                    ?>
-                                    <table class="table table-bordered ">
-                                        <thead class="bg-gray">
-                                            <tr> 
-                                                <th rowspan="2">
-                                                    วัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน (Performance Objectives / KPIs)
-                                                </th>
-                                                <th rowspan="2">
-                                                    ผลการปฏิบัติงานที่เกิดขึ้นจริง (Actual Performance)
-                                                </th>
-                                                <th rowspan="1" colspan="3">ครั้งที่ 1 ม.ค. - มิ.ย. </th>
-                                            </tr>
-                                            <tr> 
-                                                        
-                                                <th rowspan="1">น้ำหนักรวม</th>
-                                                <th rowspan="1">คะแนน</th>
-                                                <th rowspan="1">คะแนนรวม(น้ำหนัก X คะแนน) </th>
-                                            </tr>
-                                        </thead>
+                                        $count_kpi = mysqli_num_rows($query_kpi);
+                                        if($count_kpi == 0) {
+                                            echo "<tr><td colspan='5' class='text-center'>ไม่มีข้อมูล KPIs</td></tr>";
+                                        }else{
+                                        ?>
                                         <tbody>
                                             <?php while($result_kpi = mysqli_fetch_assoc($query_kpi)) {
                 
@@ -146,9 +151,9 @@
                                             <tr> 
                                                 <td rowspan="1"><?php echo $kpi_name.' เป้าหมาย: '.$symbol.''.$goal ;?></td>
                                                 <td rowspan="1"><?php echo $success;?></td>
-                                                <td rowspan="1"><?php echo $weight.'%';?></td>
-                                                <td rowspan="1"><?php echo $percent_performance/10;?></td>
-                                                <td rowspan="1"><?php echo $weight*($percent_performance/10);?></td>
+                                                <td class="text-center" rowspan="1"><?php echo $weight.'%';?></td>
+                                                <td class="text-center" rowspan="1"><?php echo $percent_performance/10;?></td>
+                                                <td class="text-center" rowspan="1"><?php echo $weight*($percent_performance/10);?></td>
                                                 <?php  
                                                 $sql_update_point_responsible="UPDATE kpi_responsible
                                                                     SET point_kpi_resp =($percent_performance/10)
@@ -176,7 +181,7 @@
                                                 while($result_percent_weight = mysqli_fetch_assoc($query_percent_weight)) {
                                                     $sum_percent_weight=$result_percent_weight ['sum_percent_weight'];
                                                  ?>           
-                                                <th rowspan="1"><?php echo $sum_percent_weight;?></th>
+                                                <th  class="text-center" rowspan="1"><?php echo $sum_percent_weight;?></th>
                                                 <?php } ?>
                                                 <?php                                                 
                
@@ -191,7 +196,7 @@
                                                
                                                 
                                                 
-                                                <th rowspan="1"><?php echo $sum_point;?></th>
+                                                <th  class="text-center" rowspan="1"><?php echo $sum_point;?></th>
                                                     <?php } ?>
                                             </tr>
                                             
@@ -218,11 +223,11 @@
                                                 while($result_point_kpi = mysqli_fetch_assoc($query_point_kpi)) {
                                                     $point_kpi=$result_point_kpi['point_kpi'];
                                                  ?>
-                                                <th colspan="1" class="bg-blue"><?php echo $point_kpi;?></th>
+                                                <th class="text-center bg-light-blue-active"><b><?php echo $point_kpi;?></b></th>
                                                 <?php } ?>
                                             </tr>
                                         </tbody>
-                                                    
+                                        <?php } ?>        
                                     </table>
                                                 
                                 </div>  

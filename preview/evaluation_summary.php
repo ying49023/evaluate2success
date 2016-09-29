@@ -112,10 +112,15 @@
                                         $result_score_term_1 = mysqli_fetch_array($query_score_term_1);
                                             
                                         $score_1_term_1 = $result_score_term_1["point_kpi"];
+                                        if($score_1_term_1 == 0) { $score_1_term_1 = '-'; }
                                         $score_2_1_term_1 = ($result_score_term_1["point_com1_part1"] + $result_score_term_1["point_com2_part1"]) / 2;
+                                        if($score_2_1_term_1 == 0) { $score_2_1_term_1 = '-'; }
                                         $score_2_2_term_1 = ($result_score_term_1["point_com1_part2"] + $result_score_term_1["point_com2_part2"] ) / 2;
+                                        if($score_2_2_term_1 == 0) { $score_2_2_term_1 = '-'; }
                                         $score_3_term_1 = $result_score_term_1["point_leave"] + $result_score_term_1["point_penalty"];
+                                        if($score_3_term_1 == 0 ){ $score_3_term_1 = '-'; }
                                         $sum_score_term_1 = ($score_1_term_1 + $score_2_1_term_1 + $score_2_2_term_1) - $score_3_term_1;
+                                        if($sum_score_term_1 == 0){ $sum_score_term_1 = '-'; }
                                 //Term 2
                                 $sql_score_term_2 = "SELECT
                                                             *
@@ -129,11 +134,15 @@
                                         $result_score_term_2 = mysqli_fetch_array($query_score_term_2);
                                             
                                         $score_1_term_2 = $result_score_term_2["point_kpi"];
+                                        if($score_1_term_2 == 0){ $score_1_term_2 = '-'; }
                                         $score_2_1_term_2 = ($result_score_term_2["point_com1_part1"] + $result_score_term_2["point_com2_part1"]) / 2;
+                                        if($score_2_1_term_2 == 0){ $score_2_1_term_2 = '-'; }
                                         $score_2_2_term_2 = ($result_score_term_2["point_com1_part2"] + $result_score_term_2["point_com2_part2"] ) / 2;
+                                        if($score_2_2_term_2 == 0){ $score_2_2_term_2 = '-'; }
                                         $score_3_term_2 = $result_score_term_2["point_leave"] + $result_score_term_2["point_penalty"];
+                                        if($score_3_term_2 == 0){ $score_3_term_2 = '-'; }
                                         $sum_score_term_2 = ($score_1_term_2 + $score_2_1_term_2 + $score_2_2_term_2) - $score_3_term_2;
-                                        
+                                        if($sum_score_term_2 == 0){ $sum_score_term_2 = '-'; }
                                 ?>
                                 <thead>
                                     <tr class="text-center">

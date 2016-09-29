@@ -93,7 +93,7 @@
                             Home
                         </a>
                     </li>
-                    <li class="active">Dashboard</li>
+                    <li class="active">My Dashboard</li>
                 </ol>
             </section>
             <!--/Page header -->

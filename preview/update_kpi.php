@@ -65,7 +65,7 @@
                             Home
                         </a>
                     </li>
-                    <li class="active">KPIs</li>
+                    <li class="active">KPIs update</li>
                 </ol>
                 </section>
             <!--/Page header -->

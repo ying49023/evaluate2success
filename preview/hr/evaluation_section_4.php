@@ -90,81 +90,67 @@
                         <div class="box-header with-border">
 
                             <!--Table Point-->
-                            <table class="table table-hover">
-                                <thead class="thead-inverse">
-                                    <tr>
-                                        <th colspan="5"><h4>สรุปคะแนนที่ได้รับจากแต่ละส่วนเพื่อประเมินผลโดยรวม</h4></th>
-                                       
+                            <table class="table table-bordered table-hover ">
+                                <thead>
+                                    <tr class="text-center">
+                                        <td rowspan=2 class="bg-inverse" style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
+                                        <td colspan=2 class="bg-orange"><b>ผู้ประเมินที่ 1</b></td>
+                                        <td colspan=2 class="bg-olive"><b>ผู้ประเมินที่ 2</b></td>
+                                    </tr>
+                                    <tr class="text-center">
+                                       <td class="bg-warning"><b>คะแนนเต็ม</b></td>
+                                       <td class="bg-warning"><b>คะแนนที่ได้รับ</b></td>
+                                       <td class="bg-success"><b>คะแนนเต็ม</b></td>
+                                       <td class="bg-success"><b>คะแนนที่ได้รับ</b></td>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr align="center">
-                                        <td rowspan=2 style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
-                                        <td colspan=2 style="background-color:#FFCCFF"><b>ผู้ประเมินที่ 1</b></td>
-                                        <td colspan=2 style="background-color:#99FF99"><b>ผู้ประเมินที่ 2</b></td>
-                                    </tr>
-                                    <tr align="center">
-                                       <td><b>คะแนนเต็ม</b></td>
-                                       <td><b>คะแนนที่ได้รับ</b></td>
-                                       <td><b>คะแนนเต็ม</b></td>
-                                       <td><b>คะแนนที่ได้รับ</b></td>
-                                    </tr>
+                                    
                                     <tr>
                                         <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
-                                        <td align="center"><b>60</b></td>
-                                        <td align="center"></td>
-                                        <td align="center"><b>60</b></td>
-                                        <td align="center"></td>
+                                        <td  class="text-center"><b>60</b></td>
+                                        <td    class="text-center"><input class="text-center" type="number" name="ass1part1point" min="0" max="60" value="" disabled></td>
+                                        <td  class="text-center"><b>60</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass2part1point" min="0" max="60" value="" disabled></td>
                                     </tr>
                                     <tr>
                                         <td><b>คะแนนรวมส่วนที่ 2 : พฤติกรรมการทำงาน</b></td>
-                                        <td style="background-color:rgb(200,200,200);"></td>
-                                        <td style="background-color:rgb(128,128,128);"></td>
-                                        <td style="background-color:rgb(200,200,200);"></td>
-                                        <td style="background-color:rgb(128,128,128);"></td>
+                                        <td ></td>
+                                        <td ></td>
+                                        <td  ></td>
+                                        <td  ></td>
                                     </tr>
                                     <tr>
-                                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
-                                        <td align="center"><b>20</b></td>
-                                        <td align="center"></td>
-                                        <td align="center"><b>20</b></td>
-                                        <td align="center"></td>
+                                        <td style="padding-left: 40px;">ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
+                                        <td  class="text-center"><b>20</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass1part2/1point" value="" min="0" max="20" disabled></td>
+                                        <td  class="text-center"><b>20</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass1part2/1point" value="" min="0" max="20" disabled></td>
                                     </tr>
                                     <tr>
-                                         <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
-                                        <td align="center"><b>20</b></td>
-                                        <td align="center"></td>
-                                        <td align="center"><b>20</b></td>
-                                        <td align="center"></td>
+                                        <td style="padding-left: 40px;">ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
+                                        <td class="text-center"><b>20</b></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="ass1part2/2point" value="" min="0" max="20" disabled></td>
+                                        <td class="text-center"><b>20</b></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="ass2part2/1point" value="" min="0" max="20" disabled></td>
                                     </tr>
                                      <tr>
-                                        <td><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
-                                        <td style="background-color:rgb(200,200,200);"></td>
-                                        <td></td>
-                                        <td style="background-color:rgb(200,200,200);"></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 )</td>
-                                        <td colspan=2 align="center" style="color: red;"><b>0</b></td>
-                                        <td colspan=2 align="center" style="color: red;"><b>0</b></td>
-                                    </tr>
-                                     <tr>
-                                        <td align= right><b>สรุปคะแนนตลอดปี (คะแนนสุทธิผู้ประเมินที่ 1 +  คะแนนสุทธิผู้ประเมินที่ 2) หาร 2</b></td>
-                                        <td colspan=4 align="center" style="background-color:#FFEFD5;"><b>0</b></td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td align= right><b>สรุปคะแนนพิจารณาบทลงโทษทางวินัย</b></td>
-                                        <td colspan=4 align="center" style="background-color:#FAF0E6;"><b></b></td>
-                                       
-                                    </tr>
-                                    <tr>
-                                        <td align= right><b>สรุปคะแนนประเมินผลงานโดยรวม (Overall rating)</b></td>
-                                        <td colspan=4 align="center" style="background-color:#F0FFFF;"><b></b></td>
-                                       
+                                        <td ><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
+                                        <td ></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="part3point" value="" min="0" max="20" disabled></td>
+                                        <td ></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="part3point" value="" min="0" max="20" disabled></td>
                                     </tr>
                                 </tbody>
+                                <tfoot>
+                                    <tr class="active">
+                                        <th>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</th>
+                                        <th></th>
+                                        <th class="text-center" style="color: blue;"><b><input class="text-center" type="number" value="" name="ass1part1+2point" min="0" max="100"  disabled></b></th>
+                                        <th></th>
+                                        <th class="text-center" style="color: blue;"><input class="text-center" type="number" value=""  name="ass2part1+2point" min="0" max="100" disabled></th>
+                                    </tr>
+                                </tfoot>
                             </table>
 
                             <br>
@@ -219,142 +205,7 @@
                                         <td></td>
                                     </tr>
                                 </tbody>
-                            </table>
-                            <table class="table">
-                                <thead class="thead-default">
-                                    <tr>
-                                                
-                                        <th colspan="4">ควรได้รับการพัฒนาด้านใด</th>
-                                                    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td></td>
-                                        <th scope="row">5</th>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td></td>
-                                        <th scope="row">6</th>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td></td>
-                                        <th scope="row">7</th>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">4</th>
-                                        <td></td>
-                                        <th scope="row">8</th>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                                        
-                            <!--Table Grade-->
-                            <table class="table ">
-                                <thead class="thead-default">
-                                    <tr>
-                                                
-                                        <th colspan="13">การประเมินผลโดยรวม (Overall Rating) </th>
-                                                    
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <form>
-                                            
-                                    <tr align="center">
-                                                
-                                        <th scope="row" rowspan="3">ผลการปฏิบัติงาน</th>  
-                                        <td><input type="radio" name="A++"></td>
-                                        <td><input type="radio" name="A+"></td>
-                                        <td><input type="radio" name="A"></td>
-                                        <td><input type="radio" name="A-"></td>
-                                        <td><input type="radio" name="B++"></td>
-                                        <td><input type="radio" name="B+"></td>
-                                        <td><input type="radio" name="B"></td>
-                                        <td><input type="radio" name="B-"></td>
-                                        <td><input type="radio" name="C++"></td>
-                                        <td><input type="radio" name="C+"></td>
-                                        <td><input type="radio" name="C"></td>
-                                        <td><input type="radio" name="C-"></td>
-                                                    
-                                                    
-                                    </tr>
-                                                
-                                </form>
-                                            
-                                <tr align="center">
-                                            
-                                            
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td><?php echo $name; ?></td>
-                                            <?php } ?>
-                                                
-                                </tr>
-                                            
-                                <tr align="center">
-                                            
-                                            
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td>(<?php echo $desc; ?>)</td>
-                                            <?php } ?>
-                                                
-                                </tr>
-                                            
-                                            
-                                <tr align="center">
-                                    <th scope="row">คะแนน</th>
-                                                
-                                            <?php
-                                            $sql_grade = "SELECT * FROM grade ORDER BY standard_max_point desc";
-                                                
-                                            $query = mysqli_query($conn, $sql_grade); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
-                                            ?>
-                                            <?php
-                                            while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                                                $name = $result["grade_description"];
-                                                $desc = $result["grade_explaned"];
-                                                $maxpoint = $result["standard_max_point"];
-                                                $minpoint = $result["standard_min_point"];
-                                                $id = $result["grade_id"];
-                                                ?>
-                                    <td><?php echo $minpoint; ?> - <?php echo $maxpoint; ?></td>
-                                            <?php } ?>
-                                </tr>
-                                            
-                                </tbody>
-                            </table>
-                                        
+                            </table>            
             
                                         
                         </div>           

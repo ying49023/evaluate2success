@@ -36,8 +36,12 @@
                     $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$_SESSION["eval_code"]."'";
                     $query_year_term = mysqli_query($conn, $sql_year_term);
                     while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
-                        echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
-                        echo "<span style='font-size:18px'>รอบการประเมินที่ " . $term = $result_year_term["term_name"] . " : " . $result_year_term["start_month"] . "-" . $result_year_term["end_month"] . "</span>";
+                        $year = $result_year_term["year"];
+                        $term = $result_year_term["term_name"];
+                        $start_month_name = $result_year_term["start_month"];
+                        $end_month_name = $result_year_term["end_month"];
+                        echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year. "</b></span> | ";
+                        echo "<span style='font-size:18px'>รอบการประเมินที่ " . $term. " : " . $start_month_name . "-" . $end_month_name . "</span>";
                     }
                     ?>
             </div>

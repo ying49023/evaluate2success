@@ -67,11 +67,12 @@
                 </h1>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="#"> <i class="fa fa-dashboard"></i>
+                        <a href="index.php"> <i class="fa fa-dashboard"></i>
                             Home
                         </a>
                     </li>
-                    <li class="active">KPIs</li>
+                    <li ><a href="total_personal_dashboard.php">Personal dashboard</a></li>
+                    <li class="active">Overall personal dashboard</li>
                 </ol>
             </section>
             <!--/Page header -->
