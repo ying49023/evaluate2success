@@ -60,7 +60,7 @@
                $default_weight =$_POST['default_weight'];
                $hidden_group_id=$_POST['hidden_group_id'];
                $strSQL =" INSERT INTO kpi(kpi_group_id,kpi_code,kpi_name,kpi_description,measure_symbol,measure_desc,unit,time_period,default_weight,current_kpi) "
-                       . "VALUES($hidden_group_id,'$kpicode','$kpiname','$kpi_desc','$measure_symbol','$measure_desc','$unit',$time_period,$default_weight,1) ";
+                       . "VALUES('$hidden_group_id','$kpicode','$kpiname','$kpi_desc','$measure_symbol','$measure_desc','$unit',$time_period,$default_weight,1) ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
@@ -499,7 +499,7 @@
                                     <div class="col-md-offset-1 col-md-10 text-center" >
                                         <input type="reset" class="btn btn-danger btn-lg" value="รีเซ็ท">
                                         <input type="submit" class="btn btn-success btn-lg" value="บันทึก">
-                                        <input type="hidden" value="<?php echo $kpi_group_id;?>" name="hidden_group_id">
+                                        <input type="hidden" value="<?php echo $group_id;?>" name="hidden_group_id">
                                         <input type="hidden" value="<?php echo $get_department_id;?>" name="hidden_dept_id">
                                         <input type="hidden" value="<?php echo $get_job_id;?>" name="hidden_job_id">
                                         <br>
