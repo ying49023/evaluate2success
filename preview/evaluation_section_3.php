@@ -231,7 +231,9 @@
                                     <table class="table table-bordered table-striped">
                                         <thead class="bg-success">
                                             <tr>
-                                                <th colspan=2><u>ประวัติการได้รับรางวัล / ยกย่อง</u></th>
+                                                
+                                                <th colspan="2"><u>ประวัติการได้รับรางวัล / ยกย่อง</u></th>
+                                                <th class="text-center">คะแนน</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -255,11 +257,24 @@
                                                     <tr >
                                                         <th style="padding: 10px;width: 60px" class="text-center" ><?php echo $i; ?></th>
                                                         <td><?php echo $reault_reward["penalty_reward_name"]; ?></td>
+                                                        <td class="text-center" style="width: 100px;"><?php echo $reault_reward["point"]; ?></td>
                                                     </tr>
                                                     <?php
                                                     }
                                                 }
                                                 ?>
+                                                <?php 
+                                                $sql_sum_reward = "SELECT sum(pr.point) as sum_reward_point   
+                                                    FROM evaluatation_penalty_reward epr 
+                                                    JOIN penalty_reward pr ON epr.penalty_reward_id=pr.penalty_reward_id
+                                                    WHERE epr.evaluate_employee_id='".$_SESSION["eval_emp_id"]."' AND pr.penalty_reward_indicated=1";
+                                                $query_sum_reward = mysqli_query($conn, $sql_sum_reward);
+                                                $result_sum_reward = mysqli_fetch_array($query_sum_reward,MYSQLI_ASSOC);
+                                                ?>
+                                                <tr class="bg-success">
+                                                    <th class="text-center" colspan="2"> รวม </th>
+                                                    <th class="text-center"><?php echo $result_sum_reward["sum_reward_point"]; ?></th>
+                                                </tr>
                                         </tbody>
                                     </table>
                                 </div>
@@ -325,20 +340,25 @@
                                     <table class="table table-striped " >
                                         <thead class="bg-light-blue-active">
                                             <tr>
+                                                <th class="text-center">คะแนนเต็ม(10 คะแนน)</th>
+                                                <th></th>
                                                 <th class="text-center">คะแนนเวลาการทำงาน</th>
                                                 <th></th>
                                                 <th class="text-center">คะแนนการลงโทษทางวินัย</th>
                                                 <th></th>
-                                                <th class="text-center">คะแนนเต็มรวม(10 คะแนน)</th>
+                                                <th class="text-center">คะแนนรวม</th>
                                             </tr>
                                         </thead>
                                         <tbody class="">
                                             <tr class="" style="background-color:#E3F2FD ;font-size: 20px;font-weight: 800;padding: 10px;">
+                                                <!--<td class="text-center"><?php if($result_sum_reward["sum_reward_point"] == ''){ echo '0'; }else{ echo $result_sum_reward["sum_reward_point"];} ?></td>-->
+                                                <td class="text-center">10</td>
+                                                <td class="text-center"> - </td>
                                                 <td class="text-center" ><?php if($result_leave_sum["sum_point_leave"] == ''){ echo '0'; } else{ echo $result_leave_sum["sum_point_leave"]; } ?></td>
-                                                <td class="text-center"> + </td>
+                                                <td class="text-center"> - </td>
                                                 <td class="text-center"><?php if($result_sum_penalty["sum_penalty_point"] == ''){ echo '0'; }else{ echo $result_sum_penalty["sum_penalty_point"];} ?></td>
                                                 <td> = </td>
-                                                <td class="text-center" ><?php echo $result_sum_penalty["sum_penalty_point"]+$result_leave_sum["sum_point_leave"]; ?></td>
+                                                <td class="text-center" ><?php echo 10-($result_sum_penalty["sum_penalty_point"]+$result_leave_sum["sum_point_leave"]); ?></td>
                                             </tr>
                                         </tbody>
                                     </table>

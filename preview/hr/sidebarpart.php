@@ -144,7 +144,7 @@
             <!-- /Manage Leave date -->
             
             <!-- Manage penalty reward -->
-            <li class="<?php if ($page == 'manage_penalty_reward.php' || $page == 'manage_penalty_reward_detail.php') {
+            <li class="<?php if ($page == 'manage_penalty_reward.php' || $page == 'manage_penalty_reward_detail.php' || $page == 'edit_penalty_reward.php') {
                     echo "active";
                 } ?>">
                 <a href="">
@@ -153,9 +153,10 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?php if ($page == 'manage_penalty_reward.php' || $page == 'manage_penalty_reward_detail.php') {
-                    echo "active";
-                } ?>">
+                    <li class="<?php if ($page == 'edit_penalty_reward.php') { echo "active"; } ?>">
+                        <a href="edit_penalty_reward.php"><i class="fa fa-circle-o"></i>แก้ไขข้อมูลรางวัล / โทษ</a>
+                    </li>
+                    <li class="<?php if ($page == 'manage_penalty_reward.php' || $page == 'manage_penalty_reward_detail.php') { echo "active"; } ?>">
                         <a href="manage_penalty_reward.php"><i class="fa fa-circle-o"></i>จัดการข้อมูลรางวัล / โทษ</a>
                     </li>
                 </ul>
@@ -163,7 +164,7 @@
             <!-- /Manage penalty reward -->
             
             <!-- Manage employee -->
-            <li class="<?php if($page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php' || $page == 'edit_profile.php'){ echo "active" ; } ?>" >    
+            <li class="<?php if($page == 'manage_employee_insert.php'|| $page == 'manage_employee_list.php' || $page == 'edit_profile.php' ){ echo "active" ; } ?>" >    
                 <a href="manage_employee.php">
                     <i class="glyphicon glyphicon-user"></i> <span>จัดการข้อมูลพนักงาน</span>
                     <i class="fa fa-angle-left pull-right"></i>

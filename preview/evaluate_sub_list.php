@@ -189,7 +189,9 @@
                                                             ee.evaluate_employee_id,
                                                             d.department_name,
                                                             j.job_name,
-                                                            c.company_id
+                                                            c.company_id,
+                                                            ee.assessor1_id,
+                                                            ee.assessor2_id
                                                           FROM
                                                             employees e
                                                           JOIN
@@ -237,6 +239,8 @@
                                         $department_name = $result_emp_list["department_name"];
                                         $comp_id = $result_emp_list["company_id"];
                                         $eval_emp_id = $result_emp_list["evaluate_employee_id"];
+                                        $assessor1_id = $result_emp_list["assessor1_id"];
+                                        $assessor2_id = $result_emp_list["assessor2_id"];
                                         ?>
                                     <tr>
                                         <td class="emp_id"><?php echo $employee_id; ?></td>

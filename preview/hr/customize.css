@@ -51,3 +51,6 @@
 .img-center{
     object-fit: cover;
 }
+.text-middle{
+    vertical-align: middle !important;
+}

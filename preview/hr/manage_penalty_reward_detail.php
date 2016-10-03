@@ -211,7 +211,8 @@
                         <div class="col-md-6">
                             <table class="table table-bordered">
                                 <tr class="bg-success">
-                                    <th class="text-center" colspan="2">รางวัล/การยกย่อง</th>
+                                    <th class="text-center">รางวัล/การยกย่อง</th>
+                                    <th class="text-center" style="width: 65px;">คะแนน</th>
                                 </tr>
                                 <?php
                                 $sql_reward = "SELECT
@@ -230,6 +231,7 @@
                                         ?>
                                 <tr>
                                     <td ><?php echo $result_reward["penalty_reward_name"]; ?></td>
+                                    <td class="text-center padding-left-lg"><?php echo $result_reward["point"]; ?></td>
                                 </tr>
                                 <?php } ?>
                             </table>
@@ -238,7 +240,7 @@
                             <table class="table table-bordered">
                                 <tr class="bg-danger">
                                     <th class="text-center">โทษทางวินัย</th>
-                                    <th class="text-center">คะแนน</th>
+                                    <th class="text-center" style="width: 65px;">คะแนน</th>
                                 </tr>
                                 <?php
                                 $sql_penalty = "SELECT
@@ -272,22 +274,49 @@
                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                             <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
                                         </div>
+                                        <script>
+                                            function getPenaltyReward(val) {
+                                                $.ajax({
+                                                    type: "POST",
+                                                    url: "get_penalty_reward.php",
+                                                    data:'penalty_reward_indicated='+val,
+                                                    success: function(data){
+                                                        $("#state-list").html(data);
+                                                    }
+                                                });
+                                            }
+                                        </script>
                                         <div class="modal-body">
                                             <div class="row box-padding">
                                                 <div class="col-md-offset-2 col-md-8">
-                                                    <label>เลือกหัวข้อรางวัล/โทษทางวินัย</label>
-                                                    <select class="form-control" name="penalty_reward_id">
+                                                    <label>เลือกประเภท</label>
+                                                    <select class="form-control" name="penalty_reward_indicated" onChange="getPenaltyReward(this.value);">
+                                                        <option value="">--เลือกประเภท--</option>
+                                                        <option value="0">โทษทางวินัย</option>
+                                                        <option value="1">รางวัล</option>
+                                                        
+                                                    </select>
+<!--                                                    <select class="form-control" name="penalty_reward_id">
                                                         <option value="" >---เลือกรางวัล / โทษทางวินัย---</option>
                                                                     
                                                                 <?php
                                                                 $sql_penalty_reward = "SELECT * FROM penalty_reward ORDER BY penalty_reward_indicated DESC ";
                                                                 $query_penalty_reward = mysqli_query($conn, $sql_penalty_reward);
-                                                                while ($result_penalty_reward = mysqli_fetch_array($query_penalty_reward)) {
+                                                                foreach($query_penalty_reward as $type) {
                                                                     ?>
-                                                                    <option value="<?php echo $result_penalty_reward["penalty_reward_id"]; ?>"><?php if($result_penalty_reward["penalty_reward_indicated"] == '0') { echo "โทษทางวินัย - "; } else {     echo 'รางวัล - '; } echo $result_penalty_reward["penalty_reward_name"]; ?></option>
+                                                                    <option value="<?php echo $type["penalty_reward_id"]; ?>"><?php if($type["penalty_reward_indicated"] == '0') { echo "โทษทางวินัย - "; } else {     echo 'รางวัล - '; } echo $type["penalty_reward_name"]; ?></option>
+                                                        <option value="<?php echo $type["penalty_reward_indicated"]; ?>"><?php if($type["penalty_reward_indicated"] == '0') { echo "โทษทางวินัย - "; } else {     echo 'รางวัล - '; } echo $type["penalty_reward_name"]; ?></option>
                                                                     <?php
                                                                 }
                                                                 ?>
+                                                    </select>-->
+                                                </div>
+                                            </div>
+                                            <div class="row box-padding">
+                                                <div class="col-md-offset-2 col-md-8">
+                                                    <label>เลือกหัวข้อรางวัล/โทษทางวินัย</label>
+                                                    <select class="form-control" name="penalty_reward_id"  id="state-list" >
+                                                        <option value="">--เลือกหัวข้อรางวัล/โทษทางวินัย--</option>
                                                     </select>
                                                 </div>
                                             </div>

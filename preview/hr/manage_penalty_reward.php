@@ -184,14 +184,14 @@
                                 <thead>
                                
                                     <tr class="">
-                                        <th class="text-center"></th>
-                                        <th class="text-center"><button class="sort" data-sort="id">ID</button></th>
-                                        <th ><button class="sort" data-sort="name">ชื่อ-นามสกุล</button></th>
-                                        <th class="text-center"><button class="sort" data-sort="job">ตำแหน่ง</button></th>
-                                        <th class="text-center"><button class="sort" data-sort="dept">แผนก</button></th>
-                                        <th class="text-center"><button class="sort" data-sort="count_reward">รางวัล</button></th>
-                                        <th class="text-center"><button class="sort" data-sort="count_penalty">โทษ</button></th>
-                                        <th class="text-center">อัพเดท</th>
+                                        <th class="text-center text-middle"></th>
+                                        <th class="text-center text-middle"><button class="sort" data-sort="id">ID</button></th>
+                                        <th class="text-middle"><button class="sort" data-sort="name">ชื่อ-นามสกุล</button></th>
+                                        <th class="text-center text-middle"><button class="sort" data-sort="job">ตำแหน่ง</button></th>
+                                        <th class="text-center text-middle"><button class="sort" data-sort="dept">แผนก</button></th>
+                                        <th class="text-center text-middle"><button class="sort" data-sort="count_reward">รางวัล</button></th>
+                                        <th class="text-center text-middle"><button class="sort" data-sort="count_penalty">โทษ</button></th>
+                                        <th class="text-center text-middle">อัพเดท</th>
                                     </tr>
                                 </thead>
                                 <?php
@@ -273,7 +273,7 @@
                                 </tbody>
                                 <script>
                                         var options = {
-                                            valueNames: [ 'id', 'name' , 'job' , 'dept','count_reward,'count_penalty' ]
+                                            valueNames: [ 'id', 'name' , 'job' , 'dept','count_reward','count_penalty' ]
                                         };
                                         
                                         var userList = new List('filter', options);

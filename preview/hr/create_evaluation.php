@@ -172,7 +172,7 @@
                                         </div>
                                         <div class="modal-body">                                           
                                             <?php
-                                            $sql_history_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=0  ";
+                                            $sql_history_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=0 ORDER BY year,term ";
                                             $query_history_eval = mysqli_query($conn, $sql_history_eval);
                                             
                                             ?>    
@@ -188,7 +188,7 @@
                                                         <?php while ($result_history_eval = mysqli_fetch_array($query_history_eval, MYSQLI_ASSOC)) { ?>
                                                             <tr>
 
-                                                                <td><?php echo $result_history_eval["term"]; ?> / <?php echo $result_history_eval["year"]; ?></td>
+                                                                <td>ปี <?php echo $result_history_eval["year"]; ?> | รอบการประเมินที่ <?php echo $result_history_eval["term"]; ?></td>
                                                                 <td><?php echo $result_history_eval["open_system_date"]; ?></td>
                                                                 <td><?php echo $result_history_eval["close_system_date"]; ?></td>
                                                                 <td class="text-center"><span style="color:maroon;">ปิดรอบการประเมิน</span></td>

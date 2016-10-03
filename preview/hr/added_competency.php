@@ -158,8 +158,7 @@
                             </form>
                         </div>
                         <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">
+                            
                                 <?php
                                 $sql_com = "SELECT c.competency_id,c.competency_description,t.title_name,t.title_id FROM competency c JOIN competency_title t ON c.title_id=t.title_id ".$condition_search." ORDER BY competency_id ASC";
                                 $query_com = mysqli_query($conn, $sql_com);
@@ -171,7 +170,7 @@
                                         <input class="search form-control" placeholder="ค้นหา" />
                                     </div>
                                     <form method="get">
-                                        <div class="form-inline padding-small col-md-7">
+                                        <div class="form-inline padding-small col-md-6">
                                             <label class="col-sm-1 control-label">หัวข้อ</label>
                                             <div class="col-sm-8">
                                                 <?php
@@ -190,10 +189,14 @@
                                                 </select>
 
                                             </div>
-                                            <input type="submit" class="btn btn-primary col-sm-3" value="ค้นหา">
+                                            
                                         </div>
-                                        
+                                        <div class="form-inline padding-small col-md-3">
+                                            <input type="submit" class="btn btn-primary" style="width: 75%;" value="ค้นหา">
+                                        </div>
                                     </form>
+                            <div class="row">
+                                <div class="col-md-12">    
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>

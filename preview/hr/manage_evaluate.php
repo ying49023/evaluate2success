@@ -193,7 +193,16 @@
                                                                     <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
                                                                 </div>
                                                                 <div class="modal-body">
-
+                                                                    <div class="input-group col-sm-12" >
+                                                                        <label for="รอบการประเมิน" class="col-sm-4 control-label">ปี:</label>
+                                                                        <div class="col-sm-8">
+                                                                            
+                                                                            <select class="form-control " name="textyear" disabled="true" >
+                                                                                <option value="">--เลือกปี--</option>                                                                                
+                                                                                <?php for($i=2015;$i<=2020;$i++){ ?><option <?php if($i==$e_year){ echo "selected";}?> value="<?php echo $i; ?>"> <?php echo $i; ?> </option><?php } ?>   
+                                                                          </select>
+                                                                        </div>
+                                                                    </div>
                                                                     <div class="input-group col-sm-12" >
                                                                         <label for="รอบการประเมิน" class="col-sm-4 control-label">เทอม:</label>
                                                                         <div class="col-sm-8">
@@ -217,16 +226,7 @@
                                                                            
                                                                         </div>
                                                                     </div>
-                                                                    <div class="input-group col-sm-12" >
-                                                                        <label for="รอบการประเมิน" class="col-sm-4 control-label">ปี:</label>
-                                                                        <div class="col-sm-8">
-                                                                            
-                                                                            <select class="form-control " name="textyear" disabled="true" >
-                                                                                <option value="">--เลือกปี--</option>                                                                                
-                                                                                <?php for($i=2015;$i<=2020;$i++){ ?><option <?php if($i==$e_year){ echo "selected";}?> value="<?php echo $i; ?>"> <?php echo $i; ?> </option><?php } ?>   
-                                                                          </select>
-                                                                        </div>
-                                                                    </div>
+                                                                    
                                                                     <div class="input-group col-sm-12">
                                                                         <label class="col-sm-4 control-label" >วันเปิด: </label>
                                                                         <div class="col-sm-8"> 
@@ -275,6 +275,14 @@
                                               </div>
                                               <div class="modal-body">                                                  
                                                       <div class="input-group col-sm-12" >
+                                                          <label for="ปีการประเมิน" class="col-sm-4 control-label">ปีการประเมิน:</label>
+                                                          <div class="col-sm-8">
+                                                              <select class="form-control " name="add_year" >
+                                                                    <option value="">--เลือกปี--</option>
+                                                                    <?php for($i=2015;$i<=2020;$i++){ echo "<option value='$i'>$i</option>" ; } ?>                                         
+                                                              </select>
+                                                              
+                                                          </div>
                                                           <label for="รอบการประเมิน" class="col-sm-4 control-label">รอบการประเมิน:</label>
                                                           <div class="col-sm-8">
                                                               <?php
@@ -295,14 +303,7 @@
                                                                         <?php } ?>
                                                                 </select>
                                                           </div>
-                                                          <label for="ปีการประเมิน" class="col-sm-4 control-label">ปีการประเมิน:</label>
-                                                          <div class="col-sm-8">
-                                                              <select class="form-control " name="add_year" >
-                                                                    <option value="">--เลือกปี--</option>
-                                                                    <?php for($i=2015;$i<=2020;$i++){ echo "<option value='$i'>$i</option>" ; } ?>                                         
-                                                              </select>
-                                                              
-                                                          </div>
+                                                          
                                                       </div>
                                                       <div class="input-group col-sm-12">
                                                           <label class="col-sm-4 control-label">วันเปิด: </label>
@@ -339,7 +340,7 @@
                                                   </div>
                                                   <div class="modal-body">                                           
                                                               <?php
-                                                              $sql_history_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=0  ";
+                                                              $sql_history_eval = "SELECT term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=0 ORDER BY year , term ";
                                                               $query_history_eval = mysqli_query($conn, $sql_history_eval);
                                                               ?>    
                                                       <table class="table table-hover">
@@ -354,7 +355,7 @@
                                                                   <?php while ($result_history_eval = mysqli_fetch_array($query_history_eval, MYSQLI_ASSOC)) { ?>
                                                           <tr>
                                                                           
-                                                              <td><?php echo $result_history_eval["term"]; ?> / <?php echo $result_history_eval["year"]; ?></td>
+                                                              <td>ปี <?php echo $result_history_eval["year"]; ?> | รอบการประเมินที่ <?php echo $result_history_eval["term"]; ?></td>
                                                               <td><?php echo $result_history_eval["open_system_date"]; ?></td>
                                                               <td><?php echo $result_history_eval["close_system_date"]; ?></td>
                                                               <td class="text-center"><span style="color:maroon;">ปิดรอบการประเมิน</span></td>

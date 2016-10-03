@@ -111,15 +111,15 @@
                                         $query_score_term_1 = mysqli_query($conn, $sql_score_term_1);
                                         $result_score_term_1 = mysqli_fetch_array($query_score_term_1);
                                             
-                                        $score_1_term_1 = $result_score_term_1["point_kpi"];
+                                        $score_1_term_1 = round($result_score_term_1["point_kpi"] ,1);
                                         if($score_1_term_1 == 0) { $score_1_term_1 = '-'; }
-                                        $score_2_1_term_1 = ($result_score_term_1["point_com1_part1"] + $result_score_term_1["point_com2_part1"]) / 2;
+                                        $score_2_1_term_1 = round(($result_score_term_1["point_com1_part1"] + $result_score_term_1["point_com2_part1"]) / 2 ,1);
                                         if($score_2_1_term_1 == 0) { $score_2_1_term_1 = '-'; }
-                                        $score_2_2_term_1 = ($result_score_term_1["point_com1_part2"] + $result_score_term_1["point_com2_part2"] ) / 2;
+                                        $score_2_2_term_1 = round(($result_score_term_1["point_com1_part2"] + $result_score_term_1["point_com2_part2"] ) / 2 ,1);
                                         if($score_2_2_term_1 == 0) { $score_2_2_term_1 = '-'; }
-                                        $score_3_term_1 = $result_score_term_1["point_leave"] + $result_score_term_1["point_penalty"];
+                                        $score_3_term_1 = round(10-($result_score_term_1["point_leave"] + $result_score_term_1["point_penalty"]) ,1);
                                         if($score_3_term_1 == 0 ){ $score_3_term_1 = '-'; }
-                                        $sum_score_term_1 = ($score_1_term_1 + $score_2_1_term_1 + $score_2_2_term_1) - $score_3_term_1;
+                                        $sum_score_term_1 = round(($score_1_term_1 + $score_2_1_term_1 + $score_2_2_term_1) + $score_3_term_1 ,1);
                                         if($sum_score_term_1 == 0){ $sum_score_term_1 = '-'; }
                                 //Term 2
                                 $sql_score_term_2 = "SELECT
@@ -133,15 +133,15 @@
                                         $query_score_term_2 = mysqli_query($conn, $sql_score_term_2);
                                         $result_score_term_2 = mysqli_fetch_array($query_score_term_2);
                                             
-                                        $score_1_term_2 = $result_score_term_2["point_kpi"];
+                                        $score_1_term_2 = round($result_score_term_2["point_kpi"] ,1);
                                         if($score_1_term_2 == 0){ $score_1_term_2 = '-'; }
-                                        $score_2_1_term_2 = ($result_score_term_2["point_com1_part1"] + $result_score_term_2["point_com2_part1"]) / 2;
+                                        $score_2_1_term_2 = round(($result_score_term_2["point_com1_part1"] + $result_score_term_2["point_com2_part1"]) / 2 ,1);
                                         if($score_2_1_term_2 == 0){ $score_2_1_term_2 = '-'; }
-                                        $score_2_2_term_2 = ($result_score_term_2["point_com1_part2"] + $result_score_term_2["point_com2_part2"] ) / 2;
+                                        $score_2_2_term_2 = round(($result_score_term_2["point_com1_part2"] + $result_score_term_2["point_com2_part2"] ) / 2 ,1);
                                         if($score_2_2_term_2 == 0){ $score_2_2_term_2 = '-'; }
-                                        $score_3_term_2 = $result_score_term_2["point_leave"] + $result_score_term_2["point_penalty"];
-                                        if($score_3_term_2 == 0){ $score_3_term_2 = '-'; }
-                                        $sum_score_term_2 = ($score_1_term_2 + $score_2_1_term_2 + $score_2_2_term_2) - $score_3_term_2;
+                                        $score_3_term_2 = round(10-($result_score_term_2["point_leave"] + $result_score_term_2["point_penalty"]) ,1);
+                                        if($score_3_term_2 == 0 || $result_score_term_2["point_leave"] == 0 && $result_score_term_2["point_penalty"] == 0){ $score_3_term_2 = '-'; }
+                                        $sum_score_term_2 = round(($score_1_term_2 + $score_2_1_term_2 + $score_2_2_term_2) + $score_3_term_2 ,1);
                                         if($sum_score_term_2 == 0){ $sum_score_term_2 = '-'; }
                                 ?>
                                 <thead>
@@ -323,6 +323,7 @@
                          if(isset($_POST["status_success"])){
                              $status = $_POST["status_success"];
                              $eval_emp_id = $_POST["eval_emp_id"];
+                             
                              $sql_update_success = "update evaluation_employee SET status_success = 1  where evaluate_employee_id = '$eval_emp_id' ";
                              $query_update_success = mysqli_query($conn, $sql_update_success);
                              
@@ -332,6 +333,30 @@
                              <?php }
                          }
                          ?>  
+                                 
+                         <?php 
+//                         if(isset($_POST["eval_emp_id"])){
+//                             $eval_emp_id = $_POST["eval_emp_id"];
+//                             
+//                             $sql_check_assessor = "SELECT * FROM evaluation_employee WHERE evaluation_employee_id = '$eval_emp_id' ";
+//                             $query_check_assessor = mysqli_query($conn, $sql_check_assessor);
+//                             foreach ($query_check_assessor as $result){
+//                                 if($my_emp_id == $result["assessor1_id"]){
+//                                     echo $sql_update_success = "update evaluation_employee SET status_assessor1 = 1  where evaluate_employee_id = '$eval_emp_id' ";
+//                                 }else if($my_emp_id == $result["assessor2_id"]){
+//                                     echo $sql_update_success = "update evaluation_employee SET status_assessor2 = 1  where evaluate_employee_id = '$eval_emp_id' ";
+//                                 }
+//                                 
+//                             }
+//                             $query_update_success = mysqli_query($conn, $sql_update_success);
+//                             
+//                             if($query_update_success){
+                                 ?>
+                                 <!--<meta http-equiv="refresh" content="0; url=evaluate_sub_list.php" />-->
+                             <?php                              
+//                             }
+//                         }
+                         ?>
                         <form method="post">
                             <div class="box-footer text-center">
                                 <input type="hidden" name="eval_emp_id" value="<?php echo $_SESSION["eval_emp_id"]; ?>" >

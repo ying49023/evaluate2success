@@ -197,14 +197,14 @@
                                     $query_score = mysqli_query($conn, $sql_score);
                                     while($result_score = mysqli_fetch_array($query_score)){
                                         $grade_id3=$result_score["grade_id3"];
-                                        $score_1 = $result_score["point_kpi"];
-                                        $score_2_1_m_1 = $result_score["point_com1_part1"];
-                                        $score_2_2_m_1 = $result_score["point_com1_part2"];
-                                        $score_2_1_m_2 = $result_score["point_com2_part1"];
-                                        $score_2_2_m_2 = $result_score["point_com2_part2"];
-                                        $score_3 = $result_score["point_leave"]+$result_score["point_penalty"];
-                                        $sum_score_m_1 = ($score_1 + $score_2_1_m_1 + $score_2_2_m_1) - $score_3;
-                                        $sum_score_m_2 = ($score_1 + $score_2_1_m_2 + $score_2_2_m_2) - $score_3;
+                                        $score_1 = round($result_score["point_kpi"] ,1);
+                                        $score_2_1_m_1 = round($result_score["point_com1_part1"], 1);
+                                        $score_2_2_m_1 = round($result_score["point_com1_part2"] ,1);
+                                        $score_2_1_m_2 = round($result_score["point_com2_part1"] ,1);
+                                        $score_2_2_m_2 = round($result_score["point_com2_part2"] ,1);
+                                        $score_3 = round(10-($result_score["point_leave"]+$result_score["point_penalty"]) ,1);
+                                        $sum_score_m_1 = round(($score_1 + $score_2_1_m_1 + $score_2_2_m_1) + $score_3 ,1);
+                                        $sum_score_m_2 = round(($score_1 + $score_2_1_m_2 + $score_2_2_m_2) + $score_3 ,1);
                                         
                                     ?>
                                 <thead>
@@ -259,7 +259,7 @@
                                     </tr>
                                 
                                     <tr class="active">
-                                        <th>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</th>
+                                        <th>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 + ส่วนที่ 3 )</th>
                                         <th></th>
                                         <th class="text-center" style="color: blue;"><b><input class="text-center" type="number" value="<?php echo $sum_score_m_1; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></th>
                                         <th></th>
