@@ -185,6 +185,88 @@
                             <!--Table Point-->
                             <!--Table Point-->
                             <table class="table table-bordered table-hover table-striped">
+                                  <?php  
+                                    $sql_score = "SELECT
+                                                                *,ee.grade_id as grade_id3
+                                                        FROM
+                                                                employees emp
+                                                        JOIN evaluation_employee ee ON emp.employee_id = ee.employee_id
+                                                        JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
+                                                        WHERE
+                                                               ee.evaluation_code= $eval_code and ee.evaluate_employee_id = '$get_eval_emp_id'";
+                                    $query_score = mysqli_query($conn, $sql_score);
+                                    while($result_score = mysqli_fetch_array($query_score)){
+                                        $grade_id3=$result_score["grade_id3"];
+                                        $score_1 = $result_score["point_kpi"];
+                                        $score_2_1_m_1 = $result_score["point_com1_part1"];
+                                        $score_2_2_m_1 = $result_score["point_com1_part2"];
+                                        $score_2_1_m_2 = $result_score["point_com2_part1"];
+                                        $score_2_2_m_2 = $result_score["point_com2_part2"];
+                                        $score_3 = $result_score["point_leave"]+$result_score["point_penalty"];
+                                        $sum_score_m_1 = ($score_1 + $score_2_1_m_1 + $score_2_2_m_1) - $score_3;
+                                        $sum_score_m_2 = ($score_1 + $score_2_1_m_2 + $score_2_2_m_2) - $score_3;
+                                        
+                                    ?>
+                                <thead>
+                                    <tr class="text-center">
+                                        <td rowspan=2 class="bg-inverse" style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
+                                        <td colspan=2 class="bg-orange"><b>ผู้ประเมินที่ 1</b></td>
+                                        <td colspan=2 class="bg-olive"><b>ผู้ประเมินที่ 2</b></td>
+                                    </tr>
+                                    <tr class="text-center">
+                                       <td class="bg-warning"><b>คะแนนเต็ม</b></td>
+                                       <td class="bg-warning"><b>คะแนนที่ได้รับ</b></td>
+                                       <td class="bg-success"><b>คะแนนเต็ม</b></td>
+                                       <td class="bg-success"><b>คะแนนที่ได้รับ</b></td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    
+                                    <tr>
+                                        <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
+                                        <td  class="text-center"><b>60</b></td>
+                                        <td    class="text-center"><input class="text-center" type="number" name="ass1part1point" min="0" max="60" value="<?php echo $score_1; ?>" disabled></td>
+                                        <td  class="text-center"><b>60</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass2part1point" min="0" max="60" value="<?php echo $score_1; ?>" disabled></td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>คะแนนรวมส่วนที่ 2 : พฤติกรรมการทำงาน</b></td>
+                                        <td ></td>
+                                        <td ></td>
+                                        <td  ></td>
+                                        <td  ></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left: 40px;">ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
+                                        <td  class="text-center"><b>20</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass1part2/1point" value="<?php echo $score_2_1_m_1; ?>" min="0" max="20" disabled></td>
+                                        <td  class="text-center"><b>20</b></td>
+                                        <td  class="text-center"><input class="text-center" type="number" name="ass1part2/1point" value="<?php echo $score_2_1_m_2; ?>" min="0" max="20" disabled></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left: 40px;">ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
+                                        <td class="text-center"><b>20</b></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="ass1part2/2point" value="<?php echo $score_2_2_m_1; ?>" min="0" max="20" disabled></td>
+                                        <td class="text-center"><b>20</b></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="ass2part2/1point" value="<?php echo $score_2_2_m_2; ?>" min="0" max="20" disabled></td>
+                                    </tr>
+                                     <tr>
+                                        <td ><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
+                                        <td ></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="part3point" value="<?php echo $score_3; ?>" min="0" max="20" disabled></td>
+                                        <td ></td>
+                                        <td class="text-center"><input class="text-center" type="number" name="part3point" value="<?php echo $score_3; ?>" min="0" max="20" disabled></td>
+                                    </tr>
+                                
+                                    <tr class="active">
+                                        <th>คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</th>
+                                        <th></th>
+                                        <th class="text-center" style="color: blue;"><b><input class="text-center" type="number" value="<?php echo $sum_score_m_1; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></th>
+                                        <th></th>
+                                        <th class="text-center" style="color: blue;"><input class="text-center" type="number" value="<?php echo $sum_score_m_2; ?>"  name="ass2part1+2point" min="0" max="100" disabled></th>
+                                    </tr>
+                                
+                                    <?php } ?>
                                 <?php  
                                 //Term 1
                                 $sql_score_term_1 = "SELECT
@@ -194,7 +276,7 @@
                                                     JOIN evaluation_employee ee ON emp.employee_id = ee.employee_id
                                                     JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
                                                     WHERE
-                                                            emp.employee_id = '".$_SESSION["emp_id"]."' AND term_id = 1";
+                                                           emp.employee_id = '".$_GET["emp_id"]."' AND term_id = 1";
                                         $query_score_term_1 = mysqli_query($conn, $sql_score_term_1);
                                         $result_score_term_1 = mysqli_fetch_array($query_score_term_1);
                                             
@@ -216,7 +298,7 @@
                                                     JOIN evaluation_employee ee ON emp.employee_id = ee.employee_id
                                                     JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
                                                     WHERE
-                                                            emp.employee_id = '".$_SESSION["emp_id"]."' AND term_id = 2";
+                                                            emp.employee_id = '".$_GET["emp_id"]."' AND term_id = 2";
                                         $query_score_term_2 = mysqli_query($conn, $sql_score_term_2);
                                         $result_score_term_2 = mysqli_fetch_array($query_score_term_2);
                                             
@@ -231,62 +313,7 @@
                                         $sum_score_term_2 = ($score_1_term_2 + $score_2_1_term_2 + $score_2_2_term_2) - $score_3_term_2;
                                         if($sum_score_term_2 == 0){ $sum_score_term_2 = '-'; }
                                 ?>
-                                <thead>
-                                    <tr class="text-center">
-                                        <td rowspan=2 class="bg-inverse" style="vertical-align: middle;"><b>หัวข้อประเมิน</b></td>
-                                        <td colspan=2 class="bg-light-blue"><b>รอบประเมินครั้งที่ 1</b></td>
-                                        <td colspan=2 class="bg-blue-active"><b>รอบประเมินครั้งที่ 2</b></td>
-                                    </tr>
-                                    <tr class="text-center">
-                                       <td class="bg-info"><b>คะแนนเต็ม</b></td>
-                                       <td class="bg-info"><b>คะแนนที่ได้รับ</b></td>
-                                       <td class="bg-info"><b>คะแนนเต็ม</b></td>
-                                       <td class="bg-info"><b>คะแนนที่ได้รับ</b></td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <tr>
-                                        <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
-                                        <td  class="text-center"><b>60</b></td>
-                                        <td    class="text-center"><b><?php echo $score_1_term_1;?></b></td>
-                                        <td  class="text-center"><b>60</b></td>
-                                        <td  class="text-center"><b><?php echo $score_1_term_2; ?></b></td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="5"><b>คะแนนรวมส่วนที่ 2 : พฤติกรรมการทำงาน</b></td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td style="padding-left: 40px;">ส่วนที่ 2.1 พฤติกรรมหลักร่วมกันทั้งองค์กร (Corporate Competency)</td>
-                                        <td  class="text-center"><b>20</b></td>
-                                        <td  class="text-center"><b><?php echo $score_2_1_term_1; ?></b></td>
-                                        <td  class="text-center"><b>20</b></td>
-                                        <td  class="text-center"><b><?php echo $score_2_1_term_2; ?></b></td>
-                                    </tr>
-                                    
-
-                                    <tr>
-                                        <td style="padding-left: 40px;">ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
-                                        <td class="text-center"><b>20</b></td>
-                                        <td class="text-center"><b><?php echo $score_2_2_term_1 ; ?></b></td>
-                                        <td class="text-center"><b>20</b></td>
-                                        <td class="text-center"><b><?php echo $score_2_2_term_2; ?></b></td>
-                                    </tr>
-
-                                    
-                                     <tr>
-                                        <td ><b>ส่วนที่ 3:  การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท (กำหนดคะแนนเต็ม 10)</td>
-                                        <td class="text-center"><b>10</b></td>
-                                        <td class="text-center"><b><?php echo $score_3_term_1; ?></b></td>
-                                        <td class="text-center"><b>10</b></td>
-                                        <td class="text-center"><b><?php echo $score_3_term_2; ?></b></td>
-                                    </tr>
-                                    <tr class="bg-blue">
-                                        <td style="padding-left: 40px;">คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</td>
-                                        <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $sum_score_term_1; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></td>
-                                        <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor2"]+$result_score_2_2["sum_2_2_assessor2"]-$result_score_3["score_3"]; ?>"  name="ass2part1+2point" min="0" max="100" disabled></b></td>
-                                    </tr>
+                                
                                     <tr class="active">
                                         <td colspan="6"></td>
                                     </tr>
@@ -295,7 +322,7 @@
                                     </tr>
                                      <tr>
                                         <td align= right><b>สรุปคะแนนตลอดปี (คะแนนสุทธิผู้ประเมินที่ 1 +  คะแนนสุทธิผู้ประเมินที่ 2) หาร 2</b></td>
-                                        <td colspan=4 class="text-center" style="background-color:#FFEFD5;"><b><input type="number" name="term1+2point" min="0" max="100" disabled></b></td>
+                                        <td colspan=4 class="text-center" style="background-color:#FFEFD5;"><b><input type="number" name="term1+2point" min="0" max="100" value="<?php echo ($sum_score_m_1+$sum_score_m_2)/2; ?>" disabled></b></td>
                                        
                                     </tr>
                                     <tr>
@@ -305,15 +332,27 @@
                                     </tr>
                                     <tr>
                                         <td align= right><b>สรุปคะแนนประเมินผลงานโดยรวม (Overall rating)</b></td>
-                                        <td colspan=4 class="text-center" style="background-color:#F0FFFF;"><b><input type="number" name="allpoint" min="0" max="100" disabled></b></td>
+                                        <td colspan=4 class="text-center" style="background-color:#F0FFFF;"><b><input type="number" name="allpoint" min="0" max="100" value="<?php echo ($sum_score_m_1+$sum_score_m_2)/2; ?>" disabled></b></td>
                                        
                                     </tr>
+                                    <tr class="bg-green">
+                                        <td align= rightcolspan="2"><strong>ผลการประเมิน</strong></td>
+                                        <?php 
+                                        $sql_grade=" select * from grade where grade_id=$grade_id3" ;
+                                        $query_grade = mysqli_query($conn, $sql_grade);
+                                                while ($result_grade = mysqli_fetch_array($query_grade, MYSQLI_ASSOC)){
+                                                        $name_grade = $result_grade['grade_description'];
+                                                }                     
+                                                ?>
+                                                <td colspan=4 class="text-center"><strong><?php if($grade_id3==0){echo 'F'; }else{ echo $name_grade;}  ?></strong></td>
+                                    </tr>
                                 </tbody>
+                                
                             </table>
                         </div>
                             <div class="box-footer">
                                 <div class="pull-right box-padding">
-                                    <button class="btn btn-foursquare" type="submit" onclick="window.location.href='compareevaluation.php'"  >เปรียบเทียบย้อนหลัง</button>
+                                    <button class="btn btn-foursquare" type="submit" ="window.location.href='compareevaluation.php'"  >เปรียบเทียบย้อนหลัง</button>
                                 </div>
                             </div>
                         </form>
