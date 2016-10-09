@@ -20,17 +20,118 @@
 <head>
     <?php
     include ('./classes/connection_mysqli.php');
-    
-    $get_emp_id = "1"; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
-        //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
-        if (isset($_GET["emp_id"])) {
-            $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
-        }
-        $get_eval_code = ''; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
+     $get_eval_code = ''; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
         //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
         if (isset($_GET["eval_code"])) {
             $get_eval_code = $_GET["eval_code"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
         }
+    $get_emp_id = "1"; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
+        //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
+        if (isset($_GET["emp_id"])) {
+            $get_emp_id = $_GET["emp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+            
+        }
+       
+        
+        $erp='';
+        if(isset($_GET['erp'])){
+            $erp=$_GET['erp'];
+            
+            if($erp=='insert'){
+               $i_emp_id=$_POST['i_emp_id'];
+               $i_eval_code=$_POST['i_eval_code'];
+               $insert_kpi_id =$_POST['insert_kpi_id']; 
+               $insert_goal =$_POST['insert_goal'];
+               $insert_weight =$_POST['insert_weight'];
+              // $hidden_group_id=$_POST['hidden_group_id'];
+               $sql_eval_emp ="select * from evaluation_employee where employee_id=$i_emp_id and evaluation_code=$i_eval_code";
+               $query_eval_emp = mysqli_query($conn, $sql_eval_emp);
+              while($result_eval_emp = mysqli_fetch_array($query_eval_emp,MYSQLI_ASSOC)){
+                $eval_emp = $result_eval_emp['evaluate_employee_id'];
+                $strSQL ="CALL assign_kpi_individual($eval_emp,$insert_kpi_id,$insert_goal,$insert_weight)";
+               $objQuery = mysqli_query($conn,$strSQL);
+            }
+               
+               if ($objQuery) {
+
+                   header ("location:hr_manage_kpi.php?emp_id=$i_emp_id&eval_code=$i_eval_code");
+
+               } else {
+
+                   echo "Error Save [" . $strSQL . "]";
+               }
+            }
+            
+             //++++++++++++++++++update record+++++++++++++
+           if($erp=='update'){          
+               $u_emp_id=$_POST['u_emp_id'];
+               $u_eval_code=$_POST['u_eval_code'];
+               //$u_kpicode =$_POST['kpi_code'];
+               $u_kpiname =$_POST['u_kpi_name'];
+               $u_kpi_desc =$_POST['u_kpi_desc'];
+               $u_measure_symbol =$_POST['u_measure_symbol'];
+               $u_measure_desc =$_POST['u_measure_desc'];
+               $u_unit =$_POST['u_unit'];
+               $u_time_period =$_POST['u_time_period'];
+               $u_default_weight =$_POST['u_default_weight'];
+               //$hidden_group_id=$_POST['hidden_group_id'];
+               $u_id=$_GET['id'];
+               $u_goal=$_POST['u_goal'];
+               $strSQL =" UPDATE kpi_responsible SET goal='$u_goal',percent_weight='$u_default_weight'"                       
+                       . "where kpi_id=$u_id ";
+               $objQuery = mysqli_query($conn,$strSQL);
+               if ($objQuery) {
+
+                   header ("location:hr_manage_kpi.php?emp_id=$u_emp_id&eval_code=$u_eval_code");
+
+
+               } else {
+
+                   echo "Error Save [" . $strSQL . "]";
+               }
+
+           }
+           
+           //++++++++++++++++++delete record+++++++++++++
+           if($erp=='delete'){        
+               $d_emp_id=$_POST['d_emp_id'];
+               $d_eval_code=$_POST['d_eval_code'];
+               $id=$_GET['id'];
+               $strSQL =" DELETE FROM kpi_responsible WHERE kpi_responsible_id=$id ";
+               $objQuery = mysqli_query($conn,$strSQL);
+               if ($objQuery) {
+
+                   header ("location:hr_manage_kpi.php?emp_id=$d_emp_id&eval_code=$d_eval_code");
+
+
+               } else {
+
+                   echo "Error Save [" . $strSQL . "]";
+               }
+
+           }
+           
+           //++++++++++++++++++submit+++++++++++++
+           if($erp=='submit'){        
+               $s_dept_id=$_POST['hidden_dept'];
+               $s_job_id=$_POST['hidden_job'];
+               $s_eval=$_POST['hidden_eval'];               
+               $sql_submit = "call auto_assign_kpi($s_dept_id,$s_job_id,$s_eval)";
+               $objQuery = mysqli_query($conn,$sql_submit);
+               if ($objQuery) {
+
+                   header ("location:hr_manage_kpi.php?department_id=$s_dept_id&job_id=$s_job_id");
+
+
+               } else {
+
+                   echo "Error Save [" . $sql_submit . "]";
+               }
+
+           }
+            
+        }
+        
         ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -194,7 +295,7 @@
                         <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newNextKPI">+ เพิ่ม</button>
                     </div>
                     <div id="newNextKPI" class="collapse">
-                        <form action="new_assign_kpi.php" method="post">
+                        <form action="hr_manage_kpi.php?erp=insert" method="post">
                         <div class="box-padding row">
                             <div class="form-group col-sm-5">
                                 <label>ชื่อ KPI</label>
@@ -203,152 +304,220 @@
                                 $query_kpi = mysqli_query($conn, $sql_kpi);
                                 ?>
 
-                                <select class="form-control " name="kpi_id" required >
+                                <select class="form-control " name="insert_kpi_id" required >
 
                                     <option>เลือกkpi </option>
                                     <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
-                                    <option value="<?php echo $result_kpi["kpi_id"]; ?>"><?php echo $result_kpi["kpi_id"]." - ".$result_kpi["kpi_name"]; ?></option>
+                                    <option value="<?php echo $result_kpi["kpi_id"]; ?>"><?php echo $result_kpi["kpi_code"]." - ".$result_kpi["kpi_name"]; ?></option>
                                     <?php } ?>
 
                                 </select>
                             </div>
                             <div class="form-group col-sm-3">
                                 <label>น้ำหนัก(%)</label>
-                                <input class="form-control" type="number"  step="5" name="weight" required > 
+                                <input class="form-control" type="number"  step="5" name="insert_weight" required > 
                             </div>
                             <div class="form-group col-sm-3">
                                 <label>เป้าหมาย</label>
-                                <input class="form-control" type="text"  name="goal" required> 
+                                <input class="form-control" type="text"  name="insert_goal" required> 
                             </div>
                             
                             <div class="form-group col-sm-1">
                                 <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit" value="บันทึก" > 
-                                <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
+                                <input  type="hidden" name="i_emp_id" value="<?php echo $get_emp_id; ?>" >                                
+                                <input type="hidden" value="<?php echo $get_eval_code; ?>" name="i_eval_code">
                             </div>
                         </div>
                         </form>
                     </div>
                     <div class="box-body">
-                        <table class="table table-bordered">
-                            <tr class="bg-primary  ">
-                                <td>รหัส</td>
-                                <td>ชื่อตัวชี้วัด</td>
-                                <td>คำอธิบาย</td>
-                                <td width="60px">น้ำหนัก</td>
-                                <td width="70px">เป้าหมาย</td>
-                                <td width="120px">การจัดการ</td>
-                            </tr>
-                            <?php
-//                            $sql_next_kpi = "SELECT k.kpi_id as kpi_id, k.kpi_name as kpi_name,k.kpi_description as kpi_description, nrk.weight as weight, nrk.goal as goal
-//                                            FROM evaluation_next_kpi enk 
-//                                            JOIN next_responsible_kpi nrk ON enk.evaluate_next_kpi_id = nrk.evaluate_next_kpi_id 
-//                                            JOIN kpi k ON nrk.kpi_id = k.kpi_id
-//                                            WHERE nrk.evaluate_next_kpi_id = (SELECT enk.evaluate_next_kpi_id 
-//                                                                              FROM evaluation_next_kpi enk 
-//                                                                              JOIN evaluation_employee ee ON enk.evaluate_employee_id = ee.evaluate_employee_id 
-//                                                                              WHERE ee.employee_id = '".$get_emp_id."')";
-                            $sql_next_kpi = "SELECT
-                                    k.kpi_code AS kpi_id,
-                                    k.kpi_name AS kpi_name,
-                                    k.kpi_description As kpi_description,
-                                    k.unit As unit,
-                                    kr.percent_weight AS weight,
-                                    kr.goal AS goal,
-                                    kr.success AS success,
-                                    e.term_id AS term,
-                                    e.YEAR AS year,
-                                    k.measure_symbol AS symbol,
-                                    kr.percent_performance,
-                                    kr.kpi_responsible_id
-                            FROM
-                                    kpi k
-                            JOIN kpi_responsible kr ON k.kpi_id = kr.kpi_id
-                            JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
-                            JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
-                            WHERE
-                                    ee.employee_id = '$get_emp_id' AND e.evaluation_code = '$get_eval_code'
-                            ORDER BY
-                                    kpi_id";
-                            $query_next_kpi = mysqli_query($conn, $sql_next_kpi);
-                            $count = mysqli_num_rows($query_next_kpi);
-                            if($count == 0){
-                                echo "<th class='text-center' colspan='6'> ไม่มีการกำหนด KPI สำหรับปีการประเมิน ". $eval_year.' รอบการประเมินที่ '.$eval_term ." </th>";
-                            }
-                            while ($result_next_kpi = mysqli_fetch_array($query_next_kpi,MYSQLI_ASSOC)) {
-                                $sql_unit = "SELECT unit FROM kpi WHERE kpi_id = '".$result_next_kpi["kpi_id"]."'" ;
-                                $query_unit = mysqli_query($conn, $sql_unit);
-                                $result_unit = mysqli_fetch_array($query_unit);
-                            ?>
-                            <tr>
-                                <td><?php echo $result_next_kpi["kpi_id"]; ?></td>
-                                <td><?php echo $result_next_kpi["kpi_name"]; ?></td>
-                                <td>
-                                    <?php echo $result_next_kpi["kpi_description"]; ?>
-                                </td>
-                                <td><?php echo $result_next_kpi["weight"]."%"; ?></td>
-                                <td><?php echo $result_next_kpi["goal"]." ".$result_unit["unit"] ; ?></td>
-                                <td class="text-center">
-                                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit_<?php echo $result_next_kpi["kpi_id"]; ?>">
-                                        <i class="glyphicon glyphicon-pencil" ></i>
-                                    </button> 
-                                    |
-                                    <a class="btn btn-danger btn-sm" href="delete_assign_kpi.php?kpi_id=<?php echo $result_next_kpi["k.kpi_id"]."&emp_id=". $get_emp_id; ?>" >
-                                        <i class="glyphicon glyphicon-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <!-- Modal -->    
-                            <div class="modal animated fade " id="edit_<?php echo $result_next_kpi["kpi_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
-                                <div class="modal-dialog" role="document">
-                                    <form action="update_next_kpi.php" method="post" >
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-blue">
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                <h4 class="modal-title" id="myModalLabel">แก้ไขหัวข้อ</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row box-padding">
-                                                    <div class="row">
-                                                        <div class="col-sm-12">
-                                                            <div class="form-group">
-                                                                
-                                                                <label>ชื่อตัวชี้วัด</label>
-                                                                <input class="form-control" type="text" name="kpi_name" value="<?php echo $result_next_kpi["kpi_name"]; ?>" readonly>
+                        <?php
+                               
+                                        
+                                        $sql_kpi = "select k.*,kp.percent_weight as percent_weight,kp.goal as goal,kp.kpi_responsible_id
+                                                    from kpi_responsible kp join kpi k on kp.kpi_id=k.kpi_id
+                                                    join evaluation_employee ee on ee.evaluate_employee_id=kp.evaluate_employee_id
+                                                    where ee.employee_id=$get_emp_id and ee.evaluation_code=$get_eval_code
+                                                    order by kpi_id";
+                                        $query_kpi= mysqli_query($conn, $sql_kpi);     
+                                        
+                                       
+                        ?>
+                        <table class="table table-hover table-bordered">
+                                <thead class="bg-blue">
+                                                <tr>
+                                                    <th>KPI-CODE</th>
+                                                    <th>ชื่อตัวชี้วัด</th>
+                                                    <th>คำอธิบาย</th>                                                    
+                                                    <th>สัญลักษณ์</th>
+                                                    <th>คำอธิบายสัญลักษณ์</th>
+                                                    <th>เป้าหมาย</th>
+                                                    <th>หน่วยวัด</th>
+                                                    <th>ระยะเวลา</th>                                                    
+                                                    <th>น้ำหนัก</th>
+                                                    <th>จัดการ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php  while($result_kpi  = mysqli_fetch_array($query_kpi ,MYSQLI_ASSOC)) {
+                                                        $kpi_id = $result_kpi['kpi_id'];
+                                                        $kpi_name = $result_kpi['kpi_name'];
+                                                        $kpi_description = $result_kpi['kpi_description'];
+                                                        $kpi_code = $result_kpi['kpi_code'];
+                                                        $kpi_group_id = $result_kpi['kpi_group_id'];
+                                                        $kpi_unit = $result_kpi['unit'];
+                                                        $kpi_goal= $result_kpi['goal'];
+                                                        $kpi_time_period= $result_kpi['time_period'];
+                                                        $kpi_measure_symbol = $result_kpi['measure_symbol'];
+                                                        $kpi_measure_desc = $result_kpi['measure_desc'];
+                                                        $kpi_default_weight = $result_kpi['percent_weight']; 
+                                                        $kpi_responsible_id=$result_kpi['kpi_responsible_id'];
+                                                ?>            
+                                                <tr>
+                                                    <td><?php echo $kpi_code; ?></td>
+                                                    <td><?php echo $kpi_name; ?></td>
+                                                    <td><?php echo $kpi_description; ?></td>                                                   
+                                                    <td><?php echo $kpi_measure_symbol; ?></td>
+                                                    <td><?php echo $kpi_measure_desc; ?></td>
+                                                    <td><?php echo $kpi_goal; ?></td>
+                                                    <td><?php echo $kpi_unit; ?></td>
+                                                    <td><?php echo $kpi_time_period.' เดือน'; ?></td>
+                                                    
+                                                    <td><?php echo $kpi_default_weight; ?></td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $kpi_id; ?>_update">
+                                                            <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
+                                                        </button>                                                   
+                                                        |
+                                                                                    
+                                                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $kpi_id; ?>_delete">
+                                                            <i class="glyphicon glyphicon-remove" ></i>ลบ
+                                                        </button>
+                                                        <!--Edit Modal -->
+                                                        <form class="form-horizontal" name="frmMain" method="post" action="hr_manage_kpi.php?erp=update&id=<?php echo $kpi_id; ?>" >
+                                                            <div class="modal fade" id="<?php echo $kpi_id; ?>_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                            <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                                                    
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="KPI-CODE" class="col-sm-4 control-label">KPI-CODE</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" disabled="true" name="u_kpi_code" value="<?php echo $kpi_code ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_name" class="col-sm-4 control-label">ชื่อตัวชี้วัด</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly="true" type="text" class="form-control" name="u_kpi_name" value="<?php echo $kpi_name ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_desc" class="col-sm-4 control-label">คำอธิบาย</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly="true" type="text" style="" class="form-control" name="u_kpi_desc" value="<?php echo $kpi_description ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                                                        
+                                                                                                        
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="measure_symbol" class="col-sm-4 control-label">สัญลักษณ์</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly="true" type="text" class="form-control" name="u_measure_symbol" value="<?php echo $kpi_measure_symbol ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="measure_desc" class="col-sm-4 control-label">คำอธิบายสัญลักษณ์</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly="true" type="text" class="form-control" name="u_measure_desc" value="<?php echo $kpi_measure_desc ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="goal" class="col-sm-4 control-label">เป้าหมาย</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input  type="text" class="form-control" name="u_goal" value="<?php echo $kpi_goal ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="unit" class="col-sm-4 control-label">หน่วยวัด</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly="true" type="text" class="form-control" name="u_unit" value="<?php echo $kpi_unit ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="time_period" class="col-sm-4 control-label">ระยะเวลา(เดือน)</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input readonly="true" type="text" class="form-control" name="u_time_period" value="<?php echo $kpi_time_period ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="default_weight" class="col-sm-4 control-label">น้ำหนัก</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" name="u_default_weight" value="<?php echo $kpi_default_weight ?>">
+                                                                                </div>
+                                                                            </div>                                           
+                                                                                                        
+                                                                                                        
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit" class="btn btn-success">บันทึก</button>
+                                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+                                                                            <input type="hidden" value="<?php echo $get_emp_id; ?>" name="u_emp_id">
+                                                                            <input type="hidden" value="<?php echo $get_eval_code; ?>" name="u_eval_code">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <div class="form-group">
-                                                                <label>น้ำหนัก(%)</label>
-                                                                <input class="form-control" type="number" name="weight" step="5" value="<?php echo $result_next_kpi["weight"]; ?>" >
+                                                        </form>
+                                                        <!--Edit Modal -->
+                                                                                    
+                                                        <!--Delete Modal -->
+                                                        <form class="form-horizontal" name="frmMain" method="post" action="hr_manage_kpi.php?erp=delete&id=<?php echo $kpi_responsible_id; ?>" >
+                                                            <div class="modal fade" id="<?php echo $kpi_id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                                <div class="modal-dialog" role="document">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                            <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="KPI-CODE" class="col-sm-4 control-label">KPI-CODE</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control" disabled="true"  value="<?php echo $kpi_code ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="input-group col-sm-12">
+                                                                                <label  for="kpi_name" class="col-sm-4 control-label">ชื่อตัวชี้วัด</label>
+                                                                                <div class="form-group col-sm-8">                                                                                                            
+                                                                                    <input type="text" class="form-control"  disabled="true" value="<?php echo $kpi_name ?>">
+                                                                                </div>
+                                                                            </div>
+                                                                                                        
+                                                                                                        
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                                                                            <input type="hidden" value="<?php echo $get_emp_id; ?>" name="d_emp_id">
+                                                                            <input type="hidden" value="<?php echo $get_eval_code; ?>" name="d_eval_code">
+                                                                                                        
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="col-sm-6" >
-                                                            <div class="form-group">
-                                                                <label>เป้าหมาย</label>
-                                                                <input class="form-control" type="text" name="goal" value="<?php echo $result_next_kpi["goal"]; ?>" >
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <input class="btn btn-success" type="submit" name="submit" value="บันทึก" >
-                                                <input type="hidden" name="emp_id" value="<?php echo $emp_id; ?>" >
-                                                <input type="hidden" name="next_responsible_kpi_id" value="<?php echo $result_next_kpi["next_responsible_kpi_id"]; ?>" >
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                                            </div>
-                                                                    
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>   
-                            <!--Modal-->
-                            </tr>
-                            <?php } ?>
-                        </table>
+                                                        </form>
+                                                        <!--Delete Modal -->
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                         <?php }  ?>
+
+                                        </table>
                     </div>
                 </div>
 
