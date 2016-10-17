@@ -29,7 +29,7 @@
             if (isset($_GET["eval_code"])) {
                 $eval_code = $_GET["eval_code"];
             }
-            //Get Position Level
+        //Get Position Level
         if(isset($_GET["position_level_id"])){
             $level = $_GET["position_level_id"];
         }

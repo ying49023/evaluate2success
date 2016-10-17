@@ -38,16 +38,16 @@
             if (isset($_POST["leave_type_id"])) {
                 $array_day = array();
                 $c_day = 0;
-                foreach ($_POST["no_of_day"] as $no_of_day){
+                foreach($_POST["no_of_day"] as $no_of_day){
                     $array_day[$c_day] = $no_of_day;
-                    //echo "date : ".$array_day[$i]." / ";
+//                    echo "date : ".$array_day[$c_day]." / ";
                     $c_day++;
                 }
                 $array_point = array();
                 $c_point = 0;
                 foreach ($_POST["point"] as $point){
                     $array_point[$c_point] = $point;
-                    //echo "date : ".$array_day[$i]." / ";
+//                    echo "date : ".$array_day[$c_point]." / ";
                     $c_point++;
                 }
                 $i = 0;
@@ -211,6 +211,7 @@
                                     
                                     ?>
                                     <!-- Show Leave -->
+                                    <form method="post">
                                     <div class="box-body">
                                         
                                         <div class="row box-padding-small">
@@ -258,15 +259,15 @@
                                                         <tr>
                                                             <th class="text-center" ><?php echo $result_leave_type["leave_type_id"]; ?></th>
                                                             <th class="text-center" ><?php echo $result_leave_type["leave_type_description"]; ?></th>
-                                                            <td class="text-center" ><input class="text-center" type="number"  name="no_of_day" min="1" max="365" value="<?php
+                                                            <td class="text-center" ><input class="text-center" type="number"  name="no_of_day[]" min="0" max="365" value="<?php
                                                                                     if ($result_leave_type["no_of_day"] == '') {
                                                                                         echo '0';
                                                                                     } else {
                                                                                         echo $result_leave_type["no_of_day"];
                                                                                     }
-                                                                                    ?>" disabled ></td>
+                                                                                    ?>"  ></td>
                                                             <td class="text-center" ><?php echo $result_leave_type["point"]; ?></td>
-                                                            <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php
+                                                            <td class="text-center"><input class="text-center" type="number"  name="point" min="0" max="60" value="<?php
                                                                                     if ($result_leave_type["point_leave"] == '') {
                                                                                         echo '0';
                                                                                     } else {
@@ -274,6 +275,9 @@
                                                                                     }
                                                                                     ?>" disabled ></td>
                                                         </tr>
+                                                        <input type="hidden" name="point[]" value="<?php echo $result_leave_type["point"]; ?>" >
+                                                        <input type="hidden" name="eval_emp_id[]" value="<?php echo $get_eval_emp_id; ?>" >
+                                                        <input type="hidden" name="leave_type_id[]" value="<?php echo $result_leave_type["leave_type_id"];  ?>" >
                                                                         <?php } ?>
                                                     </tbody>
                                                     <tfoot>
@@ -297,7 +301,7 @@
                                                                                 } else {
                                                                                     echo $result_leave_sum["sum_day_leave"];
                                                                                 }
-                                                                                ?>" disabled ></td>
+                                                                                ?>"  disabled ></td>
                                                             <td></td>
                                                             <td class="text-center"><input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php
                                                                                 if ($result_leave_sum == '') {
@@ -305,7 +309,7 @@
                                                                                 } else {
                                                                                     echo $result_leave_sum["sum_point_leave"];
                                                                                 }
-                                                                                ?>" disabled ></td>
+                                                                                ?>"  disabled ></td>
                                                         </tr>
                                                     </tfoot>
                                                                         
@@ -313,10 +317,12 @@
                                             </div>
                                         </div>
                                         <div class="box-footer text-center">
-                                            <a class="btn btn-danger search-button" href="leave_form.php">ย้อนกลับ</a>     
+                                            <a class="btn btn-danger search-button" href="leave_form.php">ย้อนกลับ</a>
+                                            <button type="submit" class="btn btn-success search-button" name="submit_leave" value="update">อัพเดท</button>
                                         </div>
                                                             
                                     </div>
+                                    </form>
                                     <!-- /Show Leave -->
                                     <?php
                                         }else {

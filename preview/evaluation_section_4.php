@@ -308,6 +308,78 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row box-padding">
+                            <div ><h4>ควรได้รับการพัฒนาและฝึกอบรมในด้านใด</h4>   </div>
+                            <div class="col-md-12">
+                                <script>
+                                        function getSkillDev(val) {
+                                            $.ajax({
+                                                type: "POST",
+                                                url: "get_skill_development.php",
+                                                data:'skill_dev_group_id='+val,
+                                                success: function(data){
+                                                    $("#list").html(data);
+                                                }
+                                            });
+                                        }
+                                </script>
+                                <div class="box box-primary box-padding-small">
+                                    <div class="box-header with-border" >
+                                        <div class="row" id="table_header">
+                                            <div class="col-md-5">
+                                                <div class="form-group"> 
+                                                    <label>หัวข้อการพัฒนาและฝึกอบรม</label>
+                                                    <select id="stemplate" class="form-control" name="skill_dev_group_id"  onChange="getSkillDev(this.value);">
+                                                        <option value="" >--เลือกหัวข้อการพัฒนาและฝึกอบรม--</option>
+                                                        <?php
+                                                        $sql_skill_group = "SELECT * FROM skill_development_group" ;
+                                                        $query_skill_group = mysqli_query($conn, $sql_skill_group);
+                                                        foreach ($query_skill_group as $result_skill_group){
+                                                            ?>
+                                                            <option value="<?php echo $result_skill_group["skill_dev_group_id"]; ?>"><?php echo $result_skill_group["skill_dev_group_name"]; ?></option>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="form-group"> 
+                                                    <label>หัวข้อย่อย</label>
+                                                    <select class="form-control" name="skill_development_id" id="list">
+                                                        <option value="" >--เลือก--</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <button onclick="add_dev()" class="btn btn-success margin-top-form" style="width: 100%;">+ เพิ่ม</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div id="table_dev"></div>
+                                            <script type="text/javascript">
+                                                function add_dev(){
+                                                    $("#stemplate ").val();
+                                                    $("#table_dev").append($("#table_header :selected").html());
+                                                    
+                                                }
+                                            </script>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="box-body">
+                                        
+                                        <div class="form-group">
+
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                </div>
+                            </div>
+                        </div>
                             <div class="box-footer">
                                 <div class="row box-padding text-center">
                                     <button class="btn btn-success btn-lg" type="submit" name="submit_skill">บันทึก</button>
@@ -319,44 +391,6 @@
                             
                         </form>
                         
-<!--                        <div class="row box-padding">
-                            <div class="col-md-12">
-                                <div class="box box-warning box-padding-small">
-                                <h5><u>ควรได้รับการพัฒนาด้านใด</u></h5>
-                                
-                                    <div class="form-group">
-                                       <ol>
-                                           <?php
-                                           $sql_skill = "SELECT
-                                                                *
-                                                        FROM
-                                                                skill_development sd
-                                                        JOIN skill_devlopment_group skg ON skg.skill_dev_group_id = sd.skill_development_id" ;
-                                           $query_skill = mysqli_query($conn, $sql_skill);
-                                           
-                                           for($i = 1;$i<=5;$i++) {
-                                           ?>
-                                                   <li>
-                                                       <select class="form-control" name="good">
-                                                           <option value="">--เลือก--</option>
-                                                           <?php 
-                                                           foreach ($query_skill as $result_skill){
-                                                                echo $result_skill["skill_development_name"];
-                                                           ?>
-                                                           <option value=""><?php echo $result_skill["skill_development_name"]; ?></option>
-                                                           <?php } ?>
-                                               </select>
-                                                   </li>
-                                           <?php 
-                                           
-                                           } ?>
-                                    </ol> 
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>-->
-
                         </div>   
                             <div class="modal fade" id="save_point" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                 <div class="modal-dialog" role="document">
@@ -400,9 +434,16 @@
             
         <!-- ./wrapper -->
     </body>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
     <!-- SCRIPT PACKS -->
     <?php include('./script_packs.html') ?>
-        
+    <script type="text/javascript">
+          // run pre selected options
+          $('#pre-selected-options').multiSelect();
+            </script>    
 </html>
             <?php
         }

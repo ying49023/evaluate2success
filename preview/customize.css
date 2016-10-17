@@ -55,3 +55,6 @@
    pointer-events: none;
    cursor: default;
 }
+.margin-top-form{
+    margin-top: 25px;
+}

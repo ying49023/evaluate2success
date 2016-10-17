@@ -209,15 +209,15 @@
                                                                  <div class="modal-body">
                                                                      <div class="row">
                                                                          <div class="form-group col-sm-12" >
-                                                                             <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อหัวข้อ:</label>
+                                                                             <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อหัวข้อ<span style="color: red;">*</span></label>
                                                                              <div class="col-sm-8">               
-                                                                                 <textarea type="text" class="form-control" name='penalty_reward_name'   ><?php echo $name; ?></textarea>
+                                                                                 <textarea type="text" class="form-control" name='penalty_reward_name'  required ><?php echo $name; ?></textarea>
                                                                              </div>
                                                                          </div>
                                                                          <div class="form-group col-sm-12" >
-                                                                             <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
+                                                                             <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง)<span style="color: red;">*</span></label>
                                                                              <div class="col-sm-8">               
-                                                                                 <input type="number" step="0.1" class="form-control" value="<?php echo $point; ?>" name='point'  >
+                                                                                 <input type="number" step="0.1" class="form-control" value="<?php echo $point; ?>" name='point' required >
                                                                              </div>
                                                                          </div>
                                                                      </div>
@@ -246,13 +246,13 @@
                                                                  </div>
                                                                  <div class="modal-body">
                                                                      <div class="form-group col-sm-12" >
-                                                                         <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อหัวข้อ:</label>
+                                                                         <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อหัวข้อ</label>
                                                                          <div class="col-sm-8">               
                                                                              <textarea type="text" class="form-control" name='penalty_reward_name' disabled="true"  ><?php echo $name; ?></textarea>
                                                                          </div>
                                                                      </div>
                                                                      <div class="form-group col-sm-12" >
-                                                                         <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
+                                                                         <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง</label>
                                                                          <div class="col-sm-8">               
                                                                              <input type="number" class="form-control" value="<?php echo $point; ?>" name='point' disabled="true"   >
                                                                          </div>
@@ -327,15 +327,15 @@
                                                                      <div class="modal-body">
                                                                          <div class="row">
                                                                              <div class="form-group col-sm-12" >
-                                                                                 <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อหัวข้อ:</label>
+                                                                                 <label for="ประเภทการลา" class="col-sm-4 control-label">ชื่อหัวข้อ<span style="color: red;">*</span></label>
                                                                                  <div class="col-sm-8">               
-                                                                                     <textarea type="text" class="form-control" name='penalty_reward_name'   ><?php echo $name; ?></textarea>
+                                                                                     <textarea type="text" class="form-control" name='penalty_reward_name'  required ><?php echo $name; ?></textarea>
                                                                                  </div>
                                                                              </div>
                                                                              <div class="form-group col-sm-12" >
-                                                                                 <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง):</label>
+                                                                                 <label for="คะแนน" class="col-sm-4 control-label">คะแนน(ต่อครั้ง)<span style="color: red;">*</span></label>
                                                                                  <div class="col-sm-8">               
-                                                                                     <input type="number" step="0.1" class="form-control" value="<?php echo $point; ?>" name='point'    >
+                                                                                     <input type="number" step="0.1" class="form-control" value="<?php echo $point; ?>" name='point'  required  >
                                                                                  </div>
                                                                              </div>
                                                                          </div>
