@@ -48,6 +48,13 @@
     width: 200px;
     height: 50px;
 }
+.not-active {
+   pointer-events: none;
+   cursor: default;
+}
+.margin-top-form{
+    margin-top: 25px;
+}
 .img-center{
     object-fit: cover;
 }

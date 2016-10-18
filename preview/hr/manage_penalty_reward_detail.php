@@ -296,20 +296,6 @@
                                                         <option value="1">รางวัล</option>
                                                         
                                                     </select>
-<!--                                                    <select class="form-control" name="penalty_reward_id">
-                                                        <option value="" >---เลือกรางวัล / โทษทางวินัย---</option>
-                                                                    
-                                                                <?php
-                                                                $sql_penalty_reward = "SELECT * FROM penalty_reward ORDER BY penalty_reward_indicated DESC ";
-                                                                $query_penalty_reward = mysqli_query($conn, $sql_penalty_reward);
-                                                                foreach($query_penalty_reward as $type) {
-                                                                    ?>
-                                                                    <option value="<?php echo $type["penalty_reward_id"]; ?>"><?php if($type["penalty_reward_indicated"] == '0') { echo "โทษทางวินัย - "; } else {     echo 'รางวัล - '; } echo $type["penalty_reward_name"]; ?></option>
-                                                        <option value="<?php echo $type["penalty_reward_indicated"]; ?>"><?php if($type["penalty_reward_indicated"] == '0') { echo "โทษทางวินัย - "; } else {     echo 'รางวัล - '; } echo $type["penalty_reward_name"]; ?></option>
-                                                                    <?php
-                                                                }
-                                                                ?>
-                                                    </select>-->
                                                 </div>
                                             </div>
                                             <div class="row box-padding">

@@ -58,3 +58,9 @@
 .margin-top-form{
     margin-top: 25px;
 }
+.img-center{
+    object-fit: cover;
+}
+.text-middle{
+    vertical-align: middle !important;
+}

@@ -128,7 +128,7 @@
                         <div class="box-header with-border ">
                             <h3 class="box-title">ตารางแสดงข้อมูลรางวัล / โทษทางวินัย</h3>
                             <a class="pull-right " data-toggle="collapse" href="#strenghtPoint">
-                                <button type="button" class="btn btn-success">เพิ่มโทษ / รางวัล</button>
+                                <button type="button" class="btn btn-success">เพิ่มรางวัล / โทษ</button>
                             </a>
                         </div>
                         <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >

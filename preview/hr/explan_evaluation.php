@@ -32,39 +32,47 @@
     <head>
         <?php
             if (isset($_POST["type"])) {
+                $get_eval_code = $_POST["evaluation_code"];
+                $get_pos = $_POST["position_level_id"];
                     if ($_POST["type"] == "header") {
-                        $get_eval_code = $_POST["evaluation_code"];
-                        $get_pos = $_POST["position_level_id"];
                         //Header
-                        if (isset($_POST["explaned_header"])) {
-                            if ($_POST["status"] == "insert") {
+                        if(isset($_POST["explaned_header"])){
+                            if($_POST["status"] == "insert") {
                                 $sql = "INSERT INTO explaned_evaluation (explaned_header,evaluation_code) values ('" . $_POST["explaned_header"] . "' , '" . $_POST["evaluation_code"] . "')";
                                 $query = mysqli_query($conn, $sql);
                                 header("location:explan_evaluation.php?eval_code=$get_eval_code&position_level_id=$get_pos");
-                            } else if ($_POST["status"] == "edit") {
+                            } 
+                        }
+                        if (isset($_POST["explaned_id"])) {    
+                            if($_POST["status"] == "edit") {
                                 $sql = "UPDATE explaned_evaluation SET explaned_header = '" . $_POST["explaned_header"] . "' WHERE explaned_id = '" . $_POST["explaned_id"] . "' ";
                                 $query = mysqli_query($conn, $sql);
                                 header("location:explan_evaluation.php?eval_code=$get_eval_code&position_level_id=$get_pos");
-                            } else if ($_POST["status"] == "delete") {
-                                $sql = "DELETE explaned_evaluation WHERE  explaned_id = '" . $_POST["explaned_id"] . "'";
+                            } else if($_POST["status"] == "delete") {
+                                $sql = "DELETE FROM explaned_evaluation WHERE explaned_evaluation.explaned_id = '".$_POST["explaned_id"]."'";
                                 $query = mysqli_query($conn, $sql);
                                 header("location:explan_evaluation.php?eval_code=$get_eval_code&position_level_id=$get_pos");
                             }
                         }
                     } else if ($_POST["type"] == "detail") {
                         //Detail
-                        if (isset($_POST["explan_detail"])) {
-                            
+                        if (isset($_POST["detail"])) {
                             
                             if ($_POST["status"] == "insert") {
-                                $sql = "";
+                                $sql = "INSERT INTO explaned_detail (detail,explaned_id,position_level_id) values ('" . $_POST["detail"] . "' , '" . $_POST["explaned_id"] . "','$get_pos')";
                                 $query = mysqli_query($conn, $sql);
-                            } else if ($_POST["status"] == "edit") {
-                                $sql = "";
+                                header("location:explan_evaluation.php?eval_code=$get_eval_code&position_level_id=$get_pos");
+                            }
+                        }
+                        if (isset($_POST["explaned_detail_id"])) {    
+                            if ($_POST["status"] == "edit") {
+                                $sql = "UPDATE explaned_detail SET detail = '".$_POST["detail"]."' WHERE explaned_detail_id = '" . $_POST["explaned_detail_id"]."' ";
                                 $query = mysqli_query($conn, $sql);
+                                header("location:explan_evaluation.php?eval_code=$get_eval_code&position_level_id=$get_pos");
                             } else if ($_POST["status"] == "delete") {
-                                $sql = "DELETE";
+                                $sql = "DELETE FROM explaned_detail WHERE explaned_detail_id = '" . $_POST["explaned_detail_id"]."'";
                                 $query = mysqli_query($conn, $sql);
+                                header("location:explan_evaluation.php?eval_code=$get_eval_code&position_level_id=$get_pos");
                             }
                         }
                     }
@@ -90,6 +98,14 @@
                 min-height: 150px;
             }
         </style>
+        <script>
+            $(function(){
+                $("modal").on(function(){
+                    $("input").focus();
+                    $("textarea").focus();
+                })
+            });
+        </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -176,9 +192,9 @@
                                             <i class="glyphicon glyphicon-plus" ></i> &nbsp;เพิ่มหัวข้อ
                                         </button> 
                                     </form>          
-                                <!-- Insert Deatail -->
+                                <!-- Insert Header -->
                                 <form class="form-horizontal" name="frmMain" method="post" >
-                                    <div class="modal fade" id="insert_header" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <div class="modal fade" id="insert_header" role="dialog" aria-labelledby="myModalLabel">
                                         <div class="modal-dialog modal-lg" role="document">
                                                     <?php
                                                     foreach ($query as $result) {
@@ -192,7 +208,7 @@
                                                     <div class="form-group col-sm-12" >
                                                         <label for="ชื่อหัวข้อ" class="col-sm-offset-1 col-sm-2 control-label">ชื่อหัวข้อ:</label>
                                                         <div class="col-sm-8">               
-                                                            <input type="text" class="form-control" value="" name='explaned_header'  >
+                                                            <input type="text" class="form-control" value="" name='explaned_header' autofocus >
                                                         </div>
                                                     </div>
                                                         
@@ -210,7 +226,7 @@
                                         </div>
                                     </div>
                                 </form>
-                                <!--/Insert Deatil -->
+                                <!--/Insert Header -->
                             </div>
                         </div>
                         <div class=" box-body " >
@@ -220,15 +236,15 @@
                                         $query_title_exp = mysqli_query($conn, $sql_title_exp);
                                         while ($result_title_exp = mysqli_fetch_array($query_title_exp, MYSQLI_ASSOC)) {
                                             $explaned_id = $result_title_exp["explaned_id"];
-                                            $explaned_header = $result_title_exp["explaned_header"].' '.$result_title_exp["explaned_small_header"];
+                                            $explaned_header = $result_title_exp["explaned_header"];
                                             
                                             $sql_detail = "SELECT * FROM explaned_detail WHERE explaned_id = '$explaned_id' AND position_level_id = '$level' ";
                                             $query_detail = mysqli_query($conn, $sql_detail);
                                             $count = mysqli_num_rows($query_detail);
                                             ?>
                                     <div style="margin-bottom: 2px;border:none;"  class="box ">
-                                    <div class="box-header ">
-                                        <div class="row">
+                                    <div class="box-header bg-gray-light">
+                                        <div  class="row ">
                                             <div class="col-sm-10">
                                                 <b><?php echo $explaned_header; ?></b>
                                                 (<a  class="" data-toggle="modal" data-target="#<?php echo $explaned_id; ?>_edit_header" >
@@ -247,9 +263,9 @@
                                             
                                         </div>
                                                 
-                                                    <!-- Insert Deatail -->
+                                                    <!-- Insert Detail -->
                                                     <form class="form-horizontal" name="frmMain" method="post" >
-                                                        <div class="modal fade" id="insert_detail_<?php echo $explaned_id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal fade" id="insert_detail_<?php echo $explaned_id; ?>"  role="dialog" aria-labelledby="myModalLabel">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <?php
                                                                 foreach ($query as $result) {
@@ -269,7 +285,7 @@
                                                                             <div class="form-group col-sm-12" >
                                                                                 <label for="รายละเอียด" class="col-sm-4 control-label">รายละเอียด:</label>
                                                                                 <div class="col-sm-8">               
-                                                                                    <textarea type="text" class="form-control" value="" name='explan_detail' ></textarea>
+                                                                                    <textarea type="text" class="form-control" value="" name='detail' autofocus ></textarea>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -278,7 +294,7 @@
                                                                             <input type="hidden" name="type" value="detail" >
                                                                             <input type="hidden" name="evaluation_code" value="<?php echo $eval_code; ?>" >
                                                                             <input type="hidden" name="explaned_id" value="<?php echo $explaned_id; ?>" >
-                                                                            <input type="hidden" name="status" value="edit" >
+                                                                            <input type="hidden" name="status" value="insert" >
                                                                             <input type="submit" class="btn btn-success" value="เพิ่ม" >
                                                                             <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
 
@@ -289,9 +305,9 @@
                                                         </div>
                                                     </form>
                                                     <!--/Insert Deatil -->
-                                                    <!--Edit Modal -->
+                                                    <!--Edit Header -->
                                                     <form class="form-horizontal" name="frmMain" method="post"  >
-                                                        <div class="modal fade" id="<?php echo $explaned_id; ?>_edit_header" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal fade" id="<?php echo $explaned_id; ?>_edit_header"  role="dialog" aria-labelledby="myModalLabel">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <?php
                                                                 foreach ($query as $result) {
@@ -305,7 +321,7 @@
                                                                             <div class="form-group col-sm-12" >
                                                                                 <label for="ชื่อหัวข้อ" class="col-sm-4 control-label">ชื่อหัวข้อ:</label>
                                                                                 <div class="col-sm-8">               
-                                                                                    <input type="text" class="form-control" value="<?php echo $explaned_header; ?>" name='explaned_header'  >
+                                                                                    <input type="text" class="form-control" value="<?php echo $explaned_header; ?>" name='explaned_header' autofocus >
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -324,11 +340,11 @@
                                                             </div>
                                                         </div>
                                                     </form>
-                                                    <!--Edit Modal -->
+                                                    <!--/Edit Header -->
 
-                                                    <!--Delete Modal -->
+                                                    <!--Delete Header -->
                                                     <form class="form-horizontal" name="frmMain" method="post"  >
-                                                        <div class="modal fade" id="<?php echo $explaned_id; ?>_delete_header" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                        <div class="modal fade" id="<?php echo $explaned_id; ?>_delete_header"  role="dialog" aria-labelledby="myModalLabel">
                                                             <div class="modal-dialog modal-lg" role="document">
                                                                 <div class="modal-content">
                                                                     <?php
@@ -362,7 +378,7 @@
                                                             </div>
                                                         </div>
                                                     </form>
-                                                    <!--Delete Modal -->
+                                                    <!--/Delete Header -->
                                         
                                         
                                     </div>
@@ -385,9 +401,9 @@
                                                                         $sql = "SELECT * FROM explaned_detail  ed JOIN explaned_evaluation ee ON ed.explaned_id = ee.explaned_id WHERE ed.explaned_detail_id = '" . $result_detail["explaned_detail_id"] . "' AND position_level_id = '".$level."' LIMIT 1";
                                                                         $query = mysqli_query($conn, $sql);
                                                                         ?>
-                                    <!--Edit Modal -->
-                                            <form class="form-horizontal" name="frmMain" method="post" action="explan_evaluation.php?id=<?php echo $result_detail["explaned_detail_id"]; ?>" >
-                                                <div class="modal fade" id="<?php echo $result_detail["explaned_detail_id"]; ?>_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                    <!--Edit Detail -->
+                                            <form class="form-horizontal" name="frmMain" method="post" >
+                                                <div class="modal fade" id="<?php echo $result_detail["explaned_detail_id"]; ?>_edit"  role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog modal-lg" role="document">
                                                         <?php
                                                         foreach ($query as $result){
@@ -401,19 +417,20 @@
                                                                 <div class="form-group col-sm-12" >
                                                                     <label for="ชื่อหัวข้อ" class="col-sm-4 control-label">ชื่อหัวข้อ:</label>
                                                                     <div class="col-sm-8">               
-                                                                        <input type="text" class="form-control" value="<?php echo $result["explaned_header"]; ?>" name='textcom' disabled  >
+                                                                        <input type="text" class="form-control" value="<?php echo $explaned_header; ?>" name='explaned_header' disabled  >
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-12" >
                                                                     <label for="รายละเอียด" class="col-sm-4 control-label">รายละเอียด:</label>
                                                                     <div class="col-sm-8">               
-                                                                        <textarea type="text" class="form-control" rows="5" value="<?php echo $result["detail"]; ?>" name='textfullcom' ><?php echo $result["detail"]; ?></textarea>
+                                                                        <textarea type="text" class="form-control" rows="5" value="<?php echo $result["detail"]; ?>" name='detail'  ><?php echo $result["detail"]; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <input type="hidden" name="position_level_id" value="<?php echo $level; ?>" >
                                                                 <input type="hidden" name="evaluation_code" value="<?php echo $eval_code; ?>" >
+                                                                <input type="hidden" name="explaned_detail_id" value="<?php echo $result["explaned_detail_id"]; ?>" >
                                                                 <input type="hidden" name="type" value="detail" >
                                                                 <input type="hidden" name="status" value="edit" >
                                                                 <input type="submit" class="btn btn-primary" value="แก้ไข" >
@@ -424,11 +441,11 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                        <!--Edit Modal -->
+                                        <!--/Edit Deatil -->
 
-                                        <!--Delete Modal -->
-                                            <form class="form-horizontal" name="frmMain" method="post" action="explan_evaluation.php?status=delete&id=<?php echo $result_detail["explaned_detail_id"]; ?>" >
-                                                <div class="modal fade" id="<?php echo $result_detail["explaned_detail_id"]; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                        <!--Delete Detail -->
+                                            <form class="form-horizontal" name="frmMain" method="post" >
+                                                <div class="modal fade" id="<?php echo $result_detail["explaned_detail_id"]; ?>_delete"  role="dialog" aria-labelledby="myModalLabel">
                                                     <div class="modal-dialog modal-lg" role="document">
                                                         <div class="modal-content">
                                                             <?php
@@ -443,19 +460,20 @@
                                                                 <div class="form-group col-sm-12" >
                                                                     <label for="ชื่อหัวข้อ" class="col-sm-4 control-label">ชื่อหัวข้อ:</label>
                                                                     <div class="col-sm-8">               
-                                                                        <input type="text" class="form-control" value="<?php echo $result["explaned_header"]; ?>" name='textcom' disabled  >
+                                                                        <input type="text" class="form-control" value="<?php echo $explaned_header; ?>" name='explaned_header' disabled  >
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group col-sm-12" >
                                                                     <label for="รายละเอียด" class="col-sm-4 control-label">รายละเอียด:</label>
                                                                     <div class="col-sm-8">               
-                                                                        <textarea type="text" class="form-control" value="<?php echo $result["detail"]; ?>" name='textfullcom' disabled ><?php echo $result["detail"]; ?></textarea>
+                                                                        <textarea type="text" class="form-control" value="<?php echo $result["detail"]; ?>" name='detail' disabled ><?php echo $result["detail"]; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <input type="hidden" name="position_level_id" value="<?php echo $level; ?>" >
                                                                 <input type="hidden" name="evaluation_code" value="<?php echo $eval_code; ?>" >
+                                                                <input type="hidden" name="explaned_detail_id" value="<?php echo $result["explaned_detail_id"]; ?>" >
                                                                 <input type="hidden" name="type" value="detail" >
                                                                 <input type="hidden" name="status" value="delete" >
                                                                 <input type="submit" class="btn btn-warning" value="ลบ" >
@@ -467,7 +485,7 @@
                                                     </div>
                                                 </div>
                                             </form>
-                                        <!--Delete Modal -->
+                                        <!--/Delete Detail -->
                                                 <?php } ?>
                                     </div>
                                     <?php } ?>

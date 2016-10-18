@@ -50,6 +50,7 @@
         <?php include('./script_packs.html'); ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -102,11 +103,12 @@
                                         $query_title_exp = mysqli_query($conn, $sql_title_exp);
                                         while ($result_title_exp = mysqli_fetch_array($query_title_exp, MYSQLI_ASSOC)) {
                                             $explaned_id = $result_title_exp["explaned_id"];
+                                            $explaned_header = $result_title_exp["explaned_header"];
                                             ?>
-                                <p style="font-size: 16px;"><strong><?php echo $result_title_exp["explaned_header"] . " " . $result_title_exp["explaned_small_header"]; ?></strong></p>
+                                <p style="font-size: 16px;"><strong><?php echo $explaned_header; ?></strong></p>
                                 <div class="box-padding">
                                                 <?php
-                                                $sql_detail = "SELECT * FROM explaned_detail WHERE explaned_id = '$explaned_id'";
+                                                $sql_detail = "SELECT * FROM explaned_detail WHERE explaned_id = '$explaned_id' AND position_level_id = '".$_SESSION['position']."'";
                                                 $query_detail = mysqli_query($conn, $sql_detail);
                                                 while ($result_detail = mysqli_fetch_array($query_detail, MYSQLI_ASSOC)) {
                                                     ?>    
@@ -125,17 +127,26 @@
                         </div>
                         <div class="box-footer">
                             <form action="evaluation_section_1.php" method="post">
+                                
                                 <script>
-                                $(function() {
-                                    var chk = $('#check');
-                                    var btn = $('#btncheck');
-
-                                    chk.on('change', function() {
-                                      btn.prop("disabled", !this.checked);//true: disabled, false: enabled
-                                    }).trigger('change'); //page load trigger event
-                                  });
+                                    $(function() {
+                                        enable_cb();
+                                        $("#check").click(enable_cb);
+                                        //                var chk = $('#check');
+                                        //                var btn = $('#btncheck');
+                                        //                
+                                        //                chk.on('change', function() {
+                                        //                    btn.prop("disabled", !this.checked);//true: disabled, false: enabled
+                                        //                }).trigger('change'); //page load trigger event
+                                    });
+                                    function enable_cb(){
+                                        if (this.checked) {
+                                            $("button #btncheck").removeProp()("disabled");
+                                        } else {
+                                            $("button #btncheck").prop("disabled", true);
+                                        }
+                                    };
                                 </script>
-
                                 <div class="form-group  text-center">
                                     <div class="checkbox ">
                                        <input id="check" name="checkbox" type="checkbox" > 

@@ -53,7 +53,20 @@
         <?php include ('./script_packs.html'); ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
-        
+        <script>
+            function getJobs(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "get_jobs.php",
+                    data:'department_id='+val,
+                    success: function(data){
+                        $("#list").html(data);
+                        $("#list2").html(data);
+                        $("#list3").html(data);
+                    }
+                });
+            }
+        </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -86,6 +99,7 @@
                 <div class="row box-padding">
                     <div class="box box-success">
                         <div class="box-body">
+                            
                             <form action="" method="GET">
                                 <div class="col-md-offset-1 col-md-4">
                                     <label class="col-sm-4 control-label">แผนก</label>
@@ -94,8 +108,8 @@
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
                                     ?>
-                                        <select class="form-control" name="department_id">
-                                            <option value="">เลือกทั้งหมด</option>
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" >
+                                            <option value="">--เลือกฝ่าย--</option>
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
                                             <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
                                                 <?php echo $result_department["department_name"]; ?>
@@ -108,11 +122,11 @@
                                     <label class="col-sm-4 control-label">ตำแหน่ง</label>
                                     <div class="col-sm-8">
                                     <?php 
-                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
+                                        $sql_job = "SELECT job_name, job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
                                         $query_job = mysqli_query($conn, $sql_job);
                                     ?>
-                                        <select class="form-control" name="job_id">
-                                            <option value="">เลือกทั้งหมด</option>
+                                        <select class="form-control" name="job_id" id="list">
+                                            <option value="">--เลือกตำแหน่ง--</option>
                                         <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
                                             <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
                                                 <?php echo $result_job["job_name"]; ?>
@@ -176,9 +190,9 @@
                                              
                                                         <div class="form-group">
                                                             <label>แผนก<span style="color: red;">*</span></label>
-                                                            <select class="form-control" name="department_id" required>
+                                                            <select class="form-control" name="department_id" onchange="getJobs(this.value);" required>
                                                                 <option value="">--เลือกแผนก--</option>
-                                                                        <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
+                                                                        <?php foreach ($query_department as $result_department) { ?>
                                                                 <option value="<?php echo $result_department["department_id"]; ?>">
                                                                                 <?php echo $result_department["department_id"] . " - " . $result_department["department_name"]; ?>
                                                                 </option>
@@ -186,18 +200,18 @@
                                                             </select>                                                        
                                                         </div>
                                                         <?php
-                                                            $sql_job = "SELECT * FROM jobs ";
-                                                            $query_job = mysqli_query($conn, $sql_job);
+//                                                            $sql_job = "SELECT * FROM jobs ";
+//                                                            $query_job = mysqli_query($conn, $sql_job);
                                                             ?>                                               
                                                         <div class="form-group">
                                                             <label>ตำแหน่ง<span style="color: red;">*</span></label>
-                                                            <select class="form-control" name="job_id" required>
+                                                            <select class="form-control" name="job_id" id="list2" required>
                                                                 <option value="">--เลือกตำแหน่ง--</option>
-                                                                        <?php while ($result_job = mysqli_fetch_array($query_job)) { ?>
-                                                                <option value="<?php echo $result_job["job_id"]; ?>">
+                                                                        <?php // while ($result_job = mysqli_fetch_array($query_job)) { ?>
+<!--                                                                <option value="<?php echo $result_job["job_id"]; ?>">
                                                                                 <?php echo $result_job["job_id"] . " - " . $result_job["job_name"]; ?>
-                                                                </option>
-                                                                        <?php } ?>
+                                                                </option>-->
+                                                                        <?php // } ?>
                                                             </select>
                                                         </div>                                                
                                                     </div>
@@ -244,7 +258,7 @@
                                     
                                     <table class="table table-hover table-responsive table-bordered table-striped">                               
                                         <thead>
-                                            <tr>
+                                            <tr class="text-middle">
                                                 <th style="width: 75px;"><button class="sort" data-sort="no">No</button></th>
                                                 <th style="width: 250px"><button class="sort" data-sort="kpi_name">ชื่อ KPIs</button></th>
                                                 <th style="width: 250px"><button class="sort" data-sort="kpi_desc">คำอธิบาย</button></th>
@@ -256,7 +270,7 @@
                                         </thead>
                                         <tbody class="list" >
                                         <?php while ($result_kpi = mysqli_fetch_array($query_kpi, MYSQLI_ASSOC)) { ?>
-                                            <tr>
+                                            <tr class="text-middle">
                                                 <td class="no"><b><?php echo $result_kpi["manage_kpi_id"]; ?></b></td>
                                                 <td class="kpi_name"><?php echo $result_kpi["kpi_name"]; ?></td>
                                                 <td class="kpi_desc"><?php echo $result_kpi["kpi_description"]; ?></td>
@@ -308,7 +322,7 @@
 
                                                                             <div class="form-group">
                                                                                 <label>แผนก</label>
-                                                                                <select class="form-control" name="department_id">
+                                                                                <select class="form-control" name="department_id" onchange="getJobs(this.value);">
                                                                                     <option value="">--เลือกแผนก--</option>
                                                                                     <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
                                                                                         <option value="<?php echo $result_department["department_id"]; ?>" <?php if($result_kpi["department_name"] == $result_department["department_name"]){ echo "selected" ; } ?> >
@@ -323,7 +337,7 @@
                                                                             ?>                                               
                                                                             <div class="form-group">
                                                                                 <label>ตำแหน่ง</label>
-                                                                                <select class="form-control" name="job_id">
+                                                                                <select class="form-control" name="job_id" id="list3">
                                                                                     <option value="">--เลือกตำแหน่ง--</option>
                                                                                     <?php while ($result_job = mysqli_fetch_array($query_job)) { ?>
                                                                                         <option value="<?php echo $result_job["job_id"]; ?>" <?php if($result_kpi["job_name"] == $result_job["job_name"]){ echo "selected" ; } ?> >

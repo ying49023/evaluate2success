@@ -27,14 +27,14 @@
                 <ul class="treeview-menu">
                     <?php if($my_position_level >1 ){ ?>
                     <li class="<?php if($page == 'index.php'){ echo "active" ; } ?>">
-                        <a href="index.php"><i class="fa fa-circle-o"></i> ภาพรวม</a>
+                        <a href="index.php"><i class="fa fa-circle-o"></i> แดชบอร์ดภาพรวม</a>
                     </li>
                     <li class="<?php if($page == 'total_personal_dashboard.php' || $page == 'total_personal_dashboard_detail.php'){ echo "active" ; } ?>">
-                        <a  href="total_personal_dashboard.php"><i class="fa fa-circle-o"></i> รายบุคคล</a>
+                        <a  href="total_personal_dashboard.php"><i class="fa fa-circle-o"></i> แดชบอร์ดรายบุคคล</a>
                     </li>
                     <?php } ?>
                     <li class="<?php if($page == 'myindex.php'){ echo "active" ; } ?>">
-                        <a href="myindex.php"><i class="fa fa-circle-o"></i>ของตนเอง</a>
+                        <a href="myindex.php"><i class="fa fa-circle-o"></i>แดชบอร์ดของตนเอง</a>
                     </li>
                 </ul>
             </li>

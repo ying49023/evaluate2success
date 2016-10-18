@@ -126,24 +126,7 @@
                                                 <div class="col-sm-12">
                                                     <div style="width: 75%;margin: auto;">
                                                         <div class="form-group">
-                                                            <label class="pull-left">ชื่อหัวข้อKPI<span style="color: red;">*</span></label>
-                                                            <input type="text" class="form-control" name="kpi_name" placeholder="ชื่อหัวข้อKPI" required />
-                                                        </div>
-                                                        
-                                                        <div class="form-group">
-                                                            <label class="pull-left">คำอธิบาย </label>
-                                                            <input type="text" class="form-control" name="kpi_description" placeholder="คำอธิบายKPI" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="pull-left">หน่วย</label>
-                                                            <input type="text" class="form-control" name="unit" placeholder="ระบุหน่วย" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="pull-left">ระยะเวลา(เดือน)</label>
-                                                            <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" />
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label class="pull-left">กลุ่ม</label>
+                                                            <label class="pull-left">กลุ่ม</label><span style="color: red;">*</span>
                                                             <?php
                                                             $sql_kpi_group = "SELECT * FROM kpi_group" ;
                                                             $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
@@ -154,7 +137,25 @@
                                                                 <option value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" ><?php echo $result_kpi_group["kpi_group_id"]." - ".$result_kpi_group["kpi_group_name"]; ?></option>
                                                                 <?php } ?>
                                                             </select>
-                                                        </div>                                    
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="pull-left">ชื่อหัวข้อKPI<span style="color: red;">*</span></label>
+                                                            <input type="text" class="form-control" name="kpi_name" placeholder="ชื่อหัวข้อKPI" required />
+                                                        </div>
+                                                        
+                                                        <div class="form-group">
+                                                            <label class="pull-left">คำอธิบาย </label>
+                                                            <textarea class="form-control" name="kpi_description" placeholder="คำอธิบายKPI" ></textarea>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="pull-left">หน่วย</label>
+                                                            <input type="text" class="form-control" name="unit" placeholder="ระบุหน่วย" />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="pull-left">ระยะเวลา(เดือน)</label>
+                                                            <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" />
+                                                        </div>
+                                                                                            
                                                     </div>
                                                 </div>
                                             </div>

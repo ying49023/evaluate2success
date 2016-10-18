@@ -87,65 +87,6 @@
                     <?php include './navbar_process.php'; ?>
                     <!-- /Navbar process -->
                     
-                    <!-- Employee Profile -->
-                    <div class="box box-primary" >
-                    <div class="box-body">
-                        <div class="row"> 
-                            <div class="box-padding">
-                                <!--ข้อมูลทั่วไป-->
-                                <table class="table table-responsive ">
-                                    
-                                        <tr>
-                                            <th rowspan="5">
-                                                <img class="circle-thumbnail img-circle img-responsive img-thumbnail" src="upload_images/default.png">
-                                            </th>
-                                            <th align="center" colspan="2" width="">ชื่อ-นามสกุล: </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            <th align="center" colspan="1" width="">ตำแหน่ง: </th>
-                                            <th align="center" colspan="1" width=""> </th>
-                                            <th align="center" colspan="1" width="">ระดับตำแหน่ง:  </th>
-                                            <th align="center" colspan="1" width=""> </th>
-
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">รหัส: </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            <th align="center" colspan="2" width="">อายุงาน: </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">วันเริ่มงาน: </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            <th align="center" colspan="2" width="">สังกัด / ฝ่าย / สายงาน :    </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 1 :   </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            <th align="center" colspan="2" width="">ชื่อ - นามสกุลของผู้ประเมินที่ 2 :   </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <th align="center" colspan="2" width="">วันที่ประเมิน : </th>
-                                            <th align="center" colspan="2" width=""> </th>
-                                            <th align="center" colspan="2" width="">ระยะเวลาประเมินผล </th>
-                                            <th align="center" colspan="2" width=""> ......../ ......... / 25 ......  ถึง ......... / ......... / 25........ </th>
-                                            
-                                        </tr>
-                                    
-                                
-                                
-                                
-                                       
-                                   </table><!--/ข้อมูลทั่วไป--> 
-                            </div>
-                        </div>  
-                    </div>
-                </div>
-                    <!-- /Employee Profile -->
                     <!-- Part 1 -->
                     <div class="box box-primary ">
                         <div class="box-header with-border">

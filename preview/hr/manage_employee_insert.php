@@ -120,7 +120,18 @@
         <?php include ('./css_packs.html'); ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
-        
+        <script>
+            function getJobs(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "get_jobs.php",
+                    data:'department_id='+val,
+                    success: function(data){
+                        $("#list").html(data);
+                    }
+                });
+            }
+        </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -206,7 +217,7 @@
                                                             <div class="col-md-6">                                               
                                                                 <div class="form-group">
                                                                     <label>แผนก<span style="color: red;">*</span></label>
-                                                                    <select class="form-control" name="department" required>
+                                                                    <select class="form-control" name="department" onchange="getJobs(this.value)" required>
                                                                         <option value="">--เลือกแผนก--</option>
                                                                         <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
                                                                         <option value="<?php echo $result_department["department_id"]; ?>">
@@ -220,23 +231,6 @@
                                                         </div>
 
                                                         <div class="row">
-                                                            <?php
-                                                            $sql_job = "SELECT * FROM jobs ";
-                                                            $query_job = mysqli_query($conn, $sql_job);
-                                                            ?>
-                                                            <div class="col-md-6">                                                
-                                                                <div class="form-group">
-                                                                    <label>ตำแหน่ง<span style="color: red;">*</span></label>
-                                                                    <select class="form-control" name="job_id" required>
-                                                                        <option value="">--เลือกตำแหน่ง--</option>
-                                                                        <?php while ($result_job = mysqli_fetch_array($query_job)) { ?>
-                                                                        <option value="<?php echo $result_job["job_id"]; ?>">
-                                                                                <?php echo $result_job["job_id"] . " - " . $result_job["job_name"]; ?>
-                                                                        </option>
-                                                                        <?php } ?>
-                                                                    </select>
-                                                                </div>                                                
-                                                            </div>
                                                             <?php
                                                             $sql_position_level = "SELECT * FROM position_level ";
                                                             $query_position_level = mysqli_query($conn, $sql_position_level);
@@ -255,6 +249,24 @@
 
                                                                 </div>                                                
                                                             </div>    
+                                                            <?php
+                                                            $sql_job = "SELECT * FROM jobs ";
+                                                            $query_job = mysqli_query($conn, $sql_job);
+                                                            ?>
+                                                            <div class="col-md-6">                                                
+                                                                <div class="form-group">
+                                                                    <label>ตำแหน่ง<span style="color: red;">*</span></label>
+                                                                    <select class="form-control" name="job_id" id="list" required>
+                                                                        <option value="">--เลือกตำแหน่ง--</option>
+                                                                        <?php while ($result_job = mysqli_fetch_array($query_job)) { ?>
+                                                                        <option value="<?php echo $result_job["job_id"]; ?>">
+                                                                                <?php echo $result_job["job_id"] . " - " . $result_job["job_name"]; ?>
+                                                                        </option>
+                                                                        <?php } ?>
+                                                                    </select>
+                                                                </div>                                                
+                                                            </div>
+                                                            
                                                         </div>
 
                                                         <div class="row">
