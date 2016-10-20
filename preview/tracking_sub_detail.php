@@ -389,7 +389,7 @@
                 
                 
                 var options2 = {
-                    title: 'KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด',
+                    title: '',
                     legend: 'none',
                     bar: {groupWidth: '70%'},
                     vAxis: { gridlines: { count: 5 } }

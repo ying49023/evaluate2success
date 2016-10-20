@@ -46,7 +46,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="pull-left">ระยะเวลา(เดือน)</label>
-                                    <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" value="<?php echo $result_kpi["time_period"]; ?>" >
+                                    <select class="form-control" name="time_period" required>
+                                        <option value="" >--เลือกระยะเวลา--</option>
+                                        <option value="1" <?php if($result_kpi["time_period"] == 1){ echo "selected"; }  ?> >1 เดือน</option>
+                                        <option value="2" <?php if($result_kpi["time_period"] == 2){ echo "selected"; }  ?> >2 เดือน</option>
+                                        <option value="3" <?php if($result_kpi["time_period"] == 3){ echo "selected"; }  ?> >3 เดือน</option>
+                                        <option value="6" <?php if($result_kpi["time_period"] == 6){ echo "selected"; }  ?> >6 เดือน</option>
+                                        <option value="12" <?php if($result_kpi["time_period"] == 12){ echo "selected"; }  ?> >12 เดือน</option>
+                                    </select>
                                 </div>
                                                                             
                             </div>

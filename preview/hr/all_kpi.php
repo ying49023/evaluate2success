@@ -148,12 +148,19 @@
                                                             <textarea class="form-control" name="kpi_description" placeholder="คำอธิบายKPI" ></textarea>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="pull-left">หน่วย</label>
-                                                            <input type="text" class="form-control" name="unit" placeholder="ระบุหน่วย" />
+                                                            <label class="pull-left">หน่วย</label><span style="color: red;">*</span>
+                                                            <input type="text" class="form-control" name="unit" placeholder="ระบุหน่วย" required />
                                                         </div>
                                                         <div class="form-group">
-                                                            <label class="pull-left">ระยะเวลา(เดือน)</label>
-                                                            <input type="text" class="form-control" name="time_period" placeholder="ระบุระยะเวลา" />
+                                                            <label class="pull-left">ระยะเวลา(เดือน)</label><span style="color: red;">*</span>
+                                                            <select class="form-control" name="time_period" required>
+                                                                <option value="" >--เลือกระยะเวลา--</option>
+                                                                <option value="1" >1 เดือน</option>
+                                                                <option value="2" >2 เดือน</option>
+                                                                <option value="3" >3 เดือน</option>
+                                                                <option value="6" >6 เดือน</option>
+                                                                <option value="12" >12 เดือน</option>
+                                                            </select>
                                                         </div>
                                                                                             
                                                     </div>

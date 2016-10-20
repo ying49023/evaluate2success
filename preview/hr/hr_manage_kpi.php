@@ -343,6 +343,7 @@
                                         
                                        
                         ?>
+                        <div  style="overflow-x:auto;">
                         <table class="table table-hover table-bordered">
                                 <thead class="bg-blue">
                                                 <tr>
@@ -385,7 +386,7 @@
                                                     
                                                     <td><?php echo $kpi_default_weight; ?></td>
                                                     <td class="text-center">
-                                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#<?php echo $kpi_id; ?>_update">
+                                                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<?php echo $kpi_id; ?>_update">
                                                             <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                                         </button>                                                   
                                                         |
@@ -396,7 +397,7 @@
                                                         <!--Edit Modal -->
                                                         <form class="form-horizontal" name="frmMain" method="post" action="hr_manage_kpi.php?erp=update&id=<?php echo $kpi_id; ?>" >
                                                             <div class="modal fade" id="<?php echo $kpi_id; ?>_update" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                                <div class="modal-dialog" role="document">
+                                                                <div class="modal-dialog modal-lg" role="document">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -418,8 +419,8 @@
                                                                             </div>
                                                                             <div class="input-group col-sm-12">
                                                                                 <label  for="kpi_desc" class="col-sm-4 control-label">คำอธิบาย</label>
-                                                                                <div class="form-group col-sm-8">                                                                                                            
-                                                                                    <input readonly="true" type="text" style="" class="form-control" name="u_kpi_desc" value="<?php echo $kpi_description ?>">
+                                                                                <div class="form-group col-sm-8">            
+                                                                                    <textarea class="form-control" name="u_kpi_desc" rows="3" readonly="true"><?php echo $kpi_description ?></textarea>
                                                                                 </div>
                                                                             </div>
                                                                                                         
@@ -518,6 +519,7 @@
                                          <?php }  ?>
 
                                         </table>
+                        </div>
                     </div>
                 </div>
 
