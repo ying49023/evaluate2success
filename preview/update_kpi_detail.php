@@ -224,7 +224,9 @@
                                             WHERE
                                                     k.kpi_code = '$kpi_id'
                                             AND e.evaluation_code = $my_eval_code";
-                            $query_kpi = mysqli_query($conn, $sql_kpi_title);
+                            $query_kpi = mysqli_query($conn, $sql_kpi_title);                            
+                                              
+                                  
                             
                         ?>
                         <div class="box-header with-border">
@@ -236,10 +238,21 @@
                                 $kpi_unit =$result_kpi["unit"];
                                 $kpi_symbol =$result_kpi["measure_symbol"];
                                 $kpi_resp_id =$result_kpi["kpi_responsible_id"];
-
+                                $sql_round ="CALL auto_Show_Round($kpi_resp_id,@round)";
+                                $query_round = mysqli_query($conn, $sql_round);
+                                $sql_round2 ="select @round as round limit 1";
+                                $query_round2 = mysqli_query($conn, $sql_round2);
+                                    // print_r($result_round1);
+                                while($result_round2 = mysqli_fetch_assoc($query_round2)) {
+                                     $test = $result_round2["round"];
+                                }
+                                 
+                                
+                                
+                                 
                              ?>
                             <strong><?php echo $kpi_id;?> -<?php echo $kpi_name;?></strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
-                             <?php } ?>
+                                 <?php } ?>
                         </div>
                     </div>
                     <div class="row">
@@ -263,9 +276,9 @@
                 <!-- อัพเดท KPIs-->
                 <div class="row box-padding">
                     <div class="box box-default">
-                        <div class="box-header">
+                        <div class="box-header">                           
                             <p class="text-center">
-                                <strong>อัพเดต KPIs</strong>
+                                <strong>อัพเดต KPIs <?php echo ' '.$test; ?></strong>
                             </p>
                         </div>  
                         <form method="POST" action="" >
