@@ -213,24 +213,24 @@
                                     <?php
                                 $sql_mng = "
                                     SELECT 
-                                            m.manage_comp_id As manage_comp_id,
-                                            c.competency_description As detail,
-                                            t.title_name As title_name,
-                                            p.position_description As position,
-                                            m.weight As weight,
-                                            c.competency_id As competency_id
-                                            FROM manage_competency m 
-                                            JOIN competency c ON m.competency_id=c.competency_id 
-                                            JOIN competency_title t ON c.title_id=t.title_id 
-                                            JOIN position_level p ON p.position_level_id=m.position_level_id 
-                                            WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1 and m.evaluation_code='".$_SESSION["eval_code"]."' ";
+                                        m.manage_comp_id As manage_comp_id,
+                                        c.competency_description As detail,
+                                        t.title_name As title_name,
+                                        p.position_description As position,
+                                        m.weight As weight,
+                                        c.competency_id As competency_id
+                                        FROM manage_competency m 
+                                        JOIN competency c ON m.competency_id=c.competency_id 
+                                        JOIN competency_title t ON c.title_id=t.title_id 
+                                        JOIN position_level p ON p.position_level_id=m.position_level_id 
+                                        WHERE m.position_level_id='$level' and t.title_id = '$result_title_id' and m.status=1 and m.evaluation_code='".$_SESSION["eval_code"]."' ";
                                 $query_mng= mysqli_query($conn, $sql_mng);
                                 $no=0;
                                 ?>
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th rowspan="2" >ข้อที่</th>
+                                                <th rowspan="2" style="width: 60px;" >ข้อที่</th>
                                                 <th style="text-align: left;" rowspan="2" >หัวข้อ</th>
                                                 <th   colspan="3" >ผู้ประเมิน1</th>
                                                 <th   colspan="3">ผู้ประเมิน2</th>
@@ -432,9 +432,9 @@
                                                         <div class="modal-dialog modal-lg" role="document">
                                                             <div class="modal-content ">
 
-                                                                <div class="modal-header">
+                                                                <div class="modal-header bg-blue-active">
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                    <h4 class="modal-title" id="myModalLabel">คำอธิบายคะแนน <?php echo $comp_description; ?></h4>
+                                                                    <h4 class="modal-title" id="myModalLabel"><u>คำอธิบายคะแนน</u></h4><div class="padding-small h4"><?php echo $comp_description; ?></div>
                                                                 </div>
                                                                 <div class="modal-body ">
                                                                     <div class="row">
@@ -479,8 +479,6 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">                                                            
-                                                                    
-                                                                    
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                                 </div>                 
                                                             </div>
@@ -502,30 +500,33 @@
                                 </div>
                                 <?php } ?> 
                                 <div class="col-md-12 text-center">
-                                    <a class="btn btn-success btn-lg"  data-toggle="modal" data-target="#save_point">บันทึก</a>   
+                                    <a class="btn btn-success btn-lg"  data-toggle="modal" data-target="#save_point" ><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - ส่วนที่ 3 : กฎระเบียบข้อบังคับ</a>
+                                    <!--<a class="btn btn-success btn-lg"  data-toggle="modal" data-target="#save_point">บันทึก</a>-->   
                                     <button class="btn btn-danger btn-lg" type="reset">รีเซ็ท</button>                                     
                                 </div>
+                                <!--modal submit-->
                                 <div class="modal fade" id="save_point" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                                                <div class="modal-dialog" role="document">
-                                                                    <div class="modal-content">
-                                                                        <div class="modal-header">
-                                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                                                            <h4 class="modal-title" id="myModalLabel">ยืนยันการประเมิน</h4>
-                                                                        </div>
-                                                                        <div class="modal-body">                                                                                                      <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="myModalLabel">ยืนยันการประเมิน</h4>
+                                            </div>
+                                            <div class="modal-body">                                                                                                      <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
 
-                                                                                    เมื่อกดยืนยันคุณจะไม่สามารถกลับมาแก้ไขได้!! ทำรายการต่อไหม?
+                                                        เมื่อกดยืนยันคุณจะไม่สามารถกลับมาแก้ไขได้!! ทำรายการต่อไหม?
 
-                                                                        </div>
-                                                                        <div class="modal-footer">                                                                   
-                                                                            <button class="btn-info btn-lg" type="submit" >ยืนยัน</button>                                                                             
-                                                                            <input type="hidden" name="position_level" value="<?php=$level;?>" >
-                                                                            <input type="hidden" name="emp" value="<?php echo $my_emp_id;?>" >
-                                                                            <input type="hidden" name="evalcode" value="<?php echo $_SESSION['eval_code'];?>" >
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
+                                            </div>
+                                            <div class="modal-footer">                                                                   
+                                                <button class="btn btn-info btn-lg" type="submit" >ยืนยัน</button>                                                                             
+                                                <input type="hidden" name="position_level" value="<?php=$level;?>" >
+                                                <input type="hidden" name="emp" value="<?php echo $my_emp_id;?>" >
+                                                <input type="hidden" name="evalcode" value="<?php echo $_SESSION['eval_code'];?>" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/modal submit-->
                             </div>
                             </form>    
                         </div>

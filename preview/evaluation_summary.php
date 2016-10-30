@@ -162,7 +162,7 @@
                                     <tr>
                                         <td><b>คะแนนรวมส่วนที่ 1:</b> การประเมินด้านผลงาน (กำหนดคะแนนเต็ม 60)</td>
                                         <td  class="text-center"><b>60</b></td>
-                                        <td    class="text-center"><b><?php echo $score_1_term_1;?></b></td>
+                                        <td  class="text-center"><b><?php echo $score_1_term_1;?></b></td>
                                         <td  class="text-center"><b>60</b></td>
                                         <td  class="text-center"><b><?php echo $score_1_term_2; ?></b></td>
                                     </tr>
@@ -195,8 +195,8 @@
                                         <td class="text-center"><b>10</b></td>
                                         <td class="text-center"><b><?php echo $score_3_term_2; ?></b></td>
                                     </tr>
-                                    <tr class="bg-blue">
-                                        <td style="padding-left: 40px;">คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</td>
+                                    <tr class="bg-light-blue-active h4">
+                                        <td class="text-center">คะแนนสุทธิ (ส่วนที่ 1 + ส่วนที่ 2 - ส่วนที่ 3 )</td>
                                         <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $sum_score_term_1; ?>" name="ass1part1+2point" min="0" max="100"  disabled></b></td>
                                         <td colspan=2 class="text-center" style="color: red;"><b><input type="number" value="<?php echo $result_kpi_score["point_kpi"]+$result_score_2_1["sum_2_1_assessor2"]+$result_score_2_2["sum_2_2_assessor2"]-$result_score_3["score_3"]; ?>"  name="ass2part1+2point" min="0" max="100" disabled></b></td>
                                     </tr>

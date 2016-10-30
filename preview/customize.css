@@ -1,3 +1,23 @@
+@font-face {
+  font-family: rsu ;
+  src: url(fonts/RSU_Regular.ttf);
+ }
+@font-face {
+  font-family: rsu ;
+  src: url(fonts/RSU_BOLD.ttf);
+  font-weight: bold;
+ }
+@font-face {
+  font-family: rsu ;
+  src: url(fonts/RSU_light.ttf);
+  font-weight: lighter;
+ }
+/*body{
+     font-family: rsu !important;
+ }
+ h1,h2,h3,h4,h5{
+     font-family: rsu !important;
+ }*/
 .box-padding{
     padding: 10px 30px 0px 30px;
 }
