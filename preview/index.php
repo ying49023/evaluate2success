@@ -170,7 +170,7 @@
                         <!-- AREA CHART -->
                     <div class="box box-primary">
                       <div class="box-header with-border">
-                        <h3 class="box-title">Area Chart</h3>
+                        <h3 class="box-title">KPI ภาพรวม</h3>
 
                         <div class="box-tools pull-right">
                           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -319,6 +319,33 @@
 <script src="./plugins/chartjs/Chart.min.js"></script>
 
 <!-- page script -->
+<?php
+ $sql_kpi_overveiw = "SELECT round(AVG(kp.performance_mile),2) as value,month_update
+                        FROM evaluation e JOIN evaluation_employee ee ON e.evaluation_code = ee.evaluation_code JOIN kpi_responsible kr ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                        JOIN kpi k ON kr.kpi_id = k.kpi_id JOIN kpi_progress kp ON kp.kpi_responsible_id = kr.kpi_responsible_id
+                        WHERE year=2016 AND time_period=1 and month_update BETWEEN 1 and 6
+                        GROUP BY month_update";
+ $query_kpi_overview = mysqli_query($conn, $sql_kpi_overveiw);
+ $array_month[]=array();
+ $array_value[]=array();
+ $count=0;
+ while($result_kpi_overview = mysqli_fetch_assoc($query_kpi_overview)){
+    $array_month[$count]=$result_kpi_overview['month_update'];
+    $array_value[$count]=$result_kpi_overview['value'];
+    // echo  $array_value[$count];
+    $count++;
+   
+ }
+?>
+<?php  /*
+                for($i=0;$i<$count;$i++){
+                     if($i<$count-1)
+                     echo  $array_value[$i].',';
+                     else
+                         echo  $array_value[$i];
+                } ;*/
+                ?>
+
     <script>
   $(function () {
     /* ChartJS
@@ -336,7 +363,7 @@
     var areaChart = new Chart(areaChartCanvas);
 
     var areaChartData = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      labels: ["January", "February", "March", "April", "May", "June"],
       datasets: [
         {
           label: "Electronics",
@@ -346,7 +373,7 @@
           pointStrokeColor: "#c1c7d1",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(220,220,220,1)",
-          data: [65, 59, 80, 81, 56, 55, 40]
+          data: [100, 100, 100, 100, 100, 100]
         },
         {
           label: "Digital Goods",
@@ -356,7 +383,15 @@
           pointStrokeColor: "rgba(60,141,188,1)",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(60,141,188,1)",
-          data: [28, 48, 40, 19, 86, 27, 90]
+          
+        data: [<?php  
+                for($i=0;$i<$count;$i++){
+                     if($i<$count-1)
+                     echo  $array_value[$i].',';
+                     else
+                         echo  $array_value[$i];
+                } ;
+                ?>]
         }
       ]
     };

@@ -154,6 +154,24 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
+        <!-- SCRIPT PACKS -->
+        <?php include ('./script_packs.html'); ?>
+        <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        <script>
+            function getJobs(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "get_jobs.php",
+                    data:'department_id='+val,
+                    success: function(data){
+                        $("#list").html(data);
+                        $("#list2").html(data);
+                        $("#list3").html(data);
+                    }
+                });
+            }
+        </script>
 
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -200,7 +218,7 @@
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
                                     ?>
-                                        <select class="form-control" name="department_id">
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);">
                                             <option value="">เลือกทั้งหมด</option>
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
                                             <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
@@ -217,7 +235,7 @@
                                         $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
                                         $query_job = mysqli_query($conn, $sql_job);
                                     ?>
-                                        <select class="form-control" name="job_id">
+                                        <select class="form-control" name="job_id" id="list">
                                             <option value="">เลือกทั้งหมด</option>
                                         <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
                                             <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >

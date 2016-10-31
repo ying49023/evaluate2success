@@ -335,7 +335,7 @@
                         
                         <?php 
                         $sql_kpi_history ="
-                            SELECT k.kpi_name,kp.kpi_progress_id as kpi_progress_id,kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol,kp.kpi_comment
+                            SELECT k.kpi_name,kp.kpi_progress_id as kpi_progress_id,kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol,kp.kpi_comment,kp.round_update
                             FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id 
                             JOIN kpi k ON ks.kpi_id = k.kpi_id
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
@@ -351,7 +351,7 @@
                                 <table class="table table-bordered table-hover">
                                     <tr class="bg-gray-light">
                                         <td class="text-center">ลำดับ</td>
-                                        <td class="text-center">วันที่</td>
+                                        <td class="text-center">รอบอัพเดท</td>
                                         <td class="text-center">KPIs</td>
                                         <td class="text-center">เป้าหมาย</td>
                                         <td class="text-center">ค่าจริง</td>                                        
@@ -369,12 +369,13 @@
                                         $kpi_progress_update = $result_kpi_history["kpi_progress_update"];
                                         $progress_time_update = $result_kpi_history["progress_time_update"];
                                         $kpi_progress_id = $result_kpi_history["kpi_progress_id"];
+                                        $round_update= $result_kpi_history["round_update"];
                                         
                                         $count++;
                                     ?>
                                     <tr>
                                         <td class="text-center"><?php echo $count;?></td>
-                                        <td class="text-center"><?php echo $progress_time_update;?></td>
+                                        <td class="text-center"><?php echo $round_update;?></td>
                                         <td class="text-center"><?php echo $kpi_id;?></td>
                                         <td class="text-center"><?php echo $symbol.''.$goal;?></td>
                                         <td class="text-center"><?php echo $kpi_progress_update;?></td>
@@ -486,7 +487,7 @@
         </div>
         <!-- ./wrapper -->
         <?php
-                $show_date ="SELECT kp.progress_time_update as date_show,kp.kpi_progress_update as success,ks.goal                         
+                $show_date ="SELECT kp.progress_time_update as date_show,kp.kpi_progress_update as success,ks.goal,kp.round_update                        
                             FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id                             
                             JOIN kpi k ON ks.kpi_id = k.kpi_id
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
@@ -494,6 +495,7 @@
                             WHERE ee.employee_id = $get_emp_id  AND
                             e.evaluation_code=$my_eval_code AND k.kpi_code='$kpi_id' and e.company_id=1";
                 $query_show_date = mysqli_query($conn, $show_date);
+               // $round_update= $result_kpi_history["round_update"];
                 $array_date[] = array();
                 $array_goal[] = array();
                 $array_success[] = array();
@@ -540,7 +542,8 @@
                     ['Month', 'value', { role: 'style' }],
                      <?php 
                      while($result_show_date=  mysqli_fetch_array($query_show_date)){
-                    $array_date[$i] =date("F",strtotime($result_show_date['date_show']));
+                    //$array_date[$i] =date("F",strtotime($result_show_date['date_show']));
+                    $array_date[$i]=$result_show_date['round_update'];
                     $array_goal[$i] =$result_show_date['goal'];
                     $array_success[$i] =$result_show_date['success'];       
                     //echo $array_date[$i].' '.$array_goal[$i].' '.$array_success[$i]."<br>";
