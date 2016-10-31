@@ -71,6 +71,22 @@
             $condition = 'WHERE eval.evaluation_code = 3 ';
         }
 ?>
+            <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        <script>
+            function getJobs(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "./hr/get_jobs.php",
+                    data:'department_id='+val,
+                    success: function(data){
+                        $("#list").html(data);
+                        $("#list2").html(data);
+                        $("#list3").html(data);
+                    }
+                });
+            }
+        </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -128,7 +144,7 @@
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
                                     ?>
-                                        <select class="form-control" name="department_id">
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);">
                                             <option value="">เลือกทั้งหมด</option>
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
                                             <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
@@ -145,7 +161,7 @@
                                         $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
                                         $query_job = mysqli_query($conn, $sql_job);
                                     ?>
-                                        <select class="form-control" name="job_id">
+                                        <select class="form-control" name="job_id" id="list">
                                             <option value="">เลือกทั้งหมด</option>
                                         <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
                                             <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
@@ -323,8 +339,10 @@
  $sql_kpi_overveiw = "SELECT round(AVG(kp.performance_mile),2) as value,month_update
                         FROM evaluation e JOIN evaluation_employee ee ON e.evaluation_code = ee.evaluation_code JOIN kpi_responsible kr ON ee.evaluate_employee_id = kr.evaluate_employee_id
                         JOIN kpi k ON kr.kpi_id = k.kpi_id JOIN kpi_progress kp ON kp.kpi_responsible_id = kr.kpi_responsible_id
-                        WHERE year=2016 AND time_period=1 and month_update BETWEEN 1 and 6
+                        WHERE e.year=2016 AND time_period=1 and company_id=1 and month_update BETWEEN 1 and 6
                         GROUP BY month_update";
+//e.evaluation_code=$get_eval_code;//
+
  $query_kpi_overview = mysqli_query($conn, $sql_kpi_overveiw);
  $array_month[]=array();
  $array_value[]=array();

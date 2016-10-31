@@ -147,8 +147,8 @@
                         <table class="display table table-hover table-responsive table-striped table-bordered" width="90%" >
                             <thead>
                                 <tr class="bg-blue-active">
-                                    <th><button class="sort" data-sort="id">รหัสพนักงาน</button></th>
-                                    <th><button class="sort" data-sort="full_name">ชื่อพนักงาน</button></th>
+                                    <th><button class="sort bg-blue-active" data-sort="id">รหัสพนักงาน</button></th>
+                                    <th><button class="sort bg-blue-active" data-sort="full_name">ชื่อพนักงาน</button></th>
                                     <th>ฝ่าย/แผนก</th>                                    
                                     <th>ตำแหน่ง</th>
                                     
@@ -168,6 +168,13 @@
                                             WHERE e.company_id = 1 ORDER BY d.department_name";
                                 $query_emp= mysqli_query($conn, $sql_emp);
                                 
+                                $sql_conclude_grade ="
+                                                    SELECT grade_description,count(ee.grade_id) as result
+                                                    FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
+                                                    GROUP BY g.grade_id 
+                                                    ORDER BY grade_description";
+                                 $query_conclude_grade = mysqli_query($conn, $sql_conclude_grade);
+                                
                                 
                                 
                               if ($id!='' and $name =='') {                                
@@ -177,6 +184,16 @@
                                             JOIN jobs j ON e.job_id = j.job_id
                                             WHERE e.company_id = 1 and e.employee_id=$id ";
                                  $query_emp= mysqli_query($conn, $sql_emp);
+                                 $sql_conclude_grade ="
+                                                    SELECT grade_description,count(ee.grade_id) as result
+                                                    FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
+                                                    JOIN employees e ON ee.employee_id = e.employee_id 
+                                                    JOIN departments d ON e.department_id = d.department_id 
+                                                    JOIN jobs j ON e.job_id = j.job_id
+                                                    WHERE e.company_id = 1 and e.employee_id=$id 
+                                                    GROUP BY g.grade_id 
+                                                    ORDER BY grade_description";
+                                 $query_conclude_grade = mysqli_query($conn, $sql_conclude_grade);
                                  
                             }else if($name !='') {                                
                                 $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description
@@ -186,6 +203,16 @@
                                             WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and e.first_name like '%$name%'
                                             ";
                                  $query_emp= mysqli_query($conn, $sql_emp);
+                                 $sql_conclude_grade ="
+                                                    SELECT grade_description,count(ee.grade_id) as result
+                                                    FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
+                                                    JOIN employees e ON ee.employee_id = e.employee_id 
+                                                    JOIN departments d ON e.department_id = d.department_id 
+                                                    JOIN jobs j ON e.job_id = j.job_id
+                                                    WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and e.first_name like '%$name%'
+                                                    GROUP BY g.grade_id 
+                                                    ORDER BY grade_description";
+                                 $query_conclude_grade = mysqli_query($conn, $sql_conclude_grade);
                                  
                                  
                             }else if($dept_name !='') {                                
@@ -196,6 +223,16 @@
                                             WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and department_name  like '%$dept_name%'
                                             ";
                                  $query_emp= mysqli_query($conn, $sql_emp);
+                                 $sql_conclude_grade ="
+                                                    SELECT grade_description,count(ee.grade_id) as result
+                                                    FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
+                                                    JOIN employees e ON ee.employee_id = e.employee_id 
+                                                    JOIN departments d ON e.department_id = d.department_id 
+                                                    JOIN jobs j ON e.job_id = j.job_id
+                                                    WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and department_name  like '%$dept_name%'
+                                                    GROUP BY g.grade_id 
+                                                    ORDER BY grade_description";
+                                 $query_conclude_grade = mysqli_query($conn, $sql_conclude_grade);
                                  
                                  
                             }
@@ -228,6 +265,32 @@
                                             var userList = new List('filter', options);
                            </script>
                         </table>
+                        <table class="table table-hover table-responsive table-striped table-bordered">
+                            <thead>
+                                <tr class="bg-blue-active">
+                                    
+                                    <th>เกรด</th>                                    
+                                    <th>จำนวน(คน)</th>
+                                    
+                                    
+                                    
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                        <?php while($result_conclude_grade = mysqli_fetch_assoc($query_conclude_grade)) { ?>
+                        <tr >
+                                    
+                                    <th><?php echo $result_conclude_grade['grade_description']; ?></th>                                    
+                                    <th><?php echo $result_conclude_grade['result']; ?></th>
+                                    
+                                    
+                                    
+
+                                </tr>
+                        <?php }?>
+                            </tbody>
+                        </table>   
                         <div class="col-md-12  ">
                             <br><br>
                             <form action="pdf_grade_report.php" method="post">
