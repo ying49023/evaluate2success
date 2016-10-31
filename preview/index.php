@@ -29,9 +29,6 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
             <!-- CSS PACKS -->
             <?php include ('./css_packs.html'); ?>
-            
-    
-    
             <?php include ('./classes/connection_mysqli.php');?>
         <?php
         
@@ -43,32 +40,61 @@
         if (isset($_GET["job_id"])) {
             $get_job_id = $_GET["job_id"];
         }
-        $eval = ' eval_code = 3';
-        $get_eval_code = '3';
-        if(isset($_GET["eval_code"])){
-            $get_eval_code = $_GET["eval_code"];
-            $eval = " eval.evaluation_code = '".$get_eval_code ."'";
+        $get_time_period = '1';
+        if (isset($_GET["time_period"])) {
+            $get_time_period = $_GET["time_period"];
+        }
+        //$eval = ' eval_code = 3';
+        $get_eval_code = '';
+        //if(isset($_GET["eval_code"])){
+            //$get_eval_code = $_GET["eval_code"];
+            //$eval = " eval.evaluation_code = '".$get_eval_code ."'";
+        //}
+        
+        $get_year = date("Y");
+        if(isset($_GET["year"])){
+            $get_year = $_GET["year"];
+
         }
         
-        $condition = 'WHERE eval.evaluation_code = 3 ';
-        if ($get_department_id != '' && $get_job_id != '' && $get_eval_code != '') {
-            $condition = " WHERE e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
+        $condition_kpi_list = "WHERE year = '$get_year' ";
+        $get_sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile,MONTH(NOW()) as current_month
+                        FROM kpi_progress kp JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
+                        JOIN kpi k ON kr.kpi_id = k.kpi_id 
+                        WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year= '$get_year'  ";
+        if ($get_department_id != '' && $get_job_id != '' && $get_time_period != '' && $get_year != '') {
+            $condition_kpi_list = " WHERE department_id = '$get_department_id' AND job_id = '$get_job_id' AND time_period = '$get_time_period' AND year = '$get_year' ";
+            $get_sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile, MONTH(NOW()) as current_month
+                            FROM kpi_progress kp 
+                            JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
+                            JOIN kpi k ON kr.kpi_id = k.kpi_id 
+                            JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
+                            WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year='$get_year' AND department_id ='$get_department_id' ";
+            
         } else if ($get_department_id != '' && $get_job_id != '') {
-            $condition = " WHERE  e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' ";
-        }else if($get_job_id != '' && $get_eval_code != ''){
-            $condition = " WHERE  e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
-        }else if($get_department_id != '' && $get_eval_code != ''){
-            $condition = " WHERE e.department_id = '$get_department_id' AND eval.evaluation_code = '$get_eval_code' ";
-        }else if($get_department_id != '' || $get_job_id != '' || $get_eval_code != ''){
-            if ($get_department_id != '') {
-                $condition = " WHERE e.department_id = '" . $get_department_id . "' ";
-            } else if ($get_job_id != '') {
-                $condition = " WHERE e.job_id = '" . $get_job_id . "' ";
-            }else if($get_eval_code != ''){
-                $condition = " WHERE eval.evaluation_code = '$get_eval_code' ";
-            }
-        }else if($get_department_id == '' && $get_job_id == '' && $get_eval_code == ''){
-            $condition = 'WHERE eval.evaluation_code = 3 ';
+            $condition_kpi_list = " WHERE  department_id = '$get_department_id' AND e.job_id = '$get_job_id' AND time_period = '$get_time_period' AND year = '$get_year' ";
+            $get_sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile, MONTH(NOW()) as current_month
+                            FROM kpi_progress kp 
+                            JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
+                            JOIN kpi k ON kr.kpi_id = k.kpi_id 
+                            JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
+                            WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year='$get_year' AND department_id ='$get_department_id' ";
+            
+        }else if($get_job_id != '' ){
+            $condition_kpi_list = " WHERE  job_id = '$get_job_id' AND department_id = '$get_department_id' AND time_period = '$get_time_period' AND year = '$get_year' ";
+        }else if($get_department_id != ''){
+            $condition_kpi_list = " WHERE department_id = '$get_department_id'  AND time_period = '$get_time_period' AND year = '$get_year' ";
+            $get_sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile, MONTH(NOW()) as current_month
+                            FROM kpi_progress kp 
+                            JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
+                            JOIN kpi k ON kr.kpi_id = k.kpi_id 
+                            JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
+                            WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year='$get_year' AND department_id ='$get_department_id' ";
+            
+        }else if($get_time_period != '' ){
+            $condition_kpi_list = " WHERE  year = '$get_year' and time_period = '$get_time_period' ";
+        }else if($get_time_period != '' && $get_year != ''){
+            $condition_kpi_list = " WHERE  year = '$get_year' and time_period = '$get_time_period' ";
         }
 ?>
             <!--ListJS-->
@@ -116,30 +142,65 @@
             <!--/Page header -->
 
             <!-- Main content -->
+            
+            <!-- Search -->
             <div class="row box-padding">
                 <div class="box box-success">
-                    <div class="box-body ">
-                            <form method="get">
-                                <div class="col-md-3">
-                                    <label class="col-sm-4 control-label">รอบ</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
-                                        $query_eval = mysqli_query($conn, $sql_eval);
-                                    ?>
-                                        <select class="form-control" name="eval_code">
-                                            <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_eval["evaluation_code"]; ?>" <?php if($get_eval_code == $result_eval["evaluation_code"]) { echo "selected"; }  ?> >
-                                                <?php echo 'ปี '.$result_eval["year"]." - ครั้งที่".$result_eval["term_id"]; ?>
+                    <div class="box-header ">
+                        <form method="get">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" control-label">รอบ</label>
+                                    <div class="">
+                                                <?php
+                                                $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
+                                                $query_eval = mysqli_query($conn, $sql_eval);
+                                                ?>
+                                        <select class="form-control input-small" name="year" required>
+
+                                                    <?php while ($result_eval = mysqli_fetch_array($query_eval, MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_eval["year"]; ?>"<?php if ($get_year == $result_eval["year"]) {
+                                                echo "selected"; } ?> >
+                                                    <?php echo 'ปี ' . $result_eval["year"] . " - ครั้งที่" . $result_eval["term_id"]; ?>
+
                                             </option>
-                                        <?php } ?>
+
+                                                    <?php } ?>
+                                        </select>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" control-label">ระยะเวลา</label>
+                                    <div class="">
+                                        <select class="form-control" name="time_period" required="">
+                                            <option value="">เลือกระยะเวลา</option>
+                                            <option value='1' <?php if($get_time_period == 1) { echo "selected"; }  ?> >
+                                                1 เดือน
+                                            </option>
+                                            <option value='2' <?php if($get_time_period == 2) { echo "selected"; }  ?> >
+                                                2 เดือน
+                                            </option>
+                                            <option value='3' <?php if($get_time_period == 3) { echo "selected"; }  ?> >
+                                                3 เดือน
+                                            </option>
+                                            <option value='6' <?php if($get_time_period == 6) { echo "selected"; }  ?> >
+                                                6 เดือน
+                                            </option>
+                                            <option value='12' <?php if($get_time_period == 12) { echo "selected"; }  ?> >
+                                                12 เดือน
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="col-sm-4 control-label">แผนก</label>
-                                    <div class="col-sm-8">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label class=" control-label">แผนก/ฝ่าย</label>
+                                    <div class="">
                                     <?php 
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
@@ -154,167 +215,172 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="col-sm-4 control-label">ตำแหน่ง</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
-                                        $query_job = mysqli_query($conn, $sql_job);
-                                    ?>
-                                        <select class="form-control" name="job_id" id="list">
-                                            <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
-                                                <?php echo $result_job["job_name"]; ?>
-                                            </option>
-                                        <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class=" col-md-1">
-                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
-                                </div>
 
-                            </form>
-                        </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group" >
+                                <label class=" control-label">ตำแหน่ง</label>
+                                <div class="">
+                                <?php 
+                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
+                                    $query_job = mysqli_query($conn, $sql_job);
+                                ?>
+                                    <select class="form-control" name="job_id" id="list">
+                                        <option value="">เลือกทั้งหมด</option>
+                                    <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
+                                        <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
+                                            <?php echo $result_job["job_name"]; ?>
+                                        </option>
+                                    <?php } ?>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="pull-right">
+                                <button type="submit" class="btn btn-primary search-button " style="width: 100px;" ><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;ค้นหา</button>
+                            </div>
+
+                        </form>
+                    </div>
                 </div>
             </div>
+            <!--/Search -->
             <div class="row box-padding">
-
-                <div class="row">
-                    <div class="col-md-8">
-                        <!-- AREA CHART -->
+                <!-- AREA CHART -->
+                <div class="col-md-8">
                     <div class="box box-primary">
-                      <div class="box-header with-border">
-                        <h3 class="box-title">KPI ภาพรวม</h3>
+                        <div class="box-header with-border">
+                            <h3 class="box-title">KPI ภาพรวม (ราย <?php echo $get_time_period; ?> เดือน)</h3>
 
-                        <div class="box-tools pull-right">
-                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                          </button>
-                          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                      </div>
-                      <div class="box-body">
-                        <div class="chart">
-                          <canvas id="areaChart" style="height:250px"></canvas>
-                        </div>
-                      </div>
-                      <!-- /.box-body -->
-                    </div>
-
-                    </div>
-                    <div class="col-md-4">
-                        <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <strong>KPIภาพรวมล่าสุด ประจำเดือน : พฤษภาคม</strong>
-                                <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>
-                                
-                            </div>
-                            </div>
-                            <div class="box-body">
-                                <div id="g5" class="200px160px" style="height:220px">
-                                    <script>
-                                    document.addEventListener("DOMContentLoaded", function(event) {
-                                      var g5 = new JustGage({
-                                        id: "g5",
-                                        //value: getRandomInt(0, 100),
-                                        value : 65,
-                                        min: 0,
-                                        max: 100,
-                                        title: "เดือนพฤษภาคม",
-                                        label: "%",
-                                        levelColorsGradient: false
-                                      });
-                                  });
-                                    </script>
-                                </div>
-                                
                             </div>
                         </div>
-
+                        <div class="box-body">
+                            <div class="chart">
+                                <canvas id="areaChart" style="height:250px"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <!-- /AREA CHART -->
+
+                <!-- Mile pedformance -->
+                <div class="col-md-4">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h4>ความสำเร็จของ KPIs ทั้งหมด  </h4>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"> 
+                                    <i class="fa fa-minus"></i>
+                                </button>   
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div id="score" class="200px160px" style="height:220px">
+                            <?php
+                            $sql_per = $get_sql_per;
+                            $query_per = mysqli_query($conn, $sql_per);
+                            $result_per = mysqli_fetch_array($query_per);
+                            $current_month = $result_per["current_month"];
+                            if($result_per["performance_mile"] == ''){
+                            ?>
+                                <h3 class="text-middle text-center">ยังไม่มีข้อมูล</h3>
+                            <?php 
+
+                            }else{
+
+                            ?> 
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function(event) {
+                                        var score = new JustGage({
+                                            id: "score",
+                                            //value: getRandomInt(0, 100),
+                                            value : <?php echo $result_per["performance_mile"]; ?>,
+                                            min: 0,
+                                            max: 100,
+                                            title: "ประจำเดือนเดือน: <?php echo $current_month; ?>",
+                                            label: "%",
+                                            levelColorsGradient: true
+                                        });
+                                    });
+                                </script>
+                            <?php 
+                            }
+                            ?>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /Mile pedformance -->
 
             </div>
+            
+            <!-- KPI list -->
             <div class="row box-padding">
-            <div class="box box-primary">
-                <div class="box-body">
-                    <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th width="80px" >ID</th>
-                            <th>ชื่อKPIs</th>
-                            <th width="90px">เป้าหมาย</th>
-                            <th width="90px">ทำจริง</th>
-                            <th width="200px">ประสิทธิภาพ</th>
-                            <th width="60" style="text-align:center">%</th>
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h4>KPIs ทั้งหมด ราย : <?php echo $get_time_period; ?> เดือน</h4>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="80px" >ID</th>
+                                <th>ชื่อ KPIs</th>
+                                <th width="90px">เป้าหมาย</th>
+                                <th width="90px">ทำจริง</th>
+                                <th width="150px">ประสิทธิภาพ</th>
+                                <th width="60" style="text-align:center">%</th>
+                            </tr>
+                        </thead>
+                        <?php
+                        $sql_kpi = "SELECT kpi_code, kpi_name, CONCAT(k.default_target,' ',k.unit) as target, CONCAT(ROUND(AVG(success),2),' ',k.unit) as actual, time_period
+                            FROM kpi k JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id 
+                            JOIN kpi_responsible kr ON kr.kpi_id = k.kpi_id 
+                            $condition_kpi_list
+                            GROUP BY k.kpi_id
+                            ORDER BY k.kpi_id";
+                        $query_kpi = mysqli_query($conn, $sql_kpi);
+                        $count_kpi = mysqli_num_rows($query_kpi);
+
+                        if($count_kpi == 0){ ?>
+                        <tr class="text-center bg-gray">
+                            <td colspan="6"><i>ไม่มีข้อมูลสำหรับ KPI ระยะเวลา <?php echo $get_time_period; ?> เดือน</i></td>
                         </tr>
-                    </thead>
-                    <tr>
-                        <td>KPI001</td>
-                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
-                        <td>10</td>
-                        <td>9</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-success" style="width: 90%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-green">90%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI002</td>
-                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
-                        <td>8</td>
-                        <td>2</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-primary" style="width: 25%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-blue">20%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI003</td>
-                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
-                        <td>20</td>
-                        <td>14</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-warning" style="width: 70%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-orange">70%</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>KPI004</td>
-                        <td>เขียนโปรแกรมให้ได้ 5 ไฟล์ใน 1 สัปดาห์</td>
-                        <td>30</td>
-                        <td>10</td>
-                        <td>
-                            <div class="progress progress-xs progress-striped active">
-                              <div class="progress-bar progress-bar-success" style="width: 80%"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <span class="badge bg-green">80%</span>
-                        </td>
-                    </tr>
-                        
-                    </table>
+                        <?php }else{
+                        foreach($query_kpi as $result_kpi){
+                            $percent_completed = ($result_kpi["actual"]/$result_kpi["target"])*100 ;
+                        ?>
+                        <tr>
+                            <td><?php echo $result_kpi["kpi_code"]; ?></td>
+                            <td><?php echo $result_kpi["kpi_name"]; ?></td>
+                            <td><?php echo $result_kpi["target"]; ?></td>
+                            <td><?php echo $result_kpi["actual"]; ?></td>
+                            <td>
+                                <div class="progress progress-xs progress-striped active">
+                                  <div class="progress-bar <?php if($percent_completed <= 40){ echo 'progress-bar-danger' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'progress-bar-warining' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'progress-bar-info' ;}else if($percent_completed > 75){ echo 'progress-bar-success' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>%"></div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge <?php if($percent_completed ==0){ echo ''; }else if($percent_completed <= 40){ echo 'bg-red' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'bg-blue' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'bg-light-blue' ;}else if($percent_completed > 75){ echo 'bg-green' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>">
+                                    <?php if($percent_completed ==0){ echo 'N/A' ; } else{ echo (int)$percent_completed."%" ; } ?><?php  ?>
+                                </span>
+                            </td>
+                        </tr>
+                        <?php }
+                        }
+                        ?>
+
+                        </table>
+                    </div>
                 </div>
             </div>
-                
-            </div>
-
+            <!-- /KPI list -->
+            
             <!-- /.content --> </div>
         <!-- /.content-wrapper -->
 
@@ -354,6 +420,7 @@
     $count++;
    
  }
+ echo $count;
 ?>
 <?php  /*
                 for($i=0;$i<$count;$i++){

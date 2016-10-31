@@ -58,7 +58,46 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                
+                <?php 
+                                    $sql_eval = "select * from evaluation where current_eval = 1 and company_id=1";
+                                    $query_eval = mysqli_query($conn, $sql_eval);
+                                ?>
+                                 <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) {
+                                    $eval_code = $result_eval['evaluation_code'];
+                                    $term_id = $result_eval['term_id'];
+                                    $year = $result_eval['year'];
+                                 } ?>
+                                <?php 
+                                    $sql_emp_list="SELECT * FROM employees e
+                                                  JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                  JOIN jobs j ON j.job_id = e.job_id
+                                                  JOIN departments d ON d.department_id = e.department_id
+                                                  JOIN company c ON c.company_id = e.company_id
+                                                  WHERE ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code
+                                                  GROUP BY ee.employee_id";
+                                    $query_emp_list = mysqli_query($conn, $sql_emp_list);
+                                    $all_emp = mysqli_num_rows($query_emp_list);
+                                    
+                                    $sql_complete = "SELECT * FROM employees e
+                                                  JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                  JOIN jobs j ON j.job_id = e.job_id
+                                                  JOIN departments d ON d.department_id = e.department_id
+                                                  JOIN company c ON c.company_id = e.company_id
+                                                  WHERE ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code AND status_success = 1 
+                                                  GROUP BY ee.employee_id";
+                                    $query_complete = mysqli_query($conn, $sql_complete);
+                                    $complete_emp = mysqli_num_rows($query_complete);
+                                    
+                                    $sql_uncomplete = "SELECT * FROM employees e
+                                                  JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                  JOIN jobs j ON j.job_id = e.job_id
+                                                  JOIN departments d ON d.department_id = e.department_id
+                                                  JOIN company c ON c.company_id = e.company_id
+                                                  WHERE ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code AND status_success = 0 
+                                                  GROUP BY ee.employee_id";
+                                    $query_uncomplete = mysqli_query($conn, $sql_uncomplete);
+                                    $uncomplete_emp = mysqli_num_rows($query_uncomplete);
+                                        ?>
                 <div class="row box-padding">
                     <!--Style 1 don't delete  อย่าเพิ่งลบ-->
                     <!--
@@ -111,7 +150,7 @@
 
                         <div class="info-box-content">
                           <span class="info-box-text">ประเมินแล้ว</span>
-                          <span class="info-box-number">50 คน</span>
+                          <span class="info-box-number"><?php echo $complete_emp; ?> คน</span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
@@ -124,7 +163,7 @@
 
                         <div class="info-box-content">
                           <span class="info-box-text">ยังไม่ประเมิน</span>
-                          <span class="info-box-number">7 คน</span>
+                          <span class="info-box-number"><?php echo $uncomplete_emp; ?> คน</span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
@@ -137,7 +176,7 @@
 
                         <div class="info-box-content">
                           <span class="info-box-text">สมาชิกทั้งหมด</span>
-                          <span class="info-box-number">57 คน</span>
+                          <span class="info-box-number"><?php echo $all_emp; ?> คน</span>
                         </div>
                         <!-- /.info-box-content -->
                       </div>
@@ -169,52 +208,7 @@
                                 <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
                                 <input class="search form-control" placeholder="ค้นหา" />
                             </div>
-                                 <?php 
-                                    $sql_eval = "select * from evaluation where current_eval = 1 and company_id=1";
-                                    $query_eval = mysqli_query($conn, $sql_eval);
-                                ?>
-                                 <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) {
-                                    $eval_code = $result_eval['evaluation_code'];
-                                    $term_id = $result_eval['term_id'];
-                                    $year = $result_eval['year'];
-                                 } ?>
-                                <?php 
-                                            $sql_emp_list="SELECT
-                                                            ee.employee_id,
-                                                            e.prefix,
-                                                            e.first_name,
-                                                            e.last_name,
-                                                            e.position_level_id,
-                                                            ee.status_success,
-                                                            ee.evaluate_employee_id,
-                                                            d.department_name,
-                                                            j.job_name,
-                                                            c.company_id,
-                                                            ee.assessor1_id,
-                                                            ee.assessor2_id
-                                                          FROM
-                                                            employees e
-                                                          JOIN
-                                                            evaluation_employee ee
-                                                          ON
-                                                            e.employee_id = ee.employee_id
-                                                          JOIN
-                                                            jobs j
-                                                          ON
-                                                            j.job_id = e.job_id
-                                                          JOIN
-                                                            departments d
-                                                          ON
-                                                            d.department_id = e.department_id
-                                                          JOIN
-                                                            company c
-                                                          ON c.company_id = e.company_id
-                                                          WHERE
-                                                            ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code
-                                                          GROUP BY
-                                                            ee.employee_id";
-                                            $query_emp_list = mysqli_query($conn, $sql_emp_list);
-                                        ?>
+                                 
 
                                 <table class="table table-bordered table-hover" width="90%" >
                                 <thead>
