@@ -11,7 +11,7 @@
     <body>
         <div class="row">
             <div class=" text-center" style="">
-                <div class="box-padding" style="padding-top: 15%;padding-bottom: 20px;background-color:#367fa9;color: #FFFFFF; ">
+                <div class="box-padding" style="padding-top: 15%;padding-bottom: 20px;background-color:#212121;color: #FFFFFF; ">
                     <h2>Session หมดเวลา กรุณา Login ใหม่อีกครั้ง</h2>
                     <h4>ระบบกำลังดำเนินการไปยังหน้า Login </h4>
                 </div>

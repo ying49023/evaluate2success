@@ -41,7 +41,7 @@
             $level = $_GET["position_level_id"];
         }
         
-        if(isset($_POST["submit_skill"])){
+        if(isset($_POST["submit_skills"])){
             if(isset($_POST["skill_dev_id"])){
                 $array_sk[] = array();
                 $c_skill_id = 0;
@@ -85,6 +85,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
+        
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
 
@@ -398,7 +399,7 @@
                         <!--submit button-->    
                         <div class="box-footer">
                             <div class="row box-padding text-center">
-                                <button class="btn btn-success btn-lg" type="submit" name="submit_skill">บันทึก</button>
+                                <button class="btn btn-success btn-lg" type="submit" name="submit_skill"><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - สรุปผลการประเมิน</button>
                                 <input class="btn btn-danger btn-lg" type="reset" value="รีเซ็ต" >
                             </div>
                         </div>
@@ -451,16 +452,8 @@
             
         <!-- ./wrapper -->
     </body>
-    <!-- jQuery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-    <!-- Bootstrap JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
-    <script type="text/javascript">
-          // run pre selected options
-          $('#pre-selected-options').multiSelect();
-            </script>    
+     <!-- SCRIPT PACKS -->
+        <?php include('./script_packs.html') ?> 
 </html>
             <?php
         }

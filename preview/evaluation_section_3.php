@@ -372,7 +372,7 @@
                                         <textarea class="form-control" name="comment1" size="60" rows="5" placeholder="เขียนความเห็น(ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)"></textarea>         
                                         <div class="form-group box-padding-small text-center">
                                             <input type="hidden" name="eval_emp_id" value="<?php echo $_SESSION["eval_emp_id"]; ?>" >
-                                            <input class="btn btn-success btn-lg search-button" type="submit" name="submit_comment" value="บันทึก">
+                                            <button class="btn btn-success btn-lg" type="submit" name="submit_comment" ><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - ส่วนที่ 4 : ความคิดเห็นเพิ่มเติม</button>
                                             <input class="btn btn-danger btn-lg search-button" type="reset" name="reset" value="รีเซ็ต" >
                                         </div>          
                                     </div>

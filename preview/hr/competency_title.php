@@ -107,7 +107,7 @@
                 <!--/Page header -->
                 
                 <!-- Main content -->
-                <div id="filter" class="row box-padding">
+                <div id="filter" class=" row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <b>หัวข้อพฤติกรรมในการทำงานของพนักงาน (Competency Title) </b>
