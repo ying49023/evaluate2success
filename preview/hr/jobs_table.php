@@ -109,7 +109,7 @@
 
                 <!-- Main content -->
              
-                <div id="filter" class="row box-padding">
+                <div id="filter" class=" row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">ตารางแสดงตำแหน่งงาน</h3>

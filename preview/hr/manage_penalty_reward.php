@@ -94,7 +94,7 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                <div class="row box-padding">
+                <div class=" row box-padding">
                     <div class="box box-success">
                         <div class="box-body ">
                             <form method="get">

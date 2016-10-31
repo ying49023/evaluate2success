@@ -123,7 +123,7 @@
 
                 <!-- Main content -->
              
-                <div class="row box-padding">
+                <div class=" row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border ">
                             <h3 class="box-title">ตารางแสดงข้อมูลรางวัล / โทษทางวินัย</h3>

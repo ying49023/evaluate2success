@@ -64,13 +64,6 @@
                     header("location:evaluation_section_4.php");
                 }
             }
-           
-            
-            
-            
-            
-            
-            
         }
             
 ?>
@@ -126,6 +119,7 @@
                         <div class="box-header with-border">
                             <h4><b>ส่วนที่ 3 : การปฏิบัติตามกฎระเบียบและข้อบังคับของบริษัท </b></h4>
                         </div>
+                        <!--box-body-->
                         <div class="box-body ">
                             <div class="box-padding-small">
                                 <h4><u>ส่วนที่ 3.1</u> เวลาการทำงาน (Time Attendance)</h4>
@@ -133,7 +127,7 @@
                             <!--Table leave -->
                             <div class="row box-padding-small">
                                 <div class="col-sm-offset-1 col-sm-10">
-                            <table class="table table-hover table-striped table-bordered">
+                                    <table class="table table-hover table-striped table-bordered">
                                 <thead class="table-active">
                                     <?php
                                             $sql_month = "SELECT start_month, end_month FROM term t JOIN evaluation e ON e.term_id = t.term_id where evaluation_code = '".$_SESSION["eval_code"]."'";
@@ -159,15 +153,15 @@
                                 <tbody>
                                             <?php
                                             $sql_leave_type = "SELECT
-                                                                                        lt.leave_type_id AS leave_type_id,
-                                                                                        lt.leave_type_description AS leave_type_description,
-                                                                                        lt.point AS point,
-                                                                                        el.no_of_day as no_of_day,
-                                                                                        el.point_leave as point_leave
-                                                                                FROM
-                                                                                        leaves_type lt
-                                                                                LEFT JOIN evaluatation_leave el ON lt.leave_type_id = el.leave_type_id
-                                                                                AND el.evaluate_employee_id = '" . $_SESSION["eval_emp_id"] . "'";
+                                                                        lt.leave_type_id AS leave_type_id,
+                                                                        lt.leave_type_description AS leave_type_description,
+                                                                        lt.point AS point,
+                                                                        el.no_of_day as no_of_day,
+                                                                        el.point_leave as point_leave
+                                                                FROM
+                                                                        leaves_type lt
+                                                                LEFT JOIN evaluatation_leave el ON lt.leave_type_id = el.leave_type_id
+                                                                AND el.evaluate_employee_id = '" . $_SESSION["eval_emp_id"] . "'";
                                             $query_leave_type = mysqli_query($conn, $sql_leave_type);
                                                 
                                             while ($result_leave_type = mysqli_fetch_array($query_leave_type)) {
@@ -177,22 +171,22 @@
                                         <th class="text-center" ><?php echo $result_leave_type["leave_type_description"]; ?></th>
                                         <td class="text-center" >
                                             <input class="text-center" type="number"  name="no_of_day" min="1" max="365" value="<?php
-                                                        if ($result_leave_type["no_of_day"] == '') {
-                                                            echo '0';
-                                                        } else {
-                                                            echo $result_leave_type["no_of_day"];
-                                                        }
-                                                        ?>" disabled > วัน
+                                                if ($result_leave_type["no_of_day"] == '') {
+                                                    echo '0';
+                                                } else {
+                                                    echo $result_leave_type["no_of_day"];
+                                                }
+                                                ?>" disabled > วัน
                                         </td>
                                         <td class="text-center" ><?php echo $result_leave_type["point"]; ?></td>
                                         <td class="text-center">
                                             <input class="text-center" type="number"  name="point" min="0.5" max="60" value="<?php
-                                                        if ($result_leave_type["point_leave"] == '') {
-                                                            echo '0';
-                                                        } else {
-                                                            echo $result_leave_type["point_leave"];
-                                                        }
-                                                        ?>" disabled > คะแนน
+                                                if ($result_leave_type["point_leave"] == '') {
+                                                    echo '0';
+                                                } else {
+                                                    echo $result_leave_type["point_leave"];
+                                                }
+                                                ?>" disabled > คะแนน
                                         </td>
                                     </tr>
                                             <?php } ?>
@@ -223,17 +217,19 @@
                                 </div>
                             </div>
                             <!--/Table leave -->
+                            
                             <div class="box-padding-small">
                                 <h4><u>ส่วนที่ 3.2</u> การพิจารณาความดี ความชอบ และการลงโทษทางวินัย</h4>
                             </div>
                             <div class="row">
+                                <!--Reward Table-->
                                 <div class="col-md-offset-1 col-md-10 box-padding-small">
                                     <table class="table table-bordered table-striped">
                                         <thead class="bg-success">
                                             <tr>
                                                 
-                                                <th colspan="2"><u>ประวัติการได้รับรางวัล / ยกย่อง</u></th>
-                                                <th class="text-center">คะแนน</th>
+                                                <th class="h4" colspan="2"><i class="glyphicon glyphicon-star text-green"></i>&nbsp;&nbsp;<u>ประวัติการได้รับรางวัล / ยกย่อง</u></th>
+                                                <th class="h4 text-center">คะแนน</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -278,12 +274,15 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <!--/Reward Table-->
+                                
+                                <!--Penalty Table-->
                                 <div class="col-md-offset-1 col-md-10 box-padding-small">
                                     <table class="table table-bordered table-striped">
                                         <thead class="bg-danger">
                                             <tr>
-                                                <th colspan="2"><u>ประวัติการลงโทษทางวินัย</u></th>
-                                                <th class="text-center">คะแนน</th>
+                                                <th class="h4" colspan="2" ><i class="glyphicon glyphicon-warning-sign text-red"></i>&nbsp;&nbsp;<u>ประวัติการลงโทษทางวินัย</u></th>
+                                                <th class="h4 text-center">คะแนน</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -331,11 +330,13 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <!--/Penalty Table-->
                             </div>
                             <hr>
                             
-                            <form method="post">
+                            
                             <div class="row">
+                                <!--sum point-->
                                 <div class="col-md-offset-1 col-md-10">
                                     <table class="table table-striped " >
                                         <thead class="bg-light-blue-active">
@@ -351,7 +352,6 @@
                                         </thead>
                                         <tbody class="">
                                             <tr class="" style="background-color:#E3F2FD ;font-size: 20px;font-weight: 800;padding: 10px;">
-                                                <!--<td class="text-center"><?php if($result_sum_reward["sum_reward_point"] == ''){ echo '0'; }else{ echo $result_sum_reward["sum_reward_point"];} ?></td>-->
                                                 <td class="text-center">10</td>
                                                 <td class="text-center"> - </td>
                                                 <td class="text-center" ><?php if($result_leave_sum["sum_point_leave"] == ''){ echo '0'; } else{ echo $result_leave_sum["sum_point_leave"]; } ?></td>
@@ -363,24 +363,25 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="col-md-offset-2 col-md-8">
-                                    <h4><u>ความคิดเห็นของผู้บังคับบัญชาตามสายงาน (ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)</u></h4>
-                                    <div>
-                                        <textarea class="form-control" name="comment1" size="60" rows="5" placeholder="เขียนความเห็น(ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)"></textarea>
-                                    </div>         
-                                            
-                                </div>
-                                <div class="col-md-offset-1 col-md-10">
-                                    <div class="form-group box-padding-small text-center">
-                                        <input type="hidden" name="eval_emp_id" value="<?php echo $_SESSION["eval_emp_id"]; ?>" >
-                                        <input class="btn btn-success btn-lg search-button" type="submit" name="submit_comment" value="บันทึก">
-                                        <input class="btn btn-danger btn-lg search-button" type="reset" name="reset" value="รีเซ็ต" >
-                                    </div>  
-                                </div>
-                            </div>
-                            </form>                            
-                                        
+                                <!--/sum point-->
+                                
+                                <!--Optional-->
+                                <form method="post">
+                                    <div class="col-md-offset-2 col-md-8">
+                                        <h4><u>ความคิดเห็นของผู้บังคับบัญชาตามสายงาน (ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)</u></h4>
+                                        <textarea class="form-control" name="comment1" size="60" rows="5" placeholder="เขียนความเห็น(ตามข้อเท็จจริง ตามข้อ 3.1, 3.2)"></textarea>         
+                                        <div class="form-group box-padding-small text-center">
+                                            <input type="hidden" name="eval_emp_id" value="<?php echo $_SESSION["eval_emp_id"]; ?>" >
+                                            <button class="btn btn-success btn-lg" type="submit" name="submit_comment" ><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - ส่วนที่ 4 : ความคิดเห็นเพิ่มเติม</button>
+                                            <input class="btn btn-danger btn-lg search-button" type="reset" name="reset" value="รีเซ็ต" >
+                                        </div>          
+                                    </div>
+                                </form> 
+                                <!--/Optional-->
+                                
+                            </div>            
                         </div>           
+                        <!--/box-body-->
                     </div> 
                     <!-- /Part 3 -->       
                     <!-- /.content -->

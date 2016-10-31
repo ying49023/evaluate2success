@@ -157,239 +157,234 @@
                 <!--/Page header -->
 
                 <!-- Main content -->
-                    <div class="row box-padding">
+                    <div class="animated fadeIn row box-padding">
                         <div class="box box-primary">
                         <div class="box-header with-border">
                             <h4>เพิ่มข้อมูลพนักงาน</h4>                           
                         </div>                           
-                                        <!--add employee-->
-                                        <div class="row ">
-                                            <div class="col-md-offset-1 col-md-10 box-padding">
-                                                <form action='manage_employee_insert.php?fn=add' method='POST' enctype="multipart/form-data" name="form1" id="form1">
-                                                    <div class="box-body">
-                                                        <div class="row">
-                                                            <div class="col-md-4">                                                
-                                                                <div class="form-group">
-                                                                    <label>อัพโหลดรูปภาพ</label>
-                                                                    <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file" id="image_name" size="40" >
+                        <!--add employee-->
+                        <div class="row ">
+                            <div class="col-md-offset-1 col-md-10 box-padding">
+                                <form action='manage_employee_insert.php?fn=add' method='POST' enctype="multipart/form-data" name="form1" id="form1">
+                                    <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-md-4">                                                
+                                                <div class="form-group">
+                                                    <label>อัพโหลดรูปภาพ</label>
+                                                    <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file" id="image_name" size="40" >
 
-                                                                </div>                                                
-                                                            </div>
-                                                            
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-2">
-                                                                <div class="form-group">
-                                                                    <label>คำนำหน้า<span style="color: red;">*</span></label>
-                                                                    <select class="form-control" name="prefix" required>
-                                                                        <option value="">เลือก</option>
-                                                                        <option value="นาย">นาย</option>
-                                                                        <option value="นางสาว">นางสาว</option>
-                                                                        <option value="นาง">นาง</option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-4">                                                
-                                                                <div class="form-group">
-                                                                    <label>ชื่อ<span style="color: red;">*</span></span></label>
-                                                                    <input class="form-control" name="first_name" type="text" required>
-                                                                </div>                                                
-                                                            </div>
-                                                            <div class="col-md-6">                                                
-                                                                <div class="form-group">
-                                                                    <label>นามสกุล<span style="color: red;">*</span></label>
-                                                                    <input class="form-control" name="last_name" type="text" required >
-                                                                </div>                                               
-                                                            </div>
-                                                        </div>
+                                                </div>                                                
+                                            </div>
 
-                                                        <div class="row">
-                                                            <div class="col-md-6">                                                
-                                                                <div class="form-group">
-                                                                    <label>วันที่เริ่มงาน<span style="color: red;">*</span></label>                                                                    
-                                                                    <input type="date" class="form-control"  name="startdate" required>                                                                    
-                                                                </div>                                                
-                                                            </div>
-                                                            <?php
-                                                            $sql_department = "SELECT * FROM departments ";
-                                                            $query_department = mysqli_query($conn, $sql_department);                                                            
-                                                            ?>
-                                                            <div class="col-md-6">                                               
-                                                                <div class="form-group">
-                                                                    <label>แผนก<span style="color: red;">*</span></label>
-                                                                    <select class="form-control" name="department" onchange="getJobs(this.value)" required>
-                                                                        <option value="">--เลือกแผนก--</option>
-                                                                        <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
-                                                                        <option value="<?php echo $result_department["department_id"]; ?>">
-                                                                                <?php echo $result_department["department_id"] . " - " . $result_department["department_name"]; ?>
-                                                                        </option>
-                                                                        <?php } ?>
-                                                                        
-                                                                    </select>                                                        
-                                                                </div>                                                
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <?php
-                                                            $sql_position_level = "SELECT * FROM position_level ";
-                                                            $query_position_level = mysqli_query($conn, $sql_position_level);
-                                                            ?>
-                                                            <div class="col-md-6">                                                
-                                                                <div class="form-group">
-                                                                    <label>ระดับ<span style="color: red;">*</span></label>
-                                                                    <select class="form-control" name="position_level_id" required>
-                                                                        <option value="">--เลือกระดับ--</option>
-                                                                        <?php while ($result_position_level = mysqli_fetch_array($query_position_level)) { ?>
-                                                                        <option value="<?php echo $result_position_level["position_level_id"]; ?>">
-                                                                                <?php echo $result_position_level["position_level_id"] . " - " . $result_position_level["position_description"]; ?>
-                                                                        </option>
-                                                                        <?php } ?>
-                                                                    </select>
-
-                                                                </div>                                                
-                                                            </div>    
-                                                            <?php
-                                                            $sql_job = "SELECT * FROM jobs ";
-                                                            $query_job = mysqli_query($conn, $sql_job);
-                                                            ?>
-                                                            <div class="col-md-6">                                                
-                                                                <div class="form-group">
-                                                                    <label>ตำแหน่ง<span style="color: red;">*</span></label>
-                                                                    <select class="form-control" name="job_id" id="list" required>
-                                                                        <option value="">--เลือกตำแหน่ง--</option>
-                                                                        <?php while ($result_job = mysqli_fetch_array($query_job)) { ?>
-                                                                        <option value="<?php echo $result_job["job_id"]; ?>">
-                                                                                <?php echo $result_job["job_id"] . " - " . $result_job["job_name"]; ?>
-                                                                        </option>
-                                                                        <?php } ?>
-                                                                    </select>
-                                                                </div>                                                
-                                                            </div>
-                                                            
-                                                        </div>
-
-                                                        <div class="row">
-                                                            <?php
-                                                            $sql_mng = "SELECT first_name, last_name FROM employees WHERE position_level_id IN (2,3,4) and department_id = 1";
-                                                            $query_mng = mysqli_query($conn, $sql_mng);
-                                                            ?>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label>หัวหน้าผู้รับผิดชอบ</label>                                                                    
-                                                                    <select class="form-control" name="manager" required>
-                                                                        <option value="">--เลือกหัวหน้า--</option>
-                                                                        <?php while ($result_mng = mysqli_fetch_array($query_mng)) { 
-                                                                            $mng_name = $result_mng["first_name"].' '.$result_mng["last_name"];
-                                                                        ?>
-                                                                        <option value="<?php echo $mng_name; ?>">
-                                                                                <?php echo $mng_name ?>
-                                                                        </option>
-                                                                        <?php } ?>
-                                                                    </select>
-                                                                </div>                                               
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>เบอร์ติดต่อ</label>
-                                                                        <input type="text" name="telephone" class="form-control" />
-                                                                    </div>
-                                                                </div>  
-                                                        </div>                                       
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label>ที่อยู่</label>
-                                                                    <textarea name="address" class="form-control" rows="3"></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <div class="form-group">
-                                                                    <label>email<span style="color: red;">*</span></label>
-                                                                    <input type="email" name="email" class="form-control" required />
-                                                                </div>
-                                                            </div>  
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                 <?php
-                                                                 $sql_maincompany = "SELECT * FROM company";
-                                                                 $query_maincompany = mysqli_query($conn, $sql_maincompany );
-                                                                
-                                                                
-                                                                ?>
-                                                                  
-                                                                <div class="form-group">
-                                                                    <label>บริษัทหลัก<span style="color: red;">*</span></label>
-                                                                    
-                                                                    <select class="form-control" name="maincompany" required >
-                                                                        <option value="">--เลือก--</option> 
-                                                                        <?php while($result_maincompany = mysqli_fetch_array($query_maincompany,MYSQLI_ASSOC)) { 
-                                                                        $maincompany_name = $result_maincompany["company_name"];
-                                                                        $maincompany_id = $result_maincompany["company_id"];
-                                                                    ?>
-                                                                        <option value="<?php echo $maincompany_id; ?>">
-                                                                                <?php echo $maincompany_name; ?>
-                                                                        </option>
-                                                                     <?php } ?>    
-                                                                    </select>
-                                                                   
-                                                                </div>
-                                                                
-                                                                </div>
-                                                            <div class="col-md-6">
-                                                                <?php
-                                                                 $sql_company = "SELECT * FROM company";
-                                                                 $query_company = mysqli_query($conn, $sql_company);
-                                                                
-                                                                
-                                                                ?>
-                                                                
-                                                                <div class="col-md-12">
-                                                                    <label>บริษัททั้งหมด </label>
-                                                                </div>
-                                                                
-                                                                    <?php while($result_company = mysqli_fetch_array($query_company,MYSQLI_ASSOC)) { 
-                                                                        $company_name = $result_company["company_name"];
-                                                                        $company_id = $result_company["company_id"];
-                                                                    ?>
-                                                                <div class="col-md-2">
-                                                                        <div class="form-inline">
-
-                                                                            <label class="">
-                                                                                <input class="form-check-input" type="checkbox" name="company" id="inlineCheckbox1" value="<?php echo $company_id; ?>" ><?php echo $company_name; ?>
-
-                                                                            </label>
-
-                                                                        </div>
-                                                                </div>
-                                                               
-                                                                
-                                                                    <?php } ?>
-                                                            </div>
-                                                             
-                                                            
-                                                        </div>
-                                                        
-
-                                                    </div><!-- /Box body -->
-                                                    <div class="box-footer">
-                                                        <center>
-                                                            <input  class="btn btn-danger search-button" type="reset" name="Reset">
-                                                            <button type="submit" class="btn btn-success search-button" value="Upload" >เพิ่ม</button>
-                                                        </center>
-
-                                                    </div>
-                                                </form>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>คำนำหน้า<span style="color: red;">*</span></label>
+                                                    <select class="form-control" name="prefix" required>
+                                                        <option value="">เลือก</option>
+                                                        <option value="นาย">นาย</option>
+                                                        <option value="นางสาว">นางสาว</option>
+                                                        <option value="นาง">นาง</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">                                                
+                                                <div class="form-group">
+                                                    <label>ชื่อ<span style="color: red;">*</span></span></label>
+                                                    <input class="form-control" name="first_name" type="text" required>
+                                                </div>                                                
+                                            </div>
+                                            <div class="col-md-6">                                                
+                                                <div class="form-group">
+                                                    <label>นามสกุล<span style="color: red;">*</span></label>
+                                                    <input class="form-control" name="last_name" type="text" required >
+                                                </div>                                               
                                             </div>
                                         </div>
-                                        <!--/add employee-->
-                                         <?php echo $msg;?> 
-                                    
-                                    
-                                
 
-                            
+                                        <div class="row">
+                                            <div class="col-md-6">                                                
+                                                <div class="form-group">
+                                                    <label>วันที่เริ่มงาน<span style="color: red;">*</span></label>                                                                    
+                                                    <input type="date" class="form-control"  name="startdate" required>                                                                    
+                                                </div>                                                
+                                            </div>
+                                            <?php
+                                            $sql_department = "SELECT * FROM departments ";
+                                            $query_department = mysqli_query($conn, $sql_department);                                                            
+                                            ?>
+                                            <div class="col-md-6">                                               
+                                                <div class="form-group">
+                                                    <label>แผนก<span style="color: red;">*</span></label>
+                                                    <select class="form-control" name="department" onchange="getJobs(this.value)" required>
+                                                        <option value="">--เลือกแผนก--</option>
+                                                        <?php while ($result_department = mysqli_fetch_array($query_department)) { ?>
+                                                        <option value="<?php echo $result_department["department_id"]; ?>">
+                                                                <?php echo $result_department["department_id"] . " - " . $result_department["department_name"]; ?>
+                                                        </option>
+                                                        <?php } ?>
+
+                                                    </select>                                                        
+                                                </div>                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <?php
+                                            $sql_position_level = "SELECT * FROM position_level ";
+                                            $query_position_level = mysqli_query($conn, $sql_position_level);
+                                            ?>
+                                            <div class="col-md-6">                                                
+                                                <div class="form-group">
+                                                    <label>ระดับ<span style="color: red;">*</span></label>
+                                                    <select class="form-control" name="position_level_id" required>
+                                                        <option value="">--เลือกระดับ--</option>
+                                                        <?php while ($result_position_level = mysqli_fetch_array($query_position_level)) { ?>
+                                                        <option value="<?php echo $result_position_level["position_level_id"]; ?>">
+                                                                <?php echo $result_position_level["position_level_id"] . " - " . $result_position_level["position_description"]; ?>
+                                                        </option>
+                                                        <?php } ?>
+                                                    </select>
+
+                                                </div>                                                
+                                            </div>    
+                                            <?php
+                                            $sql_job = "SELECT * FROM jobs ";
+                                            $query_job = mysqli_query($conn, $sql_job);
+                                            ?>
+                                            <div class="col-md-6">                                                
+                                                <div class="form-group">
+                                                    <label>ตำแหน่ง<span style="color: red;">*</span></label>
+                                                    <select class="form-control" name="job_id" id="list" required>
+                                                        <option value="">--เลือกตำแหน่ง--</option>
+                                                        <?php while ($result_job = mysqli_fetch_array($query_job)) { ?>
+                                                        <option value="<?php echo $result_job["job_id"]; ?>">
+                                                                <?php echo $result_job["job_id"] . " - " . $result_job["job_name"]; ?>
+                                                        </option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>                                                
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <?php
+                                            $sql_mng = "SELECT first_name, last_name FROM employees WHERE position_level_id IN (2,3,4) and department_id = 1";
+                                            $query_mng = mysqli_query($conn, $sql_mng);
+                                            ?>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>หัวหน้าผู้รับผิดชอบ</label>                                                                    
+                                                    <select class="form-control" name="manager" required>
+                                                        <option value="">--เลือกหัวหน้า--</option>
+                                                        <?php while ($result_mng = mysqli_fetch_array($query_mng)) { 
+                                                            $mng_name = $result_mng["first_name"].' '.$result_mng["last_name"];
+                                                        ?>
+                                                        <option value="<?php echo $mng_name; ?>">
+                                                                <?php echo $mng_name ?>
+                                                        </option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>                                               
+                                            </div>
+                                            <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>เบอร์ติดต่อ</label>
+                                                        <input type="text" name="telephone" class="form-control" />
+                                                    </div>
+                                                </div>  
+                                        </div>                                       
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>ที่อยู่</label>
+                                                    <textarea name="address" class="form-control" rows="3"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>email<span style="color: red;">*</span></label>
+                                                    <input type="email" name="email" class="form-control" required />
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                 <?php
+                                                 $sql_maincompany = "SELECT * FROM company";
+                                                 $query_maincompany = mysqli_query($conn, $sql_maincompany );
+
+
+                                                ?>
+
+                                                <div class="form-group">
+                                                    <label>บริษัทหลัก<span style="color: red;">*</span></label>
+
+                                                    <select class="form-control" name="maincompany" required >
+                                                        <option value="">--เลือก--</option> 
+                                                        <?php while($result_maincompany = mysqli_fetch_array($query_maincompany,MYSQLI_ASSOC)) { 
+                                                        $maincompany_name = $result_maincompany["company_name"];
+                                                        $maincompany_id = $result_maincompany["company_id"];
+                                                    ?>
+                                                        <option value="<?php echo $maincompany_id; ?>">
+                                                                <?php echo $maincompany_name; ?>
+                                                        </option>
+                                                     <?php } ?>    
+                                                    </select>
+
+                                                </div>
+
+                                                </div>
+                                            <div class="col-md-6">
+                                                <?php
+                                                 $sql_company = "SELECT * FROM company";
+                                                 $query_company = mysqli_query($conn, $sql_company);
+
+
+                                                ?>
+
+                                                <div class="col-md-12">
+                                                    <label>บริษัททั้งหมด </label>
+                                                </div>
+
+                                                    <?php while($result_company = mysqli_fetch_array($query_company,MYSQLI_ASSOC)) { 
+                                                        $company_name = $result_company["company_name"];
+                                                        $company_id = $result_company["company_id"];
+                                                    ?>
+                                                <div class="col-md-2">
+                                                        <div class="form-inline">
+
+                                                            <label class="">
+                                                                <input class="form-check-input" type="checkbox" name="company" id="inlineCheckbox1" value="<?php echo $company_id; ?>" ><?php echo $company_name; ?>
+
+                                                            </label>
+
+                                                        </div>
+                                                </div>
+
+
+                                                    <?php } ?>
+                                            </div>
+
+
+                                        </div>
+
+
+                                    </div><!-- /Box body -->
+                                    <div class="box-footer">
+                                        <center>
+                                            <input  class="btn btn-danger search-button" type="reset" name="Reset">
+                                            <button type="submit" class="btn btn-success search-button" value="Upload" >เพิ่ม</button>
+                                        </center>
+
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <!--/add employee-->
+                         <?php echo $msg;?>                                     
                         </div>   
                     </div>
 
