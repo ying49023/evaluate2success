@@ -23,9 +23,10 @@
             $erp=$_GET['erp'];
             //++++++++++++++++++insert record+++++++++++++
            if($erp=='insert'){          
-               $name =$_POST['job_name'];
+               $job_name =$_POST['job_name'];
+               $department_id = $_POST["department_id"];
 
-               $strSQL =" INSERT INTO jobs(job_name) VALUES('$name') ";
+               $strSQL =" INSERT INTO jobs(job_name,department_id) VALUES('$job_name','$department_id') ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
@@ -39,9 +40,11 @@
            }
             //++++++++++++++++++update record+++++++++++++
            if($erp=='update'){          
-               $name =$_POST['textjob'];
-               $id=$_GET['id'];
-               $strSQL =" UPDATE jobs SET job_name ='$name' WHERE job_id=$id ";
+               $job_name =$_POST['job_name'];
+               $job_id=$_GET['id'];
+               $department_id = $_POST["department_id"];
+               
+               $strSQL =" UPDATE jobs SET job_name ='$job_name' WHERE job_id='$job_id' and department_id = '$department_id' ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
                    echo $strSQL;
@@ -52,17 +55,15 @@
            }
             //++++++++++++++++++delete record+++++++++++++
            if($erp=='delete'){        
-
-               $id=$_GET['id'];
-               $strSQL =" DELETE FROM jobs WHERE job_id=$id ";
+               $job_id=$_GET['id'];
+               $department_id = $_POST["department_id"];
+               
+               $strSQL =" DELETE FROM jobs WHERE job_id='$job_id' and department_id = '$department_id' ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
                    header ("location:jobs_table.php");
-
-
                } else {
-
                    echo "Error Save [" . $strSQL . "]";
                }
 
@@ -113,6 +114,7 @@
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">ตารางแสดงตำแหน่งงาน</h3>
+                            
                             <a class="pull-right " data-toggle="collapse" href="#strenghtPoint">
                                 <button type="button" class="btn btn-success">เพิ่มตำแหน่ง</button>
                             </a>
@@ -122,14 +124,27 @@
                     <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
                         <form action="jobs_table.php?erp=insert" method="POST">
                         <div class="row">
-                            <div class="col-sm-7">
-                                ชื่อตำแหน่งงาน
+                            <div class="col-sm-5">
+                                ระบุแผนก / ฝ่าย
+                                <?php
+                                    $sql_department = "SELECT * FROM departments ";
+                                    $query_department = mysqli_query($conn, $sql_department);
+                                    ?>
+                                <select class="form-control" name="department_id">
+                                        <option value="" >เลือกตำแหน่ง</option>
+                                        <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
+                                        <option value="<?php echo $result_department["department_id"]; ?>"><?php echo $result_department["department_name"]; ?></option>
+                                        <?php } ?>
+                                    </select>
+                            </div>
+                            <div class="col-sm-5">
+                                ระบุชื่อตำแหน่ง
                                 <input class="form-control" type="text" name="job_name" placeholder="----- กรุณากรอกชื่อตำแหน่งงาน -----">
                             </div>
                             
                             <div class="col-sm-2">
                                 <div class="form-group">
-                                  <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
+                                  <input class="btn btn-info btn-md" style="margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
                                 </div>
                             </div>
                         </div>
@@ -146,25 +161,29 @@
                             <table  class="table table-bordered table-hover table-striped" >
                                 <thead>
                                     <tr class="table-active">
-                                        <th class="text-center"><button class="sort" data-sort="job_name">ชื่อตำแหน่งงาน</button></th>
+                                        <th class=""><button class="sort" data-sort="job_name">ตำแหน่งงาน</button></th>
+                                        <th class=""><button class="sort" data-sort="dept_name">แผนก / ฝ่าย</button></th>
                                         <th class="text-center" style="width: 150px;">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <?php
                     
-                                $sql_jobs = "SELECT * FROM jobs";
+                                $sql_jobs = "SELECT * FROM jobs j JOIN departments d ON j.department_id = d.department_id ORDER BY job_name";
                                                  
                                 $query = mysqli_query($conn, $sql_jobs); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
                                 <tbody class="list">
                                 <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
-                                    $name = $result["job_name"];
+                                    $job_name = $result["job_name"];
+                                    $dept_name = $result["department_name"];
+                                    $dept_id = $result["department_id"];
                                     $id = $result["job_id"];
                                    
                                 ?>
                                     <tr>
-                                        <td class="job_name">&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                        <td class="job_name"><?php echo $job_name; ?></td>
+                                        <td class="dept_name"><?php echo $dept_name; ?></td>
                                             
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit_<?php echo $id; ?>">
@@ -184,16 +203,21 @@
                                                                     <h4 class="modal-title" id="myModalLabel">แก้ไขข้อมูล</h4>
                                                                 </div>
                                                                 <div class="modal-body">
-
-                                                                    <div class="input-group col-sm-12" >
+                                                                    <div class="form-group row box-padding" >
+                                                                        <label for="แผนก / ฝ่าย:" class="col-sm-4 control-label">แผนก / ฝ่าย:</label>
+                                                                        <div class="col-sm-8">               
+                                                                            <input type="text" class="form-control" value="<?php echo $dept_name; ?>" name='department_id' disabled   >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row box-padding" >
                                                                         <label for="ชื่อตำแหน่งงาน" class="col-sm-4 control-label">ชื่อตำแหน่งงาน:</label>
                                                                         <div class="col-sm-8">               
-                                                                            <input type="text" class="form-control" value="<?php echo $result["job_name"]; ?>" name='textjob'   >
+                                                                            <input type="text" class="form-control" value="<?php echo $job_name; ?>" name='textjob'   >
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
-                                                                    <input type="submit" class="btn btn-success" value="บันทึก" >
+                                                                    <input type="submit" class="btn btn-success" value="แก้ไข" >
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                                 </div>
                                                             </div>
@@ -211,11 +235,17 @@
                                                                     <h4 class="modal-title" id="myModalLabel">ลบข้อมูล</h4>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <!--<iframe id="iframe_target" name="iframe_target" src="#" style="width:0;height:0;border:0px solid #fff;"></iframe>-->
-                                                                    <div class="input-group col-sm-12" >
+                                                                    <div class="form-group row box-padding" >
+                                                                        <label for="แผนก / ฝ่าย:" class="col-sm-4 control-label">แผนก / ฝ่าย:</label>
+                                                                        <div class="col-sm-8">               
+                                                                            <input type="text" class="form-control" value="<?php echo $dept_name; ?>" name='department_name' disabled   >
+                                                                            <input type="hidden" class="form-control" value="<?php echo $dept_id; ?>" name='department_id' disabled   >
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row box-padding" >
                                                                         <label for="ชื่อตำแหน่งงาน" class="col-sm-4 control-label">ชื่อตำแหน่งงาน:</label>
                                                                         <div class="col-sm-8">               
-                                                                            <input type="text" class="form-control" value="<?php echo $result["job_name"]; ?>" name='textjob' disabled="true"  >
+                                                                            <input type="text" class="form-control" value="<?php echo $job_name; ?>" name='job_name' disabled  >
                                                                         </div>
                                                                     </div>
 
@@ -243,7 +273,7 @@
                             </tbody>
                             <script>
                                 var options = {
-                                    valueNames: [ 'job_name']
+                                    valueNames: [ 'job_name','dept_name']
                                 };
                                 
                                 var userList = new List('filter', options);

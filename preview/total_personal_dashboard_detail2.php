@@ -64,7 +64,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        รายละเอียด KPI -2001
+                        รายละเอียด KPI
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
@@ -208,7 +208,7 @@
                                 $kpi_resp_id =$result_kpi["kpi_responsible_id"];
 
                              ?>
-                            <strong><?php echo $kpi_id;?> -<?php echo $kpi_name;?></strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
+                            <div class="h4"><?php echo $kpi_id;?> -<?php echo $kpi_name;?> - <small>ข้อมูลความก้าวหน้าของงาน</small></div>
                              <?php } ?>
                         </div>
                     </div>
@@ -391,7 +391,7 @@
                 
                 
                 var options2 = {
-                    title: 'KPI 1201 -ความสามารถในการสรรหาคนได้ตามเวลาที่กำหนด',
+                    title: '<?php echo $kpi_id.' - '.$kpi_name; ?>',
                     legend: 'none',
                     bar: {groupWidth: '70%'},
                     vAxis: { gridlines: { count: 5 } }
