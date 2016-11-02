@@ -61,3 +61,6 @@
 .text-middle{
     vertical-align: middle !important;
 }
+.margin-bottom-small{
+    margin-bottom: 15px;
+}

@@ -122,12 +122,13 @@
                 <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <b>หัวข้อพฤติกรรมที่ทำการประเมิน และ ปัจจัยการพิจารณา </b>
+                            <h3 class="box-title">หัวข้อพฤติกรรมที่ทำการประเมิน และ ปัจจัยการพิจารณา </h3>
                             <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่ม</button>
                         </div>
-                        <div id="newKPIGroup" class="collapse">
+                        <!--new compt -->
+                        <div id="newKPIGroup" class="collapse bg-gray-light box-padding">
                             <form action="" method="get">
-                                <div class="box-padding row">
+                                <div class="row">
                                     <div class="form-group col-sm-5">
                                         <label>เพิ่มรายการใหม่<span style="color: red;">*</span></label>
                                         <input class="form-control" type="text"  step="5" name="com_desc" required > 
@@ -150,13 +151,14 @@
                                         
                                     
                                     </div>
-                                    <div class="form-group col-sm-1">
-                                        <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
+                                    <div class="form-group col-sm-2">
+                                        <input style="margin-top: 25px;width: 100%;" class="btn btn-info" type="submit"  name="submit_insert" value="เพิ่ม" > 
                                         <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
                                     </div>
                                 </div>
                             </form>
                         </div>
+                        <!--/new compt -->
                         <div class="box-body">
                             
                                 <?php
@@ -165,14 +167,19 @@
                                 
                                 ?>
                                     <!-- ช่องค้นหา by listJS -->
-                                    <div class="form-inline padding-small col-md-3">
-                                        <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
-                                        <input class="search form-control" placeholder="ค้นหา" />
+                                    <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                        <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                        <input class="search form-control" placeholder="พิมพ์ค้นหา" >
                                     </div>
-                                    <form method="get">
-                                        <div class="form-inline padding-small col-md-6">
-                                            <label class="col-sm-1 control-label">หัวข้อ</label>
-                                            <div class="col-sm-8">
+                                    <script>
+                                        function searchCompt(){
+                                            document.submit_auto.submit();
+                                        }
+                                    </script>
+                                    <form name="submit_auto" onchange="searchCompt()" method="get">
+                                        <div class="col-sm-6 col-md-7 col-lg-6 form-group">
+                                            <label>หัวข้อ</label>
+                                            <div class="">
                                                 <?php
                                                 $sql_title = "SELECT * FROM competency_title ";
                                                 $query_title = mysqli_query($conn, $sql_title);
@@ -191,9 +198,6 @@
                                             </div>
                                             
                                         </div>
-                                        <div class="form-inline padding-small col-md-3">
-                                            <input type="submit" class="btn btn-primary" style="width: 75%;" value="ค้นหา">
-                                        </div>
                                     </form>
                             <div class="row">
                                 <div class="col-md-12">    
@@ -201,9 +205,9 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 120px;"><button class="sort" data-sort="competency_id">No.</button></th>
-                                                <th><button class="sort" data-sort="competency_name">Competency Name</button></th>
-                                                <th><button class="sort" data-sort="title_name">Title Name</button></th>
-                                                <th style="width: 150px;text-align: center;">Management</th>
+                                                <th><button class="sort" data-sort="competency_name">ชื่อ Competency</button></th>
+                                                <th><button class="sort" data-sort="title_name">ชื่อหัวข้อ</button></th>
+                                                <th class="text-center" style="width: 150px;">จัดการ</th>
 
                                             </tr>
                                         </thead>

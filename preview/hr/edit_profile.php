@@ -93,7 +93,6 @@
                             $position_level_id = $result["position_level_id"];
                             $id = $result["employee_id"];
                             $mng_id =$result["manager_id"];
-                            
                             $pic=$result["profile_picture"];
                             if($result["profile_picture"] == ""){
                                 $pic = "default.png";

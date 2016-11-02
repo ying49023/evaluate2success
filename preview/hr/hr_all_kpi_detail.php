@@ -228,8 +228,6 @@
                         </div>
                         <!--/Modal New-->
                         <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">
                                 <?php
                                 $sql_kpi = "SELECT
                                                     mk.manage_kpi_id AS manage_kpi_id,
@@ -251,9 +249,9 @@
                                 
                                 ?>
                                     <!-- ช่องค้นหา by listJS -->
-                                    <div class="form-inline padding-small">
-                                        <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
-                                        <input class="search form-control" placeholder="ค้นหา" />
+                                    <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                        <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                        <input class="search form-control" placeholder="พิมพ์ค้นหา" >
                                     </div>
                                     
                                     <table class="table table-hover table-responsive table-bordered table-striped">                               
@@ -372,8 +370,6 @@
                                             var userList = new List('filter', options);
                                         </script>
                                     </table>
-                                </div>
-                            </div>
                             
                         </div>
                     </div>

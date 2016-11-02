@@ -24,23 +24,7 @@
         $msg='';
         
         include './classes/connection_mysqli.php';    
-        
-        if (isset($_GET["emp_id"])) {
-            $get_emp_id = $_GET["emp_id"];
-        }
-        //Get Evaluation employee id
-        if (isset($_GET["eval_emp_id"])) {
-            $get_eval_emp_id = $_GET["eval_emp_id"];
-        }
-        //Get Evaluation code
-        if (isset($_GET["eval_code"])) {
-            $get_eval_code = $_GET["eval_code"];
-        }
-        //Get Position Level
-        if(isset($_GET["position_level_id"])){
-            $level = $_GET["position_level_id"];
-        }
-        
+                
         if(isset($_POST["submit_skills"])){
             if(isset($_POST["skill_dev_id"])){
                 $array_sk[] = array();
@@ -57,21 +41,20 @@
                     $array_p[$c_prominent] = $prominent_dev;
                     $c_prominent++;
                 }
-                    
-                    
+  
                 $i= 0 ;
                 foreach ($_POST["skill_dev_id"] as $skill_dev_id){
                     $eval_emp_id = $_SESSION["eval_emp_id"];
                     
-                    $sql_insert_skill = 'CALL insert_develop('.$eval_emp_id.','.$array_sk[$i].','.$array_p[$i].')';
+                    //$sql_insert_skill = 'CALL insert_develop('.$eval_emp_id.','.$array_sk[$i].','.$array_p[$i].')';
                     $query_insert_skill = mysqli_query($conn, $sql_insert_skill);
                     echo '<br>'.$sql_insert_skill;
                     $i++;
 
                 }
-                header("location:evaluation_summary.php");
+//                header("location:evaluation_summary.php");
             }
-            header("location:evaluation_summary.php");
+//            header("location:evaluation_summary.php");
             
         }
 ?>
@@ -264,10 +247,18 @@
                                                         $max = 2;
                                                         for ($n = 0; $n <= $max; $n++) {
                                                             ?>
-                                                <div class="firstTr2 form-group">
-                                                    
-                                                    <input name="h_item_id[]" type="hidden" id="h_item_id[]" value="" /> 
-                                                    <input type="text" class="text_data form-control" name="weak_point[]" id="data2[]" placeholder="ระบุจุดด้อยของผู้ถูกประเมิน" />  
+                                                <div class="firstTr2 form-inline">
+                                                    <select class="form-control" name="skill_dev_group_id">
+                                                        <option value="">เลือกประเภทข้อด้อย</option>
+                                                    <?php 
+                                                    $sql_skill = "SELECT * FROM skill_development_group ";
+                                                    $query_skill = mysqli_query($conn, $sql_skill);
+                                                    foreach ($query_skill as $result_skill){ ?>
+                                                        <option value='<?php echo $result_skill["skill_dev_id"]; ?>'><?php echo $result_skill["skill_description"]; ?></option>"
+                                                    <?php }
+                                                    ?>
+                                                    </select>
+                                                    <input type="text" class=" form-control" name="weak_point[]" id="data2[]" placeholder="ระบุจุดด้อยของผู้ถูกประเมิน" />  
                                                         
                                                 </div> 
                                                         <?php } ?> 
@@ -378,18 +369,7 @@
                                                     <button onclick="add_dev()" class="btn btn-success margin-top-form" style="width: 100%;">+ เพิ่ม</button>
                                                 </div>
                                             </div>
-                                        </div>
-<!--                                        <div class="row">
-                                            <div id="table_dev"></div>
-                                            <script type="text/javascript">
-                                                function add_dev(){
-                                                    $("#stemplate ").val();
-                                                    $("#table_dev").append($("#table_header :selected").html());
-                                                    
-                                                }
-                                            </script>
-                                        </div>-->
-                                        
+                                        </div>                                        
                                     </div>                                      
                                 </div>
                             </div>

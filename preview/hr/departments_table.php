@@ -121,31 +121,30 @@
                                 <button type="button" class="btn btn-success">เพิ่มแผนก</button>
                             </a>
                         </div>
-                        <div class="box-body">
-                            
-                         <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
-                             <form action="departments_table.php?erp=insert" method="POST">
-                             <div class="row">
-                                 <div class="col-sm-7">
-                                     ชื่อแผนก/ฝ่าย
-                                     <input class="form-control" type="text" name="department_name" placeholder="----- กรุณากรอกชื่อแผนก/ฝ่าย -----">
-                                 </div>
-
-                                 <div class="col-sm-2">
-                                     <div class="form-group">
-                                       <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
-                                     </div>
-                                 </div>
-                             </div>
-                             </form>
-                           </div>
-
+                        <!-- new dept -->
+                            <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
+                                <form action="departments_table.php?erp=insert" method="POST">
+                                    <div class="row">
+                                        <div class="col-sm-7 form-group">
+                                            <label>ชื่อแผนก/ฝ่าย</label>
+                                            <input class="form-control" type="text" name="department_name" placeholder="----- กรุณากรอกชื่อแผนก/ฝ่าย -----">
+                                        </div>
+                                     
+                                        <div class="col-sm-3 form-group">
+                                            <input class="btn btn-info" style="margin-top:25px;width: 100%;" type="submit" value="เพิ่ม">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        <!--/new dept -->
+                        
+                        
                              <div class="box-body ">
                                  <!-- ช่องค้นหา by listJS -->
-                                 <div class="form-inline padding-small">
-                                     <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
-                                     <input class="search form-control" placeholder="ค้นหา" />
-                                 </div>
+                                    <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                        <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                        <input class="search form-control" placeholder="พิมพ์ค้นหา" >
+                                    </div>
                                  <table  class="table table-bordered table-hover table-striped" >
                                      <thead>
                                          <tr class="table-active">
@@ -260,10 +259,6 @@
 
                              </div>
 
-
-
-
-                             </div>
 
                     </div>
                 </div> 

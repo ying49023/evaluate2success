@@ -162,22 +162,22 @@
                 <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h4>ตารางรายชื่อพนักงาน</h4>
-                            <div class="box-tools pull-right">
+                            <h3 class="box-title">ตารางรายชื่อพนักงาน</h3>
+                            <!-- <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                                 </button>
                                 
                                 <button type="button" class="btn btn-box-tool" data-widget="remove">
                                     <i class="fa fa-times"></i>
                                 </button>
-                            </div>
+                            </div>-->
                         </div>
      
                         <div class="box-body ">    
                             <!-- ช่องค้นหา by listJS -->
-                            <div class="form-inline padding-small">
-                                <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
-                                <input class="search form-control" placeholder="ค้นหา" />
+                            <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                <input class="search form-control" placeholder="พิมพ์ค้นหา" >
                             </div>
                             <table class="table table-bordered table-striped table-hover">
                                 <thead>

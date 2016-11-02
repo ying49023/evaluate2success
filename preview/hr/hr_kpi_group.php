@@ -108,31 +108,29 @@
                 <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <b>กลุ่มทั้งหมด</b>
+                            <h3 class="box-title">กลุ่มทั้งหมด</h3>
                             <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่ม</button>
                         </div>
-                        <div id="newKPIGroup" class="collapse">
+                        <div id="newKPIGroup" class="collapse box-padding bg-gray-light ">
                             <form action="" method="get">
-                                <div class="box-padding row">
+                                <div class="row">
                                     <div class="form-group col-sm-5">
                                         <label>สร้างชื่อกลุ่ม<span style="color: red;">*</span></label>
                                         <input class="form-control" type="text"  step="5" name="kpi_group_name" required > 
                                     </div>
-                                    <div class="form-group col-sm-1">
-                                        <input style="margin-top: 25px;" class="btn btn-info" type="submit"  name="submit_insert" value="บันทึก" > 
+                                    <div class="form-group col-sm-2">
+                                        <input style="margin-top: 25px;" class="btn btn-info search" type="submit"  name="submit_insert" value="เพิ่ม" > 
                                         <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <!-- ช่องค้นหา by listJS -->
-                                    <div class="form-inline padding-small">
-                                        <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
-                                        <input class="search form-control" placeholder="ค้นหา" />
-                                    </div>
+                            <!-- ช่องค้นหา by listJS -->
+                            <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                <input class="search form-control" placeholder="พิมพ์ค้นหา" >
+                            </div>
                                 <?php
                                 $sql_kpi_group = "SELECT kpi_group_id,	kpi_group_name FROM kpi_group ORDER BY	kpi_group_id ASC";
                                 $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
@@ -214,8 +212,6 @@
                                         var userList = new List('filter', options);
                                 </script>
                                     </table>
-                                </div>
-                            </div>
                             
                         </div>
                     </div>

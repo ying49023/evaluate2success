@@ -68,35 +68,43 @@
                                     $year = $result_eval['year'];
                                  } ?>
                                 <?php 
-                                    $sql_emp_list="SELECT * FROM employees e
-                                                  JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
-                                                  JOIN jobs j ON j.job_id = e.job_id
-                                                  JOIN departments d ON d.department_id = e.department_id
-                                                  JOIN company c ON c.company_id = e.company_id
-                                                  WHERE ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code
-                                                  GROUP BY ee.employee_id";
-                                    $query_emp_list = mysqli_query($conn, $sql_emp_list);
-                                    $all_emp = mysqli_num_rows($query_emp_list);
                                     
-                                    $sql_complete = "SELECT * FROM employees e
-                                                  JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
-                                                  JOIN jobs j ON j.job_id = e.job_id
-                                                  JOIN departments d ON d.department_id = e.department_id
-                                                  JOIN company c ON c.company_id = e.company_id
-                                                  WHERE ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code AND status_success = 1 
-                                                  GROUP BY ee.employee_id";
-                                    $query_complete = mysqli_query($conn, $sql_complete);
-                                    $complete_emp = mysqli_num_rows($query_complete);
                                     
-                                    $sql_uncomplete = "SELECT * FROM employees e
-                                                  JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
-                                                  JOIN jobs j ON j.job_id = e.job_id
-                                                  JOIN departments d ON d.department_id = e.department_id
-                                                  JOIN company c ON c.company_id = e.company_id
-                                                  WHERE ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code AND status_success = 0 
-                                                  GROUP BY ee.employee_id";
-                                    $query_uncomplete = mysqli_query($conn, $sql_uncomplete);
-                                    $uncomplete_emp = mysqli_num_rows($query_uncomplete);
+                                    $sql_count = "SELECT e.manager_id,
+                                                    (
+                                                        SELECT COUNT(e.employee_id)
+                                                        FROM
+                                                                evaluation_employee v
+                                                        JOIN employees e ON v.employee_id = e.employee_id
+                                                        JOIN employees m ON e.manager_id = m.employee_id
+                                                        WHERE
+                                                                e.manager_id = '".$my_emp_id."'
+                                                        AND status_success = 1
+                                                    ) AS count_com,
+                                                    (
+                                                        SELECT
+                                                                COUNT(e.employee_id)
+                                                        FROM
+                                                                evaluation_employee v
+                                                        JOIN employees e ON v.employee_id = e.employee_id
+                                                        JOIN employees m ON e.manager_id = m.employee_id
+                                                        WHERE
+                                                                e.manager_id = '".$my_emp_id."'
+                                                        AND status_success = 0
+                                                    ) AS count_uncom,
+                                                    COUNT(e.employee_id) AS count_all
+                                            FROM employees e
+                                            JOIN employees m ON e.manager_id = m.employee_id
+                                            JOIN departments d ON m.department_id = d.department_id
+                                            JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                            WHERE ee.evaluation_code = '".$my_eval_code."' AND e.manager_id = '".$my_emp_id."' ";
+                                    $query_count = mysqli_query($conn, $sql_count);
+                                    foreach ($query_count as $result_count){
+                                        $complete_emp = $result_count["count_com"];
+                                        $uncomplete_emp = $result_count["count_uncom"];
+                                        $all_emp = $result_count["count_all"];
+                                    }
+
                                         ?>
                 <div class="row box-padding">
                     <!--Style 1 don't delete  อย่าเพิ่งลบ-->
@@ -223,6 +231,15 @@
                                 </thead>
                                 <tbody class="list">
                                     <?php
+                                        $sql_emp_list="SELECT * FROM employees e
+                                                  JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                  JOIN jobs j ON j.job_id = e.job_id
+                                                  JOIN departments d ON d.department_id = e.department_id
+                                                  JOIN company c ON c.company_id = e.company_id
+                                                  WHERE ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code
+                                                  GROUP BY ee.employee_id";
+                                        $query_emp_list = mysqli_query($conn, $sql_emp_list);
+                                        
                                         while($result_emp_list = mysqli_fetch_assoc($query_emp_list)) {
                 
                                         $employee_id = $result_emp_list["employee_id"];                                       

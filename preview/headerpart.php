@@ -33,6 +33,7 @@
         $my_tel = $result["telephone_no"];
         $my_job_id = $result["job_id"];
         $my_job = $result["job_name"];
+        $my_dept_id = $result["department_id"];
         $my_department = $result["department_name"];
         $my_company = $result["company_name"];
         $my_position_level = $result["position_level_id"];

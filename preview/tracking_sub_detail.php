@@ -204,7 +204,7 @@
                                 $kpi_resp_id =$result_kpi["kpi_responsible_id"];
 
                              ?>
-                            <strong><?php echo $kpi_id;?> -<?php echo $kpi_name;?></strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
+                            <h4><?php echo $kpi_id;?> -<?php echo $kpi_name;?> - <small>ข้อมูลความก้าวหน้าของงาน</small></h4>
                              <?php } ?>
                         </div>
                     </div>
@@ -378,7 +378,7 @@
                      <?php 
                      while($result_show_date=  mysqli_fetch_array($query_show_date)){
                    // $array_date[$i] =date("F",strtotime($result_show_date['date_show']));
-                    $array_date[$i]=$result_show_date['round_update'];
+                    $array_date[$i]=iconv_substr($result_show_date['round_update'],8,25,"UTF-8");
                     $array_goal[$i] =$result_show_date['goal'];
                     $array_success[$i] =$result_show_date['success'];    
                     

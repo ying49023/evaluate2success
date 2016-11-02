@@ -110,7 +110,7 @@
 
                 <!-- Main content -->
              
-                <div class="animated fadeIn row box-padding">
+                <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">ตารางแสดงรายชื่อบริษัท</h3>
@@ -118,35 +118,40 @@
                                 <button type="button" class="btn btn-success">เพิ่มบริษัท</button>
                             </a>
                         </div>
-                   <div class="box-body">
-                    <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
-                        <form action="company_table.php?erp=insert" method="POST">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                ชื่อบริษัท
-                                <input class="form-control" type="text" name="company_name" placeholder="----- กรุณากรอกชื่อบริษัท -----">
-								 
-                            </div>
-                            <div class="col-sm-6">
-                                ชื่อเต็มบริษัท
-                                <input class="form-control" type="text" name="company_full_name" placeholder="----- กรุณากรอกชื่อเต็มบริษัท -----">
-								 
-                            </div>		
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                  <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 60%;" type="submit" value="เพิ่ม">
-                                </div>
-                            </div>
-                        </div>
-                        </form>
-                      </div>
                         
-                        <div class="box-body ">    
+                        <!--new comp -->
+                        <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
+                            <form action="company_table.php?erp=insert" method="POST">
+                                <div class="row">
+                                    <div class="col-md-5 col-sm-4 form-group">
+                                        <label>ชื่อบริษัท</label>
+                                        <input class="form-control" type="text" name="company_name" placeholder="----- กรุณากรอกชื่อบริษัท -----">
+                                                    
+                                    </div>
+                                    <div class="col-md-5 col-sm-5 form-group">
+                                        <label>ชื่อเต็มบริษัท</label>
+                                        <input class="form-control" type="text" name="company_full_name" placeholder="----- กรุณากรอกชื่อเต็มบริษัท -----">
+                                                    
+                                    </div>		
+                                    <div class="col-md-2 col-sm-3 form-group">
+                                        <input class="btn btn-info btn-md" style="margin-top:25px;width: 100%;" type="submit" value="เพิ่ม">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <!--new comp-->
+                        
+                        <div class="box-body ">   
+                            <!-- ช่องค้นหา by listJS -->
+                            <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                <input class="search form-control" placeholder="พิมพ์ค้นหา" >
+                            </div>
                             <table  class="table table-bordered table-hover table-striped" >
                                 <thead>
                                     <tr class="table-active">
-                                        <th class="text-center">ชื่อบริษัท</th>
-										<th class="text-center">ชื่อเต็มของบริษัท</th>
+                                        <th class="text-center"><button class="sort" data-sort="com_name">ชื่อบริษัท</button></th>
+                                        <th class="text-center"><button class="sort" data-sort="com_full_name">ชื่อเต็มของบริษัท</button></th>
                                         <th class="text-center" style="width: 150px">จัดการ</th>
                                     </tr>
                                 </thead>
@@ -157,17 +162,19 @@
                                 $query = mysqli_query($conn, $sql_dept); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
                                  ?>
-                                <?php  while($result = mysqli_fetch_array($query, MYSQLI_ASSOC)){ 
-                                    $name = $result["company_name"];
-									$fullname = $result["company_full_name"];
-                                    $id = $result["company_id"];
-                                   
-                                ?>
                                 
-                            
-                                <tr>
-                                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
-                                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $fullname; ?></td>
+                               
+                                
+                                <tbody class="list">
+                                    <?php
+                                    while ($result = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+                                        $name = $result["company_name"];
+                                        $fullname = $result["company_full_name"];
+                                        $id = $result["company_id"];
+                                        ?>
+                                    <tr>
+                                    <td class="com_name"><?php echo $name; ?></td>
+                                    <td class="com_full_name"><?php echo $fullname; ?></td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
                                             <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
@@ -247,19 +254,23 @@
                                             </form>
                                         <!--Delete Modal -->
                                     </td>
-                                </tr>
-                                
-                                
-                               <?php } ?>
+                                    </tr>
+                                    <?php } ?>
+                                </tbody>
+                                <script>
+                                    var options = {
+                                        valueNames: [ 'com_name','com_full_name']
+                                    };
+
+                                    var userList = new List('filter', options);
+                                </script>
+                               
 
                             </table>
                          
                         </div>
 
 
-                         
-     
-                        </div>
 
                     </div>
                 </div> 

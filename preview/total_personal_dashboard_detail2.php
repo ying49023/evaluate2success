@@ -380,7 +380,7 @@
                      <?php 
                      while($result_show_date=  mysqli_fetch_array($query_show_date)){
                     // $array_date[$i] =date("F",strtotime($result_show_date['date_show']));
-                    $array_date[$i]=$result_show_date['round_update'];
+                    $array_date[$i]=  iconv_substr($result_show_date['round_update'],8,25,"UTF-8");
                     $array_goal[$i] =$result_show_date['goal'];
                     $array_success[$i] =$result_show_date['success'];    
                     

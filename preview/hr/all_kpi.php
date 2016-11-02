@@ -32,8 +32,7 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
-        <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
+        
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
     </head>
@@ -64,38 +63,7 @@
                 </section>
                 <!--/Page header -->
                 
-                <!-- Main content -->
-                <div  class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body">
-                            <form action="" method="GET">
-                                <div class="col-sm-offset-1 col-sm-8">
-                                    <label class="col-sm-2 control-label">กลุ่ม</label>
-                                    <div class="col-sm-10">
-                                        <?php
-                                        $sql_kpi_group = "SELECT * FROM kpi_group";
-                                        $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
-                                        ?>
-                                        <select class="form-control" name="kpi_group_id">
-                                            <option value="" >--แสดงทั้งหมด--</option>
-                                            <?php while ($result_kpi_group = mysqli_fetch_array($query_kpi_group, MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" <?php if($get_kpi_group_id == $result_kpi_group["kpi_group_id"]) { echo "selected"; }  ?>>
-                                                    <?php echo $result_kpi_group["kpi_group_id"] . " - " . $result_kpi_group["kpi_group_name"]; ?>
-                                                </option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                
-                                <div class=" col-sm-2">
-                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
-                                </div>
-                                
-                            </form>
-                        </div>
-                    </div>
-                    
-                </div>
+                
                 <?php 
                                 
                 $condition_search = '';
@@ -104,10 +72,11 @@
                     $condition_search = " WHERE kg.kpi_group_id = '".$get_kpi_group_id."'";
                 }                
                 ?>
-                <div id="filter" class="row box-padding">
+                <!-- Main content -->
+                <div  id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <b>รายชื่อ KPIs ทั้งหมด</b>
+                            <h3 class="box-title">รายชื่อ KPIs ทั้งหมด</h3>
                             <button type="button" class="pull-right btn btn-success btn-sm" data-toggle="modal" data-target="#new_kpi">
                                 <i class="glyphicon glyphicon-plus" ></i> &nbsp;เพิ่ม
                             </button>  
@@ -176,14 +145,39 @@
                             </div>  
                         </div>
                         <!--/Modal New-->
+                        
                         <div class="box-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                <!-- ช่องค้นหา by listJS -->
-                                <div class="form-inline padding-small">
-                                    <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
-                                    <input class="search form-control" placeholder="ค้นหา" />
-                                </div>
+                                    <!-- ช่องค้นหา by listJS -->
+                                    <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                        <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                        <input class="search form-control" placeholder="พิมพ์ค้นหา" >
+                                    </div>
+                                    <script>
+                                        function search_data(){
+                                            document.submit_auto.submit();
+                                        }
+                                    </script>
+                                    <form name="submit_auto" onchange="search_data()" method="GET">
+                                        <div class="col-sm-6 col-md-7 col-lg-6 form-group">
+                                            <label>กลุ่ม</label>
+                                            <div >
+                                                        <?php
+                                                        $sql_kpi_group = "SELECT * FROM kpi_group";
+                                                        $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
+                                                        ?>
+                                                <select class="form-control" name="kpi_group_id">
+                                                    <option value="" >--แสดงทั้งหมด--</option>
+                                                    <?php while ($result_kpi_group = mysqli_fetch_array($query_kpi_group, MYSQLI_ASSOC)) { ?>
+                                                    <option value="<?php echo $result_kpi_group["kpi_group_id"]; ?>" <?php if ($get_kpi_group_id == $result_kpi_group["kpi_group_id"]) {
+                                                        echo "selected";
+                                                    } ?>>
+                                                                <?php echo $result_kpi_group["kpi_group_name"]; ?>
+                                                    </option>
+                                                    <?php } ?>
+                                                </select>
+                                            </div>
+                                        </div>                                
+                                    </form>
                                 
                                 <?php
                                 $sql_kpi = "SELECT
@@ -209,7 +203,7 @@
                                                 <th style="width: 65px;"><button class="sort" data-sort="id">ID</button></th>
                                                 <th style="width: 200px;"><button class="sort" data-sort="kpi_name">ชื่อKPIs</button></th>
                                                 <th><button class="sort" data-sort="kpi_desc">คำอธิบาย</button></th>
-                                                <th style="width: 75px;text-align: center;"><button class="sort" data-sort="unit">หน่วย</button></th>
+                                                <th style="width: 80px;text-align: center;"><button class="sort" data-sort="unit">หน่วย</button></th>
                                                 <th style="width: 145px;text-align: center;"><button class="sort" data-sort="period">ระยะเวลา(เดือน)</button></th> 
                                                 <th style="width: 150px;text-align: center;"><button class="sort" data-sort="group">กลุ่มหมวดหมู่</button></th>
                                                 <th style="width: 135px;text-align: center;">แก้ไข/ลบ</th>
@@ -249,9 +243,6 @@
                                             var userList = new List('filter', options);
                                         </script>
                                     </table>
-                                
-                                </div>
-                            </div>
                             
                         </div>
                     </div>
@@ -273,7 +264,8 @@
         </div>
         <!-- ./wrapper -->
     </body>
-    
+    <!-- SCRIPT PACKS -->
+        <?php include ('./script_packs.html'); ?>
 </html>
             <?php
         }

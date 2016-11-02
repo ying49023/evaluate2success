@@ -30,12 +30,41 @@
             <!-- CSS PACKS -->
             <?php include ('./css_packs.html'); ?>
             <?php include ('./classes/connection_mysqli.php');?>
-        <?php
         
+            <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        <script>
+            function getJobs(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "./hr/get_jobs.php",
+                    data:'department_id='+val,
+                    success: function(data){
+                        $("#list").html(data);
+                        $("#list2").html(data);
+                        $("#list3").html(data);
+                    }
+                });
+            }
+        </script>
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <!--Header part-->
+        <?php include './headerpart.php'; ?>
+        <!-- Left side column. contains the logo and sidebar -->
+        <?php include './sidebarpart.php'; ?>
+
+        <?php
         $get_department_id = '';
-        if (isset($_GET["department_id"])) {
+        
+        if($my_position_level == 2 || $my_position_level == 3){
+            $get_department_id = $my_dept_id;
+        }else if (isset($_GET["department_id"])) {
             $get_department_id = $_GET["department_id"];
         }
+        
+        
         $get_job_id = '';
         if (isset($_GET["job_id"])) {
             $get_job_id = $_GET["job_id"];
@@ -96,34 +125,11 @@
         }else if($get_time_period != '' && $get_year != ''){
             $condition_kpi_list = " WHERE  year = '$get_year' and time_period = '$get_time_period' ";
         }
-?>
-            <!--ListJS-->
-        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
-        <script>
-            function getJobs(val) {
-                $.ajax({
-                    type: "POST",
-                    url: "./hr/get_jobs.php",
-                    data:'department_id='+val,
-                    success: function(data){
-                        $("#list").html(data);
-                        $("#list2").html(data);
-                        $("#list3").html(data);
-                    }
-                });
-            }
-        </script>
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
-        <!--Header part-->
-        <?php include './headerpart.php'; ?>
-        <!-- Left side column. contains the logo and sidebar -->
-        <?php include './sidebarpart.php'; ?>
-
+        ?>
+        
         <!-- Content Wrapper. Contains page content แก้เนื้อหาแต่ละหน้าตรงนี้นะ -->
         <div class="content-wrapper">
-
+            
             <!-- Content Header (Page header)  -->
             <section class="content-header">
                 <h1>
@@ -142,13 +148,13 @@
             <!--/Page header -->
 
             <!-- Main content -->
-            
+                    
             <!-- Search -->
             <div class="row box-padding">
                 <div class="box box-success">
                     <div class="box-header ">
                         <form method="get">
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label class=" control-label">รอบ</label>
                                     <div class="">
@@ -172,7 +178,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label class=" control-label">ระยะเวลา</label>
                                     <div class="">
@@ -197,42 +203,50 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label class=" control-label">แผนก/ฝ่าย</label>
                                     <div class="">
                                     <?php 
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
+
                                     ?>
-                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);">
-                                            <option value="">เลือกทั้งหมด</option>
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" <?php if ($my_position_level == "2" || $my_position_level == "3") { echo "disabled"; } ?>  >
+                                        <option value="">เลือกทั้งหมด</option>
+                                        
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                            <option value="<?php  echo $result_department["department_id"];  ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
                                                 <?php echo $result_department["department_name"]; ?>
                                             </option>
-                                        <?php } ?>
+                                            <?php } ?>
+                                        
                                         </select>
                                     </div>
                                 </div>
 
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-6">
                                 <div class="form-group" >
                                 <label class=" control-label">ตำแหน่ง</label>
                                 <div class="">
                                 <?php 
-                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
+                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
                                     $query_job = mysqli_query($conn, $sql_job);
                                 ?>
                                     <select class="form-control" name="job_id" id="list">
                                         <option value="">เลือกตำแหน่ง</option>
+                                        <?php foreach($query_job as $result_job){ ?>
+                                        <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
+                                            <?php echo $result_job["job_name"]; ?>
+                                        </option>
+                                        <?php } ?>
                                     </select>
                                 </div>
                                 </div>
                             </div>
 
-                            <div class="pull-right">
+                            <div class=" pull-right">
                                 <button type="submit" class="btn btn-primary search-button " style="width: 100px;" ><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;ค้นหา</button>
                             </div>
 
@@ -243,7 +257,7 @@
             <!--/Search -->
             <div class="row box-padding">
                 <!-- AREA CHART -->
-                <div class="col-lg-8">
+                <div class="col-lg-8 col-md-7">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">KPI ภาพรวม (ราย <?php echo $get_time_period; ?> เดือน)</h3>
@@ -263,7 +277,7 @@
                 <!-- /AREA CHART -->
 
                 <!-- Mile pedformance -->
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-5 col-sm-6">
                     <div class="box box-primary">
                         <div >
                     
@@ -276,7 +290,7 @@
                             </div>
                         </div>
                         <div class="box-body text-center">
-                            <div id="score"  style="height:235px;min-width: 255px;">
+                            <div id="score"  style="min-width: 255px;height: 220px;">
                             <?php
                             $sql_per = $get_sql_per;
                             $query_per = mysqli_query($conn, $sql_per);
@@ -412,7 +426,7 @@
  $array_value[]=array();
  $count=0;
  while($result_kpi_overview = mysqli_fetch_assoc($query_kpi_overview)){
-    $array_month[$count]=$result_kpi_overview['round_update'];
+    $array_month[$count]=  iconv_substr($result_kpi_overview['round_update'],8,25,"UTF-8");
     $array_value[$count]=$result_kpi_overview['score'];
     // echo  $array_value[$count];
     $count++;

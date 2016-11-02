@@ -110,24 +110,26 @@
                 <div id="filter" class=" row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <b>หัวข้อพฤติกรรมในการทำงานของพนักงาน (Competency Title) </b>
+                            <h4 class="box-title">หัวข้อพฤติกรรมในการทำงานของพนักงาน (Competency Title) </h4>
                             <button class="btn btn-success pull-right"  data-toggle="collapse" data-target="#newKPIGroup">+ เพิ่ม</button>
                         </div>
-                        <div id="newKPIGroup" class="collapse">
+                        <!--new -->
+                        <div id="newKPIGroup" class="collapse box-padding bg-gray-light">
                             <form action="" method="get">
-                                <div class="box-padding row">
+                                <div class="row">
                                     <div class="form-group col-sm-5">
                                         <label>เพิ่มหัวข้อใหม่<span style="color: red;">*</span></label>
                                         <input class="form-control" type="text"  step="5" name="t_name" required >
                                     </div>
                                     
                                     <div class="form-group col-sm-1">
-                                        <input style="margin-top: 25px;" class="btn btn-danger" type="submit"  name="submit_insert" value="บันทึก" > 
+                                        <input style="margin-top: 25px;" class="btn btn-info" type="submit"  name="submit_insert" value="บันทึก" > 
                                         <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
                                     </div>
                                 </div>
                             </form>
                         </div>
+                        <!--/new -->
                         <div class="box-body">
                             <div class="row">
                                 <div class="col-md-12">
@@ -137,16 +139,16 @@
                                 
                                 ?>
                                     <!-- ช่องค้นหา by listJS -->
-                                    <div class="form-inline padding-small">
-                                        <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
-                                        <input class="search form-control" placeholder="ค้นหา" />
+                                    <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                        <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                        <input class="search form-control" placeholder="พิมพ์ค้นหา" >
                                     </div>
                                     <table class="table table-hover table-responsive table-striped table-bordered">                               
                                         <thead>
                                             <tr>
-                                                <th style="width: 120px;"><button class="sort" data-sort="title_id">Title ID</button></th>
-                                                <th><button class="sort" data-sort="title_name">Title Name</button></th>
-                                                <th style="width: 150px;text-align: center;">Management</th>
+                                                <th style="width: 120px;"><button class="sort" data-sort="title_id">No.</button></th>
+                                                <th><button class="sort" data-sort="title_name">ชื่อหัวข้อ</button></th>
+                                                <th class="text-center" style="width: 150px;">จัดการ</th>
 
                                             </tr>
                                         </thead>

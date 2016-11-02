@@ -15,14 +15,24 @@
         }else{
             //HTML PAGE
             ?>
+
 <?php include('./classes/connection_mysqli.php'); 
         $erp='';
         $msg='';
         
+        $get_dept_id = '';
+        if(isset ($_GET["department_id"])){
+            $get_dept_id = $_GET["department_id"];
+            $condition = " WHERE j.department_id = '$get_dept_id' ";
+        }
+        if($get_dept_id == ''){
+            $condition = " ";
+        }
+        
         if(isset($_GET['erp'])) {
             $erp=$_GET['erp'];
             //++++++++++++++++++insert record+++++++++++++
-           if($erp=='insert'){          
+           if($erp == 'insert'){          
                $job_name =$_POST['job_name'];
                $department_id = $_POST["department_id"];
 
@@ -39,35 +49,36 @@
 
            }
             //++++++++++++++++++update record+++++++++++++
-           if($erp=='update'){          
-               $job_name =$_POST['job_name'];
-               $job_id=$_GET['id'];
-               $department_id = $_POST["department_id"];
-               
-               $strSQL =" UPDATE jobs SET job_name ='$job_name' WHERE job_id='$job_id' and department_id = '$department_id' ";
-               $objQuery = mysqli_query($conn,$strSQL);
-               if ($objQuery) {
-                   echo $strSQL;
-                   header ("location:jobs_table.php");
-               } else {
-                   echo "Error Save [" . $strSQL . "]";
-               }
-           }
+           if($erp == 'update'){ 
+               if (isset($_POST["job_id"]) && isset($_POST["department_id"])) {
+                    $job_name = $_POST['job_name'];
+                    $job_id = $_POST['job_id'];
+                    $department_id = $_POST["department_id"];
+                    $strSQL = " UPDATE jobs SET job_name ='$job_name' WHERE job_id='$job_id' and department_id = '$department_id' ";
+                    $objQuery = mysqli_query($conn, $strSQL);
+                    if ($objQuery) {
+                        echo $strSQL;
+                    header ("location:jobs_table.php");
+                    } else {
+                        echo "Error Save [" . $strSQL . "]";
+                    }
+                }
+            }
             //++++++++++++++++++delete record+++++++++++++
-           if($erp=='delete'){        
-               $job_id=$_GET['id'];
-               $department_id = $_POST["department_id"];
-               
-               $strSQL =" DELETE FROM jobs WHERE job_id='$job_id' and department_id = '$department_id' ";
-               $objQuery = mysqli_query($conn,$strSQL);
-               if ($objQuery) {
-
-                   header ("location:jobs_table.php");
-               } else {
-                   echo "Error Save [" . $strSQL . "]";
-               }
-
-           }
+           if($erp == 'delete'){  
+               if (isset($_POST["job_id"])) {
+                    $job_id = $_POST['job_id'];
+                        
+                    $strSQL = " DELETE FROM jobs WHERE job_id='$job_id' ";
+                    $objQuery = mysqli_query($conn, $strSQL);
+                    if ($objQuery) {
+                        echo $strSQL;
+                    header ("location:jobs_table.php");
+                    } else {
+                        echo "Error Save [" . $strSQL . "]";
+                    }
+                }
+            }
         }
             
 ?>
@@ -119,56 +130,89 @@
                                 <button type="button" class="btn btn-success">เพิ่มตำแหน่ง</button>
                             </a>
                         </div>
-                   <div class="box-body">
-                    <!-- Modal New -->
-                    <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
-                        <form action="jobs_table.php?erp=insert" method="POST">
-                        <div class="row">
-                            <div class="col-sm-5">
-                                ระบุแผนก / ฝ่าย
-                                <?php
-                                    $sql_department = "SELECT * FROM departments ";
-                                    $query_department = mysqli_query($conn, $sql_department);
-                                    ?>
-                                <select class="form-control" name="department_id">
-                                        <option value="" >เลือกตำแหน่ง</option>
-                                        <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
-                                        <option value="<?php echo $result_department["department_id"]; ?>"><?php echo $result_department["department_name"]; ?></option>
-                                        <?php } ?>
+                        <!-- Modal New -->
+                        <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
+                            <form action="jobs_table.php?erp=insert" method="POST">
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label>ระบุแผนก / ฝ่าย</label>
+                                    <select  id="dept_test" class="form-control" name="department_id"   >
+                                        <option value="">  เลือกแผนก/ฝ่าย  </option>
+                                                <?php
+                                                $sql_dept = "SELECT * FROM departments";
+
+                                                $query = mysqli_query($conn, $sql_dept);
+
+                                                foreach ($query as $result) {
+                                                    ?>
+                                        <option value="<?php echo $result["department_id"] ?>" <?php if ($get_dept_id == $result["department_id"]) { echo "selected"; } ?> >
+                                            <?php echo $result["department_name"] ?>
+                                        </option>
+                                                    <?php
+                                                }
+                                                ?>
                                     </select>
-                            </div>
-                            <div class="col-sm-5">
-                                ระบุชื่อตำแหน่ง
-                                <input class="form-control" type="text" name="job_name" placeholder="----- กรุณากรอกชื่อตำแหน่งงาน -----">
-                            </div>
-                            
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                  <input class="btn btn-info btn-md" style="margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
+                                </div>
+                                <div class="col-sm-5">
+                                    <label>ระบุชื่อตำแหน่ง</label>
+                                    <input class="form-control" type="text" name="job_name" placeholder="----- กรุณากรอกชื่อตำแหน่งงาน -----">
+                                </div>
+
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                      <input class="btn btn-info btn-md" style="margin-top:25px;width: 100%;" type="submit" value="เพิ่ม">
+                                    </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
-                        </form>
-                    </div>
-                    <!--/Modal New -->
+                        <!--/Modal New -->
                         
+                        <!-- job table -->
                         <div class="box-body ">   
+                            
                             <!-- ช่องค้นหา by listJS -->
-                            <div class="form-inline padding-small">
-                                <i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>
-                                <input class="search form-control" placeholder="ค้นหา" />
+                            <div class="form-group col-sm-6 col-md-5 col-lg-4">
+                                <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                <input class="search form-control" placeholder="พิมพ์ค้นหา" >
                             </div>
-                            <table  class="table table-bordered table-hover table-striped" >
+                            <script>
+                                function searchDept(){
+                                    document.submit_auto.submit();
+                                }
+                            </script>
+                            <form name="submit_auto" method="get" onchange="searchDept()">
+                            <div class="col-sm-6 col-md-7 col-lg-6 form-group">
+                                <label>เลือกแผนก/ฝ่าย : </label>
+                                <select  id="dept_test" class="form-control" name="department_id"   >
+                                    <option value="">  เลือกแผนก/ฝ่าย  </option>
+                                            <?php
+                                            $sql_dept = "SELECT * FROM departments";
+                                                
+                                            $query = mysqli_query($conn, $sql_dept);
+                                                
+                                            foreach ($query as $result) {
+                                                ?>
+                                    <option value="<?php echo $result["department_id"] ?>" <?php if ($get_dept_id == $result["department_id"]) { echo "selected"; } ?> >
+                                        <?php echo $result["department_name"] ?>
+                                    </option>
+                                                <?php
+                                            }
+                                            ?>
+                                </select>
+                            </div>
+                            </form>
+                            <table id="dept_table" class="table table-bordered table-hover table-striped" >
                                 <thead>
                                     <tr class="table-active">
-                                        <th class=""><button class="sort" data-sort="job_name">ตำแหน่งงาน</button></th>
-                                        <th class=""><button class="sort" data-sort="dept_name">แผนก / ฝ่าย</button></th>
+                                        <th><button class="sort" data-sort="job_name">ตำแหน่งงาน</button></th>
+                                        <th><button class="sort" data-sort="dept_name">แผนก / ฝ่าย</button></th>
                                         <th class="text-center" style="width: 150px;">จัดการ</th>
                                     </tr>
                                 </thead>
                                 <?php
                     
-                                $sql_jobs = "SELECT * FROM jobs j JOIN departments d ON j.department_id = d.department_id ORDER BY job_name";
+                                $sql_jobs = "SELECT * FROM jobs j JOIN departments d ON j.department_id = d.department_id ".$condition." ORDER BY job_name ASC";
                                                  
                                 $query = mysqli_query($conn, $sql_jobs); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
 
@@ -178,7 +222,7 @@
                                     $job_name = $result["job_name"];
                                     $dept_name = $result["department_name"];
                                     $dept_id = $result["department_id"];
-                                    $id = $result["job_id"];
+                                    $job_id = $result["job_id"];
                                    
                                 ?>
                                     <tr>
@@ -186,16 +230,16 @@
                                         <td class="dept_name"><?php echo $dept_name; ?></td>
                                             
                                         <td class="text-center">
-                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit_<?php echo $id; ?>">
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#edit_<?php echo $job_id; ?>">
                                                 <i class="glyphicon glyphicon-pencil" ></i>แก้ไข
                                             </button>                                            
                                             |   
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $id; ?>_delete">
+                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal"  data-target="#<?php echo $job_id; ?>_delete">
                                                 <i class="glyphicon glyphicon-remove" ></i>ลบ
                                             </button>
                                             <!--Edit Modal -->
-                                            <form class="form-horizontal" name="frmMain" method="post" action="jobs_table.php?erp=update&id=<?php echo $id; ?>" >
-                                                    <div class="modal fade" id="edit_<?php echo $id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                            <form class="form-horizontal" name="frmMain" method="post" action="jobs_table.php?erp=update" >
+                                                    <div class="modal fade" id="edit_<?php echo $job_id; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header bg-blue">
@@ -206,17 +250,19 @@
                                                                     <div class="form-group row box-padding" >
                                                                         <label for="แผนก / ฝ่าย:" class="col-sm-4 control-label">แผนก / ฝ่าย:</label>
                                                                         <div class="col-sm-8">               
-                                                                            <input type="text" class="form-control" value="<?php echo $dept_name; ?>" name='department_id' disabled   >
+                                                                            <input type="text" class="form-control" value="<?php echo $dept_name; ?>" name='department_name' disabled >
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row box-padding" >
                                                                         <label for="ชื่อตำแหน่งงาน" class="col-sm-4 control-label">ชื่อตำแหน่งงาน:</label>
                                                                         <div class="col-sm-8">               
-                                                                            <input type="text" class="form-control" value="<?php echo $job_name; ?>" name='textjob'   >
+                                                                            <input type="text" class="form-control" value="<?php echo $job_name; ?>" name='job_name'   >
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="modal-footer">
+                                                                    <input type="hidden" class="form-control" value="<?php echo $job_id; ?>" name='job_id' >
+                                                                    <input type="hidden" class="form-control" value="<?php echo $dept_id; ?>" name='department_id' >
                                                                     <input type="submit" class="btn btn-success" value="แก้ไข" >
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
                                                                 </div>
@@ -226,8 +272,8 @@
                                             </form>
                                             <!--Edit Modal -->
                                             <!--Delete Modal -->
-                                                <form class="form-horizontal" name="frmMain" method="post" action="jobs_table.php?erp=delete&id=<?php echo $id; ?>" >
-                                                    <div class="modal fade" id="<?php echo $id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                                                <form class="form-horizontal" method="post" action="jobs_table.php?erp=delete" >
+                                                    <div class="modal fade" id="<?php echo $job_id; ?>_delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                                                         <div class="modal-dialog" role="document">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
@@ -239,7 +285,6 @@
                                                                         <label for="แผนก / ฝ่าย:" class="col-sm-4 control-label">แผนก / ฝ่าย:</label>
                                                                         <div class="col-sm-8">               
                                                                             <input type="text" class="form-control" value="<?php echo $dept_name; ?>" name='department_name' disabled   >
-                                                                            <input type="hidden" class="form-control" value="<?php echo $dept_id; ?>" name='department_id' disabled   >
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group row box-padding" >
@@ -253,6 +298,7 @@
 
                                                                 </div>
                                                                 <div class="modal-footer">
+                                                                    <input type="hidden" class="form-control" value="<?php echo $job_id; ?>" name='job_id' >
                                                                     <button type="submit" class="btn btn-danger">ยืนยันการลบ</button>
                                                                     <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
 
@@ -281,11 +327,7 @@
                             </table>
                          
                         </div>
-
-
-                         
-     
-                        </div>
+                        <!--/job table -->
 
                     </div>
                 </div> 

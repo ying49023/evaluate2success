@@ -114,7 +114,7 @@
 
                 <!-- Main content -->
              
-                <div class=" row box-padding">
+                <div  id="filter" class=" row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">ตารางแสดงรายชื่อระดับ</h3>
@@ -122,33 +122,39 @@
                                 <button type="button" class="btn btn-success">เพิ่มระดับ</button>
                             </a>
                         </div>
-                   <div class="box-body">
-                    <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
-                        <form action="position_level.php?erp=insert" method="POST">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                ชื่อระดับ
-                                <input class="form-control" type="text" name="position_description" placeholder="----- กรุณากรอกชื่อระดับ-----">
-                            </div>
-                            
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                  <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
+                        <!-- New pos -->
+                        <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
+                            <form action="position_level.php?erp=insert" method="POST">
+                            <div class="row">
+                                <div class="col-sm-7 form-group">
+                                    <label>ชื่อระดับ</label>
+                                    <input class="form-control" type="text" name="position_description" placeholder="----- กรุณากรอกชื่อระดับ-----">
+                                </div>
+
+                                <div class="col-sm-3 form-group">
+                                    <input class="btn btn-info btn-md" style="margin-top:25px;width: 100%;" type="submit" value="เพิ่ม">
                                 </div>
                             </div>
+                            </form>
                         </div>
-                        </form>
-                      </div>
+                        <!--/New pos -->
+                        <div class="box-body">
+                            <!-- ช่องค้นหา by listJS -->
+                            <div class="form-group col-md-5 col-sm-6 col-lg-4">
+                                <label><i class="glyphicon glyphicon-search" style="padding: 0px 10px;" ></i>ค้นหา</label>
+                                <input class="search form-control" placeholder="พิมพ์ค้นหา" >
+                            </div>
                         
+                        <!--Table pos -->
                         <div class="box-body ">    
                             <table  class="table table-bordered table-hover table-striped" >
                                 <thead>
                                     <tr class="table-active">
-                                        <th class="text-center">ชื่อระดับ</th>
+                                        <th class="text-center"><button class="sort" data-sort="pos_name">ชื่อระดับ</button></th>
                                         <th class="text-center" style="width: 150px">จัดการ</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody class="list">
                                 <?php
                     
                                 $sql_dept = "SELECT * FROM position_level";
@@ -164,7 +170,7 @@
                                 
                             
                                     <tr>
-                                        <td>&nbsp&nbsp&nbsp&nbsp&nbsp<?php echo $name; ?></td>
+                                        <td class="pos_name"><?php echo $name; ?></td>
                                             
                                         <td class="text-center">
                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#<?php echo $id; ?>">
@@ -246,14 +252,19 @@
                                 
                                <?php } ?>
                             </tbody>
+                            <script>
+                                var options = {
+                                    valueNames: [ 'pos_name']
+                                };
+                                
+                                var userList = new List('filter', options);
+                            </script>
                             </table>
                          
                         </div>
+                        <!--/Table pos-->
 
-
-                         
-     
-                        </div>
+                    </div>
 
                     </div>
                 </div> 
