@@ -103,7 +103,7 @@
                 <div class="box box-success">
                      <div class="box-body ">
                             <form method="get">
-                                <div class="col-md-11">
+                                <div class="col-md-10">
                                     <label class="col-sm-2 control-label">รอบ</label>
                                     <div class="col-sm-8">
                                     <?php 
@@ -121,7 +121,7 @@
                                     </div>
                                 </div>                                
                                 
-                                <div class=" col-md-1">
+                                <div class=" col-md-2">
                                     <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
                                 </div>
 

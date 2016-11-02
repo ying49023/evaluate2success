@@ -226,12 +226,7 @@
                                     $query_job = mysqli_query($conn, $sql_job);
                                 ?>
                                     <select class="form-control" name="job_id" id="list">
-                                        <option value="">เลือกทั้งหมด</option>
-                                    <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
-                                        <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
-                                            <?php echo $result_job["job_name"]; ?>
-                                        </option>
-                                    <?php } ?>
+                                        <option value="">เลือกตำแหน่ง</option>
                                     </select>
                                 </div>
                                 </div>
@@ -248,7 +243,7 @@
             <!--/Search -->
             <div class="row box-padding">
                 <!-- AREA CHART -->
-                <div class="col-md-8">
+                <div class="col-lg-8">
                     <div class="box box-primary">
                         <div class="box-header with-border">
                             <h3 class="box-title">KPI ภาพรวม (ราย <?php echo $get_time_period; ?> เดือน)</h3>
@@ -268,8 +263,10 @@
                 <!-- /AREA CHART -->
 
                 <!-- Mile pedformance -->
-                <div class="col-md-4">
+                <div class="col-lg-4">
                     <div class="box box-primary">
+                        <div >
+                    
                         <div class="box-header with-border">
                             <h4>ความสำเร็จของ KPIs ทั้งหมด  </h4>
                             <div class="box-tools pull-right">
@@ -278,8 +275,8 @@
                                 </button>   
                             </div>
                         </div>
-                        <div class="box-body">
-                            <div id="score" class="200px160px" style="height:220px">
+                        <div class="box-body text-center">
+                            <div id="score"  style="height:235px;min-width: 255px;">
                             <?php
                             $sql_per = $get_sql_per;
                             $query_per = mysqli_query($conn, $sql_per);
@@ -312,8 +309,8 @@
                             ?>
                             </div>
                         </div>
+                        </div>
                     </div>
-
                 </div>
                 <!-- /Mile pedformance -->
 
@@ -402,11 +399,12 @@
 
 <!-- page script -->
 <?php
- $sql_kpi_overveiw = "SELECT round(AVG(kp.performance_mile),2) as value,month_update
-                        FROM evaluation e JOIN evaluation_employee ee ON e.evaluation_code = ee.evaluation_code JOIN kpi_responsible kr ON ee.evaluate_employee_id = kr.evaluate_employee_id
-                        JOIN kpi k ON kr.kpi_id = k.kpi_id JOIN kpi_progress kp ON kp.kpi_responsible_id = kr.kpi_responsible_id
-                        WHERE e.year=2016 AND time_period=1 and company_id=1 and month_update BETWEEN 1 and 6
-                        GROUP BY month_update";
+ $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,round_update, month_update
+                        FROM kpi_progress kp JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
+                        JOIN kpi k ON kr.kpi_id = k.kpi_id JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
+                        $condition_kpi_list AND round_update != ''
+                        GROUP BY month_update
+                        ORDER BY kpi_progress_id;";
 //e.evaluation_code=$get_eval_code;//
 
  $query_kpi_overview = mysqli_query($conn, $sql_kpi_overveiw);
@@ -414,23 +412,14 @@
  $array_value[]=array();
  $count=0;
  while($result_kpi_overview = mysqli_fetch_assoc($query_kpi_overview)){
-    $array_month[$count]=$result_kpi_overview['month_update'];
-    $array_value[$count]=$result_kpi_overview['value'];
+    $array_month[$count]=$result_kpi_overview['round_update'];
+    $array_value[$count]=$result_kpi_overview['score'];
     // echo  $array_value[$count];
     $count++;
    
  }
  echo $count;
 ?>
-<?php  /*
-                for($i=0;$i<$count;$i++){
-                     if($i<$count-1)
-                     echo  $array_value[$i].',';
-                     else
-                         echo  $array_value[$i];
-                } ;*/
-                ?>
-
     <script>
   $(function () {
     /* ChartJS
@@ -448,7 +437,14 @@
     var areaChart = new Chart(areaChartCanvas);
 
     var areaChartData = {
-      labels: ["January", "February", "March", "April", "May", "June"],
+      labels: [<?php  
+                for($i=0;$i<$count;$i++){
+                     if($i<$count-1)
+                        echo  " '".$array_month[$i]."' ,";
+                     else
+                        echo  "'".$array_month[$i]."'";
+                } ;
+                ?>],
       datasets: [
         {
           label: "Electronics",
@@ -458,7 +454,12 @@
           pointStrokeColor: "#c1c7d1",
           pointHighlightFill: "#fff",
           pointHighlightStroke: "rgba(220,220,220,1)",
-          data: [100, 100, 100, 100, 100, 100]
+          data: [<?php  
+                for($i=0;$i<$count;$i++){
+                        echo  "100".",";
+
+                } ;
+                ?>]
         },
         {
           label: "Digital Goods",
