@@ -6,6 +6,8 @@ require('./mysql_table/mysql_table.php');
 define('FPDF_FONTPATH','font/');
 // require('fpdf.php');
 $sql_grade=$_POST['sql_grade'];
+$con_grade=$_POST['con_grade'];
+$avg_grade=$_POST['avg_grade'];
  
 $pdf=new FPDF();
 class PDF extends PDF_MySQL_Table
@@ -32,7 +34,7 @@ class PDF extends PDF_MySQL_Table
         // Move to the right
         $this->Cell(80);
         // Title
-        $this->Cell(25,70,iconv( 'UTF-8','cp874' , 'รายงานผลการประเมินผลการปฏิบัติงานทั่วทั้งองค์การ' ),0,0,'C');
+        $this->Cell(25,70,iconv( 'UTF-8','cp874' , 'รายงานผลการประเมินผลการปฏิบัติงานทั่วทั้งองค์การบริษัท ALT' ),0,0,'C');
 
         // Line break
         $this->Ln(50);
@@ -55,31 +57,30 @@ class PDF extends PDF_MySQL_Table
 
     function TableZa($header, $data){
 
-
-        //Colors, line width and bold font
-//        $this->SetFillColor(255,0,0);
-//        $this->SetTextColor(255);
-//        $this->SetDrawColor(128,0,0);
-//        $this->SetLineWidth(.3);
         $this->SetFont('angsana','',12);
 
         //Header
-        $w=array(20,60,55,50,10);
+        $w=array(10,20,40,55,50,10,10);
         for($i=0;$i<count($header);$i++)
             $this->Cell($w[$i],7,$header[$i],1,0,'C');
         $this->Ln();
 
         //Data
+        $no=1;
         foreach($data as $row)
         {
-                $this->Cell($w[0],6,iconv( 'UTF-8','cp874' , $row[0]),1,0,'C');
-                $this->Cell($w[1],6,iconv( 'UTF-8','cp874' , $row[1]),1,0,'L');
-                $this->Cell($w[2],6,iconv( 'UTF-8','cp874' , $row[2]),1,0,'L');
-                $this->Cell($w[3],6,iconv( 'UTF-8','cp874' , $row[3]),1,0,'L');
-                $this->Cell($w[4],6,iconv( 'UTF-8','cp874' , $row[4]),1,0,'C');
+                $this->Cell($w[0],6,iconv( 'UTF-8','cp874' , $no),1,0,'L');
+                $this->Cell($w[1],6,iconv( 'UTF-8','cp874' , $row[0]),1,0,'C');
+                $this->Cell($w[2],6,iconv( 'UTF-8','cp874' , $row[1]),1,0,'L');
+                $this->Cell($w[3],6,iconv( 'UTF-8','cp874' , $row[2]),1,0,'L');
+                $this->Cell($w[4],6,iconv( 'UTF-8','cp874' , $row[3]),1,0,'L');
+                $this->Cell($w[5],6,iconv( 'UTF-8','cp874' , $row[4]),1,0,'C');
+                $this->Cell($w[6],6,iconv( 'UTF-8','cp874' , $row[5]),1,0,'C');
                 $this->Ln();
+                $no++;
         }
         $this->Cell(array_sum($w),0,'','T');
+        //$this->SetFillColor(200,220,255);
     }
 
 }
@@ -106,53 +107,57 @@ $pdf->AliasNbPages();
 $pdf->AddPage();
 $pdf->AddFont('angsana','','angsa.php');
 
-//$pdf->AddFont('angsana','B','angsab.php');
-
-//$pdf->AddFont('angsana','I','angsai.php');
-
-//$pdf->AddFont('angsana','BI','angsaz.php');
 
 $pdf->SetFont('angsana','',12);
 
 
-/*$pdf->AddCol('employee_id',20,'','C');
-$pdf->AddCol('prefix',40,'first_name');
-$pdf->AddCol('last_name',40,'Pop (2001)','R');*/
 
-/*for($i=1;$i<=40;$i++)
 
-    $pdf->Cell(0,10,'Printing line number '.$i,1,1);*/
-//Second table: specify 3 columns
-//$pdf->AddCol('employee_id',20,'empno','C');
-//$pdf->AddCol('fullname',60,'name');
-//$pdf->AddCol('department_name',40,'department','C');
-//$pdf->AddCol('job_name',30,'job','C');
-//$pdf->AddCol('grade_description',10,'grade','R');
+$prop=array('HeaderColor'=>array(255,150,100),
+			'color1'=>array(210,245,255),
+			'color2'=>array(255,255,210),
+			'padding'=>2);
 
 
 
 
-//$prop=array('HeaderColor'=>array(255,150,100),
-//			'color1'=>array(210,245,255),
-//			'color2'=>array(255,255,210),
-//			'padding'=>2);
 
 
 
-/*$pdf->Table( "SELECT v.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname,d.department_name,j.job_name, v.sum_point,g.grade_description
-FROM grade g 
-JOIN evaluation_employee v ON g.grade_id = v.grade_id 
-JOIN evaluation n on v.evaluation_code = n.evaluation_code 
-JOIN company c ON n.company_id = c.company_id 
-JOIN employees e on c.company_id = e.company_id 
-JOIN jobs j ON e.job_id = j.job_id 
-JOIN departments d ON e.department_id = d.department_id
-WHERE c.company_name='ALT' and v.employee_id = e.employee_id AND j.job_id = e.job_id
-GROUP by v.employee_id");*/
+$sql_dept="SELECT
 
-//$pdf->Table("$sql_grade",$prop);
+                        department_name,d.department_id
 
-$res=mysql_query($sql_grade,$db);
+                FROM
+                        grade g
+                JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
+                JOIN employees e ON ee.employee_id = e.employee_id
+                JOIN departments d ON e.department_id = d.department_id
+                JOIN jobs j ON e.job_id = j.job_id
+                WHERE
+                        e.company_id = 1
+                GROUP BY d.department_name
+                ORDER BY
+                        d.department_name
+                ";
+$query_dept=mysql_query($sql_dept,$db);
+while($result_dept = mysql_fetch_array($query_dept)){
+    $dept_name = $result_dept['department_name'];
+    $dept_id = $result_dept['department_id'];
+    $deptid = $result_dept['department_id'];
+    
+     /*while($result_avg_dept_grade = mysql_fetch_array($query_avg_dept_grade)) { 
+          $dept_grade = $result_avg_dept_grade['grade_description']; 
+
+    }
+    $pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $dept_grade),0,0,'L');*/
+    $sql_grade_dept = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description,sum_overall_point,d.department_id 
+                                            FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id 
+                                            JOIN employees e ON ee.employee_id = e.employee_id JOIN departments d ON e.department_id = d.department_id 
+                                            JOIN jobs j ON e.job_id = j.job_id
+                                            WHERE e.company_id = 1 and d.department_id = $dept_id
+                                            ORDER BY d.department_name";
+$res=mysql_query($sql_grade_dept,$db);
 $data = [];
 $i = 0;
 while($result = mysql_fetch_array($res)){
@@ -161,16 +166,37 @@ while($result = mysql_fetch_array($res)){
     $row[1] = $result['fullname'];
     $row[2] = $result['department_name'];
     $row[3] = $result['job_name'];
-    $row[4] = $result['grade_description'];
+    $row[4] = $result['sum_overall_point'];
+    $row[5] = $result['grade_description'];
     $data[$i] = $row;
     $i += 1;
 }
-$header = array(iconv( 'UTF-8','cp874' ,'รหัสพนักงาน'),iconv( 'UTF-8','cp874' ,'ชื่อพนักงาน'),iconv( 'UTF-8','cp874' ,'ฝ่าย/แผนก'),iconv( 'UTF-8','cp874' ,'ตำแหน่ง'),iconv( 'UTF-8','cp874' ,'เกรด'));
+$pdf->AddFont('angsana','','angsa.php');
+$pdf->SetFont('angsana','B',20);
+$pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $dept_name ),0,0,'L');
+$pdf->Ln(5);
 
-$pdf->TableZa($header, $data);
+$header = array(iconv( 'UTF-8','cp874' ,'ลำดับ'),iconv( 'UTF-8','cp874' ,'รหัสพนักงาน'),iconv( 'UTF-8','cp874' ,'ชื่อพนักงาน'),iconv( 'UTF-8','cp874' ,'ฝ่าย/แผนก'),iconv( 'UTF-8','cp874' ,'ตำแหน่ง'),iconv( 'UTF-8','cp874' ,'คะแนน'),iconv( 'UTF-8','cp874' ,'เกรด'));
 
-    
+$pdf->TableZa($header, $data); 
+/*$avg_dept_grade = "CALL get_avg_grade_dept($deptid)";
+$query_avg_dept_grade = mysql_query($avg_dept_grade,$db);
+*/
+$pdf->Ln(10);
+}
 
+
+$pdf->Ln(5);
+$pdf->Table("$con_grade",$prop); 
+$query_avg_grade = mysql_query($avg_grade,$db);
+ while($result_avg_grade = mysql_fetch_array($query_avg_grade)) { 
+      $avggrade = $result_avg_grade['grade_description'];                                    
+}
+$pdf->AddFont('angsana','','angsa.php');
+$pdf->SetFont('angsana','',18);
+
+$pdf->Cell(25,10,iconv( 'UTF-8','cp874' , 'เกรดเฉลี่ยรวมทุกแผนก' ),0,0,'L');
+$pdf->Cell(25,10,iconv( 'UTF-8','cp874' , $avggrade ),0,0,'R');
 $pdf->Output();
 ?>
 

@@ -20,7 +20,7 @@
     $msg='';
     $id='';
     $name='';
-    $dept_name='';
+    $dept_id='';
      
     if(isset($_GET['emp_id'])){
         $id=$_GET['emp_id'];
@@ -28,8 +28,8 @@
     if(isset($_GET['emp_name'])){
         $name=$_GET['emp_name'];
     }
-    if(isset($_GET['dept_name'])){
-        $dept_name=$_GET['dept_name'];
+    if(isset($_GET['dept_id'])){
+        $dept_id=$_GET['dept_id'];
     }
 ?>
 <html>
@@ -105,10 +105,10 @@
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
                                         ?>
-                                        <select class="form-control" name="dept_name">
+                                        <select class="form-control" name="dept_id">
                                             <option value="">เลือก</option>
                                             <?php while ($result_department = mysqli_fetch_array($query_department, MYSQLI_ASSOC)) { ?>
-                                                <option><?php echo $result_department["department_name"]; ?></option>
+                                            <option value="<?php echo $result_department["department_id"]; ?>"><?php echo $result_department["department_name"]; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>                               
@@ -147,11 +147,12 @@
                         <table class="display table table-hover table-responsive table-striped table-bordered" width="90%" >
                             <thead>
                                 <tr class="bg-blue-active">
+                                    <th>ลำดับ</th>  
                                     <th><button class="sort bg-blue-active" data-sort="id">รหัสพนักงาน</button></th>
                                     <th><button class="sort bg-blue-active" data-sort="full_name">ชื่อพนักงาน</button></th>
                                     <th>ฝ่าย/แผนก</th>                                    
                                     <th>ตำแหน่ง</th>
-                                    
+                                    <th>คะแนน</th>
                                     <th>
                                         <center>เกรด</center>
                                     </th>
@@ -159,9 +160,10 @@
 
                                 </tr>
                             </thead>
-                            <?php                                 
+                            <?php         
+                            if ($id=='' and $name =='' and $dept_id ==''){
                                 //default
-                                $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description
+                                $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description,sum_overall_point
                                             FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id 
                                             JOIN employees e ON ee.employee_id = e.employee_id JOIN departments d ON e.department_id = d.department_id 
                                             JOIN jobs j ON e.job_id = j.job_id
@@ -174,11 +176,14 @@
                                                     GROUP BY g.grade_id 
                                                     ORDER BY grade_description";
                                  $query_conclude_grade = mysqli_query($conn, $sql_conclude_grade);
+                                $no=1;
+                                //CALL get_avg_grade_allEmp();
+                                $avg_grade = "CALL get_avg_grade_allEmp()";
+                                $query_avg_grade = mysqli_query($conn, $avg_grade);
                                 
                                 
-                                
-                              if ($id!='' and $name =='') {                                
-                                $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description
+                              }else if ($id!='' and $name =='') {                                
+                                $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description,sum_overall_point
                                             FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id 
                                             JOIN employees e ON ee.employee_id = e.employee_id JOIN departments d ON e.department_id = d.department_id 
                                             JOIN jobs j ON e.job_id = j.job_id
@@ -194,9 +199,10 @@
                                                     GROUP BY g.grade_id 
                                                     ORDER BY grade_description";
                                  $query_conclude_grade = mysqli_query($conn, $sql_conclude_grade);
+                                 $no=1;
                                  
                             }else if($name !='') {                                
-                                $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description
+                                $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description,sum_overall_point
                                             FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id 
                                             JOIN employees e ON ee.employee_id = e.employee_id JOIN departments d ON e.department_id = d.department_id 
                                             JOIN jobs j ON e.job_id = j.job_id
@@ -213,14 +219,15 @@
                                                     GROUP BY g.grade_id 
                                                     ORDER BY grade_description";
                                  $query_conclude_grade = mysqli_query($conn, $sql_conclude_grade);
+                                 $no=1;
                                  
                                  
-                            }else if($dept_name !='') {                                
-                                $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description
+                            }else if($dept_id !='') {                                
+                                $sql_emp = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description,sum_overall_point,d.department_id 
                                             FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id 
                                             JOIN employees e ON ee.employee_id = e.employee_id JOIN departments d ON e.department_id = d.department_id 
                                             JOIN jobs j ON e.job_id = j.job_id
-                                            WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and department_name  like '%$dept_name%'
+                                            WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and d.department_id = $dept_id
                                             ";
                                  $query_emp= mysqli_query($conn, $sql_emp);
                                  $sql_conclude_grade ="
@@ -229,11 +236,15 @@
                                                     JOIN employees e ON ee.employee_id = e.employee_id 
                                                     JOIN departments d ON e.department_id = d.department_id 
                                                     JOIN jobs j ON e.job_id = j.job_id
-                                                    WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and department_name  like '%$dept_name%'
+                                                    WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and d.department_id =$dept_id
                                                     GROUP BY g.grade_id 
                                                     ORDER BY grade_description";
                                  $query_conclude_grade = mysqli_query($conn, $sql_conclude_grade);
-                                 
+                                 $no=1;
+                                
+                                $avg_grade = "CALL get_avg_grade_dept($dept_id)";
+                                $query_avg_grade = mysqli_query($conn, $avg_grade);
+                                
                                  
                             }
                               
@@ -243,19 +254,20 @@
                             <tbody class="list"> 
                             <?php while($result_emp = mysqli_fetch_assoc($query_emp)) { ?>
                             <tr>
+                                <td class="emp_id"><?php echo $no ; ?></td>
                                 <td class="emp_id"><?php echo $result_emp['employee_id'] ; ?></td>
                                 <td class="full_name"><?php echo $result_emp['fullname'] ; ?></td>
                                 <td class="dept_name"><?php echo $result_emp['department_name'] ; ?></td> 
                                 <td class="job_name"><?php echo $result_emp['job_name'] ; ?></td>                                                                 
-                                    
+                                <td class="job_name"><?php echo $result_emp['sum_overall_point'] ; ?></td>      
                                 <td class="grade"><?php echo $result_emp['grade_description'] ; ?></td>
-
-
+                                
                             </tr>
                             
                             
                             
-                            <?php }  ?>
+                            <?php $no++;
+ }  ?>
                             </tbody>
                            <script>
                                             var options = {
@@ -289,6 +301,12 @@
 
                                 </tr>
                         <?php }?>
+                                 <?php if($query_avg_grade){ while($result_avg_grade = mysqli_fetch_assoc($query_avg_grade)) { ?>
+                                            <tr class="bg-blue-active">
+                                                <th>เกรดเฉลี่ยรวม</th>
+                                                <th><?php echo $result_avg_grade['grade_description']; ?></th>
+                                            </tr>
+                                 <?php }}else{}?>     
                             </tbody>
                         </table>   
                         <div class="col-md-12  ">
@@ -297,6 +315,15 @@
                             <button  type="submit" class="btn-danger" style="float: right">
                                 <img src="img/icon_pdf.png" width="16" height="16" align="absmiddle" /> PDF</button>
                                 <input type="hidden" value="<?php echo $sql_emp;?>" name="sql_grade">
+                                <input type="hidden" value="<?php echo $sql_conclude_grade;?>" name="con_grade">
+                                <input type="hidden" value="<?php echo $avg_grade;?>" name="avg_grade">
+                            </form>
+                            <form action="pdf_grade_dept_report.php" method="post">
+                            <button  type="submit" class="btn-danger" style="float: right">
+                                <img src="img/icon_pdf.png" width="16" height="16" align="absmiddle" /> PDF dept</button>
+                                <input type="hidden" value="<?php echo $sql_emp;?>" name="sql_grade">
+                                <input type="hidden" value="<?php echo $sql_conclude_grade;?>" name="con_grade">
+                                <input type="hidden" value="<?php echo $avg_grade;?>" name="avg_grade">
                             </form>
                             
                         </div>
