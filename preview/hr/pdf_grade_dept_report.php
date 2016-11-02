@@ -141,48 +141,56 @@ $sql_dept="SELECT
                         d.department_name
                 ";
 $query_dept=mysql_query($sql_dept,$db);
+
 while($result_dept = mysql_fetch_array($query_dept)){
     $dept_name = $result_dept['department_name'];
     $dept_id = $result_dept['department_id'];
-    $deptid = $result_dept['department_id'];
-    
-     /*while($result_avg_dept_grade = mysql_fetch_array($query_avg_dept_grade)) { 
-          $dept_grade = $result_avg_dept_grade['grade_description']; 
-
-    }
-    $pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $dept_grade),0,0,'L');*/
+    $dept_count=0;
     $sql_grade_dept = "SELECT e.employee_id,CONCAT(e.prefix,e.first_name,' ', e.last_name) as fullname, department_name , job_name, grade_description,sum_overall_point,d.department_id 
                                             FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id 
                                             JOIN employees e ON ee.employee_id = e.employee_id JOIN departments d ON e.department_id = d.department_id 
                                             JOIN jobs j ON e.job_id = j.job_id
                                             WHERE e.company_id = 1 and d.department_id = $dept_id
                                             ORDER BY d.department_name";
-$res=mysql_query($sql_grade_dept,$db);
-$data = [];
-$i = 0;
-while($result = mysql_fetch_array($res)){
-    $row = [];
-    $row[0] = $result['employee_id'];
-    $row[1] = $result['fullname'];
-    $row[2] = $result['department_name'];
-    $row[3] = $result['job_name'];
-    $row[4] = $result['sum_overall_point'];
-    $row[5] = $result['grade_description'];
-    $data[$i] = $row;
-    $i += 1;
-}
-$pdf->AddFont('angsana','','angsa.php');
-$pdf->SetFont('angsana','B',20);
-$pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $dept_name ),0,0,'L');
-$pdf->Ln(5);
+        
+        $res=mysql_query($sql_grade_dept,$db);
+        $data = [];
+        $i = 0;
+        
+        while($result = mysql_fetch_array($res)){
+            $row = [];
+            $row[0] = $result['employee_id'];
+            $row[1] = $result['fullname'];
+            $row[2] = $result['department_name'];
+            $row[3] = $result['job_name'];
+            $row[4] = $result['sum_overall_point'];
+            $row[5] = $result['grade_description'];
+            $data[$i] = $row;
+            $i += 1;
+        }
+        
+        $pdf->AddFont('angsana','','angsa.php');
+        $pdf->SetFont('angsana','B',20);
+        
+        $pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $dept_name ),0,0,'L');
+        $pdf->Ln(5);
 
-$header = array(iconv( 'UTF-8','cp874' ,'ลำดับ'),iconv( 'UTF-8','cp874' ,'รหัสพนักงาน'),iconv( 'UTF-8','cp874' ,'ชื่อพนักงาน'),iconv( 'UTF-8','cp874' ,'ฝ่าย/แผนก'),iconv( 'UTF-8','cp874' ,'ตำแหน่ง'),iconv( 'UTF-8','cp874' ,'คะแนน'),iconv( 'UTF-8','cp874' ,'เกรด'));
+        $header = array(iconv( 'UTF-8','cp874' ,'ลำดับ'),iconv( 'UTF-8','cp874' ,'รหัสพนักงาน'),iconv( 'UTF-8','cp874' ,'ชื่อพนักงาน'),iconv( 'UTF-8','cp874' ,'ฝ่าย/แผนก'),iconv( 'UTF-8','cp874' ,'ตำแหน่ง'),iconv( 'UTF-8','cp874' ,'คะแนน'),iconv( 'UTF-8','cp874' ,'เกรด'));
 
-$pdf->TableZa($header, $data); 
-/*$avg_dept_grade = "CALL get_avg_grade_dept($deptid)";
-$query_avg_dept_grade = mysql_query($avg_dept_grade,$db);
-*/
-$pdf->Ln(10);
+        $pdf->TableZa($header, $data); 
+        
+        $avg_dept_grade = [];
+        $avg_dept_grade[$dept_count]="CALL get_avg_grade_dept($dept_id)";
+        /*$query_avg_dept_grade = mysql_query($avg_dept_grade[$dept_count],$db);
+        while($result_avg_dept_grade = mysql_fetch_array($query_avg_dept_grade)) { 
+                  
+                  $dept_grade[$dept_count]=$result_avg_dept_grade['grade_description'];     
+                  $pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $dept_grade[$dept_count] ),0,0,'L');
+                  
+            }
+          */  
+        $pdf->Ln(10);
+        $dept_count++;
 }
 
 
@@ -197,6 +205,18 @@ $pdf->SetFont('angsana','',18);
 
 $pdf->Cell(25,10,iconv( 'UTF-8','cp874' , 'เกรดเฉลี่ยรวมทุกแผนก' ),0,0,'L');
 $pdf->Cell(25,10,iconv( 'UTF-8','cp874' , $avggrade ),0,0,'R');
+           
+            foreach ($avg_dept_grade as $avg){
+               $query_avg_dept_grade = mysql_query($avg,$db);
+               //$dept_grade=$result_avg_dept_grade['grade_description'];   
+               //$result_avg_dept_grade = mysql_fetch_array($query_avg_dept_grade);                  
+               //$dept_grade=$result_avg_dept_grade['grade_description'];     
+               $pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $query_avg_dept_grade ),0,0,'L');
+                  
+            
+               //$pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $query_avg_dept_grade['grade_description'] ),0,0,'L');
+
+            }
 $pdf->Output();
 ?>
 

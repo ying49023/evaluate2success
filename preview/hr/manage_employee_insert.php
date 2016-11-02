@@ -43,6 +43,7 @@
             $address=$_POST['address'];
             $email=$_POST['email'];
             $hiredate =$_POST['startdate'];
+            $emp_id = $_POST['emp_id'];
             $mng =''; 
             
             // เริ่มต้นใช้งาน class.upload.php ด้วยการสร้าง instant จากคลาส
@@ -57,7 +58,7 @@
                 $upload_image->image_x              = 400 ; // กำหนดความกว้างภาพเท่ากับ 400 pixel 
                 $upload_image->image_ratio_y        = true; // ให้คำณวนความสูงอัตโนมัติ
 
-                $upload_image->process( "upload_images" ); // เก็บภาพไว้ในโฟลเดอร์ที่ต้องการ  *** โฟลเดอร์ต้องมี permission 0777
+                $upload_image->process( "../upload_images" ); // เก็บภาพไว้ในโฟลเดอร์ที่ต้องการ  *** โฟลเดอร์ต้องมี permission 0777
 
                 // ถ้าหากว่าการจัดเก็บรูปภาพไม่มีปัญหา  เก็บชื่อภาพไว้ในตัวแปร เพื่อเอาไปเก็บในฐานข้อมูลต่อไป
                 if ( $upload_image->processed ) {
@@ -76,7 +77,7 @@
                      echo $name;
 
                      }   
-                    $add_query="INSERT INTO employees(prefix,first_name,last_name,department_id,job_id,position_level_id,manager_id,telephone_no,address,email,company_id,hiredate,profile_picture) VALUES ('$prefix','$first_name','$last_name',$department_id,$job_id,$position_level_id,$mng,'$telephone','$address','$email',1,'$hiredate','$image_name')";            
+                    $add_query="INSERT INTO employees(prefix,first_name,last_name,department_id,job_id,position_level_id,manager_id,telephone_no,address,email,company_id,hiredate,profile_picture,employee_id) VALUES ('$prefix','$first_name','$last_name',$department_id,$job_id,$position_level_id,$mng,'$telephone','$address','$email',1,'$hiredate','$image_name',$emp_id)";            
                     $a_query =  mysqli_query($conn,$add_query);
 
                     if($a_query)
@@ -173,6 +174,13 @@
                                                     <label>อัพโหลดรูปภาพ</label>
                                                     <input class="form-control" name="image_name" value="<?php echo $pic;?>" type="file" id="image_name" size="40" >
 
+                                                </div>                                                
+                                            </div>
+                                            
+                                            <div class="col-md-2">                                                
+                                                <div class="form-group">
+                                                    <label>รหัสพนักงาน<span style="color: red;">*</span></span></label>
+                                                    <input class="form-control" name="emp_id" type="text" required>
                                                 </div>                                                
                                             </div>
 
@@ -337,7 +345,7 @@
                                                 </div>
 
                                                 </div>
-                                            <div class="col-md-6">
+                                <!--            <div class="col-md-6">
                                                 <?php
                                                  $sql_company = "SELECT * FROM company";
                                                  $query_company = mysqli_query($conn, $sql_company);
@@ -366,7 +374,7 @@
 
 
                                                     <?php } ?>
-                                            </div>
+                                            </div> -->
 
 
                                         </div>

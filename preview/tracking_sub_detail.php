@@ -237,7 +237,7 @@
                         
                         <?php 
                         $sql_kpi_history ="
-                            SELECT kp.kpi_comment,k.kpi_name, kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol
+                            SELECT kp.kpi_comment,k.kpi_name, kp.kpi_progress_update, kp.progress_time_update,k.kpi_code as kpi_id,ks.goal,k.measure_symbol as symbol,kp.round_update
                             FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id 
                             JOIN kpi k ON ks.kpi_id = k.kpi_id
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
@@ -268,7 +268,7 @@
                                         $symbol = $result_kpi_history["symbol"];
                                         $comment = $result_kpi_history["kpi_comment"];
                                         $kpi_progress_update = $result_kpi_history["kpi_progress_update"];
-                                        $progress_time_update = $result_kpi_history["progress_time_update"];
+                                        $progress_time_update = $result_kpi_history["round_update"];
                                         $count++;
                                     ?>
                                     <tr>
@@ -305,7 +305,7 @@
         <!-- ./wrapper -->
         <!-- Google Chart Script-->
         <?php
-                $show_date ="SELECT kp.progress_time_update as date_show,kp.kpi_progress_update as success,ks.goal                         
+                $show_date ="SELECT kp.progress_time_update as date_show,kp.kpi_progress_update as success,ks.goal ,kp.round_update                           
                             FROM kpi_progress kp JOIN kpi_responsible ks ON kp.kpi_responsible_id = ks.kpi_responsible_id                             
                             JOIN kpi k ON ks.kpi_id = k.kpi_id
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
@@ -377,7 +377,8 @@
                     ['Month', 'value', { role: 'style' }],
                      <?php 
                      while($result_show_date=  mysqli_fetch_array($query_show_date)){
-                    $array_date[$i] =date("F",strtotime($result_show_date['date_show']));
+                   // $array_date[$i] =date("F",strtotime($result_show_date['date_show']));
+                    $array_date[$i]=$result_show_date['round_update'];
                     $array_goal[$i] =$result_show_date['goal'];
                     $array_success[$i] =$result_show_date['success'];    
                     
@@ -389,7 +390,7 @@
                 
                 
                 var options2 = {
-                    title: '',
+                    title: '<?php echo $kpi_id;?> - <?php echo $kpi_name ?>',
                     legend: 'none',
                     bar: {groupWidth: '70%'},
                     vAxis: { gridlines: { count: 5 } }

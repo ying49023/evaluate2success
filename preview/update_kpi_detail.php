@@ -39,8 +39,8 @@
        $kpicode=$_POST["kpicode"];
        $empid=$_POST["empid"];
        $get_kpi_responsible_id = $_GET["kpi_responsible_id"]; 
-       
-       $sql_submit = "call getMile_kpi_progress($resp_id,$float_value_of_var,'$input_desc')";
+       $round=$_POST["round"];
+       $sql_submit = "call getMile_kpi_progress($resp_id,$float_value_of_var,'$input_desc','$round')";
        $objQuery = mysqli_query($conn,$sql_submit);
                if ($objQuery) {
                   
@@ -311,7 +311,8 @@
                                               <input type="hidden" name="resp_id" value="<?php echo $kpi_resp_id ;?>" > 
                                               <input type="hidden" name="empid" value="<?php echo $get_emp_id ;?>" > 
                                               <input type="hidden" name="kpicode" value="<?php echo $kpi_id ;?>" > 
-                                              <input type="hidden" name="kpi_responsible_id" value="<?php echo $get_kpi_responsible_id ;?>" > 
+                                              <input type="hidden" name="emp_name" value="<?php echo $progress_time_update; ?>">
+                                              <input type="hidden" name="round" value="<?php echo $test ;?>" > 
                                         </div>
                                         </td>
                                     </tr>
@@ -454,6 +455,7 @@
                                                                             <button type="submit" name="kpi_sendmail" class="btn btn-primary">ส่งคำร้อง</button>                                                                    
                                                                             <input type="hidden" name="emp_name" value="<?php echo $name; ?>">
                                                                             <input type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>">
+                                                                            
                                                                             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
                                                                         </div>
                                                                     </div>

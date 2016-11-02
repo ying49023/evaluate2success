@@ -108,6 +108,9 @@
                                                     วัตถุประสงค์ / เป้าหมายที่กำหนดร่วมกันระหว่างผู้ประเมิน และผู้ถูกประเมิน (Performance Objectives / KPIs)
                                                 </th>
                                                 <th rowspan="2"  style="vertical-align: middle;">
+                                                    เป้าหมาย (Goal)
+                                                </th>
+                                                <th rowspan="2"  style="vertical-align: middle;">
                                                     ผลการปฏิบัติงานที่เกิดขึ้นจริง (Actual Performance)
                                                 </th>
                                                 <th colspan="3" class="text-center">ครั้งที่ <?php echo $term ;  ?> <?php echo $start_month_name ; ?> -<?php echo $end_month_name; ;  ?> </th>
@@ -149,7 +152,8 @@
                                              ?>
                                 
                                             <tr> 
-                                                <td rowspan="1"><?php echo $kpi_name.' เป้าหมาย: '.$symbol.''.$goal ;?></td>
+                                                <td rowspan="1"><?php echo $kpi_name ;?></td>
+                                                <td rowspan="1"><?php echo $symbol.''.$goal ;?></td>
                                                 <td rowspan="1"><?php echo $success;?></td>
                                                 <td class="text-center" rowspan="1"><?php echo $weight.'%';?></td>
                                                 <td class="text-center" rowspan="1"><?php echo $percent_performance/10;?></td>
@@ -170,7 +174,7 @@
                                             <?php }?>
                                             
                                             <tr class="bg-gray-active"> 
-                                                <th rowspan="1" colspan="2" class="text-right" >รวม</th>
+                                                <th rowspan="1" colspan="3" class="text-right" >รวม</th>
                                                  <?php                                                 
                
                                                 $sql_percent_weight="SELECT SUM(percent_weight) as sum_percent_weight
@@ -216,7 +220,7 @@
                                                         WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";
                                                 $query_sum_kpi_total = mysqli_query($conn, $sql_sum_kpi_total);
                                                 ?>
-                                                <th colspan="4" class=""></th>
+                                                <th colspan="5" class=""></th>
                                                 <?php 
                                                 $sql_point_kpi="select * from evaluation_employee WHERE evaluate_employee_id='".$_SESSION["eval_emp_id"]."' ";
                                                 $query_point_kpi=  mysqli_query($conn, $sql_point_kpi);

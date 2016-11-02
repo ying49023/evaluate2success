@@ -59,8 +59,8 @@
                $time_period =$_POST['time_period'];
                $default_weight =$_POST['default_weight'];
                $hidden_group_id=$_POST['hidden_group_id'];
-               $strSQL =" INSERT INTO kpi(kpi_group_id,kpi_code,kpi_name,kpi_description,measure_symbol,measure_desc,unit,time_period,default_weight,current_kpi) "
-                       . "VALUES('$hidden_group_id','$kpicode','$kpiname','$kpi_desc','$measure_symbol','$measure_desc','$unit',$time_period,$default_weight,1) ";
+               $strSQL =" INSERT INTO kpi(kpi_group_id,kpi_code,kpi_name,kpi_description,measure_symbol,measure_desc,unit,time_period,default_weight,year) "
+                       . "VALUES('$hidden_group_id','$kpicode','$kpiname','$kpi_desc','$measure_symbol','$measure_desc','$unit',$time_period,$default_weight,2016) ";
                $objQuery = mysqli_query($conn,$strSQL);
                if ($objQuery) {
 
@@ -278,7 +278,7 @@
                                                         $group_id = $result_kpi_group['kpi_group_id'];
                                                         $group_name = $result_kpi_group['kpi_group_name'];
                                         if($group_id!=''){
-                                        $sql_kpi = "select * from kpi where current_kpi = 1 and kpi_group_id = '$group_id'";
+                                        $sql_kpi = "select * from kpi where year = 2016 and kpi_group_id = '$group_id'";
                                         $query_kpi= mysqli_query($conn, $sql_kpi);     
                                         
                                        
