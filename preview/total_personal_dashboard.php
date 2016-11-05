@@ -32,50 +32,101 @@
     
     <!-- SCRIPT PACKS -->
     <?php include('./script_packs.html') ?>
-            <?php include ('./classes/connection_mysqli.php');?>
+    <?php include ('./classes/connection_mysqli.php');?>
+        
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
+        <!--Header part-->
+        <?php include './headerpart.php'; ?>
+        
         <?php
         
         $get_department_id = '';
-        if (isset($_GET["department_id"])) {
+        if($my_position_level == 2 || $my_position_level == 3){
+            $get_department_id = $my_dept_id;
+        }else if(isset($_GET["department_id"])) {
             $get_department_id = $_GET["department_id"];
         }
         $get_job_id = '';
         if (isset($_GET["job_id"])) {
             $get_job_id = $_GET["job_id"];
         }
-        $eval = ' eval_code = 3';
-        $get_eval_code = '3';
-        if(isset($_GET["eval_code"])){
-            $get_eval_code = $_GET["eval_code"];
-            $eval = " eval.evaluation_code = '".$get_eval_code ."'";
+        
+        $get_time_period = '1';
+        if (isset($_GET["time_period"])) {
+            $get_time_period = $_GET["time_period"];
+        }
+       
+        $get_year = date("Y");
+        if(isset($_GET["year"])){
+            $get_year = $_GET["year"];
+
+        }
+        $get_term = '';
+        if(isset($_GET["term"])){
+            $get_term = $_GET["term"];
+
+        }
+//        $eval = ' eval_code = 3';
+//        $get_eval_code = '3';
+//        if(isset($_GET["eval_code"])){
+//            $get_eval_code = $_GET["eval_code"];
+//            $eval = " eval.evaluation_code = '".$get_eval_code ."'";
+//        }
+        
+        if($my_position_level == 2 || $my_position_level == 3){
+            $get_department_id = $my_dept_id;
+            $condition_kpi_list = "WHERE d.department_id = '$get_department_id'
+                                    AND e.YEAR = '$get_year' AND term_id =='1' ";
+        }else {
+            $condition_kpi_list = "WHERE e.YEAR = '$get_year' AND term_id='1' ";
         }
         
-        $condition = 'WHERE eval.evaluation_code = 3 ';
-        if ($get_department_id != '' && $get_job_id != '' && $get_eval_code != '') {
-            $condition = " WHERE e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
-        } else if ($get_department_id != '' && $get_job_id != '') {
-            $condition = " WHERE  e.department_id = '$get_department_id' AND e.job_id = '$get_job_id' ";
-        }else if($get_job_id != '' && $get_eval_code != ''){
-            $condition = " WHERE  e.job_id = '$get_job_id' AND eval.evaluation_code = '$get_eval_code' ";
-        }else if($get_department_id != '' && $get_eval_code != ''){
-            $condition = " WHERE e.department_id = '$get_department_id' AND eval.evaluation_code = '$get_eval_code' ";
-        }else if($get_department_id != '' || $get_job_id != '' || $get_eval_code != ''){
-            if ($get_department_id != '') {
-                $condition = " WHERE e.department_id = '" . $get_department_id . "' ";
-            } else if ($get_job_id != '') {
-                $condition = " WHERE e.job_id = '" . $get_job_id . "' ";
-            }else if($get_eval_code != ''){
-                $condition = " WHERE eval.evaluation_code = '$get_eval_code' ";
+        if ($get_job_id != '' && $get_year != '' && $get_term != '') {
+                $condition_kpi_list = "WHERE
+                                        d.department_id = '$get_department_id'
+                                        AND j.job_id = '$get_job_id'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+        }else if($get_department_id != ''&& $get_year != '' && $get_term != '') {
+            $condition_kpi_list = "WHERE
+                                        d.department_id = '$get_department_id'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            $condition_performance = " AND year= '$get_year' AND d.department_id = '$get_department_id' ";    
+        } else if($get_year != '' && $get_term != ''){
+            if($my_position_level == 2 || $my_position_level == 3){
+                $get_department_id = $my_dept_id;
+                $condition_kpi_list = "WHERE
+                                        
+                                        d.department_id = '$get_department_id'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            }else {
+                $condition_kpi_list = "WHERE
+                                        e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
             }
-        }else if($get_department_id == '' && $get_job_id == '' && $get_eval_code == ''){
-            $condition = 'WHERE eval.evaluation_code = 3 ';
+            
+            
+        }else if($get_year != '' && $get_department_id != ''){
+
+                $condition_kpi_list = "WHERE e.YEAR = '$get_year' AND d.department_id = '$get_department_id' AND e.term_id = '1'";
+
+            
+        }else if($get_year != ''){
+            if($my_position_level == 2 || $my_position_level == 3){
+                $get_department_id = $my_dept_id;
+                $condition_kpi_list = "WHERE d.department_id = '$get_department_id'
+                                        AND e.YEAR = '$get_year' AND e.term_id = '1' ";
+            }else {
+                $condition_kpi_list = "WHERE e.YEAR = '$get_year' AND term_id = '1' ";
+            }
+            
         }
-?>
-</head>
-<body class="hold-transition skin-blue sidebar-mini">
-    <div class="wrapper">
-        <!--Header part-->
-        <?php include './headerpart.php'; ?>
+        ?>
+        
         <!-- Left side column. contains the logo and sidebar -->
         <?php include './sidebarpart.php'; ?>
 
@@ -100,71 +151,99 @@
             <!--/Page header -->
 
             <!-- Main content -->
-            <!--header search filter-->
+            <!-- Search -->
             <div class="row box-padding">
                 <div class="box box-success">
-                     <div class="box-body ">
-                            <form method="get">
-                                <div class="col-md-3">
-                                    <label class="col-sm-4 control-label">รอบ</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
-                                        $query_eval = mysqli_query($conn, $sql_eval);
-                                    ?>
-                                        <select class="form-control" name="eval_code">
-                                            <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_eval["evaluation_code"]; ?>" <?php if($get_eval_code == $result_eval["evaluation_code"]) { echo "selected"; }  ?> >
-                                                <?php echo 'ปี '.$result_eval["year"]." - ครั้งที่".$result_eval["term_id"]; ?>
+                    <div class="box-header ">
+                        <form method="get">
+                            <div class="col-lg-2 col-md-2 col-sm-6">
+                                <div class="form-group">
+                                    <label class=" control-label">ปี</label>
+                                                <?php
+                                                $sql_eval = "SELECT DISTINCT(year) FROM evaluation ORDER BY year , term_id ASC";
+                                                $query_eval = mysqli_query($conn, $sql_eval);
+                                                ?>
+                                        <select class="form-control input-small" name="year" required>
+
+                                                    <?php while ($result_eval = mysqli_fetch_array($query_eval, MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_eval["year"]; ?>"<?php if ($get_year == $result_eval["year"]) {
+                                                echo "selected"; } ?> >
+                                                    <?php echo 'ปี ' . $result_eval["year"]; ?>
+
                                             </option>
-                                        <?php } ?>
+
+                                                    <?php } ?>
                                         </select>
-                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="col-sm-4 control-label">แผนก</label>
-                                    <div class="col-sm-8">
+
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">รอบ</label>
+                                    <select class="form-control" name="term">
+                                        
+                                        <option value="1" <?php if($get_term == '1') { echo "selected"; }  ?> >รอบที่ 1</option>
+                                        <option value="2" <?php if($get_term == '2') { echo "selected"; }  ?> >รอบที่ 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label class=" control-label">แผนก/ฝ่าย</label>
+                                    <div class="">
                                     <?php 
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
+
                                     ?>
-                                        <select class="form-control" name="department_id">
-                                            <option value="">เลือกทั้งหมด</option>
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" <?php if ($my_position_level == "2" || $my_position_level == "3") { echo "disabled"; } ?> >
+                                        <option value="">เลือกทั้งหมด</option>
+                                        
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                            <option value="<?php  echo $result_department["department_id"];  ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
                                                 <?php echo $result_department["department_name"]; ?>
                                             </option>
-                                        <?php } ?>
+                                            <?php } ?>
+                                        
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-sm-4 control-label">ตำแหน่ง</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
-                                        $query_job = mysqli_query($conn, $sql_job);
-                                    ?>
-                                        <select class="form-control" name="job_id">
-                                            <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
-                                                <?php echo $result_job["job_name"]; ?>
-                                            </option>
-                                        <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class=" col-md-1">
-                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
                                 </div>
 
-                            </form>
-                        </div>
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="form-group" >
+                                <label class=" control-label">ตำแหน่ง</label>
+                                <div class="">
+                                <?php 
+                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$my_dept_id."' ";
+                                    $query_job = mysqli_query($conn, $sql_job);
+                                ?>
+                                    <select class="form-control" name="job_id" id="list" >
+                                        <option value="">เลือกตำแหน่งทั้งหมด</option>
+                                        <?php foreach($query_job as $result_job){ ?>
+                                        <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
+                                            <?php echo $result_job["job_name"]; ?>
+                                        </option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-md-2 col-sm-12">
+                                <div class="form-group">
+                                    <div class=" pull-right">
+                                    <button type="submit" class="btn btn-primary " style="width: 100px;margin-top: 25px;" ><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;ค้นหา</button>
+                                </div>
+                                </div>
+                                    
+                            </div>
+                           
+                        </form>
+                    </div>
                 </div>
             </div>
-            <!--/header search filer-->
+            <!--/Search -->
              <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -201,31 +280,22 @@
                                 </thead>
                                 <?php
                     
-                                $sql_emp = "SELECT
-                                                e.employee_id As emp_id,
-                                                        CONCAT(
-                                                                e.prefix,
-                                                                e.first_name,
-                                                                '  ',
-                                                                e.last_name
-                                                        ) AS name,
-                                                        e.profile_picture,
-                                                        d.department_name As dept_name,
-                                                        j.job_name As job_name,
-                                                        eval.evaluation_code As eval_code
-
-                                                FROM
-                                                        employees e
-                                                JOIN departments d ON d.department_id = e.department_id
-                                                JOIN jobs j ON j.job_id = e.job_id
-                                                JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
-                                                JOIN employees m ON e.manager_id = m.employee_id
-                                                JOIN evaluation eval ON ee.evaluation_code = eval.evaluation_code
-                                                JOIN kpi_responsible r ON ee.evaluate_employee_id = r.evaluate_employee_id																								
-                                                $condition and m.employee_id = '$my_emp_id'
-                                                GROUP BY ee.evaluate_employee_id    
-                                                ORDER BY
-                                                        e.employee_id ASC";
+                                $sql_emp = "SELECT 
+                                                    emp.employee_id As emp_id, CONCAT(emp.prefix,emp.first_name,' ',emp.last_name) AS name, 
+                                                    emp.profile_picture, 
+                                                    d.department_name As dept_name,
+                                                    j.job_name As job_name, 
+                                                    j.job_name As job_name, 
+                                                    e.evaluation_code As eval_code FROM employees emp 
+                                                    JOIN departments d ON d.department_id = emp.department_id 
+                                                    JOIN jobs j ON j.job_id = emp.job_id 
+                                                    JOIN evaluation_employee ee ON emp.employee_id = ee.employee_id 
+                                                    JOIN employees m ON emp.manager_id = m.employee_id 
+                                                    JOIN evaluation e ON ee.evaluation_code = e.evaluation_code 
+                                                    JOIN kpi_responsible r ON ee.evaluate_employee_id = r.evaluate_employee_id																									
+                                            $condition_kpi_list and m.employee_id = '10002'
+                                            GROUP BY ee.evaluate_employee_id    
+                                            ORDER BY emp.employee_id ASC";
                                 $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
                                  
                                     
@@ -240,10 +310,10 @@
                                     $profile_picture = $result["profile_picture"];
                                     $sql_mile ="select SUM(r.percent_weight*r.percent_performance)/ (SELECT SUM(percent_weight) FROM kpi_responsible er
                                     JOIN evaluation_employee ee ON ee.evaluate_employee_id = er.evaluate_employee_id
-                                    WHERE ee.employee_id=$emp_id and ee.evaluation_code =$get_eval_code  ) as mile_percent
+                                    WHERE ee.employee_id=$emp_id and ee.evaluation_code =$eval_code  ) as mile_percent
                                     FROM kpi_responsible r
                                     JOIN evaluation_employee e ON e.evaluate_employee_id = r.evaluate_employee_id
-                                    WHERE e.employee_id=$emp_id AND r.percent_performance IS NOT NULL and e.evaluation_code =$get_eval_code";
+                                    WHERE e.employee_id=$emp_id AND r.percent_performance IS NOT NULL and e.evaluation_code ='$eval_code'";
                                     $query_mile = mysqli_query($conn, $sql_mile);
                                     while ($result_mile = mysqli_fetch_assoc($query_mile)){
                                         $mile = $result_mile['mile_percent'];
@@ -266,7 +336,9 @@
                                         </td>
                                     <td class="text-center"><a class="btn btn-primary" href="total_personal_dashboard_detail.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; ดู</a></td>
                                 </tr>
-                                <?php } } ?>
+                                <?php } 
+                                
+                                                } ?>
                                 </tbody>
                                 <script>
                                         var options = {

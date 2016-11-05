@@ -56,15 +56,14 @@
         <?php include './sidebarpart.php'; ?>
 
         <?php
-        $get_department_id = '';
         
+        $get_department_id = '';
         if($my_position_level == 2 || $my_position_level == 3){
             $get_department_id = $my_dept_id;
-        }else if (isset($_GET["department_id"])) {
+        }else if(isset($_GET["department_id"])) {
             $get_department_id = $_GET["department_id"];
         }
-        
-        
+
         $get_job_id = '';
         if (isset($_GET["job_id"])) {
             $get_job_id = $_GET["job_id"];
@@ -73,57 +72,87 @@
         if (isset($_GET["time_period"])) {
             $get_time_period = $_GET["time_period"];
         }
-        //$eval = ' eval_code = 3';
-        $get_eval_code = '';
-        //if(isset($_GET["eval_code"])){
-            //$get_eval_code = $_GET["eval_code"];
-            //$eval = " eval.evaluation_code = '".$get_eval_code ."'";
-        //}
-        
+       
         $get_year = date("Y");
         if(isset($_GET["year"])){
             $get_year = $_GET["year"];
 
         }
+        $get_term = '';
+        if(isset($_GET["term"])){
+            $get_term = $_GET["term"];
+
+        }
         
-        $condition_kpi_list = "WHERE year = '$get_year' ";
-        $get_sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile,MONTH(NOW()) as current_month
-                        FROM kpi_progress kp JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
-                        JOIN kpi k ON kr.kpi_id = k.kpi_id 
-                        WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year= '$get_year'  ";
-        if ($get_department_id != '' && $get_job_id != '' && $get_time_period != '' && $get_year != '') {
-            $condition_kpi_list = " WHERE department_id = '$get_department_id' AND job_id = '$get_job_id' AND time_period = '$get_time_period' AND year = '$get_year' ";
-            $get_sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile, MONTH(NOW()) as current_month
-                            FROM kpi_progress kp 
-                            JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
-                            JOIN kpi k ON kr.kpi_id = k.kpi_id 
-                            JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
-                            WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year='$get_year' AND department_id ='$get_department_id' ";
+        $condition_kpi_list = "WHERE time_period = '1' AND e.YEAR = '$get_year' ";
+        $condition_performance = " AND year= '$get_year' ";
+        
+        if ($get_department_id != '' && $get_job_id != '' && $get_time_period != '' && $get_year != '' && $get_term != '') {
+            $condition_kpi_list = "WHERE
+                                        department_id = '$get_department_id'
+                                        AND job_id = '$get_job_id'
+                                        AND time_period = '$get_time_period'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            $condition_performance = " AND year= '$get_year' AND department_id = '$get_department_id' ";    
+        } else if($get_job_id != '' && $get_time_period != '' && $get_year != '' && $get_term != ''){
+            $condition_kpi_list = "WHERE
+                                        department_id = '$my_dept_id' 
+                                        AND job_id = '$get_job_id'
+                                        AND time_period = '$get_time_period'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            $condition_performance = " AND year= '$get_year' AND department_id = '$get_department_id' "; 
+        }else if($get_department_id != '' && $get_time_period != '' && $get_year != '' && $get_term != ''){
+            $condition_kpi_list = "WHERE
+                                        department_id = '$get_department_id' 
+                                        AND time_period = '$get_time_period'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            $condition_performance = " AND year= '$get_year' AND department_id = '$get_department_id' "; 
+        }else if($get_year != '' && $get_term != ''){
+            if($my_position_level == 2 || $my_position_level == 3){
+                $get_department_id = $my_dept_id;
+                $condition_kpi_list = "WHERE
+                                        time_period = '1'
+                                        AND department_id = '$get_department_id'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            }else {
+                $condition_kpi_list = "WHERE
+                                        time_period = '1'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            }
             
-        } else if ($get_department_id != '' && $get_job_id != '') {
-            $condition_kpi_list = " WHERE  department_id = '$get_department_id' AND e.job_id = '$get_job_id' AND time_period = '$get_time_period' AND year = '$get_year' ";
-            $get_sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile, MONTH(NOW()) as current_month
-                            FROM kpi_progress kp 
-                            JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
-                            JOIN kpi k ON kr.kpi_id = k.kpi_id 
-                            JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
-                            WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year='$get_year' AND department_id ='$get_department_id' ";
             
-        }else if($get_job_id != '' ){
-            $condition_kpi_list = " WHERE  job_id = '$get_job_id' AND department_id = '$get_department_id' AND time_period = '$get_time_period' AND year = '$get_year' ";
-        }else if($get_department_id != ''){
-            $condition_kpi_list = " WHERE department_id = '$get_department_id'  AND time_period = '$get_time_period' AND year = '$get_year' ";
-            $get_sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile, MONTH(NOW()) as current_month
-                            FROM kpi_progress kp 
-                            JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
-                            JOIN kpi k ON kr.kpi_id = k.kpi_id 
-                            JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
-                            WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year='$get_year' AND department_id ='$get_department_id' ";
+        }else  if($get_year != '' && $get_term != '' && $get_time_period != ''){
+            if($my_position_level == 2 || $my_position_level == 3){
+                $get_department_id = $my_dept_id;
+                $condition_kpi_list = "WHERE
+                                        time_period = '1'
+                                        AND department_id = '$get_department_id'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            }else{
+                $condition_kpi_list = "WHERE
+                                        time_period = '$get_term'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            }
             
-        }else if($get_time_period != '' ){
-            $condition_kpi_list = " WHERE  year = '$get_year' and time_period = '$get_time_period' ";
-        }else if($get_time_period != '' && $get_year != ''){
-            $condition_kpi_list = " WHERE  year = '$get_year' and time_period = '$get_time_period' ";
+        }else if($get_year != '' && $get_time_period != ''){
+            if($my_position_level == 2 || $my_position_level == 3){
+                $get_department_id = $my_dept_id;
+                $condition_kpi_list = "WHERE
+                                        time_period = '$get_time_period'
+                                        AND department_id = '$get_department_id'
+                                        AND e.YEAR = '$get_year' ";
+            }else {
+                $condition_kpi_list = "WHERE time_period = '$get_time_period' AND e.YEAR = '$get_year' ";
+            }
+        }else if($get_year != ''){
+            $condition_kpi_list = "WHERE time_period = '1' AND e.YEAR = '$get_year' ";
         }
         ?>
         
@@ -154,12 +183,11 @@
                 <div class="box box-success">
                     <div class="box-header ">
                         <form method="get">
-                            <div class="col-md-3 col-sm-6">
+                            <div class="col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label class=" control-label">รอบ</label>
-                                    <div class="">
                                                 <?php
-                                                $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
+                                                $sql_eval = "SELECT DISTINCT(year) FROM evaluation ORDER BY year , term_id ASC";
                                                 $query_eval = mysqli_query($conn, $sql_eval);
                                                 ?>
                                         <select class="form-control input-small" name="year" required>
@@ -167,18 +195,26 @@
                                                     <?php while ($result_eval = mysqli_fetch_array($query_eval, MYSQLI_ASSOC)) { ?>
                                             <option value="<?php echo $result_eval["year"]; ?>"<?php if ($get_year == $result_eval["year"]) {
                                                 echo "selected"; } ?> >
-                                                    <?php echo 'ปี ' . $result_eval["year"] . " - ครั้งที่" . $result_eval["term_id"]; ?>
+                                                    <?php echo 'ปี ' . $result_eval["year"]; ?>
 
                                             </option>
 
                                                     <?php } ?>
                                         </select>
-
-                                    </div>
                                 </div>
 
                             </div>
-                            <div class="col-md-3 col-sm-6">
+                            <div class="col-md-2 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">รอบ</label>
+                                    <select class="form-control" name="term">
+                                        <option value="">เลือกทั้งหมด</option>
+                                        <option value="1" <?php if($get_term == '1') { echo "selected"; }  ?> >รอบที่ 1</option>
+                                        <option value="2" <?php if($get_term == '2') { echo "selected"; }  ?> >รอบที่ 2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label class=" control-label">ระยะเวลา</label>
                                     <div class="">
@@ -203,7 +239,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-3 col-sm-6">
+                            <div class="col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label class=" control-label">แผนก/ฝ่าย</label>
                                     <div class="">
@@ -226,7 +262,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-3 col-sm-6">
+                            <div class="col-md-2 col-sm-6">
                                 <div class="form-group" >
                                 <label class=" control-label">ตำแหน่ง</label>
                                 <div class="">
@@ -245,22 +281,27 @@
                                 </div>
                                 </div>
                             </div>
-
-                            <div class=" pull-right">
-                                <button type="submit" class="btn btn-primary search-button " style="width: 100px;" ><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;ค้นหา</button>
+                            <div class="col-md-2 col-sm-6">
+                                <div class="form-group">
+                                    <div class=" pull-right">
+                                    <button type="submit" class="btn btn-primary " style="width: 100px;margin-top: 25px;" ><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;ค้นหา</button>
+                                </div>
+                                </div>
+                                    
                             </div>
-
+                           
                         </form>
                     </div>
                 </div>
             </div>
             <!--/Search -->
             <div class="row box-padding">
+                <div class="row">
                 <!-- AREA CHART -->
                 <div class="col-lg-8 col-md-7">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">KPI ภาพรวม (ราย <?php echo $get_time_period; ?> เดือน)</h3>
+                            <h3 class="box-title">KPI ภาพรวม รอบ <?php echo $get_year; ?> (ราย <?php echo $get_time_period; ?> เดือน)</h3>
 
                             <div class="box-tools pull-right">
                                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -292,7 +333,13 @@
                         <div class="box-body text-center">
                             <div id="score"  style="min-width: 255px;height: 220px;">
                             <?php
-                            $sql_per = $get_sql_per;
+                            $sql_per = "SELECT ROUND(AVG(performance_mile),2) as performance_mile,MONTH(NOW()) as current_month
+                                            FROM kpi_progress kp 
+                                            JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
+                                            JOIN kpi k ON kr.kpi_id = k.kpi_id 
+                                            JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id 
+                                            JOIN employees emp ON emp.employee_id = ee.employee_id
+                                            WHERE MONTH(progress_time_update) = MONTH(NOW()) $condition_performance ";
                             $query_per = mysqli_query($conn, $sql_per);
                             $result_per = mysqli_fetch_array($query_per);
                             $current_month = $result_per["current_month"];
@@ -327,7 +374,7 @@
                     </div>
                 </div>
                 <!-- /Mile pedformance -->
-
+                </div>
             </div>
             
             <!-- KPI list -->
@@ -349,22 +396,34 @@
                             </tr>
                         </thead>
                         <?php
-                        $sql_kpi = "SELECT kpi_code, kpi_name, CONCAT(k.default_target,' ',k.unit) as target, CONCAT(ROUND(AVG(success),2),' ',k.unit) as actual, time_period
-                            FROM kpi k JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id 
-                            JOIN kpi_responsible kr ON kr.kpi_id = k.kpi_id 
-                            $condition_kpi_list
-                            GROUP BY k.kpi_id
-                            ORDER BY k.kpi_id";
+                        $sql_kpi = "SELECT
+                                                kpi_code,
+                                                kpi_name,
+                                                CONCAT(k.default_target,' ',k.unit) AS target,
+                                                CONCAT(	ROUND(AVG(success), 2),	' ',	k.unit) AS actual,
+                                                time_period FROM kpi k
+                                        JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
+                                        JOIN kpi_responsible kr ON kr.kpi_id = k.kpi_id
+                                        JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                                        JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
+                                        $condition_kpi_list 
+                                        GROUP BY k.kpi_id ORDER BY k.kpi_id";
                         $query_kpi = mysqli_query($conn, $sql_kpi);
                         $count_kpi = mysqli_num_rows($query_kpi);
 
                         if($count_kpi == 0){ ?>
-                        <tr class="text-center bg-gray">
+                        <tr class="text-center bg-gray-light">
                             <td colspan="6"><i>ไม่มีข้อมูลสำหรับ KPI ระยะเวลา <?php echo $get_time_period; ?> เดือน</i></td>
                         </tr>
                         <?php }else{
                         foreach($query_kpi as $result_kpi){
-                            $percent_completed = ($result_kpi["actual"]/$result_kpi["target"])*100 ;
+                            //Check actual == 0
+                            if($result_kpi["actual"] == 0){
+                                $percent_completed = 0;
+                            }else{
+                               $percent_completed = ($result_kpi["actual"]/$result_kpi["target"])*100 ; 
+                            }
+                            
                         ?>
                         <tr>
                             <td><?php echo $result_kpi["kpi_code"]; ?></td>
@@ -377,8 +436,8 @@
                                 </div>
                             </td>
                             <td>
-                                <span class="badge <?php if($percent_completed ==0){ echo ''; }else if($percent_completed <= 40){ echo 'bg-red' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'bg-blue' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'bg-light-blue' ;}else if($percent_completed > 75){ echo 'bg-green' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>">
-                                    <?php if($percent_completed ==0){ echo 'N/A' ; } else{ echo (int)$percent_completed."%" ; } ?><?php  ?>
+                                <span class="badge <?php if($percent_completed ==0){ echo ''; }else if($percent_completed <= 40){ echo 'bg-red' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'bg-blue' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'bg-light-blue' ;}else if($percent_completed > 75){ echo 'bg-green' ;}  ?>" style="width:100%">
+                                    <?php if($percent_completed == 0){ echo 'N/A' ; } else{ echo (int)$percent_completed."%" ; } ?><?php  ?>
                                 </span>
                             </td>
                         </tr>
@@ -392,7 +451,8 @@
             </div>
             <!-- /KPI list -->
             
-            <!-- /.content --> </div>
+            <!-- /.content --> 
+        </div>
         <!-- /.content-wrapper -->
 
         <!--Footer -->
@@ -413,9 +473,13 @@
 
 <!-- page script -->
 <?php
- $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,round_update, month_update
-                        FROM kpi_progress kp JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id
-                        JOIN kpi k ON kr.kpi_id = k.kpi_id JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
+ $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,
+                            round_update, month_update FROM kpi_progress kp 
+                            JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id 
+                            JOIN kpi k ON kr.kpi_id = k.kpi_id 
+                            JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id 
+                            JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
+                            JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
                         $condition_kpi_list AND round_update != ''
                         GROUP BY month_update
                         ORDER BY kpi_progress_id;";
@@ -432,9 +496,9 @@
     $count++;
    
  }
- echo $count;
+ //echo $count;
 ?>
-    <script>
+  <script>
   $(function () {
     /* ChartJS
      * -------
