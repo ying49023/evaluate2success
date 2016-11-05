@@ -30,15 +30,22 @@
     
     <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
-    <?php
-    $get_eval_code = '3';
-        if (isset($_GET["eval_code"])) {
-            $get_eval_code = $_GET["eval_code"];
-            $eval = " eval.evaluation_code = '" . $get_eval_code . "'";
+    <!--ListJS-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+    <script>
+        function getJobs(val) {
+            $.ajax({
+                type: "POST",
+                url: "./get_jobs.php",
+                data:'department_id='+val,
+                success: function(data){
+                    $("#list").html(data);
+                    $("#list2").html(data);
+                    $("#list3").html(data);
+                }
+            });
         }
-        ?>
-    
-    
+    </script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -60,8 +67,9 @@
         if (isset($_GET["job_id"])) {
             $get_job_id = $_GET["job_id"];
         }
+        
         $get_time_period = '1';
-        if (isset($_GET["time_period"])) {
+        if(isset($_GET["time_period"])) {
             $get_time_period = $_GET["time_period"];
         }
        
@@ -85,9 +93,25 @@
                                         AND job_id = '$get_job_id'
                                         AND time_period = '$get_time_period'
                                         AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";   
+        }else if($get_job_id != '' && $get_department_id != '' && $get_time_period != '' && $get_year != ''){
+            $condition_kpi_list = "WHERE
+                                        department_id = '$get_department_id' 
+                                        AND job_id = '$get_job_id'
+                                        AND time_period = '$get_time_period'
                                         AND e.YEAR = '$get_year' ";
-            $condition_performance = " AND year= '$get_year' AND department_id = '$get_department_id' ";    
-        } else if($get_job_id != '' && $get_time_period != '' && $get_year != '' && $get_term != ''){
+        }else if($get_department_id != '' && $get_time_period != '' && $get_term != '' && $get_year != ''){
+            $condition_kpi_list = "WHERE
+                                        department_id = '$get_department_id' 
+                                        AND e.term_id = '$get_term'
+                                        AND time_period = '$get_time_period'
+                                        AND e.YEAR = '$get_year' ";
+        }else if($get_department_id != '' && $get_time_period != '' && $get_year != ''){
+            $condition_kpi_list = "WHERE
+                                        department_id = '$get_department_id' 
+                                        AND time_period = '$get_time_period'
+                                        AND e.YEAR = '$get_year' ";
+        }else if($get_job_id != '' && $get_time_period != '' && $get_year != '' && $get_term != ''){
             $condition_kpi_list = "WHERE
                                         department_id = '$my_dept_id' 
                                         AND job_id = '$get_job_id'
@@ -102,6 +126,21 @@
                                         AND e.term_id = '$get_term'
                                         AND e.YEAR = '$get_year' ";
             $condition_performance = " AND year= '$get_year' AND department_id = '$get_department_id' "; 
+        }else if($get_year != '' && $get_term != '' && $get_time_period != ''){
+            if($my_position_level == 2 || $my_position_level == 3){
+                $get_department_id = $my_dept_id;
+                $condition_kpi_list = "WHERE
+                                        time_period = '$get_time_period'
+                                        AND department_id = '$get_department_id'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            }else{
+                $condition_kpi_list = "WHERE
+                                        time_period = '$get_time_period'
+                                        AND e.term_id = '$get_term'
+                                        AND e.year = '$get_year' ";
+            }
+            
         }else if($get_year != '' && $get_term != ''){
             if($my_position_level == 2 || $my_position_level == 3){
                 $get_department_id = $my_dept_id;
@@ -116,32 +155,16 @@
                                         AND e.term_id = '$get_term'
                                         AND e.YEAR = '$get_year' ";
             }
-            
-            
-        }else  if($get_year != '' && $get_term != '' && $get_time_period != ''){
-            if($my_position_level == 2 || $my_position_level == 3){
-                $get_department_id = $my_dept_id;
-                $condition_kpi_list = "WHERE
-                                        time_period = '1'
-                                        AND department_id = '$get_department_id'
-                                        AND e.term_id = '$get_term'
-                                        AND e.YEAR = '$get_year' ";
-            }else{
-                $condition_kpi_list = "WHERE
-                                        time_period = '$get_term'
-                                        AND e.term_id = '$get_term'
-                                        AND e.YEAR = '$get_year' ";
-            }
-            
+
         }else if($get_year != '' && $get_time_period != ''){
             if($my_position_level == 2 || $my_position_level == 3){
                 $get_department_id = $my_dept_id;
                 $condition_kpi_list = "WHERE
-                                        time_period = '1'
+                                        time_period = '$get_time_period'
                                         AND department_id = '$get_department_id'
                                         AND e.YEAR = '$get_year' ";
             }else {
-                $condition_kpi_list = "WHERE time_period = '$get_time_period' AND e.YEAR = '$get_year' ";
+                $condition_kpi_list = "WHERE time_period = '$get_time_period' AND e.year = '$get_year' ";
             }
         }else if($get_year != ''){
             $condition_kpi_list = "WHERE time_period = '1' AND e.YEAR = '$get_year' ";
@@ -263,11 +286,16 @@
                                 ?>
                                     <select class="form-control" name="job_id" id="list">
                                         <option value="">เลือกตำแหน่ง</option>
-                                        <?php foreach($query_job as $result_job){ ?>
+                                        <?php 
+                                        if(isset($_GET["department_id"])){
+                                            if($_GET["department_id"] != ''){
+                                        foreach($query_job as $result_job){ ?>
                                         <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
                                             <?php echo $result_job["job_name"]; ?>
                                         </option>
-                                        <?php } ?>
+                                            <?php }}
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 </div>

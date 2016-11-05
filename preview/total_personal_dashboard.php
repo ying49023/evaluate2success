@@ -29,10 +29,23 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
-    
-    <!-- SCRIPT PACKS -->
-    <?php include('./script_packs.html') ?>
     <?php include ('./classes/connection_mysqli.php');?>
+    <!--ListJS-->
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        <script>
+            function getJobs(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "./hr/get_jobs.php",
+                    data:'department_id='+val,
+                    success: function(data){
+                        $("#list").html(data);
+                        $("#list2").html(data);
+                        $("#list3").html(data);
+                    }
+                });
+            }
+        </script>
         
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -216,16 +229,20 @@
                                 <label class=" control-label">ตำแหน่ง</label>
                                 <div class="">
                                 <?php 
-                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$my_dept_id."' ";
+                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
                                     $query_job = mysqli_query($conn, $sql_job);
                                 ?>
                                     <select class="form-control" name="job_id" id="list" >
                                         <option value="">เลือกตำแหน่งทั้งหมด</option>
-                                        <?php foreach($query_job as $result_job){ ?>
+                                        <?php 
+                                        if(isset($_GET["department_id"])){
+                                        foreach($query_job as $result_job){ ?>
                                         <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
                                             <?php echo $result_job["job_name"]; ?>
                                         </option>
-                                        <?php } ?>
+                                        <?php }
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                                 </div>
@@ -372,6 +389,8 @@
 
     
 </body>
+<!-- SCRIPT PACKS -->
+    <?php include('./script_packs.html') ?>
 </html>
 <?php
         }

@@ -29,9 +29,23 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- CSS PACKS -->
     <?php include ('./css_packs.html'); ?>
-    
-    
     <?php include ('./classes/connection_mysqli.php');?>
+    <!--ListJS-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+    <script>
+        function getJobs(val) {
+            $.ajax({
+                type: "POST",
+                url: "./hr/get_jobs.php",
+                data:'department_id='+val,
+                success: function(data){
+                    $("#list").html(data);
+                    $("#list2").html(data);
+                    $("#list3").html(data);
+                }
+            });
+        }
+    </script>
     
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
@@ -93,7 +107,22 @@
                                         AND e.term_id = '$get_term'
                                         AND e.YEAR = '$get_year' ";
             $condition_performance = " AND year= '$get_year' AND department_id = '$get_department_id' "; 
-        }else if($get_year != '' && $get_term != ''){
+        }else  if($get_year != '' && $get_term != '' && $get_time_period != ''){
+            if($my_position_level == 2 || $my_position_level == 3){
+                $get_department_id = $my_dept_id;
+                $condition_kpi_list = "WHERE
+                                        time_period = '$get_time_period'
+                                        AND department_id = '$get_department_id'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            }else{
+                $condition_kpi_list = "WHERE
+                                        time_period = '$get_time_period'
+                                        AND e.term_id = '$get_term'
+                                        AND e.YEAR = '$get_year' ";
+            }
+            
+        }else  if($get_year != '' && $get_term != ''){
             if($my_position_level == 2 || $my_position_level == 3){
                 $get_department_id = $my_dept_id;
                 $condition_kpi_list = "WHERE
@@ -108,21 +137,6 @@
                                         AND e.YEAR = '$get_year' ";
             }
             
-            
-        }else  if($get_year != '' && $get_term != '' && $get_time_period != ''){
-            if($my_position_level == 2 || $my_position_level == 3){
-                $get_department_id = $my_dept_id;
-                $condition_kpi_list = "WHERE
-                                        time_period = '1'
-                                        AND department_id = '$get_department_id'
-                                        AND e.term_id = '$get_term'
-                                        AND e.YEAR = '$get_year' ";
-            }else{
-                $condition_kpi_list = "WHERE
-                                        time_period = '$get_term'
-                                        AND e.term_id = '$get_term'
-                                        AND e.YEAR = '$get_year' ";
-            }
             
         }else if($get_year != '' && $get_time_period != ''){
             if($my_position_level == 2 || $my_position_level == 3){
@@ -387,7 +401,7 @@
                         
                         <tbody>
                             <?php
-                            $sql_kpi = "SELECT kpi_code, kpi_name, CONCAT(k.default_target,' ',k.unit) as target, CONCAT(ROUND(AVG(success),2),' ',k.unit) as actual, time_period
+                            echo $sql_kpi = "SELECT kpi_code, kpi_name, CONCAT(k.default_target,' ',k.unit) as target, CONCAT(ROUND(AVG(success),2),' ',k.unit) as actual, time_period
                                         FROM kpi k JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id 
                                         JOIN kpi_responsible kr ON kr.kpi_id = k.kpi_id
                                         JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
@@ -456,7 +470,7 @@
 
 <!-- page script -->
 <?php
- $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,
+ echo $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,
                             round_update, month_update FROM kpi_progress kp 
                             JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id 
                             JOIN kpi k ON kr.kpi_id = k.kpi_id 
