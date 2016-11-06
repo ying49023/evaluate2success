@@ -47,7 +47,7 @@
                     <?php
                     $eval_code = '';
                     if (isset($_SESSION["eval_code"])) {
-                        echo $eval_code = $_SESSION["eval_code"];
+                        $eval_code = $_SESSION["eval_code"];
                     }
 
                     $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$_SESSION["eval_code"]."'";

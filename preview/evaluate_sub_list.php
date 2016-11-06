@@ -236,7 +236,7 @@
                                                   JOIN jobs j ON j.job_id = e.job_id
                                                   JOIN departments d ON d.department_id = e.department_id
                                                   JOIN company c ON c.company_id = e.company_id
-                                                  WHERE ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id AND ee.evaluation_code = $eval_code
+                                                  WHERE ( ee.assessor1_id = $my_emp_id OR ee.assessor2_id = $my_emp_id ) AND ee.evaluation_code = '$eval_code'
                                                   GROUP BY ee.employee_id";
                                         $query_emp_list = mysqli_query($conn, $sql_emp_list);
                                         
@@ -244,7 +244,8 @@
                 
                                         $employee_id = $result_emp_list["employee_id"];                                       
                                         $emp_name = $result_emp_list["prefix"].' '.$result_emp_list["first_name"].'  '.$result_emp_list["last_name"];
-                                        $status=$result_emp_list["status_success"];
+                                        $status_accessor1=$result_emp_list["status_assessor1"];
+                                        $status_accessor2=$result_emp_list["status_assessor2"];
                                         $position=$result_emp_list["position_level_id"];
                                         $job_name = $result_emp_list["job_name"];
                                         $department_name = $result_emp_list["department_name"];
@@ -252,6 +253,18 @@
                                         $eval_emp_id = $result_emp_list["evaluate_employee_id"];
                                         $assessor1_id = $result_emp_list["assessor1_id"];
                                         $assessor2_id = $result_emp_list["assessor2_id"];
+                                        
+                                        $sql_check_ass1 = " SELECT * FROM employees e 
+                                                            JOIN evaluation_employee ee ON e.employee_id = ee.assessor1_id
+                                                            WHERE e.employee_id = 10002 AND ee.status_assessor1 = 1";
+                                        $query_check_ass1 = mysqli_query($conn, $sql_check_ass1);
+                                        $result_check_ass1 = mysqli_fetch_array($query_check_ass1);
+                                        
+                                        $sql_check_ass2 = " SELECT * FROM employees e 
+                                                            JOIN evaluation_employee ee ON e.employee_id = ee.assessor2_id
+                                                            WHERE e.employee_id = 10002 AND ee.status_assessor2 = 1";
+                                        $query_check_ass2 = mysqli_query($conn, $sql_check_ass2);
+                                        $result_check_ass2 = mysqli_fetch_array($query_check_ass2);
                                         ?>
                                     <tr>
                                         <td class="emp_id"><?php echo $employee_id; ?></td>
@@ -265,15 +278,16 @@
                                                 <input type="hidden" name="eval_emp_id" value="<?php echo $eval_emp_id; ?>" >
                                                 <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
                                                 <input type="hidden" name="comp_id" value="<?php echo $comp_id; ?>" >
-                                                <button class="btn btn-success" type="submit" name="submit_eval" <?php if($status == 1){ echo "disabled"; } ?> >
+                                                <button class="btn btn-success" type="submit" name="submit_eval" <?php if($result_check_ass1["status_assessor1"] == 1 || $result_check_ass2["status_assessor2"] ){ echo "disabled"; } ?> >
                                                     <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
                                                 </button>
                                             </form>
                                         </td>
-                                        <?php if($status==0){
-                                           echo '<td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>';   
+                                        <?php if($result_check_ass1["status_assessor1"] == 1 || $result_check_ass2["status_assessor2"]){
+                                             
+                                           echo '<td ><center><font color="green" >ประเมินแล้ว</font></center></td>'; 
                                         }else{
-                                            echo '<td ><center><font color="green" >ประเมินแล้ว</font></center></td>';  
+                                           echo '<td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>'; 
                                         }?>
                                        
                                         

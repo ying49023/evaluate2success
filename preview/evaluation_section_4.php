@@ -62,20 +62,21 @@
                 foreach ($_POST["development_group_id"] as $skill_dev_id){
                     $eval_emp_id = $_SESSION["eval_emp_id"];
                     
-                    $sql_insert_skill = "CALL insert_Development( $eval_emp_id , $array_dev_id[$i] ,$array_p[$i] , '$array_comment[$i]') <br>";
+                    $sql_insert_skill = "CALL insert_Development( $eval_emp_id , $array_dev_id[$i] ,$array_p[$i] , '$array_comment[$i]'); ";
+                    $i++;
                     $query_insert_skill = mysqli_query($conn, $sql_insert_skill);
                     if(!$query_insert_skill){
                         die('Invalid query: '.$sql_insert_skill. mysql_error());
                     }
                     //echo '<br>'.$sql_insert_skill;
-                    $i++;
+                    
                 }
                 }
-                //header("location:evaluation_summary.php");
+                header("location:evaluation_summary.php");
             }
-            //header("location:evaluation_summary.php");
+            header("location:evaluation_summary.php");
             
-        }
+        } echo $_SESSION["eval_emp_id"].' eval_code :'.$_SESSION["eval_code"];  
 ?>
 <!DOCTYPE html>
 <html>
