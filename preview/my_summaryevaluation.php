@@ -48,7 +48,7 @@
                 <section class="content-header">
                     <h1>
                         ดูผลการประเมิน
-                        <small>รอบการประเมิน 2/2559</small>
+                        <small></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -189,7 +189,7 @@
                 <div class="row box-padding">
                     <div class="box box-primary">
  
-                        <form method="get" action="compareevaluation.php" >
+                        <form method="get" action="compare_mygrade.php" >
                             <div class="box-body">
                             <!--Table Point-->
                             <!--Table Point-->
@@ -354,7 +354,7 @@
                                        
                                     </tr>
                                     <tr class="bg-green">
-                                        <td align= rightcolspan="2"><strong>ผลการประเมิน</strong></td>
+                                        <td align= center colspan="1"><strong>ผลการประเมิน</strong></td>
                                         <?php 
                                         $sql_grade=" select * from grade where grade_id=$grade_id3" ;
                                         $query_grade = mysqli_query($conn, $sql_grade);
@@ -362,7 +362,7 @@
                                                         $name_grade = $result_grade['grade_description'];
                                                 }                     
                                                 ?>
-                                                <td colspan=4 class="text-center"><strong><?php if($grade_id3==0){echo 'F'; }else{ echo $name_grade;}  ?></strong></td>
+                                                <td colspan=5 class="text-center"><strong><?php if($grade_id3==0){echo 'F'; }else{ echo $name_grade;}  ?></strong></td>
                                     </tr>
                                 </tbody>
                                 
@@ -370,7 +370,7 @@
                         </div>
                             <div class="box-footer">
                                 <div class="pull-right box-padding">
-                                    <button class="btn btn-foursquare" type="submit" ="window.location.href='compareevaluation.php'"  >เปรียบเทียบย้อนหลัง</button>
+                                    <button class="btn btn-foursquare" type="submit" ="window.location.href='compare_mygrade.php'"  >เปรียบเทียบย้อนหลัง</button>
                                 </div>
                             </div>
                         </form>

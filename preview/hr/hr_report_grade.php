@@ -171,7 +171,7 @@
                                 $query_emp= mysqli_query($conn, $sql_emp);
                                 
                                 $sql_conclude_grade ="
-                                                    SELECT grade_description,count(ee.grade_id) as result
+                                                    SELECT grade_description as Grade ,count(ee.grade_id) as Members
                                                     FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
                                                     GROUP BY g.grade_id 
                                                     ORDER BY grade_description";
@@ -190,7 +190,7 @@
                                             WHERE e.company_id = 1 and e.employee_id=$id ";
                                  $query_emp= mysqli_query($conn, $sql_emp);
                                  $sql_conclude_grade ="
-                                                    SELECT grade_description,count(ee.grade_id) as result
+                                                    SELECT grade_description as Grade ,count(ee.grade_id) as Members
                                                     FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
                                                     JOIN employees e ON ee.employee_id = e.employee_id 
                                                     JOIN departments d ON e.department_id = d.department_id 
@@ -210,7 +210,7 @@
                                             ";
                                  $query_emp= mysqli_query($conn, $sql_emp);
                                  $sql_conclude_grade ="
-                                                    SELECT grade_description,count(ee.grade_id) as result
+                                                    SELECT grade_description as Grade ,count(ee.grade_id) as Members
                                                     FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
                                                     JOIN employees e ON ee.employee_id = e.employee_id 
                                                     JOIN departments d ON e.department_id = d.department_id 
@@ -231,7 +231,7 @@
                                             ";
                                  $query_emp= mysqli_query($conn, $sql_emp);
                                  $sql_conclude_grade ="
-                                                    SELECT grade_description,count(ee.grade_id) as result
+                                                    SELECT grade_description as Grade ,count(ee.grade_id) as Members
                                                     FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
                                                     JOIN employees e ON ee.employee_id = e.employee_id 
                                                     JOIN departments d ON e.department_id = d.department_id 
@@ -293,8 +293,8 @@
                         <?php while($result_conclude_grade = mysqli_fetch_assoc($query_conclude_grade)) { ?>
                         <tr >
                                     
-                                    <th><?php echo $result_conclude_grade['grade_description']; ?></th>                                    
-                                    <th><?php echo $result_conclude_grade['result']; ?></th>
+                                    <th><?php echo $result_conclude_grade['Grade']; ?></th>                                    
+                                    <th><?php echo $result_conclude_grade['Members']; ?></th>
                                     
                                     
                                     
@@ -313,14 +313,14 @@
                             <br><br>
                             <form action="pdf_grade_report.php" method="post">
                             <button  type="submit" class="btn-danger" style="float: right">
-                                <img src="img/icon_pdf.png" width="16" height="16" align="absmiddle" /> PDF</button>
+                                <img src="img/icon_pdf.png" width="16" height="16" align="absmiddle" /> PDF order by Search</button>
                                 <input type="hidden" value="<?php echo $sql_emp;?>" name="sql_grade">
                                 <input type="hidden" value="<?php echo $sql_conclude_grade;?>" name="con_grade">
                                 <input type="hidden" value="<?php echo $avg_grade;?>" name="avg_grade">
                             </form>
                             <form action="pdf_grade_dept_report.php" method="post">
                             <button  type="submit" class="btn-danger" style="float: right">
-                                <img src="img/icon_pdf.png" width="16" height="16" align="absmiddle" /> PDF dept</button>
+                                <img src="img/icon_pdf.png" width="16" height="16" align="absmiddle" /> PDF order by Department</button>
                                 <input type="hidden" value="<?php echo $sql_emp;?>" name="sql_grade">
                                 <input type="hidden" value="<?php echo $sql_conclude_grade;?>" name="con_grade">
                                 <input type="hidden" value="<?php echo $avg_grade;?>" name="avg_grade">

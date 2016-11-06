@@ -109,7 +109,7 @@
                                     <label class="col-sm-2 control-label">รอบ</label>
                                     <div class="col-sm-8">
                                     <?php 
-                                        $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
+                                        $sql_eval = "SELECT * FROM evaluation where year<=YEAR(CURDATE())  ORDER BY year , term_id ASC";
                                         $query_eval = mysqli_query($conn, $sql_eval);
                                     ?>
                                         <select class="form-control" name="eval_code">

@@ -79,7 +79,8 @@
                      }   
                     $add_query="INSERT INTO employees(prefix,first_name,last_name,department_id,job_id,position_level_id,manager_id,telephone_no,address,email,company_id,hiredate,profile_picture,employee_id) VALUES ('$prefix','$first_name','$last_name',$department_id,$job_id,$position_level_id,$mng,'$telephone','$address','$email',1,'$hiredate','$image_name',$emp_id)";            
                     $a_query =  mysqli_query($conn,$add_query);
-
+                    $sql_Individual_eval_Emp = "CALL gen_Individual_eval_Emp($emp_id)";
+                    $query_Individual_eval_Emp = mysqli_query($conn, $sql_Individual_eval_Emp);
                     if($a_query)
                        header ("location:manage_employee_list.php");
                     else {

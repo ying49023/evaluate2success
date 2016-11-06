@@ -24,7 +24,7 @@
                 $term = $_GET["term"];
                 $year = $_GET["year"];
 
-                $sql_evaluation = "insert into evaluation(company_id,term_id,year,open_system_date,close_system_date,current_eval) values(1,$term,$year,'0000-00-00','0000-00-00',1)";
+                $sql_evaluation = "insert into evaluation(company_id,term_id,year,open_system_date,close_system_date,current_eval) values(1,$term,$year,'0000-00-00','0000-00-00',0)";
                 $query_evaluation = mysqli_query($conn, $sql_evaluation);
 
 
@@ -40,6 +40,17 @@
                     header("location:explan_evaluation.php");
                 }           
 
+            }
+            if(isset($_POST['open_eval'])) {
+                $eval_code_upd =$_POST['eval_code_id'];
+                $sql_upd_status ="update evaluation set current_eval = 1 where evaluation_code=$eval_code_upd";
+                $quety_open = mysqli_query($conn, $sql_upd_status);
+            }
+            
+            if(isset($_POST['close_eval'])) {
+                $eval_code_upd =$_POST['eval_code_id'];
+                $sql_upd_status ="update evaluation set current_eval = 0 where evaluation_code=$eval_code_upd ";
+                $quety_open = mysqli_query($conn, $sql_upd_status);
             }
         ?>
         
@@ -137,23 +148,39 @@
                                             <th>วันปิด</th>
                                             <th class="text-center">สถานะ</th>
                                             <th class="text-center">แก้ไข</th>
+                                            <th class="text-center">เปิด/ปิด รอบประเมิน</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php 
-                                    $sql_active_eval = "SELECT evaluation_code,current_eval, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation where current_eval=1  ";
+                                    $sql_active_eval = "SELECT evaluation_code,current_eval, term_id as term,year,DATE_FORMAT(open_system_date,'%d/ %m/ %Y') as open_system_date ,DATE_FORMAT(close_system_date,'%d/ %m/ %Y') as close_system_date from evaluation order by year   ";
                                     $query_active_eval = mysqli_query($conn, $sql_active_eval);
                                     
-                                    while ($result_active_eval = mysqli_fetch_array($query_active_eval, MYSQLI_ASSOC)) {                                    
+                                    while ($result_active_eval = mysqli_fetch_array($query_active_eval, MYSQLI_ASSOC)) {
+                                        $current_eval =$result_active_eval["current_eval"];
+                                        $eval_code_id =$result_active_eval["evaluation_code"];
                                         ?>
                                         <tr>
                                             <td><?php echo $result_active_eval["term"]; ?> / <?php echo $result_active_eval["year"]; ?></td>
                                             <td><?php echo $result_active_eval["open_system_date"]; ?></td>
                                             <td><?php echo $result_active_eval["close_system_date"]; ?></td>
+                                            <?php if($current_eval==1) {?>
                                             <td class="text-center"><span style="color:green;">เปิดรอบการประเมิน</span></td>
+                                            <?php } else{?>
+                                            <td class="text-center"><span style="color:red;">ปิดรอบการประเมิน</span></td>
+                                            <?php }?>
                                             <td class="text-center">
                                                 <a class="btn btn-primary" href="explan_evaluation.php?eval_code=<?php echo $result_active_eval["evaluation_code"]; ?>" ><i class="glyphicon glyphicon-edit"></i>&nbsp; แก้ไข</a>
                                             </td>
+                                            
+                                            <td class="text-center">
+                                                <form method="post" action="create_evaluation.php">
+                                                <button class="btn btn-success" name="open_eval" ><i class="glyphicon glyphicon-ok"></i>&nbsp;เปิด</button>
+                                                <button class="btn btn-danger" name="close_eval"  ><i class="glyphicon glyphicon-remove"></i>&nbsp;ปิด</button>
+                                                <input type="hidden" name="eval_code_id" value="<?php echo $eval_code_id;  ?>">
+                                                </form>
+                                             </td>
+                                            
                                         </tr>
                                     <?php } ?>
                                     </tbody>

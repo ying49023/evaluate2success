@@ -462,10 +462,21 @@
                             <div class="col-md-12" style="background-color: #D1C4E9;">
                                 <br>
                                 <div class="row">
-                                    <div class="col-md-offset-1 col-md-1">
+                                    <div class="col-md-offset-1 col-md-2">
                                         <div class="form-group">
                                             <label  for="KPI-CODE">KPI-CODE</label>
-                                            <input type="text" class="form-control"  name="kpi_code" placeholder="<?php echo $group_name.'XX' ?>">
+                                            <?php  
+                                                $new_kpi_group = "CALL create_new_kpi ($group_id)";
+                                                $query_new_kpi_group =  mysqli_query($conn, $new_kpi_group);  
+                                                $result_new_kpi_group = mysqli_fetch_array($query_new_kpi_group);
+                                                $kpi_group = $result_new_kpi_group['new_kpi_group'];    
+                                               // $row_count = mysqli_num_rows($query_new_kpi_group);
+                                            ?>
+                                            <?php  if($kpi_group!=''){ ?>
+                                            <input type="text" class="form-control"  name="kpi_code" placeholder="<?php echo $kpi_group;?>" value="<?php echo $kpi_group;?>">
+                                            <?php }else {?>
+                                            <input type="text" class="form-control"  name="kpi_code" placeholder="<?php echo $group_name.'XX' ?>" value="<?php echo $group_name.'1';?>">
+                                            <?php }?>
                                         </div>
                                     </div>
                                     <div class="col-md-5">

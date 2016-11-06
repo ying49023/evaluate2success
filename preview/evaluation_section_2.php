@@ -48,7 +48,7 @@
                 $e_emp_id=$_SESSION["eval_emp_id"]; 
                 $emp=$_POST["emp"];
               
-                echo $sql_update_comp ="call update_point_comp($compId,$e_code,$e_emp_id,$array_h[$i],$emp)";
+                 $sql_update_comp ="call update_point_comp($compId,$e_code,$e_emp_id,$array_h[$i],$emp)";
                 
                 $query_update_comp=  mysqli_query($conn, $sql_update_comp);
 

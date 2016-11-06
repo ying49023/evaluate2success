@@ -69,13 +69,13 @@ class PDF extends PDF_MySQL_Table
         $no=1;
         foreach($data as $row)
         {
-                $this->Cell($w[0],6,iconv( 'UTF-8','cp874' , $no),1,0,'L');
-                $this->Cell($w[1],6,iconv( 'UTF-8','cp874' , $row[0]),1,0,'C');
-                $this->Cell($w[2],6,iconv( 'UTF-8','cp874' , $row[1]),1,0,'L');
-                $this->Cell($w[3],6,iconv( 'UTF-8','cp874' , $row[2]),1,0,'L');
-                $this->Cell($w[4],6,iconv( 'UTF-8','cp874' , $row[3]),1,0,'L');
-                $this->Cell($w[5],6,iconv( 'UTF-8','cp874' , $row[4]),1,0,'C');
-                $this->Cell($w[6],6,iconv( 'UTF-8','cp874' , $row[5]),1,0,'C');
+                $this->Cell($w[0],10,iconv( 'UTF-8','cp874' , $no),1,0,'L');
+                $this->Cell($w[1],10,iconv( 'UTF-8','cp874' , $row[0]),1,0,'C');
+                $this->Cell($w[2],10,iconv( 'UTF-8','cp874' , $row[1]),1,0,'L');
+                $this->Cell($w[3],10,iconv( 'UTF-8','cp874' , $row[2]),1,0,'L');
+                $this->Cell($w[4],10,iconv( 'UTF-8','cp874' , $row[3]),1,0,'L');
+                $this->Cell($w[5],10,iconv( 'UTF-8','cp874' , $row[4]),1,0,'C');
+                $this->Cell($w[6],10,iconv( 'UTF-8','cp874' , $row[5]),1,0,'C');
                 $this->Ln();
                 $no++;
         }
@@ -179,17 +179,43 @@ while($result_dept = mysql_fetch_array($query_dept)){
 
         $pdf->TableZa($header, $data); 
         
-        $avg_dept_grade = [];
-        $avg_dept_grade[$dept_count]="CALL get_avg_grade_dept($dept_id)";
-        /*$query_avg_dept_grade = mysql_query($avg_dept_grade[$dept_count],$db);
-        while($result_avg_dept_grade = mysql_fetch_array($query_avg_dept_grade)) { 
-                  
-                  $dept_grade[$dept_count]=$result_avg_dept_grade['grade_description'];     
-                  $pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $dept_grade[$dept_count] ),0,0,'L');
-                  
-            }
-          */  
-        $pdf->Ln(10);
+        //สรุปเกรดแต่ละแผนก
+        $pdf->Ln(20);
+        $sql_conclude_grade = "
+                                                    SELECT grade_description as Grade ,count(ee.grade_id) as Members
+                                                    FROM grade g JOIN evaluation_employee ee ON g.grade_id = ee.grade_id
+                                                    JOIN employees e ON ee.employee_id = e.employee_id 
+                                                    JOIN departments d ON e.department_id = d.department_id 
+                                                    JOIN jobs j ON e.job_id = j.job_id
+                                                    WHERE e.company_id = 1 and e.employee_id =e.employee_id AND j.job_id = e.job_id and d.department_id =$dept_id
+                                                    GROUP BY g.grade_id 
+                                                    ORDER BY grade_description";
+    $query_conclude_grade = mysql_query($sql_conclude_grade, $db);
+    $pdf->SetFont('angsana', 'B', 12);
+    $pdf->Cell(100, 10, iconv('UTF-8', 'cp874', 'เกรด'), 'LTBR', 0, 'C', 0);
+    $pdf->Cell(95, 10, iconv('UTF-8', 'cp874', 'จำนวนคน'), 'LTBR', 0, 'C', 0);
+    $pdf->Ln();
+    while($result_dept_conculd = mysql_fetch_array($query_conclude_grade)){
+        $grade = $result_dept_conculd['Grade'];
+        $member = $result_dept_conculd['Members'];
+    $pdf->Cell(100, 10, iconv('UTF-8', 'cp874', $grade), 'LTBR', 0, 'C', 0);
+    $pdf->Cell(95, 10, iconv('UTF-8', 'cp874', $member), 'LTBR', 0, 'C', 0);
+    $pdf->Ln();
+    }
+   
+   $avg_grade_dept = "call get_avg_grade_dept($dept_id)";
+    //$pdf->Table("$con_grade",$prop); 
+    $query_avg_grade_dept = mysql_query($avg_grade_dept,$db);
+    if (!$query_avg_grade_dept) { // add this check.
+    die('Invalid query: ' . mysql_error());
+}
+   /*while($result_avg_grade = mysql_fetch_array($query_avg_grade)){
+    $avg_grade_dept_result = $result_dept_avg['grade_description'];
+    $pdf->Cell(100, 10, iconv('UTF-8', 'cp874', 'เกรดเฉลี่ยรวม'), 'LTBR', 0, 'C', 0);
+    $pdf->Cell(95, 10, iconv('UTF-8', 'cp874', $avg_grade_dept_result), 'LTBR', 0, 'C', 0);
+    }*/
+ 
+        $pdf->AddPage();
         $dept_count++;
 }
 
@@ -206,17 +232,7 @@ $pdf->SetFont('angsana','',18);
 $pdf->Cell(25,10,iconv( 'UTF-8','cp874' , 'เกรดเฉลี่ยรวมทุกแผนก' ),0,0,'L');
 $pdf->Cell(25,10,iconv( 'UTF-8','cp874' , $avggrade ),0,0,'R');
            
-            foreach ($avg_dept_grade as $avg){
-               $query_avg_dept_grade = mysql_query($avg,$db);
-               //$dept_grade=$result_avg_dept_grade['grade_description'];   
-               //$result_avg_dept_grade = mysql_fetch_array($query_avg_dept_grade);                  
-               //$dept_grade=$result_avg_dept_grade['grade_description'];     
-               $pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $query_avg_dept_grade ),0,0,'L');
-                  
             
-               //$pdf->Cell(40,0,iconv( 'UTF-8','cp874' , $query_avg_dept_grade['grade_description'] ),0,0,'L');
-
-            }
 $pdf->Output();
 ?>
 
