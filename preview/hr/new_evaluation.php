@@ -26,6 +26,8 @@
             $query_gen_title_comp = mysqli_query($conn, $sql_gen_title_comp);
             $sql_Gen_Point_Competency = "call Gen_Point_Competency($eval_code)";
             $query_Gen_Point_Competency = mysqli_query($conn, $sql_Gen_Point_Competency);
+            $insertEvalEmp= "CALL insertEvalEmp($eval_code)";
+            $query_insertEvalEmp=  mysqli_query($conn,$insertEvalEmp);
             //echo $eval_code;
             header("location:create_evaluation.php");
 //            header("location:explan_evaluation.php?eval_code=$eval_code");
