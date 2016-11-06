@@ -37,7 +37,7 @@
         //Edit
         if(isset($_GET["submit_edit"])){
             
-            $sql_edit_group = "UPDATE kpi_group SET kpi_group_name='".$_GET["kpi_group_name"]."' WHERE kpi_group_id='".$_GET["kpi_group_id"]."'";
+            $sql_edit_group = "UPDATE kpi_group SET kpi_group_name='".$_GET["kpi_group_name"]."' , kpi_group_detail='".$_GET["kpi_group_detail"]."' WHERE kpi_group_id='".$_GET["kpi_group_id"]."'";
             if (mysqli_query($conn, $sql_edit_group)) {
                     echo "Record edit successfully";
                     echo $sql_edit_group;
@@ -114,12 +114,16 @@
                         <div id="newKPIGroup" class="collapse box-padding bg-gray-light ">
                             <form action="" method="get">
                                 <div class="row">
-                                    <div class="form-group col-sm-5">
+                                    <div class="form-group col-md-2 col-sm-3">
                                         <label>สร้างชื่อกลุ่ม<span style="color: red;">*</span></label>
                                         <input class="form-control" type="text"  step="5" name="kpi_group_name" required > 
                                     </div>
+                                    <div class="form-group col-md-5 col-sm-5">
+                                        <label>คำอธิบาย<span style="color: red;">*</span></label>
+                                        <input class="form-control" type="text"  step="5" name="kpi_group_detail" required > 
+                                    </div>
                                     <div class="form-group col-sm-2">
-                                        <input style="margin-top: 25px;" class="btn btn-info search" type="submit"  name="submit_insert" value="เพิ่ม" > 
+                                        <input style="margin-top: 25px;width: 100px;" class="btn btn-info search" type="submit"  name="submit_insert" value="เพิ่ม" > 
                                         <input  type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
                                     </div>
                                 </div>
@@ -132,7 +136,7 @@
                                 <input class="search form-control" placeholder="พิมพ์ค้นหา" >
                             </div>
                                 <?php
-                                $sql_kpi_group = "SELECT kpi_group_id,	kpi_group_name FROM kpi_group ORDER BY	kpi_group_id ASC";
+                                $sql_kpi_group = "SELECT * FROM kpi_group ORDER BY	kpi_group_id ASC";
                                 $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
                                 
                                 ?>
@@ -142,9 +146,14 @@
                                                 <th  style="width: 120px;">
                                                     <button class="sort" data-sort="group_id">Group ID</button>
                                                 </th>
-                                                <th>
+                                                <th style="width: 120px;">
                                                     <button class="sort" data-sort="kpi_group_name">
                                                         ชื่อกลุ่ม
+                                                    </button>
+                                                </th>
+                                                <th>
+                                                    <button class="sort" data-sort="kpi_group_detail">
+                                                    คำอธิบาย
                                                     </button>
                                                 </th>
                                                 <th style="width: 150px;text-align: center;">แก้ไข/ลบ</th>
@@ -155,6 +164,7 @@
                                         <tr>
                                             <td class="group_id"><b><?php echo $result_kpi_group["kpi_group_id"]; ?></b></td>
                                             <td class="kpi_group_name"><?php echo $result_kpi_group["kpi_group_name"]; ?></td>
+                                            <td class="kpi_group_detail"><?php echo $result_kpi_group["kpi_group_detail"]; ?></td>
                                             <td class="edit_delete" style="text-align: center;">
 
                                                 <a class="btn btn-primary btn-sm" data-toggle="modal" href="#edit_kpi_group_<?php echo $result_kpi_group["kpi_group_id"]; ?>" ><i class="glyphicon glyphicon-pencil"></i>แก้ไข</a>
@@ -177,8 +187,20 @@
                                                                     <div class="col-sm-12">
                                                                         <div style="width: 75%;margin: auto;">
                                                                             <div class="form-group">
-                                                                                <label class="pull-left">แก้ไขหัวข้อ</label>
-                                                                                <input type="text" class="form-control" name="kpi_group_name" placeholder="ชื่อหัวข้อKPI" value="<?php echo $result_kpi_group["kpi_group_name"]; ?>" required >
+                                                                                <label class="pull-left">แก้ไขชื่อกลุ่ม<span style="color: red;">*</span></label>
+                                                                                <input type="text" class="form-control" name="kpi_group_name" placeholder="ชื่อกลุ่มKPI" value="<?php echo $result_kpi_group["kpi_group_name"]; ?>" required >
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-sm-12">
+                                                                        <div style="width: 75%;margin: auto;">
+                                                                            <div class="form-group">
+                                                                                <label class="pull-left">แก้ไขคำอธิบาย<span style="color: red;">*</span></label>
+                                                                                <input type="text" class="form-control" name="kpi_group_detail" placeholder="คำอธิบาย" value="<?php echo $result_kpi_group["kpi_group_detail"]; ?>" required >
 
                                                                             </div>
 
@@ -206,9 +228,8 @@
                                     </tbody>
                                     <script>
                                         var options = {
-                                            valueNames: [ 'group_id', 'kpi_group_name' ]
+                                            valueNames: [ 'group_id', 'kpi_group_name','kpi_group_detail' ]
                                         };
-                                        
                                         var userList = new List('filter', options);
                                 </script>
                                     </table>

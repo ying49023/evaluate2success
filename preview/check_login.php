@@ -45,7 +45,7 @@ if($username == ''){
                         $_SESSION["position_level_id"] = $result["position_level_id"];
                         $_SESSION["login_status"] = $result["login_status"];
                     // send to Employee
-                    header("location:index.php");
+                    header("location:myindex.php");
                     } else if ($result['position_level_id'] == '2') {
                         //User
                         $_SESSION["employee_id"] = session_id();

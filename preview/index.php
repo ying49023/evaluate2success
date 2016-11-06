@@ -364,6 +364,7 @@
                             $query_per = mysqli_query($conn, $sql_per);
                             $result_per = mysqli_fetch_array($query_per);
                             $current_month = $result_per["current_month"];
+
                             if($result_per["performance_mile"] == ''){
                             ?>
                                 <h3 class="text-middle text-center">ยังไม่มีข้อมูล</h3>
@@ -417,7 +418,7 @@
                             </tr>
                         </thead>
                         <?php
-                        echo $sql_kpi = " SELECT
+                        $sql_kpi = " SELECT
                                                 kpi_code,
                                                 kpi_name,
                                                 CONCAT(k.default_target,' ',k.unit) AS target,
@@ -494,7 +495,7 @@
 
 <!-- page script -->
 <?php
- echo $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,
+ $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,
                             round_update, month_update FROM kpi_progress kp 
                             JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id 
                             JOIN kpi k ON kr.kpi_id = k.kpi_id 
@@ -503,7 +504,7 @@
                             JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
                         $condition_kpi_list AND round_update != ''
                         GROUP BY month_update
-                        ORDER BY kpi_progress_id;";
+                        ORDER BY month_update*1 ASC";
 //e.evaluation_code=$get_eval_code;//
 
  $query_kpi_overview = mysqli_query($conn, $sql_kpi_overveiw);

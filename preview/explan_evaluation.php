@@ -78,9 +78,7 @@
                 <!-- Main content -->
                 
                 <div class="row box-padding">
-                    <?php
-                    
-                    ?>
+
                     <!-- Brief Info Profile Employee  -->
                     <?php include './breif_info_profile_eval.php'; ?>
                     <!-- /Brief Info Profile Employee  -->

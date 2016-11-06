@@ -74,23 +74,23 @@
                                                     (
                                                         SELECT COUNT(e.employee_id)
                                                         FROM
-                                                                evaluation_employee v
-                                                        JOIN employees e ON v.employee_id = e.employee_id
+                                                                evaluation_employee ee
+                                                        JOIN employees e ON ee.employee_id = e.employee_id
                                                         JOIN employees m ON e.manager_id = m.employee_id
                                                         WHERE
                                                                 e.manager_id = '".$my_emp_id."'
-                                                        AND status_success = 1
+                                                        AND status_success = 1 AND ee.evaluation_code = '".$my_eval_code."'
                                                     ) AS count_com,
                                                     (
                                                         SELECT
                                                                 COUNT(e.employee_id)
                                                         FROM
-                                                                evaluation_employee v
-                                                        JOIN employees e ON v.employee_id = e.employee_id
+                                                                evaluation_employee ee
+                                                        JOIN employees e ON ee.employee_id = e.employee_id
                                                         JOIN employees m ON e.manager_id = m.employee_id
                                                         WHERE
                                                                 e.manager_id = '".$my_emp_id."'
-                                                        AND status_success = 0
+                                                        AND status_success = 0 AND ee.evaluation_code = '".$my_eval_code."'
                                                     ) AS count_uncom,
                                                     COUNT(e.employee_id) AS count_all
                                             FROM employees e
@@ -265,10 +265,9 @@
                                                 <input type="hidden" name="eval_emp_id" value="<?php echo $eval_emp_id; ?>" >
                                                 <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
                                                 <input type="hidden" name="comp_id" value="<?php echo $comp_id; ?>" >
-                                                <button class="btn btn-success" type="submit" name="submit_eval" <?php if($status == 1){ echo "disabled"; } ?> ><i class="glyphicon glyphicon-triangle-right"></i>ประเมิน</button>
-<!--                                                <a class="btn btn-success " href="explan_evaluation.php?emp_id=<?php echo $employee_id;?>&position_level_id=<?php echo $position;?>&eval_code=<?php echo $eval_code;?>&eval_emp_id=<?php echo $eval_emp_id; ?>">    
+                                                <button class="btn btn-success" type="submit" name="submit_eval" <?php if($status == 1){ echo "disabled"; } ?> >
                                                     <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
-                                                </a>-->
+                                                </button>
                                             </form>
                                         </td>
                                         <?php if($status==0){
