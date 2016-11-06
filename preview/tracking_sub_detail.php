@@ -187,9 +187,10 @@
                                             JOIN kpi_responsible kr ON k.kpi_id = kr.kpi_id
                                             JOIN evaluation_employee ee ON kr.evaluate_employee_id = ee.evaluate_employee_id
                                             JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
+                                            JOIN employees em ON em.employee_id = ee.employee_id
                                             WHERE
                                                     k.kpi_code = '$get_kpi_id'
-                                            AND e.evaluation_code = $my_eval_code";
+                                            AND e.evaluation_code = $my_eval_code AND ee.employee_id =$get_emp_id";
                             $query_kpi = mysqli_query($conn, $sql_kpi_title);
                             
                         ?>
@@ -243,7 +244,7 @@
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
                             JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
                             WHERE ee.employee_id = $get_emp_id  AND
-                            e.evaluation_code=$my_eval_code AND k.kpi_code='$get_kpi_id'";
+                            e.evaluation_code=$my_eval_code AND k.kpi_code='$get_kpi_id' order by month_update";
                         $query_kpi_history = mysqli_query($conn,$sql_kpi_history);
                         $count=0;
                         ?>
@@ -311,7 +312,7 @@
                             JOIN evaluation_employee ee ON ks.evaluate_employee_id = ee.evaluate_employee_id 
                             JOIN evaluation e ON ee.evaluation_code = e.evaluation_code
                             WHERE ee.employee_id = $get_emp_id  AND
-                            e.evaluation_code=$my_eval_code AND k.kpi_code='$get_kpi_id' and e.company_id=1";
+                            e.evaluation_code=$my_eval_code AND k.kpi_code='$get_kpi_id' and e.company_id=1 order by month_update";
                 $query_show_date = mysqli_query($conn, $show_date);
                 $array_date[] = array();
                 $array_goal[] = array();
@@ -336,7 +337,7 @@
                 while ($result_kpi_responsible_id = mysqli_fetch_array($query_kpi_responsible_id, MYSQLI_ASSOC)) {
 
                     $kpi_responsible_id = $result_kpi_responsible_id["kpi_responsible_id"];
-                    $sql_progess = "call getCurrentKPIPerformance($kpi_responsible_id ) ";
+                    $sql_progess = "call getCurrentKPIPerformance($kpi_responsible_id) ";
                     $query_progess = mysqli_query($conn, $sql_progess);
                 }
                 ?> 

@@ -177,16 +177,20 @@ $header = array(iconv( 'UTF-8','cp874' ,'ลำดับ'),iconv( 'UTF-8','cp874
 
 $pdf->TableZa($header, $data); 
 $pdf->Ln(10);
+
+$pdf->SetFont('angsana','',16);
+$pdf->Cell(10,0,iconv( 'UTF-8','cp874' , 'สรุปจำนวนเกรดรวมทุกแผนก' ),0,0,'L');
+$pdf->Ln(5);
 $pdf->Table("$con_grade",$prop); 
 $query_avg_grade = mysql_query($avg_grade,$db);
  while($result_avg_grade = mysql_fetch_array($query_avg_grade)) { 
       $avggrade = $result_avg_grade['grade_description'];                                    
 }
-$pdf->AddFont('angsana','B','angsa.php');
-$pdf->SetFont('angsana','B',20);
-
-$pdf->Cell(40,20,iconv( 'UTF-8','cp874' , 'เกรดเฉลี่ยรวมทุกแผนก' ),0,0,'L');
-$pdf->Cell(35,20,iconv( 'UTF-8','cp874' , $avggrade ),0,0,'C');
+$pdf->AddFont('angsana','','angsa.php');
+$pdf->SetFont('angsana','B',14);
+$pdf->SetFillColor(255,150,100);
+$pdf->Cell(95,10,iconv( 'UTF-8','cp874' , 'เกรดเฉลี่ยรวมทุกแผนก' ),1,0,'C',TRUE); 
+$pdf->Cell(95,10,iconv( 'UTF-8','cp874' , $avggrade ),1,0,'C',TRUE);
 $pdf->Output();
 ?>
 
