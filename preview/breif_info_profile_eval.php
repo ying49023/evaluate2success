@@ -3,7 +3,7 @@
     $sql_emp = "SELECT
                                                     GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
                                                     GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1,
-                                                    GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2
+                                                    GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2,e.position_level_id
                                             FROM
                                                     employees e
                                             JOIN position_level p ON p.position_level_id = e.position_level_id
@@ -14,7 +14,11 @@
                                             WHERE
                                                     e.employee_id ='".$_SESSION["emp_id"]."'";
     $query_emp = mysqli_query($conn, $sql_emp);
+    $result_pos= mysqli_fetch_array($query_emp);
+    $get_pos_id = $result_pos["position_level_id"];
+            
     while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
+       $position_level_id= $result_emp['position_level_id'];
         ?>
     <div class="box-header">
         <div class="col-md6">

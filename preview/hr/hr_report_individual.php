@@ -58,7 +58,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        จัดการข้อมูลวันลาของพนักงาน
+                        แบบประเมินรายบุคคล
                         
                     </h1>
                     <ol class="breadcrumb">
@@ -83,7 +83,7 @@
                                             JOIN evaluation_employee ee ON ee.evaluation_code = e.evaluation_code
                                             JOIN employees emp ON emp.employee_id = ee.employee_id
                                             WHERE
-                                                    ee.evaluation_code = '".$my_eval_code."' Limit 1";
+                                                    ee.evaluation_code = '".$_GET['eval_code']."' Limit 1";
                             $query_year_term = mysqli_query($conn, $sql_year_term);
                             while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
                                 echo "<span style='font-size:18px'><b>ปี : " . $year = $result_year_term["year"] . "</b></span> | ";
@@ -110,50 +110,31 @@
                                                             <th class="text-center"><button class="sort" data-sort="job_name"><b>ตำแหน่ง</b></button></th>
                                                             <th class="text-center"><button class="sort" data-sort="dept_name"><b>แผนก</b></button></th>
                                                             <th class="text-center" style="min-width:100px;"><button class="sort" data-sort="pos_level_id"><b>ระดับ</b></button></th>
-                                                            <th class="text-center"  style="min-width:80px;"><b>สถานะ</b></th>
-                                                            <th class="text-center"  style="min-width:100px;"><b>แก้ไข</b></th>
+                                                            
+                                                            <th class="text-center"  style="min-width:100px;"><b>PDF</b></th>
                                                         </tr>
                                                     </thead>
                                                     <?php
-                                                        $sql_emp = "SELECT
-                                                                            emp.employee_id AS emp_id,
-                                                                            emp.prefix AS prefix,
-                                                                            emp.first_name AS f_name,
-                                                                            emp.last_name AS l_name,
-                                                                            dept.department_name AS dept_name,
-                                                                            j.job_name AS job,
-                                                                            p.position_description AS position,
-                                                                            emp.profile_picture AS profile_picture,
-                                                                            eval.evaluation_code AS eval_code,
-                                                                            ee.evaluate_employee_id AS eval_emp_id,
-                                                                            ee.point_leave as point_leave
-                                                                    FROM
-                                                                            employees emp
-                                                                    JOIN departments dept ON emp.department_id = dept.department_id
-                                                                    JOIN jobs j ON emp.job_id = j.job_id
-                                                                    JOIN position_level p ON p.position_level_id = emp.position_level_id
-                                                                    JOIN evaluation_employee ee ON emp.employee_id = ee.employee_id
-                                                                    JOIN evaluation eval ON eval.evaluation_code = ee.evaluation_code
-                                                                    WHERE
-                                                                            p.position_level_id >= 1
-                                                                    AND p.position_level_id <= 3
-                                                                    AND eval.evaluation_code = '".$my_eval_code."'
-                                                                    ORDER BY
-                                                                            emp_id ASC";
+                                                        $sql_emp = "SELECT prefix,first_name,last_name,d.department_name, j.job_name, pl.position_description,e.employee_id,e.profile_picture,ee.evaluation_code,ee.evaluate_employee_id
+                                                                    FROM evaluation_employee ee 
+                                                                    JOIN employees e ON ee.employee_id = e.employee_id 
+                                                                    JOIN departments d ON e.department_id = d.department_id 
+                                                                    JOIN jobs j ON e.job_id = j.job_id 
+                                                                    JOIN position_level pl ON e.position_level_id = pl.position_level_id
+                                                                    WHERE status_success = 1 AND e.company_id = 1 and ee.evaluation_code='".$_GET['eval_code']."'";
                                                         $query = mysqli_query($conn, $sql_emp); //$conn มาจากไฟล์ connection_mysqli.php เป็นตัว connect DB
                                                     ?>
                                                     <tbody class="list">
                                                         <?php
                                                         while ($result = mysqli_fetch_assoc($query)) {
-                                                            $emp_id = $result["emp_id"];
-                                                            $name = $result["prefix"].$result["f_name"] . "  " . $result["l_name"];
+                                                            $emp_id = $result["employee_id"];
+                                                            $name = $result["prefix"].$result["first_name"] . "  " . $result["last_name"];
                                                             $profile_picture = $result["profile_picture"];
-                                                            $dept = $result["dept_name"];
-                                                            $job = $result["job"];
-                                                            $position = $result["position"];
-                                                            $eval_code = $result["eval_code"];
-                                                            $point_leave = $result["point_leave"];
-                                                            $eval_emp_id = $result["eval_emp_id"];
+                                                            $dept = $result["department_name"];
+                                                            $job = $result["job_name"];
+                                                            $position = $result["position_description"];
+                                                            $eval_code = $result["evaluation_code"];                                                            
+                                                            $eval_emp_id = $result["evaluate_employee_id"];
                                                             ?>
                                                             <tr>
                                                                 <td class="profile_picture"><img class="img-circle img-center" src="../upload_images/<?php if($profile_picture == ''){ echo 'default.png' ;}else { echo $profile_picture;} ?>" style="width: 35px;height: 35px;" alt="<?php echo $profile_picture; ?>" ></td>
@@ -162,9 +143,9 @@
                                                                 <td class="job_name text-center"><?php echo $job; ?></td>
                                                                 <td class="dept_name text-center"><?php echo $dept; ?></td>
                                                                 <td class="pos_level_id text-center"><?php echo $position; ?></td>
-                                                                <td class="text-center" ><?php if($point_leave == 0){ echo "<i class='bg-red glyphicon glyphicon-remove'></i>"; }else{ echo "<i class='bg-green glyphicon glyphicon-ok'></i>"; } ?></td>
+                                                                
                                                                 <td class="text-center">
-                                                                    <a class="btn btn-primary btn-sm" href="leave_form2.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>"><i class="glyphicon glyphicon-log-out"></i></a>
+                                                                    <a class="btn btn-danger btn-md" href="pdf_report_individual.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
                                                                 </td>
                                                             </tr>
                                                             

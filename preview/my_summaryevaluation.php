@@ -192,6 +192,10 @@
                                                         WHERE
                                                                ee.evaluation_code= $my_eval_code and ee.employee_id = $my_emp_id";
                                     $query_score = mysqli_query($conn, $sql_score);
+                                     $sql_pos = "select * from employees where employee_id=$my_emp_id";
+                                            $query_pos = mysqli_query($conn,$sql_pos);
+                                            $get_pos = mysqli_fetch_array($query_pos);
+                                            $get_pos_id=$get_pos["position_level_id"];
                                     while($result_score = mysqli_fetch_array($query_score)){
                                         $grade_id3=$result_score["grade_id3"];
                                         $score_1 = round($result_score["point_kpi"] ,1);
@@ -200,9 +204,13 @@
                                         $score_2_1_m_2 = round($result_score["point_com2_part1"] ,1);
                                         $score_2_2_m_2 = round($result_score["point_com2_part2"] ,1);
                                         $score_3 = round(10-($result_score["point_leave"]+$result_score["point_penalty"]) ,1);
-                                        $sum_score_m_1 = round(($score_1 + $score_2_1_m_1 + $score_2_2_m_1) + $score_3 ,1);
-                                        $sum_score_m_2 = round(($score_1 + $score_2_1_m_2 + $score_2_2_m_2) + $score_3 ,1);
-                                        
+                                        if($get_pos_id!=3){
+                                            $sum_score_m_1 = round(($score_1 + $score_2_1_m_1 + $score_2_2_m_1) + $score_3 ,1);
+                                            $sum_score_m_2 = round(($score_1 + $score_2_1_m_2 + $score_2_2_m_2) + $score_3 ,1);
+                                        }else{
+                                           $sum_score_m_1 = round(($score_1 + $score_2_1_m_1 + $score_2_2_m_1),1);
+                                           $sum_score_m_2 = round(($score_1 + $score_2_1_m_2 + $score_2_2_m_2),1); 
+                                        }
                                     ?>
                                 <thead>
                                     <tr class="text-center">
@@ -242,9 +250,10 @@
                                     </tr>
                                     <tr>
                                         <td style="padding-left: 40px;">ส่วนที่ 2.2 ในส่วนพฤติกรรมทั่วไป (General Competency)</td>
-                                        <td class="text-center"><b>20</b></td>
+                                        
+                                        <td class="text-center"><b><?php if($get_pos_id==3){ echo '20';}else{    echo '10';} ?></b></td>
                                         <td class="text-center"><input class="text-center" type="number" name="ass1part2/2point" value="<?php echo $score_2_2_m_1; ?>" min="0" max="20" disabled></td>
-                                        <td class="text-center"><b>20</b></td>
+                                        <td class="text-center"><b><?php if($get_pos_id==3){ echo '20';}else{    echo '10';} ?></b></td>
                                         <td class="text-center"><input class="text-center" type="number" name="ass2part2/1point" value="<?php echo $score_2_2_m_2; ?>" min="0" max="20" disabled></td>
                                     </tr>
                                      <tr>
