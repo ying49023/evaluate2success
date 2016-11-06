@@ -26,11 +26,11 @@
         include './classes/connection_mysqli.php';    
         
         if(isset($_POST["submit_skill"])){
-            //echo "sumitted";
+            echo "sumitted";
             if(isset($_POST["development_group_id"])){
-                //echo "loop";
+                echo "loop";
                 if($_POST["development_group_id"] != '' && $_POST["comment"] != '' ){
-                //echo "array";
+                echo "array";
                 $array_dev_id[] = array();
                 $c_dev_group_id = 0;
                 
@@ -58,12 +58,15 @@
                 }
   
                 $i= 0 ;
-
+                
                 foreach ($_POST["development_group_id"] as $skill_dev_id){
                     $eval_emp_id = $_SESSION["eval_emp_id"];
                     
-                    echo $sql_insert_skill = 'CALL insert_Development(default,'.$array_comment[$i].','.$array_dev_id[$i].','.$eval_emp_id.','.$array_p[$i].') <br>';
+                    $sql_insert_skill = "CALL insert_Development( $eval_emp_id , $array_dev_id[$i] ,$array_p[$i] , '$array_comment[$i]') <br>";
                     $query_insert_skill = mysqli_query($conn, $sql_insert_skill);
+                    if(!$query_insert_skill){
+                        die('Invalid query: '.$sql_insert_skill. mysql_error());
+                    }
                     //echo '<br>'.$sql_insert_skill;
                     $i++;
                 }
@@ -294,7 +297,7 @@
                                                             <input type="text" class="form-control" name="comment[]" id="data2[]" value="" placeholder="ระบุจุดด้อยของผู้ถูกประเมิน" />
                                                     
                                                         </div>
-                                                        <input type="hidden" name="prominent_development[]" value="1" >
+                                                        <input type="hidden" name="prominent_development[]" value="0" >
                                                     </div>
                                                     
                                                 </div> 

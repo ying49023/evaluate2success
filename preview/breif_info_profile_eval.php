@@ -1,32 +1,44 @@
 <div class="box box-success collapsed-box">
     <?php
-    
     $sql_emp = "SELECT
-                        GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
-                        GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1,
-                        GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2,e.position_level_id
-                FROM
+                    GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
+                    GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1
+                    FROM
                         employees e
-                JOIN position_level p ON p.position_level_id = e.position_level_id
-                JOIN departments d ON d.department_id = e.department_id
-                JOIN jobs j ON j.job_id = e.job_id
-                JOIN employees m ON e.manager_id = m.employee_id
-                JOIN employees m2 ON m.manager_id = m2.employee_id
-                WHERE
-                        e.employee_id ='".$_SESSION["emp_id"]."'";
+                    JOIN position_level p ON p.position_level_id = e.position_level_id
+                    JOIN departments d ON d.department_id = e.department_id
+                    JOIN jobs j ON j.job_id = e.job_id
+                    JOIN employees m ON e.manager_id = m.employee_id
+                    WHERE e.employee_id ='".$_SESSION["emp_id"]."'";
     $query_emp = mysqli_query($conn, $sql_emp);
-    $result_pos= mysqli_fetch_array($query_emp);
-    $get_pos_id = $result_pos["position_level_id"];
-            
-    while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
-       $position_level_id= $result_emp['position_level_id'];
+    while($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
+        $manager_name_1 = $result_emp["manager_name_1"];
+        $manager_name_2 = '';
+        if($result_emp["manager_id2"] != '' && $result_emp["manager_id2"] != 0){
+            $sql_man2 = "SELECT GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2
+                        FROM employees e
+                        JOIN position_level p ON p.position_level_id = e.position_level_id
+                        JOIN departments d ON d.department_id = e.department_id
+                        JOIN jobs j ON j.job_id = e.job_id
+                        JOIN employees m2 ON e.manager_id2 = m2.employee_id
+                        WHERE e.employee_id = '".$_SESSION["emp_id"]."'";
+            $query_man2 = mysqli_query($conn, $sql_man2);
+            $result_man2 = mysqli_fetch_row($query_man2);
+            $manager_name_2 = $result_man2["manager_name_2"];
+        }
+        
         ?>
     <div class="box-header">
         <div class="col-md6">
             
             
             <div style="float: right;">
-                <img class='img-circle img-sm img-center' src="./upload_images/<?php echo $result_emp["profile_picture"]; ?>" > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
+                <img class='img-circle img-sm img-center' src="./upload_images/<?php if ($result_emp["profile_picture"] == '') {
+                                 echo "default.png";
+                             } else {
+                                 echo $result_emp["profile_picture"]; 
+                                 
+                             } ?>" > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-plus"></i>
                 </button>
             </div>
@@ -45,6 +57,7 @@
                         $term = $result_year_term["term_name"];
                         $start_month_name = $result_year_term["start_month"];
                         $end_month_name = $result_year_term["end_month"];
+                        
                         echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year. "</b></span> | ";
                         echo "<span style='font-size:18px'>รอบการประเมินที่ " . $term. " : " . $start_month_name . "-" . $end_month_name . "</span>";
                     }
@@ -62,9 +75,9 @@
                              if ($result_emp["profile_picture"] == '') {
                                  echo "default.png";
                              } else {
-                                 echo $result_emp["profile_picture"];
-                             }
-                             ?>" >
+                                 echo $result_emp["profile_picture"]; 
+                                 
+                             } ?>" >
                 </th>
                 <th>ชื่อ-นามสกุล</th>
                 <th>รหัส</th>
@@ -93,8 +106,8 @@
             </tr>
             <tr>
                 <td class="text-center"> - </td>
-                <td><?php echo $result_emp["manager_name_1"]; ?></td>
-                <td><?php echo $result_emp["manager_name_2"]; ?></td>
+                <td><?php echo $manager_name_1; ?></td>
+                <td><?php echo $manager_name_2; ?></td>
                 <td>
                     <?php 
                     $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '".$_SESSION["eval_code"]."' ";

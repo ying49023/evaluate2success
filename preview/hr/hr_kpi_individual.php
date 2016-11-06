@@ -67,6 +67,20 @@
         <?php include ('./css_packs.html'); ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
+        <script>
+            function getJobs(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "get_jobs.php",
+                    data:'department_id='+val,
+                    success: function(data){
+                        $("#list").html(data);
+                        $("#list2").html(data);
+                        $("#list3").html(data);
+                    }
+                });
+            }
+        </script>
         
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
@@ -97,9 +111,9 @@
                     <div class="box box-success">
                         <div class="box-body ">
                             <form method="get">
-                                <div class="col-md-4">
-                                    <label class="col-sm-4 control-label">รอบ</label>
-                                    <div class="col-sm-8">
+                                <div class="col-md-2 col-sm-3">
+                                    <label>รอบ</label>
+
                                     <?php 
                                         $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
                                         $query_eval = mysqli_query($conn, $sql_eval);
@@ -112,44 +126,55 @@
                                             </option>
                                         <?php } ?>
                                         </select>
-                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <label class="col-sm-4 control-label">แผนก</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_department = "SELECT * FROM departments ";
-                                        $query_department = mysqli_query($conn, $sql_department);
-                                    ?>
-                                        <select class="form-control" name="department_id">
+                                <div class="col-md-4 col-sm-3">
+                                    <div class="form-group">
+                                        <label class=" control-label">แผนก/ฝ่าย</label>
+                                        <div class="">
+                                        <?php 
+                                            $sql_department = "SELECT * FROM departments ";
+                                            $query_department = mysqli_query($conn, $sql_department);
+
+                                        ?>
+                                            <select class="form-control" name="department_id" onchange="getJobs(this.value);" <?php if ($my_position_level == "2" || $my_position_level == "3") { echo "disabled"; } ?>  >
                                             <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
-                                                <?php echo $result_department["department_name"]; ?>
-                                            </option>
-                                        <?php } ?>
-                                        </select>
+
+                                            <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
+                                                <option value="<?php  echo $result_department["department_id"];  ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                                    <?php echo $result_department["department_name"]; ?>
+                                                </option>
+                                                <?php } ?>
+
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="col-sm-4 control-label">ตำแหน่ง</label>
-                                    <div class="col-sm-8">
+                                <div class="col-md-4 col-sm-3">
+                                    <div class="form-group" >
+                                    <label class=" control-label">ตำแหน่ง</label>
                                     <?php 
-                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
+                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
                                         $query_job = mysqli_query($conn, $sql_job);
+
                                     ?>
-                                        <select class="form-control" name="job_id">
-                                            <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
+                                        <select class="form-control" name="job_id" id="list">
+                                            <option value="">เลือกตำแหน่งทั้งหมด</option>
+                                            <?php 
+                                            if (isset($_GET["department_id"])) {
+                                                if($_GET["department_id"] != ''){
+                                            foreach($query_job as $result_job){ ?>
+                                            <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
                                                 <?php echo $result_job["job_name"]; ?>
                                             </option>
-                                        <?php } ?>
+                                            <?php }
+                                                }
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
-                                <div class=" col-md-1">
-                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
+                                <div class=" col-md-2 col-sm-3">
+                                    <input style="margin-top: 25px;" type="submit" class="btn btn-primary search-button " value="ค้นหา" >
                                 </div>
 
                             </form>

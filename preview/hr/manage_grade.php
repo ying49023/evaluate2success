@@ -118,28 +118,27 @@
              
                 <div class="row box-padding">
                     <div class="box box-primary">
-                         <div class="box-header with-border">
-                <h3 class="box-title">ตารางแสดงเกณฑ์การตัดเกรด</h3>
-                <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-success">เพิ่มเกรด
-                </button></a>
-             </div>
-                   <div class="box-body">
-                    <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
+                        <div class="box-header with-border">
+                            <h3 class="box-title">ตารางแสดงเกณฑ์การตัดเกรด</h3>
+                            <a class="pull-right " data-toggle="collapse" href="#strenghtPoint"><button type="button" class="btn btn-success">เพิ่มเกรด
+                                </button></a>
+                        </div>
+                        <div class="collapse bg-gray-light box-padding" id="strenghtPoint" >
                         <form action="manage_grade.php?erp=insert" method="POST">
                         <div class="row">
-                            <div class="col-sm-2">
-                                เกรด
+                            <div class="col-sm-3">
+                                <label>เกรด</label>
                                 <input class="form-control" type="text" name="grade_description" placeholder="-- กรุณากรอกเกรด --">
                             </div>
-                            <div  class="col-sm-offset-1 col-sm-2">
-                                เกณฑ์ต่ำสุด
-                                <input class="form-control" style="margin-left:10px;" type="text" name="standard_min_point" placeholder="-- เกณฑ์ต่ำสุด(คะแนน)--">
+                            <div  class="col-sm-3">
+                                <label>เกณฑ์ต่ำสุด</label>
+                                <input class="form-control" style="margin-left:10px;" type="number" name="standard_min_point" placeholder="-- เกณฑ์ต่ำสุด(คะแนน)--">
                             </div>
-                            <div  class="col-sm-offset-1 col-sm-2">
-                                เกณฑ์สูงสุด
-                                <input class="form-control" style="margin-left:10px;" type="text" name="standard_max_point" placeholder="--เกณฑ์สูงสุด(คะแนน)--">
+                            <div  class="col-sm-3">
+                                <label>เกณฑ์สูงสุด</label>
+                                <input class="form-control" style="margin-left:10px;" type="number" name="standard_max_point" placeholder="--เกณฑ์สูงสุด(คะแนน)--">
                             </div>
-                            <div class="col-sm-1">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                   <input class="btn btn-info btn-md" style="margin-left:80px;margin-top:20px;width: 100%;" type="submit" value="เพิ่ม">
                                 </div>
@@ -148,6 +147,7 @@
                         </div>
                         </form>
                       </div>
+                    
                         
                         <div class="box-body ">    
                             <table  class="table table-bordered table-hover table-striped" >
@@ -288,10 +288,6 @@
                          
                         </div>
 
-
-                         
-     
-                        </div>
 
                     </div>
                 </div> 
