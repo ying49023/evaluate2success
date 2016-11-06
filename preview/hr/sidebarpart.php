@@ -212,12 +212,12 @@
             <!-- Assign KPI -->
             
             <!-- Report Doc-->
-<!--            <li class="<?php if($page == 'hr_report_page.php' || $page == 'hr_report_grade.php'){ echo "active" ; } ?>">
+           <li class="<?php if($page == 'hr_report_page.php' || $page == 'hr_report_grade.php'){ echo "active" ; } ?>">
                 <a href="hr_report_page.php" >
                     <i class="glyphicon glyphicon-book"></i> <span>ออกรายงาน</span>
 
                 </a>
-            </li>-->
+            </li>
             <!-- /Report Doc-->
             
             

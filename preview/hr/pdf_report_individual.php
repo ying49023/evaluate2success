@@ -909,9 +909,42 @@ if(mysql_num_rows($query_dev2)>0){
 }else{
         $pdf->Cell(190, 10, iconv('UTF-8','cp874', 'ไม่มีข้อมูล'), 'LTBR', 0, 'C', 0);
     }
+ //หน้าสุดท้าย
+$pdf->AddPage();    
+  //course dev  
+$pdf->Ln(20);
+$pdf->SetFont('angsana','B',16);
+$pdf->Cell(0,20,iconv( 'UTF-8','cp874' , 'ควรได้รับการพัฒนาและฝึกอบรมในด้านใด' ),0,0,'L'); 
+$pdf->Ln();
+$pdf->Cell(50, 10, iconv('UTF-8','cp874', 'ประเภทคอร์ส'), 'LTBR', 0, 'C', 0);
+$pdf->Cell(140, 10, iconv('UTF-8','cp874', 'ชื่อคอร์ส'), 'LTBR', 0, 'C', 0);
+//$pdf->Cell(95, 10, iconv('UTF-8','cp874', 'สิ่งที่ควรปรับปรุง'), 'LTBR', 0, 'C', 0);
+$pdf->Ln(10);
+$sql_course ="select *
+                from evaluation_course ec
+                join suggest_course sc 
+                on ec.course_id = sc.course_id
+                join suggest_course_group sg
+                on sc.course_group_id = sg.course_group_id
+                where evaluate_employee_id =$eval_emp_id";
+$query_course = mysql_query($sql_course, $db);
+if(mysql_num_rows($query_course)>0){
+ while($result_course = mysql_fetch_array($query_course) ){
+    $course_group=$result_course["course_group_name"];
+    $course_name=$result_course["course_name"];
+
+        $pdf->Cell(50, 10, iconv('UTF-8','cp874', $course_group), 'LTBR', 0, 'L', 0);
+        $pdf->Cell(140, 10, iconv('UTF-8','cp874', $course_name), 'LTBR', 0, 'L', 0);
+        $pdf->Ln();
+ 
+
+}
+}else{
+        $pdf->Cell(190, 10, iconv('UTF-8','cp874', 'ไม่มีข้อมูล'), 'LTBR', 0, 'C', 0);
+    }
 
 //ลงนามผู้ประเมิน
-$pdf->AddPage();
+$pdf->Ln(40);
 $pdf->SetFont('angsana','B',14);
 $pdf->Cell(95, 10, iconv('UTF-8','cp874', 'ลงนามผู้ประเมินที่ 1'), 'LTBR', 0, 'C', 0);
 $pdf->Cell(95, 10, iconv('UTF-8','cp874', 'ลงนามผู้ประเมินที่ 2'), 'LTBR', 0, 'C', 0);
