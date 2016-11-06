@@ -96,54 +96,105 @@
                 <!--/Page header -->
                 
                 <!-- Main content -->
-                <div class="row box-padding">
-                    <div class="box box-success">
-                        <div class="box-body">
-                            
-                            <form action="" method="GET">
-                                <div class="col-md-offset-1 col-md-4">
-                                    <label class="col-sm-4 control-label">แผนก</label>
-                                    <div class="col-sm-8">
+                <!-- Search -->
+            <div class="row box-padding">
+                <div class="box box-success">
+                    <div class="box-header ">
+                        <form method="get">
+<!--                            <div class="col-md-2 col-sm-6">
+                                <div class="form-group">
+                                    <label class=" control-label">ปี</label>
+                                                <?php
+                                                $sql_eval = "SELECT DISTINCT(year) FROM evaluation ORDER BY year , term_id ASC";
+                                                $query_eval = mysqli_query($conn, $sql_eval);
+                                                ?>
+                                        <select class="form-control input-small" name="year" required>
+
+                                                    <?php while ($result_eval = mysqli_fetch_array($query_eval, MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php echo $result_eval["year"]; ?>"<?php if ($get_year == $result_eval["year"]) {
+                                                echo "selected"; } ?> >
+                                                    <?php echo 'ปี ' . $result_eval["year"]; ?>
+
+                                            </option>
+
+                                                    <?php } ?>
+                                        </select>
+                                </div>
+
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <div class="form-group">
+                                    <label class="control-label">รอบ</label>
+                                    <select class="form-control" name="term">
+                                        <option value="">เลือกทั้งหมด</option>
+                                        <option value="1" <?php if($get_term == '1') { echo "selected"; }  ?> >รอบที่ 1</option>
+                                        <option value="2" <?php if($get_term == '2') { echo "selected"; }  ?> >รอบที่ 2</option>
+                                    </select>
+                                </div>
+                            </div>-->
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group">
+                                    <label class=" control-label">แผนก/ฝ่าย</label>
+                                    <div class="">
                                     <?php 
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
+
                                     ?>
-                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" >
-                                            <option value="">--เลือกฝ่าย--</option>
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" <?php if ($my_position_level == "2" || $my_position_level == "3") { echo "disabled"; } ?>  >
+                                        <option value="">เลือกทั้งหมด</option>
+                                        
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                            <option value="<?php  echo $result_department["department_id"];  ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
                                                 <?php echo $result_department["department_name"]; ?>
                                             </option>
-                                        <?php } ?>
+                                            <?php } ?>
+                                        
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="col-sm-4 control-label">ตำแหน่ง</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_job = "SELECT job_name, job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
-                                        $query_job = mysqli_query($conn, $sql_job);
-                                    ?>
-                                        <select class="form-control" name="job_id" id="list">
-                                            <option value="">--เลือกตำแหน่ง--</option>
-                                        <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
-                                                <?php echo $result_job["job_name"]; ?>
-                                            </option>
-                                        <?php } ?>
-                                        </select>
-                                    </div>
+
+                            </div>
+                            <div class="col-md-5 col-sm-5">
+                                <div class="form-group" >
+                                <label class=" control-label">ตำแหน่ง</label>
+                                <div class="">
+                                <?php 
+                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
+                                    $query_job = mysqli_query($conn, $sql_job);
+                                    
+                                ?>
+                                    <select class="form-control" name="job_id" id="list">
+                                        <option value="">เลือกตำแหน่งทั้งหมด</option>
+                                        <?php 
+                                        if (isset($_GET["department_id"])) {
+                                            if($_GET["department_id"] != ''){
+                                        foreach($query_job as $result_job){ ?>
+                                        <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
+                                            <?php echo $result_job["job_name"]; ?>
+                                        </option>
+                                        <?php }
+                                            }
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
-                                <div class=" col-md-2">
-                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
                                 </div>
-                                
-                            </form>
-                        </div>
+                            </div>
+                            <div class="col-md-2 col-sm-2">
+                                <div class="form-group">
+                                    <div class=" pull-right">
+                                    <button type="submit" class="btn btn-primary " style="width: 100px;margin-top: 25px;" ><i class="glyphicon glyphicon-search"></i>&nbsp;&nbsp;ค้นหา</button>
+                                </div>
+                                </div>
+                                    
+                            </div>
+                           
+                        </form>
                     </div>
-                    
                 </div>
+            </div>
+            <!--/Search -->
                 
                 <div id="filter" class="row box-padding">
                     <div class="box box-primary">
@@ -213,7 +264,23 @@
                                                                 </option>-->
                                                                         <?php // } ?>
                                                             </select>
-                                                        </div>                                                
+                                                        </div>
+                                                        <?php
+                                                        $sql_kpi_group = "SELECT * FROM kpi_group ";
+                                                        $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
+                                                        ?>
+                                             
+                                                        <div class="form-group">
+                                                            <label>กลุ่ม KPI<span style="color: red;">*</span></label>
+                                                            <select class="form-control" name="department_id" onchange="getJobs(this.value);" required>
+                                                                <option value="">--เลือกกลุ่ม KPI--</option>
+                                                                        <?php foreach ($query_kpi_group as $result_kpi_group) { ?>
+                                                                <option value="<?php echo $result_kpi_group["kpi_group_id"]; ?>">
+                                                                                <?php echo $result_kpi_group["kpi_group_name"]; ?>
+                                                                </option>
+                                                                        <?php } ?>
+                                                            </select>                                                        
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -230,15 +297,7 @@
                         <div class="box-body">
                                 <?php
                                 $sql_kpi = "SELECT
-                                                    mk.manage_kpi_id AS manage_kpi_id,
-                                                    k.kpi_id AS kpi_id,
-                                                    k.kpi_name AS kpi_name,
-                                                    k.kpi_description AS kpi_description,
-                                                    k.unit As unit,
-                                                    mk.department_id As department_id,
-                                                    d.department_name AS department_name,
-                                                    mk.job_id As job_id,
-                                                    j.job_name AS job_name
+                                                  *
                                             FROM
                                                     manage_kpi mk
                                             JOIN kpi k ON mk.kpi_id = k.kpi_id

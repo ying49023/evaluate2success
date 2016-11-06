@@ -1,18 +1,19 @@
 <div class="box box-success collapsed-box">
     <?php
+    
     $sql_emp = "SELECT
-                                                    GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
-                                                    GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1,
-                                                    GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2,e.position_level_id
-                                            FROM
-                                                    employees e
-                                            JOIN position_level p ON p.position_level_id = e.position_level_id
-                                            JOIN departments d ON d.department_id = e.department_id
-                                            JOIN jobs j ON j.job_id = e.job_id
-                                            JOIN employees m ON e.manager_id = m.employee_id
-                                            JOIN employees m2 ON m.manager_id = m2.employee_id
-                                            WHERE
-                                                    e.employee_id ='".$_SESSION["emp_id"]."'";
+                        GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
+                        GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1,
+                        GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2,e.position_level_id
+                FROM
+                        employees e
+                JOIN position_level p ON p.position_level_id = e.position_level_id
+                JOIN departments d ON d.department_id = e.department_id
+                JOIN jobs j ON j.job_id = e.job_id
+                JOIN employees m ON e.manager_id = m.employee_id
+                JOIN employees m2 ON m.manager_id = m2.employee_id
+                WHERE
+                        e.employee_id ='".$_SESSION["emp_id"]."'";
     $query_emp = mysqli_query($conn, $sql_emp);
     $result_pos= mysqli_fetch_array($query_emp);
     $get_pos_id = $result_pos["position_level_id"];
@@ -33,8 +34,8 @@
             <div style="float: left;">
                     <?php
                     $eval_code = '';
-                    if (isset($_GET["eval_code"])) {
-                        $eval_code = $_GET["eval_code"];
+                    if (isset($_SESSION["eval_code"])) {
+                        echo $eval_code = $_SESSION["eval_code"];
                     }
 
                     $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '".$_SESSION["eval_code"]."'";

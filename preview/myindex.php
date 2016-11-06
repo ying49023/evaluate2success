@@ -401,7 +401,7 @@
                         
                         <tbody>
                             <?php
-                            echo $sql_kpi = "SELECT kpi_code, kpi_name, CONCAT(k.default_target,' ',k.unit) as target, CONCAT(ROUND(AVG(success),2),' ',k.unit) as actual, time_period
+                            $sql_kpi = "SELECT kpi_code, kpi_name, CONCAT(k.default_target,' ',k.unit) as target, CONCAT(ROUND(AVG(success),2),' ',k.unit) as actual, time_period
                                         FROM kpi k JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id 
                                         JOIN kpi_responsible kr ON kr.kpi_id = k.kpi_id
                                         JOIN evaluation_employee ee ON ee.evaluate_employee_id = kr.evaluate_employee_id
@@ -470,7 +470,7 @@
 
 <!-- page script -->
 <?php
- echo $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,
+ $sql_kpi_overveiw = "SELECT ROUND(AVG(performance_mile),2) as score ,
                             round_update, month_update FROM kpi_progress kp 
                             JOIN kpi_responsible kr ON kp.kpi_responsible_id = kr.kpi_responsible_id 
                             JOIN kpi k ON kr.kpi_id = k.kpi_id 
@@ -479,7 +479,7 @@
                             JOIN evaluation e ON e.evaluation_code = ee.evaluation_code
                         $condition_kpi_list AND round_update != '' AND ee.employee_id = '".$my_emp_id."'
                         GROUP BY month_update
-                        ORDER BY kpi_progress_id;";
+                        ORDER BY month_update*1 ASC";
 //e.evaluation_code=$get_eval_code;//
 
  $query_kpi_overview = mysqli_query($conn, $sql_kpi_overveiw);

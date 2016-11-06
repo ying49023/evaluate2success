@@ -24,37 +24,53 @@
         $msg='';
         
         include './classes/connection_mysqli.php';    
+        
+        if(isset($_POST["submit_skill"])){
+            //echo "sumitted";
+            if(isset($_POST["development_group_id"])){
+                //echo "loop";
+                if($_POST["development_group_id"] != '' && $_POST["comment"] != '' ){
+                //echo "array";
+                $array_dev_id[] = array();
+                $c_dev_group_id = 0;
                 
-        if(isset($_POST["submit_skills"])){
-            if(isset($_POST["skill_dev_id"])){
-                $array_sk[] = array();
-                $c_skill_id = 0;
-                foreach ($_POST["skill_dev_id"] as $skill_dev_id) {
-                    $array_sk[$c_skill_id] = $skill_dev_id;
+                foreach ($_POST["development_group_id"] as $skill_dev_id) {
+                    $array_dev_id[$c_dev_group_id] = $skill_dev_id;
                     //echo 'array : '.$c_skill_id.' -->'.$skill_dev_id.', ';
-                    $c_skill_id++;
+                    $c_dev_group_id++;
                 }
-            
+                
+                $array_comment[] = array();
+                $c_comment = 0;
+                
+                foreach($_POST["comment"] as $comment) {
+                    $array_comment[$c_comment] = $comment;
+                    //echo 'array : '.$c_skill_id.' -->'.$skill_dev_id.', ';
+                    $c_comment++;
+                }
+                
                 $array_p[] = array();
                 $c_prominent = 0;
-                foreach ($_POST["prominent_dev"] as $prominent_dev) {
+                
+                foreach ($_POST["prominent_development"] as $prominent_dev) {
                     $array_p[$c_prominent] = $prominent_dev;
                     $c_prominent++;
                 }
   
                 $i= 0 ;
-                foreach ($_POST["skill_dev_id"] as $skill_dev_id){
+
+                foreach ($_POST["development_group_id"] as $skill_dev_id){
                     $eval_emp_id = $_SESSION["eval_emp_id"];
                     
-                    //$sql_insert_skill = 'CALL insert_develop('.$eval_emp_id.','.$array_sk[$i].','.$array_p[$i].')';
+                    echo $sql_insert_skill = 'CALL insert_Development(default,'.$array_comment[$i].','.$array_dev_id[$i].','.$eval_emp_id.','.$array_p[$i].') <br>';
                     $query_insert_skill = mysqli_query($conn, $sql_insert_skill);
-                    echo '<br>'.$sql_insert_skill;
+                    //echo '<br>'.$sql_insert_skill;
                     $i++;
-
                 }
-//                header("location:evaluation_summary.php");
+                }
+                //header("location:evaluation_summary.php");
             }
-//            header("location:evaluation_summary.php");
+            //header("location:evaluation_summary.php");
             
         }
 ?>
@@ -211,16 +227,31 @@
                                         <div class="form-group">
                                             <h4><u>จุดเด่นของผู้ถูกประเมิน</u></h4>
                                             <div id="myTbl"> 
-                                                        <?php
-                                                        $max = 2;
-                                                        for ($n = 0; $n <= $max; $n++) {
-                                                            ?>
-                                                <div class="firstTr form-group">
-                                                    <input name="h_item_id[]" type="hidden" id="h_item_id[]" value="" /> 
-                                                    <input type="text" class="text_data form-control" name="strong_point[]" id="data2[]" placeholder="ระบุจุดเด่นของผู้ถูกประเมิน" />  
                                                         
-                                                </div> 
-                                                        <?php } ?> 
+                                                <div class="firstTr  form-group">
+                                                    <div class="row ">
+                                                        <div class="col-lg-4 col-sm-5 col-xs-6">
+                                                            <select class="  form-control" name="development_group_id[]">
+                                                                <option value="">เลือกจุดเด่น</option>
+                                                                <?php 
+                                                                $sql_skill = "SELECT * FROM development_group ";
+                                                                $query_skill = mysqli_query($conn, $sql_skill);
+                                                                foreach ($query_skill as $result_skill){ ?>
+                                                                    <option value='<?php echo $result_skill["development_group_id"]; ?>'><?php echo $result_skill["development_group_name"]; ?></option>
+                                                                <?php }
+                                                                ?>
+                                                            </select>
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-8 col-sm-7 col-xs-6">
+                                                            <input type="text" class="form-control" name="comment[]" value="" id="data2[]" placeholder="ระบุจุดเด่นของผู้ถูกประเมิน" />
+                                                        </div>
+                                                        
+                                                        <input type="hidden" name="prominent_development[]" value="1" >
+                                                    </div>
+                                                    
+                                                </div>  
+                                                        
                                             </div>  
                                             <div class="form-group">
                                                 <button id="addRow" type="button">+</button>    
@@ -243,25 +274,31 @@
                                         <div class="form-group">
                                             <h4><u>จุดด้อยของผู้ถูกประเมิน</u></h4>
                                             <div id="myTbl2"> 
-                                                        <?php
-                                                        $max = 2;
-                                                        for ($n = 0; $n <= $max; $n++) {
-                                                            ?>
-                                                <div class="firstTr2 form-inline">
-                                                    <select class="form-control" name="skill_dev_group_id">
-                                                        <option value="">เลือกประเภทข้อด้อย</option>
-                                                    <?php 
-                                                    $sql_skill = "SELECT * FROM skill_development_group ";
-                                                    $query_skill = mysqli_query($conn, $sql_skill);
-                                                    foreach ($query_skill as $result_skill){ ?>
-                                                        <option value='<?php echo $result_skill["skill_dev_id"]; ?>'><?php echo $result_skill["skill_description"]; ?></option>"
-                                                    <?php }
-                                                    ?>
-                                                    </select>
-                                                    <input type="text" class=" form-control" name="weak_point[]" id="data2[]" placeholder="ระบุจุดด้อยของผู้ถูกประเมิน" />  
+                                            
+                                                <div class="firstTr2  form-group">
+                                                    <div class="row ">
+                                                        <div class="col-lg-4 col-sm-5 col-xs-6">
+                                                            <select class="  form-control" name="development_group_id[]" >
+                                                                <option value="">เลือกจุดด้อย</option>
+                                                                <?php 
+                                                                $sql_skill = "SELECT * FROM development_group ";
+                                                                $query_skill = mysqli_query($conn, $sql_skill);
+                                                                foreach ($query_skill as $result_skill){ ?>
+                                                                    <option value='<?php echo $result_skill["development_group_id"]; ?>'><?php echo $result_skill["development_group_name"]; ?></option>
+                                                                <?php }
+                                                                ?>
+                                                            </select>
+                                                        </div>
                                                         
+                                                        <div class="col-lg-8 col-sm-7 col-xs-6">
+                                                            <input type="text" class="form-control" name="comment[]" id="data2[]" value="" placeholder="ระบุจุดด้อยของผู้ถูกประเมิน" />
+                                                    
+                                                        </div>
+                                                        <input type="hidden" name="prominent_development[]" value="1" >
+                                                    </div>
+                                                    
                                                 </div> 
-                                                        <?php } ?> 
+                                                
                                             </div>  
                                             <div class="form-group">
                                                 <button id="addRow2" type="button">+</button>    
@@ -286,14 +323,15 @@
                                         // ส่วนของการ clone ข้อมูลด้วย jquery clone() ค่า true คือ  
                                         // การกำหนดให้ ไม่ต้องมีการ ดึงข้อมูลจากค่าเดิมมาใช้งาน  
                                         // รีเซ้ตเป็นค่าว่าง ถ้ามีข้อมูลอยู่แล้ว ทั้ง select หรือ input  
-                                        $(".firstTr:eq(0)").clone(true)   
-                                                .find("input").attr("value","").end()    
-                                                .appendTo($("#myTbl"));  
+                                        $(".firstTr:eq(0)").clone(true)
+                                            .find("input").attr("value","").end()  
+                                            .find("select").attr("value","").end()
+                                            .appendTo($("#myTbl"));  
                                     });  
                                     $("#removeRow").click(function(){  
                                         // // ส่วนสำหรับการลบ  
-                                        if($("#myTbl div").size()>1){ // จะลบรายการได้ อย่างน้อย ต้องมี 1 รายการ  
-                                            $("#myTbl div:last").remove(); // ลบรายการสุดท้าย  
+                                        if($("#myTbl .row").size()>1){ // จะลบรายการได้ อย่างน้อย ต้องมี 1 รายการ  
+                                            $("#myTbl .row:last").remove(); // ลบรายการสุดท้าย  
                                         }else{  
                                             // เหลือ 1 รายการลบไม่ได้  
                                             alert("ต้องมีรายการข้อมูลอย่างน้อย 1 รายการ");  
@@ -310,8 +348,8 @@
                                     });  
                                     $("#removeRow2").click(function(){  
                                         // // ส่วนสำหรับการลบ  
-                                        if($("#myTbl2 div").size()>1){ // จะลบรายการได้ อย่างน้อย ต้องมี 1 รายการ  
-                                            $("#myTbl2 div:last").remove(); // ลบรายการสุดท้าย  
+                                        if($("#myTbl2 .row").size()>1){ // จะลบรายการได้ อย่างน้อย ต้องมี 1 รายการ  
+                                            $("#myTbl2 .row:last").remove(); // ลบรายการสุดท้าย  
                                         }else{  
                                             // เหลือ 1 รายการลบไม่ได้  
                                             alert("ต้องมีรายการข้อมูลอย่างน้อย 1 รายการ");  
@@ -379,7 +417,7 @@
                         <!--submit button-->    
                         <div class="box-footer">
                             <div class="row box-padding text-center">
-                                <button class="btn btn-success btn-lg" type="submit" name="submit_skill"><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - สรุปผลการประเมิน</button>
+                                <button class="btn btn-success btn-lg" type="submit" name="submit_skill" value="1"><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - สรุปผลการประเมิน</button>
                                 <input class="btn btn-danger btn-lg" type="reset" value="รีเซ็ต" >
                             </div>
                         </div>
