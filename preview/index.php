@@ -364,6 +364,9 @@
                             $query_per = mysqli_query($conn, $sql_per);
                             $result_per = mysqli_fetch_array($query_per);
                             $current_month = $result_per["current_month"];
+//                            $month = "Call getMonthThai($current_month)";
+//                            $query_month = mysqli_query($conn, $month);
+//                            $result_month = mysqli_fetch_array($query_month);
 
                             if($result_per["performance_mile"] == ''){
                             ?>
@@ -381,7 +384,7 @@
                                             value : <?php echo $result_per["performance_mile"]; ?>,
                                             min: 0,
                                             max: 100,
-                                            title: "ประจำเดือนเดือน: <?php echo $current_month; ?>",
+                                            title: "ประจำเดือน: <?php echo $current_month; ?>",
                                             label: "%",
                                             levelColorsGradient: true
                                         });

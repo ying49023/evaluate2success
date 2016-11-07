@@ -254,18 +254,37 @@
                                         $assessor1_id = $result_emp_list["assessor1_id"];
                                         $assessor2_id = $result_emp_list["assessor2_id"];
                                         
-                                        $sql_check_ass1 = " SELECT * FROM employees e 
-                                                            JOIN evaluation_employee ee ON e.employee_id = ee.assessor1_id
-                                                            WHERE e.employee_id = 10002 AND ee.status_assessor1 = 1";
-                                        $query_check_ass1 = mysqli_query($conn, $sql_check_ass1);
-                                        $result_check_ass1 = mysqli_fetch_array($query_check_ass1);
                                         
-                                        $sql_check_ass2 = " SELECT * FROM employees e 
-                                                            JOIN evaluation_employee ee ON e.employee_id = ee.assessor2_id
-                                                            WHERE e.employee_id = 10002 AND ee.status_assessor2 = 1";
-                                        $query_check_ass2 = mysqli_query($conn, $sql_check_ass2);
-                                        $result_check_ass2 = mysqli_fetch_array($query_check_ass2);
+                                        $sql_huahna = "
+                                                        select assessor1_id as huahna1,assessor2_id as huahna2,status_assessor1 as status_mgn1,status_assessor2 as status_mgn2
+                                                        from evaluation_employee
+                                                        where employee_id =$employee_id and evaluation_code =$my_eval_code ";
+                                                $query_huahna= mysqli_query($conn, $sql_huahna);
+                                        $huahna1=0;
+                                        $huahna2=0;
+                                        
+                                        while ($result_huahna = mysqli_fetch_assoc($query_huahna)) {
+                                            $huahna1 = $result_huahna["huahna1"];
+                                            $huahna2 = $result_huahna["huahna2"];
+                                            $status_mgn1 =$result_huahna["status_mgn1"];
+                                            $status_mgn2 =$result_huahna["status_mgn2"];
+                                        }
+                                        
+//                                        $sql_check_ass1 = " SELECT * FROM employees e 
+//                                                            JOIN evaluation_employee ee ON e.employee_id = ee.assessor1_id
+//                                                            WHERE e.manager_id = '$my_emp_id' AND ee.status_assessor1 = 1";
+//                                        $query_check_ass1 = mysqli_query($conn, $sql_check_ass1);
+//                                        $result_check_ass1 = mysqli_fetch_array($query_check_ass1);
+//                                        echo $result_check_ass1["status_assessor1"];
+//                                        
+//                                        echo $sql_check_ass2 = " SELECT * FROM employees e 
+//                                                            JOIN evaluation_employee ee ON e.employee_id = ee.assessor2_id
+//                                                            WHERE e.manager_id2 = '$my_emp_id' AND ee.status_assessor2 = 1";
+//                                        $query_check_ass2 = mysqli_query($conn, $sql_check_ass2);
+//                                        $result_check_ass2 = mysqli_fetch_array($query_check_ass2);
+//                                        echo $result_check_ass2["status_assessor2"]
                                         ?>
+                                                
                                     <tr>
                                         <td class="emp_id"><?php echo $employee_id; ?></td>
                                         <td class="emp_name"><?php echo $emp_name; ?></td>
@@ -278,17 +297,58 @@
                                                 <input type="hidden" name="eval_emp_id" value="<?php echo $eval_emp_id; ?>" >
                                                 <input type="hidden" name="eval_code" value="<?php echo $eval_code; ?>" >
                                                 <input type="hidden" name="comp_id" value="<?php echo $comp_id; ?>" >
-                                                <button class="btn btn-success" type="submit" name="submit_eval" <?php if($result_check_ass1["status_assessor1"] == 1 || $result_check_ass2["status_assessor2"] ){ echo "disabled"; } ?> >
+                                                <?php
+                                                if ($my_emp_id == $huahna1) {
+                                                    if($status_mgn1==1){ ?>
+                                                        
+                                                     <button class="btn btn-success" type="submit" name="submit_eval" disabled >
+                                                        <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
+                                                    </button>
+                                                
+                                                <?php    }else{ ?>
+                                                            <button class="btn btn-success" type="submit" name="submit_eval"  >
+                                                        <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
+                                                    </button> 
+                                                <?php } }else if ($my_emp_id == $huahna2) {
+                                                    if($status_mgn2==1){  ?>
+                                                
+                                                
+                                                        
+                                                     <button class="btn btn-success" type="submit" name="submit_eval" disabled >
+                                                        <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
+                                                    </button>
+                                                
+                                                <?php    }else{ ?>
+                                                            <button class="btn btn-success" type="submit" name="submit_eval"  >
+                                                        <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
+                                                    </button> 
+                                               <?php } }  ?>
+                                                
+                                               <!-- <button class="btn btn-success" type="submit" name="submit_eval" <?php if($huahna1 ==1 ){ echo "disabled"; } ?> >
                                                     <i class="glyphicon glyphicon-triangle-right"></i>ประเมิน
-                                                </button>
+                                                </button> -->
                                             </form>
                                         </td>
-                                        <?php if($result_check_ass1["status_assessor1"] == 1 || $result_check_ass2["status_assessor2"]){
-                                             
-                                           echo '<td ><center><font color="green" >ประเมินแล้ว</font></center></td>'; 
-                                        }else{
-                                           echo '<td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>'; 
-                                        }?>
+                                        
+                                        
+                                        <?php
+                                                if ($my_emp_id == $huahna1) {
+                                                    if($status_mgn1==1){ 
+                                                        
+                                                     echo '<td ><center><font color="green" >ประเมินแล้ว</font></center></td>';
+                                                
+                                                  }else{ 
+                                                             echo '<td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>';
+                                                } } ?>
+                                                
+                                                <?php
+                                                if ($my_emp_id == $huahna2) {
+                                                    if($status_mgn2==1){ 
+                                                      echo '<td ><center><font color="green" >ประเมินแล้ว</font></center></td>';
+                                                
+                                                   }else{
+                                                           echo '<td ><center><font color="red" >ยังไม่ประเมิน</font></center></td>';
+                                                }}   ?>
                                        
                                         
                                     </tr>

@@ -18,9 +18,9 @@ and open the template in the editor.
                 $get_emp_id = $_GET["emp_id"];
         }
 
-        if($get_emp_id!=''){       
+        if($get_emp_id !=''){       
 
-            $add_query="DELETE FROM employees WHERE employee_id=$get_emp_id ";
+            $add_query="DELETE FROM employees WHERE employee_id='$get_emp_id'  ";
             
             $a_query =  mysqli_query($conn,$add_query);
             

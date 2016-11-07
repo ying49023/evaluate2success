@@ -269,22 +269,10 @@
                                                 <?php
                                                 $employee_id_com =$_SESSION['emp_id'];
                                                     $sql_huahna = "
-                                                        SELECT
-                                                            e.employee_id AS looknong,
-                                                            m.employee_id AS huahna1,
-                                                            (
-                                                                    SELECT
-                                                                            m2.manager_id
-                                                                    FROM
-                                                                            employees m2
-                                                                    WHERE
-                                                                            m2.employee_id = m.employee_id
-                                                            ) AS huahna2
-                                                    FROM
-                                                            employees e
-                                                    JOIN employees m ON e.manager_id = m.employee_id
-                                                    WHERE
-                                                            e.employee_id = '$employee_id_com' ";
+                                                       
+                                                        select assessor1_id as huahna1,assessor2_id as huahna2,status_assessor1 as status_mgn1,status_assessor2 as status_mgn2
+                                                        from evaluation_employee
+                                                        where employee_id =$employee_id_com and evaluation_code =$my_eval_code ";
                                                    $query_huahna= mysqli_query($conn, $sql_huahna);
                                                    $huahna1=0;
                                                    $huahna2=0;

@@ -353,7 +353,7 @@
                                         value : <?php if($mile==''){  echo 0;}else{ echo $mile; }?>,
                                         min: 0,
                                         max: 100,
-                                        title: "สถานะ KPIs ของเดือน: <?php echo $current_month; ?>",
+                                        title: "ประจำเดือน: <?php echo $current_month; ?>",
                                         label: "%",
                                         levelColorsGradient: false
                                       });

@@ -39,6 +39,7 @@
             $job_id=$_POST['job_id'];
             $position_level_id=$_POST['position_level_id'];
             $manager=$_POST['manager'];
+            $manager2=$_POST['manager2'];
             $telephone=$_POST['telephone'];
             $address=$_POST['address'];
             $email=$_POST['email'];
@@ -68,25 +69,26 @@
                     //
                     //
                     //
-                    $sql = "SELECT employee_id,concat(first_name,' ',last_name) as name from employees where concat(first_name,' ',last_name) like '%$manager%'  ";
-                    $query= mysqli_query($conn, $sql);
-                     while($mresult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
-                     $mng =$mresult['employee_id'];                                           
-                     $name =$mresult['name'];
-                     echo $mng;
-                     echo $name;
-
-                     }   
-                    $add_query="INSERT INTO employees(prefix,first_name,last_name,department_id,job_id,position_level_id,manager_id,telephone_no,address,email,company_id,hiredate,profile_picture,employee_id) VALUES ('$prefix','$first_name','$last_name',$department_id,$job_id,$position_level_id,$mng,'$telephone','$address','$email',1,'$hiredate','$image_name',$emp_id)";            
+//                    $sql = "SELECT employee_id,concat(first_name,' ',last_name) as name from employees where concat(first_name,' ',last_name) like '%$manager%'  ";
+//                    $query= mysqli_query($conn, $sql);
+//                     while($mresult = mysqli_fetch_array($query, MYSQLI_ASSOC)) {
+//                     $mng =$mresult['employee_id'];                                           
+//                     $name =$mresult['name'];
+//                     echo $mng;
+//                     echo $name;
+//
+//                     }   
+                    echo $add_query="INSERT INTO employees(prefix,first_name,last_name,department_id,job_id,position_level_id,manager_id,manager_id2,telephone_no,address,email,company_id,hiredate,profile_picture,employee_id) VALUES ('$prefix','$first_name','$last_name',$department_id,$job_id,$position_level_id,$manager,$manager2,'$telephone','$address','$email',1,'$hiredate','$image_name',$emp_id)";            
                     $a_query =  mysqli_query($conn,$add_query);
                     $sql_Individual_eval_Emp = "CALL gen_Individual_eval_Emp($emp_id)";
                     $query_Individual_eval_Emp = mysqli_query($conn, $sql_Individual_eval_Emp);
-                    if($a_query)
+                    if($a_query){
+                        echo $add_query;
                        header ("location:manage_employee_list.php");
-                    else {
+                    }else {
                         $msg='Error :'.mysql_error();
                         echo "Error Save [" . $add_query . "]";
-                        echo $sql;
+                        //echo $sql;
 
 
                     }
@@ -280,30 +282,47 @@
 
                                         <div class="row">
                                             <?php
-                                            $sql_mng = "SELECT first_name, last_name FROM employees WHERE position_level_id IN (2,3,4) and department_id = 1";
+                                            $sql_mng = "SELECT first_name, last_name , employee_id FROM employees WHERE position_level_id IN (2,3,4) ";
                                             $query_mng = mysqli_query($conn, $sql_mng);
                                             ?>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label>หัวหน้าผู้รับผิดชอบ</label>                                                                    
+                                                    <label>หัวหน้าผู้รับผิดชอบคนที่ 1</label>                                                                    
                                                     <select class="form-control" name="manager" required>
                                                         <option value="">--เลือกหัวหน้า--</option>
-                                                        <?php while ($result_mng = mysqli_fetch_array($query_mng)) { 
+                                                                                                            <?php echo $mng_name ?>
+                                                        <?php while ($result_mng = mysqli_fetch_array($query_mng)) {
+                                                            $mng_id = $result_mng["employee_id"];
                                                             $mng_name = $result_mng["first_name"].' '.$result_mng["last_name"];
                                                         ?>
-                                                        <option value="<?php echo $mng_name; ?>">
+                                                        <option value="<?php echo $mng_id; ?>">
                                                                 <?php echo $mng_name ?>
                                                         </option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>                                               
                                             </div>
+                                            <?php
+                                            $sql_mng2 = "SELECT first_name, last_name,employee_id FROM employees WHERE position_level_id IN (2,3,4) ";
+                                            $query_mng2 = mysqli_query($conn, $sql_mng2);
+                                            ?>
                                             <div class="col-md-6">
-                                                    <div class="form-group">
-                                                        <label>เบอร์ติดต่อ</label>
-                                                        <input type="text" name="telephone" class="form-control" />
-                                                    </div>
-                                                </div>  
+                                                <div class="form-group">
+                                                    <label>หัวหน้าผู้รับผิดชอบคนที่ 2</label>                                                                    
+                                                    <select class="form-control" name="manager2" required>
+                                                        <option value="">--เลือกหัวหน้า--</option>
+                                                        <?php while ($result_mng2 = mysqli_fetch_array($query_mng2)) { 
+                                                            $mng_name2 = $result_mng2["first_name"].' '.$result_mng2["last_name"];
+                                                            $mng_id2 = $result_mng2["employee_id"];
+                                                        ?>
+                                                        <option value="<?php echo $mng_id2; ?>">
+                                                                <?php echo $mng_id2.' - '.$mng_name2; ?>
+                                                        </option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>                                               
+                                            </div>
+                                             
                                         </div>                                       
                                         <div class="row">
                                             <div class="col-md-6">
@@ -320,6 +339,12 @@
                                             </div>  
                                         </div>
                                         <div class="row">
+                                            <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label>เบอร์ติดต่อ</label>
+                                                        <input type="text" name="telephone" class="form-control" />
+                                                    </div>
+                                                </div> 
                                             <div class="col-md-6">
                                                  <?php
                                                  $sql_maincompany = "SELECT * FROM company";

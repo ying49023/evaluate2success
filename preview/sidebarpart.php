@@ -65,14 +65,14 @@
             
             <!--Tracking -->
             <?php if($my_position_level >1 ){ ?>
-            <li class="<?php if($page == 'tracking_sub_list.php' || $page == 'tracking_sub_kpi.php'){ echo "active" ; } ?> ">
+            <li class="<?php if($page == 'tracking_sub_list.php' || $page == 'tracking_sub_kpi.php' || $page == 'tracking_sub_detail.php'){ echo "active" ; } ?> ">
                 <a href="">
                     <i class="glyphicon glyphicon-screenshot"></i>
                         <span>ติดตามสถานะการทำงาน</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?php if($page == 'tracking_sub_list.php' || $page == 'tracking_sub_kpi.php'){ echo "active" ; } ?>"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
+                    <li class="<?php if($page == 'tracking_sub_list.php' || $page == 'tracking_sub_kpi.php' || $page == 'tracking_sub_detail.php'){ echo "active" ; } ?>"><a href="tracking_sub_list.php"><i class="fa fa-circle-o"></i>ติดตามสถานะรายบุคคล</a></li>
                     <!--<li ><a href="#"><i class="fa fa-circle-o"></i>ตืดตามสถานรายแผนก</a></li>-->
                 </ul>
             </li>

@@ -362,6 +362,7 @@
                             $query_per = mysqli_query($conn, $sql_per);
                             $result_per = mysqli_fetch_array($query_per);
                             $current_month = $result_per["current_month"];
+                            
                             if($result_per["performance_mile"] == ''){
                             ?>
                                 <h3 class="text-middle text-center">ยังไม่มีข้อมูล</h3>
@@ -378,7 +379,7 @@
                                             value : <?php echo $result_per["performance_mile"]; ?>,
                                             min: 0,
                                             max: 100,
-                                            title: "ประจำเดือนเดือน: <?php echo $current_month; ?>",
+                                            title: "ประจำเดือน: <?php echo $current_month; ?>",
                                             label: "%",
                                             levelColorsGradient: true
                                         });

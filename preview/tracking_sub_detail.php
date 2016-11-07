@@ -60,7 +60,7 @@
                 <!-- Content Header (Page header)  -->
                 <section class="content-header">
                     <h1>
-                        รายละเอียด KPI -2001
+                        รายละเอียด KPI - <?php echo $get_kpi_id; ?>
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
