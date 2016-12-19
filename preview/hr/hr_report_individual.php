@@ -137,7 +137,7 @@
                                                             $eval_emp_id = $result["evaluate_employee_id"];
                                                             ?>
                                                             <tr>
-                                                                <td class="profile_picture"><img class="img-circle img-center" src="../upload_images/<?php if($profile_picture == ''){ echo 'default.png' ;}else { echo $profile_picture;} ?>" style="width: 35px;height: 35px;" alt="<?php echo $profile_picture; ?>" ></td>
+                                                                <td class="profile_picture"><img class="img-circle img-center" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($profile_picture == ''){ echo 'default.png' ;}else { echo $profile_picture;} ?>" style="width: 35px;height: 35px;" alt="<?php echo $profile_picture; ?>" ></td>
                                                                 <td class="emp_id" style="width: 130px;"><?php echo $emp_id; ?></td>
                                                                 <td class="emp_name"><?php echo $name; ?></td>
                                                                 <td class="job_name text-center"><?php echo $job; ?></td>

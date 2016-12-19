@@ -155,27 +155,26 @@
                         </div>
                                 <?php
                                 $sql_emp_list = "SELECT
-                                                                    ee.employee_id,
-                                                                    e.prefix,
-                                                                    e.first_name,
-                                                                    e.last_name,
-                                                                    e.position_level_id,
-                                                                    ee.status_success,
-                                                                    ec.evaluate_employee_id,
-                                                                    d.department_name,
-                                                                    j.job_name
-                                                            FROM
-                                                                    employees e
-                                                            JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
-                                                            JOIN evaluation ev ON ee.evaluation_code = ev.evaluation_code
-                                                            JOIN evaluation_competency ec ON ec.evaluate_employee_id = ee.evaluate_employee_id
-                                                            JOIN jobs j ON j.job_id = e.job_id
-                                                            JOIN departments d ON d.department_id = e.department_id
-                                                            WHERE
-                                                                    e.manager_id = '$my_emp_id'
-                                                            AND ev.evaluation_code = $get_eval_code
-                                                            GROUP BY
-                                                                    ee.employee_id";
+                                                        ee.employee_id,
+                                                        e.prefix,
+                                                        e.first_name,
+                                                        e.last_name,
+                                                        e.position_level_id,
+                                                        ee.status_success,
+                                                        ec.evaluate_employee_id,
+                                                        d.department_name,
+                                                        j.job_name
+                                                FROM
+                                                        employees e
+                                                JOIN evaluation_employee ee ON e.employee_id = ee.employee_id
+                                                JOIN evaluation ev ON ee.evaluation_code = ev.evaluation_code
+                                                JOIN evaluation_competency ec ON ec.evaluate_employee_id = ee.evaluate_employee_id
+                                                JOIN jobs j ON j.job_id = e.job_id
+                                                JOIN departments d ON d.department_id = e.department_id
+                                                WHERE
+                                                        e.manager_id = '$my_emp_id'
+                                                AND ev.evaluation_code = '$get_eval_code'
+                                                GROUP BY ee.employee_id";
                                 $query_emp_list = mysqli_query($conn, $sql_emp_list);
                                 ?>
                                     

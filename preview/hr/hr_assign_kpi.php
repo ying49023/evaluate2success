@@ -252,7 +252,7 @@
                                     ?>
                                 
                                 <tr >
-                                    <td class="text-center"><img class="img-circle img-center img-sm" src="../upload_images/<?php if($profile_picture ==''){ echo "default.png";} else { echo $profile_picture; } ?>" ></td>
+                                    <td class="text-center"><img class="img-circle img-center img-sm" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($profile_picture ==''){ echo "default.png";} else { echo $profile_picture; } ?>" ></td>
                                     <td class="id text-center"><?php  echo $emp_id; ?></td>
                                     <td class="name"><?php echo $name; ?></td>
                                     <td class="job text-center"><?php echo $job; ?></td>

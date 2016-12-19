@@ -31,11 +31,20 @@ and open the template in the editor.
                 background-color:#212121;
                 color: #fff;
             }
-            .bg1 h1{
-                padding-top: 60px;
-                font-size: 5em;
-                font-weight: 700;
+            @media screen and (max-width:480px){
+                .bg1 h1{
+                    font-size: 5em;
+                    font-weight: 700;
+                }
             }
+            @media screen and (min-width:481px){
+                .bg1 h1{
+                    padding-top: 60px;
+                    font-size: 5em;
+                    font-weight: 700;
+                }
+            }
+            
             .bg2{
 
             }
@@ -110,10 +119,11 @@ and open the template in the editor.
                     </form>
                     <div class="row">
                         <div class="col-md-offset-2 col-md-8">
-                            <div class="well">
-                                <div class="form-horizontal form-signin" style="color:#00897B;width: 500px;font-weight: 800;font-style: italic">
-                                    <p ><u>หมายเหตุ</u>โปรด  Login โดย username : admin  / password : 123456 </p>
-                                    <p>ขั้นตอนการ Logout</p>
+                            <div class="well well-lg" style="margin: 15px;">
+                                <div style="color:#00897B;font-style: italic">
+                                    <p ><u><b>หมายเหตุ</b></u></p>
+                                    <p>กรุณา Login โดย username : admin  / password : 123456 </p>
+                                    <p><u><b>ขั้นตอนการ Logout</b></u></p>
                                     <ol>
                                         <li>คลิกมุมบนขวาที่แสดงชื่อ</li>
                                         <li>เลือกปุ่ม logout</li>

@@ -560,7 +560,6 @@
           data: [<?php  
                 for($i=0;$i<$count;$i++){
                         echo  "100".",";
-
                 } ;
                 ?>]
         },
@@ -574,13 +573,17 @@
           pointHighlightStroke: "rgba(60,141,188,1)",
           
         data: [<?php  
-                for($i=0;$i<$count;$i++){
-                     if($i<$count-1)
-                     echo  $array_value[$i].',';
-                     else
-                         echo  $array_value[$i];
-                } ;
-                ?>]
+                for ($i = 0; $i < $count; $i++) {
+                    if ($i < $count - 1) {
+                        if($array_value[$i] > 100){
+                            echo '100'.',';
+                        }else{
+                            echo $array_value[$i] . ',';
+                        }
+                        
+                    }
+                }
+          ?>]
         }
       ]
     };

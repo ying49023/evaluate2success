@@ -507,7 +507,7 @@
                                             </div>
                                             <div class="modal-footer">                                                                   
                                                 <button class="btn btn-info btn-lg" type="submit" >ยืนยัน</button>                                                                             
-                                                <input type="hidden" name="position_level" value="<?php=$level;?>" >
+                                                <input type="hidden" name="position_level" value="<?php echo $level;?>" >
                                                 <input type="hidden" name="emp" value="<?php echo $my_emp_id;?>" >
                                                 <input type="hidden" name="evalcode" value="<?php echo $_SESSION['eval_code'];?>" >
                                             </div>

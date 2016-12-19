@@ -91,8 +91,8 @@
                                     </thead>
                                     <tbody class="list">
                                         <?php 
-                                        $sql_emp = "SELECT
-                                                            e.employee_id as employee_id, e.prefix as prefix, e.first_name as first_name, e.last_name as last_name, d.department_name as department_name, j.job_name as job_name
+                                        $sql_emp_list = "SELECT
+                                                        e.*,j.*,d.*
                                                     FROM
                                                             employees e
                                                     JOIN employees m ON e.manager_id = m.employee_id
@@ -102,22 +102,20 @@
                                                     JOIN kpi_responsible r ON ee.evaluate_employee_id = r.evaluate_employee_id
                                                     JOIN jobs j ON j.job_id = e.job_id
                                                     WHERE
-                                                            eval.evaluation_code=$my_eval_code 
-                                                         and   m.employee_id = '$my_emp_id'"
-                                                . "GROUP BY ee.evaluate_employee_id    
-                                                ORDER BY
-                                                        e.employee_id ASC";
-                                        $query_emp = mysqli_query($conn, $sql_emp);
-                                        while($result_emp = mysqli_fetch_array($query_emp , MYSQLI_ASSOC)){
+                                                        eval.evaluation_code='$my_eval_code' 
+                                                        AND   m.employee_id = '$my_emp_id' 
+                                                    GROUP BY ee.evaluate_employee_id ORDER BY e.employee_id ASC";
+                                        $query_emp_list = mysqli_query($conn, $sql_emp_list);
+                                        foreach ($query_emp_list as $result_emp_list){
 
                                         ?>
                                         <tr>
-                                            <td class="emp_id"><?php echo $result_emp["employee_id"]; ?></td>
-                                            <td class="emp_name"><?php echo $result_emp["prefix"].$result_emp["first_name"]."  ".$result_emp["last_name"]; ?></td>
-                                            <td class="job_name"><?php echo $result_emp["job_name"]; ?></td>
-                                            <td class="department_name"><?php echo $result_emp["department_name"]; ?></td>
+                                            <td class="emp_id"><?php echo $result_emp_list["employee_id"]; ?></td>
+                                            <td class="emp_name"><?php echo $result_emp_list["prefix"].$result_emp_list["first_name"]."  ".$result_emp_list["last_name"]; ?></td>
+                                            <td class="job_name"><?php echo $result_emp_list["job_name"]; ?></td>
+                                            <td class="department_name"><?php echo $result_emp_list["department_name"]; ?></td>
                                             <td class="text-center">
-                                                <a class=" btn btn-dropbox btn-sm" href="tracking_sub_kpi.php?emp_id=<?php echo $result_emp["employee_id"]; ?>">    
+                                                <a class=" btn btn-dropbox btn-sm" href="tracking_sub_kpi.php?emp_id=<?php echo $result_emp_list["employee_id"]; ?>">    
                                                 <center><span class="glyphicon glyphicon-search" aria-hidden="true"></span></center>
                                                 </a>
                                             </td>

@@ -107,7 +107,7 @@
             
             
             <div style="float: right;">
-                <img class='img-circle img-sm img-center' src="../upload_images/<?php if($result_emp["profile_picture"]== ''){ echo 'default.png' ;}else { echo  $result_emp["profile_picture"];} ?>"  > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
+                <img class='img-circle img-sm img-center' src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($result_emp["profile_picture"]== ''){ echo 'default.png' ;}else { echo  $result_emp["profile_picture"];} ?>"  > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                 </button>
             </div>
@@ -137,7 +137,7 @@
             
             <tr >
                 <th rowspan="4" style="text-align: center;">
-                    <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="../upload_images/<?php
+                    <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php
                              if ($result_emp["profile_picture"] == '') {
                                  echo "default.png";
                              } else {

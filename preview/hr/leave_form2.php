@@ -159,7 +159,7 @@
                                     <tbody>
                                         <tr>
                                             <th rowspan="2" style="padding: 10px;width: 90px;">
-                                                <img class="img-circle img-center img-md img-thumbnail" alt="<?php echo $picture; ?>"  src="../upload_images/<?php if($picture == ''){ echo 'default.png'; }else { echo $picture ; } ?>" >
+                                                <img class="img-circle img-center img-md img-thumbnail" alt="<?php echo $picture; ?>"  src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($picture == ''){ echo 'default.png'; }else { echo $picture ; } ?>" >
                                             </th>
                                             <th align="center" width="" >ชื่อ-นามสกุล</th>
                                             <th align="center" width="120px">รหัส</th>

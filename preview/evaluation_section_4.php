@@ -76,7 +76,7 @@
             }
             header("location:evaluation_summary.php");
             
-        } echo $_SESSION["eval_emp_id"].' eval_code :'.$_SESSION["eval_code"];  
+        } //echo $_SESSION["eval_emp_id"].' eval_code :'.$_SESSION["eval_code"];  
 ?>
 <!DOCTYPE html>
 <html>

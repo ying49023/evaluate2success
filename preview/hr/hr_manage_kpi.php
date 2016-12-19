@@ -197,7 +197,7 @@
 
 
                                         <div style="float: right;">
-                                            <img class='img-circle img-sm img-center' src="../upload_images/<?php if ($result_emp["profile_picture"] == '') {
+                                            <img class='img-circle img-sm img-center' src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if ($result_emp["profile_picture"] == '') {
                         echo 'default.png';
                     } else {
                         echo $result_emp["profile_picture"];
@@ -231,7 +231,7 @@
 
                                         <tr >
                                             <th rowspan="4" style="text-align: center;">
-                                                <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="../upload_images/<?php
+                                                <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php
                                                 if ($result_emp["profile_picture"] == '') {
                                                     echo "default.png";
                                                 } else {

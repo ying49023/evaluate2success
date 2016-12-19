@@ -126,32 +126,24 @@
                         <div class="box-footer">
                             <form action="evaluation_section_1.php" method="post">
                                 
-                                <script>
-                                    $(function() {
-                                        enable_cb();
-                                        $("#check").click(enable_cb);
-                                        //                var chk = $('#check');
-                                        //                var btn = $('#btncheck');
-                                        //                
-                                        //                chk.on('change', function() {
-                                        //                    btn.prop("disabled", !this.checked);//true: disabled, false: enabled
-                                        //                }).trigger('change'); //page load trigger event
-                                    });
-                                    function enable_cb(){
-                                        if (this.checked) {
-                                            $("button #btncheck").removeProp()("disabled");
-                                        } else {
-                                            $("button #btncheck").prop("disabled", true);
-                                        }
-                                    };
-                                </script>
+                                
                                 <div class="form-group  text-center">
                                     <div class="checkbox ">
-                                       <input id="check" name="checkbox" type="checkbox" > 
+                                        <input id="check" name="checkbox" type="checkbox" onclick="enable_cb(this)" > 
                                        <label for="check">ยอมรับข้อตกลงและคำชี้แจง</label><!-- for must be the id of input -->
                                     </div>
-                                    <button class="btn btn-success btn-lg " type="submit" id="btncheck"  name="submit"><i class="glyphicon glyphicon-play-circle"></i> &nbsp; หน้าถัดไป - ส่วนที่ 1 : KPIs</button>
-                                </div>  
+                                    <button class="btn btn-success btn-lg " type="submit" id="btncheck"  name="submit" disabled=""><i class="glyphicon glyphicon-play-circle"></i> &nbsp; หน้าถัดไป - ส่วนที่ 1 : KPIs</button>
+                                </div> 
+                                <script>
+                                    function enable_cb(){
+                                        var check = document.getElementById('check');
+                                        if (check.checked) {
+                                            document.getElementById('btncheck').disabled = false;
+                                        } else {
+                                            document.getElementById('btncheck').disabled = true;
+                                        }
+                                    }
+                                </script>
                             </form>
                         </div>
                     </div>

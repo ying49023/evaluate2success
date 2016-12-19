@@ -98,7 +98,7 @@
                         JOIN employees m2 ON e.manager_id2 = m2.employee_id
                         WHERE e.employee_id = '".$my_emp_id."'";
             $query_man2 = mysqli_query($conn, $sql_man2);
-            $result_man2 = mysqli_fetch_row($query_man2);
+            $result_man2 = mysqli_fetch_array($query_man2);
             $manager_name_2 = $result_man2["manager_name_2"];
         }
         
@@ -108,7 +108,7 @@
             
             
             <div style="float: right;">
-                <img class='img-circle img-sm img-center' src="./upload_images/<?php if($result_emp["profile_picture"]== ''){ echo 'default.png' ;}else { echo  $result_emp["profile_picture"];} ?>"  > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
+                <img class='img-circle img-sm img-center' src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($result_emp["profile_picture"]== ''){ echo 'default.png' ;}else { echo  $result_emp["profile_picture"];} ?>"  > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
                 </button>
             </div>
@@ -132,7 +132,7 @@
             
             <tr >
                 <th rowspan="4" style="text-align: center;">
-                    <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="upload_images/<?php
+                    <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php
                              if ($result_emp["profile_picture"] == '') {
                                  echo "default.png";
                              } else {

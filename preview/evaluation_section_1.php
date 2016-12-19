@@ -237,11 +237,11 @@
                                 </div>  
                                             
                                 <form action="evaluation_section_2.php" method="post">
-                                <div class="form-group box-padding-small text-center">
-                                    <input type="hidden" name="position_level_id" value="<?php echo $_SESSION["position"]; ?>" >
-                                    <button class="btn btn-success btn-lg" type="submit" id="btncheck" name="submit" ><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - ส่วนที่ 2 : Competency</button>
-                                </div>  
-                            </form>                
+                                    <div class="form-group box-padding-small text-center">
+                                        <input type="hidden" name="position_level_id" value="<?php echo $_SESSION["position"]; ?>" >
+                                        <button class="btn btn-success btn-lg" type="submit" id="btncheck" name="submit" ><i class="glyphicon glyphicon-play-circle"></i>&nbsp; หน้าถัดไป - ส่วนที่ 2 : Competency</button>
+                                    </div>  
+                                </form>                
                             </div>
                         </div>
                     </div>

@@ -396,6 +396,7 @@
                                 <th class="text-center">เป้าหมาย</th>
                                 <th class="text-center">ค่าจริง</th>
                                 <th class="text-center">สถานะ</th>   
+                                <th class="text-center" style="width:35px;">%</th>   
                             </tr>
                         </thead>
                         
@@ -421,17 +422,17 @@
                                         ?>              
                                             
                             <tr>
-                                <td><?php echo $result_kpi["kpi_code"]; ?></td>
-                                <td><?php echo $result_kpi["kpi_name"]; ?></td>
-                                <td><?php echo $result_kpi["target"]; ?></td>
-                                <td><?php echo $result_kpi["actual"]; ?></td>
+                                <td class="text-center"><?php echo $result_kpi["kpi_code"]; ?></td>
+                                <td class="text-center"><?php echo $result_kpi["kpi_name"]; ?></td>
+                                <td class="text-center"><?php echo $result_kpi["target"]; ?></td>
+                                <td class="text-center"><?php echo $result_kpi["actual"]; ?></td>
                                 <td>
                                     <div class="progress progress-xs progress-striped active">
                                       <div class="progress-bar <?php if($percent_completed <= 40){ echo 'progress-bar-danger' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'progress-bar-warining' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'progress-bar-info' ;}else if($percent_completed > 75){ echo 'progress-bar-success' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>%"></div>
                                     </div>
                                 </td>
-                                <td>
-                                    <span class="badge <?php if($percent_completed ==0){ echo ''; }else if($percent_completed <= 40){ echo 'bg-red' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'bg-blue' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'bg-light-blue' ;}else if($percent_completed > 75){ echo 'bg-green' ;}  ?>" style="width:100%">
+                                <td class="text-center">
+                                    <span class="badge <?php if($percent_completed ==0){ echo ''; }else if($percent_completed <= 40){ echo 'bg-red' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'bg-blue' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'bg-light-blue' ;}else if($percent_completed > 75){ echo 'bg-green' ;}  ?>" style="width:100%;">
                                         <?php if($percent_completed == 0){ echo 'N/A' ; } else{ echo (int)$percent_completed."%" ; } ?><?php  ?>
                                     </span>
                                 </td>

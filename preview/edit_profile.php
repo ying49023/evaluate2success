@@ -81,7 +81,6 @@
                             $position_level_id = $result["position_level_id"];
                             $id = $result["employee_id"];
                             $mng_id =$result["manager_id"];
-                            
                             $pic=$result["profile_picture"];
                             if($result["profile_picture"] == ""){
                                 $pic = "default.png";
@@ -89,7 +88,7 @@
                                 $pic = $result["profile_picture"];
                             }      
                     ?>
-                    <form action="edit_profile_status.php?emp_id=<?php echo $id; ?>" method='POST' enctype="multipart/form-data" >
+                    <form action="edit_profile_status.php" method='POST' >
                     <div class="box box-primary">
                         <div class="box-header">
                             <h3 class="box-title">ข้อมูลของ : <?php echo $name; ?></h3>
@@ -100,7 +99,7 @@
                                 <div class="row with-border">
                                     <div class="col-md-2">
                                         <div class="form-group">
-                                            <img class="thumbnail img-circle img-center" src="./upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
+                                            <img class="thumbnail img-circle img-center" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php echo $pic;?>"  alt="รูปโปรไฟล์" height="150px" width="120px" />
                                             
                                         </div>
                                     </div>
@@ -226,14 +225,14 @@
                                             ?>
                                             <label>หัวหน้าผู้รับผิดชอบ</label>
                                             <select class="form-control" name="manager"  disabled="true">
-                                                                        <option value="">--เลือกหัวหน้า--</option>
-                                                                        <?php while ($result_mng = mysqli_fetch_array($query_mng)) { 
-                                                                            $mng_name = $result_mng["first_name"].' '.$result_mng["last_name"];
-                                                                        ?>
-                                                                        <option value="<?php echo $mng_name; ?>" <?php if($mng_id == $result_mng["employee_id"]){ echo "selected";} ?>>
-                                                                                <?php echo $mng_name ?>
-                                                                        </option>
-                                                                        <?php } ?>
+                                                <option value="">--เลือกหัวหน้า--</option>
+                                                <?php while ($result_mng = mysqli_fetch_array($query_mng)) { 
+                                                    $mng_name = $result_mng["first_name"].' '.$result_mng["last_name"];
+                                                ?>
+                                                <option value="<?php echo $mng_name; ?>" <?php if($mng_id == $result_mng["employee_id"]){ echo "selected";} ?>>
+                                                        <?php echo $mng_name ?>
+                                                </option>
+                                                <?php } ?>
                                             </select>
                                         </div>                                               
                                     </div>
@@ -241,7 +240,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>เบอร์ติดต่อ</label>
-                                            <input type="text" name="telephone" class="form-control" value="<?php echo $telno ?>" />
+                                            <input type="text" name="telephone" class="form-control" value="<?php echo $telno; ?>" />
                                         </div>
                                     </div>  
                                 </div>                                       
@@ -263,12 +262,13 @@
                                 <br>
 
                             </div>
-                    </div>
-                            <!-- /Box body -->
-                            <div class="box-footer text-center">
-                                <button class="btn btn-danger search-button" onclick="goBack()">ย้อนกลับ</button>
-                                <input  class="btn btn-success search-button" type="submit" name="Send" value="บันทึก">     
-                            </div>
+                        </div>
+                        <!-- /Box body -->
+                        <div class="box-footer text-center">
+                            <button class="btn btn-danger search-button" onclick="goBack()">ย้อนกลับ</button>
+                            <input  class="btn btn-success search-button" type="submit" name="Send" value="บันทึก">   
+                            <input type="hidden" name="emp_id" value="<?php echo $get_emp_id; ?>" >
+                        </div>
                         
                     </div>
                     </form>
