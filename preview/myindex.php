@@ -339,10 +339,14 @@
                                                 JOIN kpi_group kg ON k.kpi_group_id = kg.kpi_group_id
                                                 WHERE MONTH(progress_time_update) = MONTH(NOW()) AND year=YEAR(NOW()) AND ee.employee_id = '".$my_emp_id."';";
                                     $query_mile = mysqli_query($conn, $sql_mile);
-                                    while ($result_mile = mysqli_fetch_assoc($query_mile)){
-                                        $mile = $result_mile['mile_percent'];
-                                        $current_month = $result_mile["current_month"];
-                                    }
+                                    $result_mile = mysqli_fetch_assoc($query_mile);
+                                    $mile = $result_mile['mile_percent'];
+                                    $current_month = $result_mile["current_month"];
+                                        $sql_month_th = "SELECT * FROM month_th WHERE month_id = '$current_month'";
+                                        $query_month_th = mysqli_query($conn, $sql_month_th);
+                                        $result_month_th = mysqli_fetch_array($query_month_th);
+                                        $month_th = $result_month_th["month_name_full"];
+                                    
                                 ?>
                                 <div id="g5" class="200px160px" style="height:220px">
                                     <script>
@@ -353,7 +357,7 @@
                                         value : <?php if($mile==''){  echo 0;}else{ echo $mile; }?>,
                                         min: 0,
                                         max: 100,
-                                        title: "ประจำเดือน: <?php echo $current_month; ?>",
+                                        title: "ประจำเดือน: <?php echo $month_th; ?>",
                                         label: "%",
                                         levelColorsGradient: false
                                       });
@@ -391,10 +395,10 @@
                     <table class="table table-bordered" width="90%" border="1px">
                         <thead>
                             <tr>
-                                <th>No.</th>
+                                <th class="text-center">ID</th>
                                 <th>KPIs</th>
                                 <th class="text-center">เป้าหมาย</th>
-                                <th class="text-center">ค่าจริง</th>
+                                <th class="text-center">ทำจริง</th>
                                 <th class="text-center">สถานะ</th>   
                                 <th class="text-center" style="width:35px;">%</th>   
                             </tr>
@@ -423,7 +427,7 @@
                                             
                             <tr>
                                 <td class="text-center"><?php echo $result_kpi["kpi_code"]; ?></td>
-                                <td class="text-center"><?php echo $result_kpi["kpi_name"]; ?></td>
+                                <td class=""><?php echo $result_kpi["kpi_name"]; ?></td>
                                 <td class="text-center"><?php echo $result_kpi["target"]; ?></td>
                                 <td class="text-center"><?php echo $result_kpi["actual"]; ?></td>
                                 <td>

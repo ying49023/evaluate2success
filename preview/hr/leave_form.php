@@ -62,8 +62,8 @@
                         
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">manage Leave</li>
+                        <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Manage leave</li>
                         
                     </ol>
                 </section>
@@ -123,6 +123,7 @@
                                                                             dept.department_name AS dept_name,
                                                                             j.job_name AS job,
                                                                             p.position_description AS position,
+                                                                            emp.company_id as company_id,
                                                                             emp.profile_picture AS profile_picture,
                                                                             eval.evaluation_code AS eval_code,
                                                                             ee.evaluate_employee_id AS eval_emp_id,
@@ -154,6 +155,7 @@
                                                             $eval_code = $result["eval_code"];
                                                             $point_leave = $result["point_leave"];
                                                             $eval_emp_id = $result["eval_emp_id"];
+                                                            $company_id = $result["company_id"];
                                                             ?>
                                                             <tr>
                                                                 <td class="profile_picture"><img class="img-circle img-center" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($profile_picture == ''){ echo 'default.png' ;}else { echo $profile_picture;} ?>" style="width: 35px;height: 35px;" alt="<?php echo $profile_picture; ?>" ></td>
@@ -164,7 +166,7 @@
                                                                 <td class="pos_level_id text-center"><?php echo $position; ?></td>
                                                                 <td class="text-center" ><?php if($point_leave == 0){ echo "<i class='bg-red glyphicon glyphicon-remove'></i>"; }else{ echo "<i class='bg-green glyphicon glyphicon-ok'></i>"; } ?></td>
                                                                 <td class="text-center">
-                                                                    <a class="btn btn-primary btn-sm" href="leave_form2.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>"><i class="glyphicon glyphicon-log-out"></i></a>
+                                                                    <a class="btn btn-primary btn-sm" href="leave_form2.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id; ?>&comp_id=<?php echo $company_id; ?>"><i class="glyphicon glyphicon-log-out"></i></a>
                                                                 </td>
                                                             </tr>
                                                             

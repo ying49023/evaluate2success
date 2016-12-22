@@ -154,8 +154,8 @@
                         <small>เพิ่มข้อมูลพนักงาน</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">manage employee</li>
+                        <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Add employee</li>
                     </ol>
                 </section>
                 <!--/Page header -->

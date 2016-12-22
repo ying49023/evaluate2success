@@ -20,7 +20,6 @@
     <head>
         <?php include ('./classes/connection_mysqli.php');?>
         
-        
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>ระบบประเมินผลปฏิบัติงาน : ALT Evaluation</title>
@@ -28,9 +27,24 @@
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!--CSS PACKS -->
         <?php include ('./css_packs.html'); ?>
+        <!-- SCRIPT PACKS -->
+        <?php include ('./script_packs.html'); ?>
         <!--ListJS-->
         <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.2.0/list.min.js"></script>
-        
+        <script>
+            function getJobs(val) {
+                $.ajax({
+                    type: "POST",
+                    url: "get_jobs.php",
+                    data:'department_id='+val,
+                    success: function(data){
+                        $("#list").html(data);
+                        $("#list2").html(data);
+                        $("#list3").html(data);
+                    }
+                });
+            }
+        </script>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="wrapper">
@@ -39,15 +53,14 @@
             <!-- Left side column. contains the logo and sidebar -->
             <?php include './sidebarpart.php'; ?>
             <?php
-        
-        $get_department_id = '';
-        if (isset($_GET["department_id"])) {
-            $get_department_id = $_GET["department_id"];
-        }
-        $get_job_id = '';
-        if (isset($_GET["job_id"])) {
-            $get_job_id = $_GET["job_id"];
-        }
+            $get_department_id = '';
+            if (isset($_GET["department_id"])) {
+                $get_department_id = $_GET["department_id"];
+            }
+            $get_job_id = '';
+            if (isset($_GET["job_id"])) {
+                $get_job_id = $_GET["job_id"];
+            }
         
         $get_eval_code = $my_eval_code;
         if(isset($_GET["eval_code"])){
@@ -98,59 +111,74 @@
                     <div class="box box-success">
                         <div class="box-body ">
                             <form method="get">
-                                <div class="col-md-4">
-                                    <label class="col-sm-4 control-label">รอบ</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
-                                        $query_eval = mysqli_query($conn, $sql_eval);
-                                    ?>
-                                        <select class="form-control" name="eval_code">
-                                            <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_eval["evaluation_code"]; ?>" <?php if($get_eval_code == $result_eval["evaluation_code"]) { echo "selected"; }  ?> >
-                                                <?php echo 'ปี '.$result_eval["year"]." - ครั้งที่".$result_eval["term_id"]; ?>
-                                            </option>
-                                        <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
                                 <div class="col-md-3">
-                                    <label class="col-sm-4 control-label">แผนก</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_department = "SELECT * FROM departments ";
-                                        $query_department = mysqli_query($conn, $sql_department);
-                                    ?>
-                                        <select class="form-control" name="department_id">
-                                            <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_department["department_id"]; ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
-                                                <?php echo $result_department["department_name"]; ?>
-                                            </option>
-                                        <?php } ?>
-                                        </select>
+                                    <div class="form-group">
+                                        <label class="control-label">รอบ</label>
+                                        <div class="">
+                                        <?php 
+                                            $sql_eval = "SELECT * FROM evaluation ORDER BY year , term_id ASC";
+                                            $query_eval = mysqli_query($conn, $sql_eval);
+                                        ?>
+                                            <select class="form-control" name="eval_code">
+                                                <option value="">เลือกทั้งหมด</option>
+                                            <?php while($result_eval = mysqli_fetch_array($query_eval,MYSQLI_ASSOC)) { ?>
+                                                <option value="<?php echo $result_eval["evaluation_code"]; ?>" <?php if($get_eval_code == $result_eval["evaluation_code"]) { echo "selected"; }  ?> >
+                                                    <?php echo 'ปี '.$result_eval["year"]." - ครั้งที่".$result_eval["term_id"]; ?>
+                                                </option>
+                                            <?php } ?>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-sm-4 control-label">ตำแหน่ง</label>
-                                    <div class="col-sm-8">
-                                    <?php 
-                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs ";
-                                        $query_job = mysqli_query($conn, $sql_job);
-                                    ?>
-                                        <select class="form-control" name="job_id">
+                                    <div class="form-group">
+                                        <label class=" control-label">แผนก/ฝ่าย</label>
+                                        <div class="">
+                                        <?php 
+                                            $sql_department = "SELECT * FROM departments ";
+                                            $query_department = mysqli_query($conn, $sql_department);
+                                        ?>
+                                            <select class="form-control" name="department_id" onchange="getJobs(this.value)" >
                                             <option value="">เลือกทั้งหมด</option>
-                                        <?php while($result_job = mysqli_fetch_array($query_job,MYSQLI_ASSOC)) { ?>
-                                            <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]) { echo "selected"; }  ?> >
-                                                <?php echo $result_job["job_name"]; ?>
-                                            </option>
-                                        <?php } ?>
-                                        </select>
+
+                                            <?php foreach ($query_department as $result_department){ ?>
+                                                <option value="<?php  echo $result_department["department_id"];  ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                                    <?php echo $result_department["department_name"]; ?>
+                                                </option>
+                                                <?php } ?>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group" >
+                                        <label class=" control-label">ตำแหน่ง</label>
+                                        <div class="">
+                                        <?php 
+                                            $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
+                                            $query_job = mysqli_query($conn, $sql_job);
+
+                                        ?>
+                                            <select class="form-control" name="job_id" id="list">
+                                                <option value="">เลือกตำแหน่งทั้งหมด</option>
+                                                <?php 
+                                                if (isset($_GET["department_id"])) {
+                                                    if($_GET["department_id"] != ''){
+                                                foreach($query_job as $result_job){ ?>
+                                                <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
+                                                    <?php echo $result_job["job_name"]; ?>
+                                                </option>
+                                                <?php }
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class=" col-md-1">
-                                    <input type="submit" class="btn btn-primary search-button " value="ค้นหา" >
+                                    <input type="submit" class="btn btn-primary" style="margin-top: 25px;" value="ค้นหา" >
                                 </div>
 
                             </form>
@@ -205,6 +233,7 @@
                                                                 e.last_name
                                                         ) AS name,
                                                         e.profile_picture,
+                                                        e.company_id,
                                                         d.department_name As dept_name,
                                                         j.job_name As job_name,
                                                         eval.evaluation_code As eval_code,
@@ -230,6 +259,7 @@
                                     $eval_code = $result["eval_code"];
                                     $eval_emp_id = $result["evaluate_employee_id"];
                                     $profile_picture = $result["profile_picture"];
+                                    $company_id = $result["company_id"];
                                     $sql_count_reward = "SELECT
                                                             pr.penalty_reward_name,	pr.penalty_reward_indicated,	pr.point,	emp.*
                                                     FROM
@@ -267,7 +297,7 @@
                                     <td class="dept text-center"><?php echo $dept; ?></td>
                                     <td class="count_reward text-center"><span style="color: #000080;font-size: 18px;"><?php echo $count_reward; ?></span></td>
                                     <td class="count_penalty text-center"><span style="color: maroon;font-size: 18px;"><?php echo $count_penalty; ?></span></td>
-                                    <td class="text-center"><a class="btn btn-primary" href="manage_penalty_reward_detail.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id ; ?>"><i class="glyphicon glyphicon-refresh"></i></a></td>
+                                    <td class="text-center"><a class="btn btn-primary" href="manage_penalty_reward_detail.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>&eval_emp_id=<?php echo $eval_emp_id ; ?>&comp_id=<?php echo $company_id ?>"><i class="glyphicon glyphicon-refresh"></i></a></td>
                                 </tr>
                                 <?php } ?>
                                 </tbody>
@@ -302,8 +332,7 @@
         <!-- ./wrapper -->
 
     </body>
-    <!-- SCRIPT PACKS -->
-        <?php include ('./script_packs.html'); ?>
+    
 </html>
             <?php
         }

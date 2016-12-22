@@ -20,7 +20,7 @@
         <ul class="sidebar-menu">
             <li class="header" style="color:white;font-size: 14px;" >เมนูสำหรับระดับ<?php echo $my_position; ?></li>
             <!-- Dashboard -->
-            <li class=" <?php if($page == 'index.php' || $page == 'total_personal_dashboard.php' || $page == 'myindex.php' || $page == 'total_personal_dashboard_detail.php'){ echo "active" ; } ?> " >
+            <li class=" <?php if($page == 'index.php' || $page == 'total_personal_dashboard.php' || $page == 'myindex.php' || $page == 'total_personal_dashboard_detail.php' || $page == 'total_personal_dashboard_detail2.php' ){ echo "active" ; } ?> " >
                 <a href="">
                     <i class="glyphicon glyphicon-dashboard"></i> <span>แดชบอร์ด</span> <i class="fa fa-angle-left pull-right"></i>
                 </a>
@@ -29,7 +29,7 @@
                     <li class="<?php if($page == 'index.php'){ echo "active" ; } ?>">
                         <a href="index.php"><i class="fa fa-circle-o"></i> แดชบอร์ดภาพรวม</a>
                     </li>
-                    <li class="<?php if($page == 'total_personal_dashboard.php' || $page == 'total_personal_dashboard_detail.php'){ echo "active" ; } ?>">
+                    <li class="<?php if($page == 'total_personal_dashboard.php' || $page == 'total_personal_dashboard_detail.php' || $page == 'total_personal_dashboard_detail2.php' ){ echo "active" ; } ?>">
                         <a  href="total_personal_dashboard.php"><i class="fa fa-circle-o"></i> แดชบอร์ดรายบุคคล</a>
                     </li>
                     <?php } ?>

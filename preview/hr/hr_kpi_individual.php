@@ -111,7 +111,7 @@
                     <div class="box box-success">
                         <div class="box-body ">
                             <form method="get">
-                                <div class="col-md-2 col-sm-3">
+                                <div class="col-md-3 col-sm-3">
                                     <label>รอบ</label>
 
                                     <?php 
@@ -173,7 +173,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class=" col-md-2 col-sm-3">
+                                <div class=" col-md-1 col-sm-3">
                                     <input style="margin-top: 25px;" type="submit" class="btn btn-primary search-button " value="ค้นหา" >
                                 </div>
 
@@ -228,6 +228,7 @@
                                                                 e.last_name
                                                         ) AS name,
                                                         e.profile_picture,
+                                                        e.company_id,
                                                         d.department_name As dept_name,
                                                         j.job_name As job_name,
                                                         eval.evaluation_code As eval_code
@@ -251,6 +252,7 @@
                                     $job = $result["job_name"];
                                     $eval_code = $result["eval_code"];
                                     $profile_picture = $result["profile_picture"];
+                                    $company_id = $result["company_id"];
                                     $sql_count_kpi = "SELECT
                                                             *
                                                     FROM
@@ -271,7 +273,7 @@
                                     <td class="job text-center"><?php echo $job; ?></td>
                                     <td class="dept text-center"><?php echo $dept; ?></td>
                                     <td class="kpi_count text-center"><span style="color: #000080;font-size: 18px;"><?php echo $count_kpi; ?></span></td>
-                                    <td class="text-center"><a class="btn btn-primary" href="hr_kpi_individual_resp.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; ดู</a></td>
+                                    <td class="text-center"><a class="btn btn-primary" href="hr_kpi_individual_resp.php?emp_id=<?php echo $emp_id; ?>&eval_code=<?php echo $eval_code; ?>&comp_id=<?php echo $company_id; ?>"><i class="glyphicon glyphicon-eye-open"></i>&nbsp; ดู</a></td>
                                 </tr>
                                 <?php } ?>
                                 </tbody>

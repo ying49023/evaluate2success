@@ -221,7 +221,8 @@
                                 <table class="table table-bordered table-hover" width="90%" >
                                 <thead>
                                     <tr>
-                                        <th><button class="sort" data-sort="emp_id">รหัสพนักงาน</button></th>
+                                        <th></th>
+                                        <th><button class="sort" data-sort="emp_id">ID</button></th>
                                         <th><button class="sort" data-sort="emp_name">ชื่อพนักงาน</button></th>
                                         <th><button class="sort" data-sort="job_name">ตำแหน่ง</button></th>
                                         <th><button class="sort" data-sort="dept_name">ฝ่าย/แผนก</button></th>
@@ -253,7 +254,7 @@
                                         $eval_emp_id = $result_emp_list["evaluate_employee_id"];
                                         $assessor1_id = $result_emp_list["assessor1_id"];
                                         $assessor2_id = $result_emp_list["assessor2_id"];
-                                        
+                                        $profile_picture = $result_emp_list["profile_picture"];
                                         
                                         $sql_huahna = "
                                                         select assessor1_id as huahna1,assessor2_id as huahna2,status_assessor1 as status_mgn1,status_assessor2 as status_mgn2
@@ -286,6 +287,7 @@
                                         ?>
                                                 
                                     <tr>
+                                        <td class="text-center"><img class="img-circle img-center img-sm" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($profile_picture ==''){ echo "default.png";} else { echo $profile_picture; } ?>" ></td>
                                         <td class="emp_id"><?php echo $employee_id; ?></td>
                                         <td class="emp_name"><?php echo $emp_name; ?></td>
                                         <td class="job_name"><?php echo $job_name; ?></td>

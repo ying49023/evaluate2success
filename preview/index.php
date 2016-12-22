@@ -255,6 +255,8 @@
                                     </div>
                                 </div>
                             </div>
+                            <?php if ($my_position_level == "2" || $my_position_level == "3") { ?>
+                            
                             <div class="col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <label class=" control-label">แผนก/ฝ่าย</label>
@@ -264,7 +266,56 @@
                                         $query_department = mysqli_query($conn, $sql_department);
 
                                     ?>
-                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" <?php if ($my_position_level == "2" || $my_position_level == "3") { echo "disabled"; } ?>  >
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" disabled >
+                                        <option value="">เลือกทั้งหมด</option>
+                                        
+                                        <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php  echo $result_department["department_id"];  ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                                <?php echo $result_department["department_name"]; ?>
+                                            </option>
+                                            <?php } ?>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <div class="form-group" >
+                                <label class=" control-label">ตำแหน่ง</label>
+                                <div class="">
+                                <?php 
+                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$my_dept_id."' ";
+                                    $query_job = mysqli_query($conn, $sql_job);
+                                ?>
+                                    <select class="form-control" name="job_id" id="list" >
+                                        <option value="">เลือกตำแหน่งทั้งหมด</option>
+                                        <?php 
+
+                                        foreach($query_job as $result_job){ ?>
+                                        <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
+                                            <?php echo $result_job["job_name"]; ?>
+                                        </option>
+                                        <?php }
+                                        
+                                        ?>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+                            
+                            <?php }else { ?>
+                            
+                            <div class="col-md-2 col-sm-6">
+                                <div class="form-group">
+                                    <label class=" control-label">แผนก/ฝ่าย</label>
+                                    <div class="">
+                                    <?php 
+                                        $sql_department = "SELECT * FROM departments ";
+                                        $query_department = mysqli_query($conn, $sql_department);
+
+                                    ?>
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);"  >
                                         <option value="">เลือกทั้งหมด</option>
                                         
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
@@ -285,12 +336,11 @@
                                 <?php 
                                     $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
                                     $query_job = mysqli_query($conn, $sql_job);
-                                    
                                 ?>
-                                    <select class="form-control" name="job_id" id="list">
+                                    <select class="form-control" name="job_id" id="list" >
                                         <option value="">เลือกตำแหน่งทั้งหมด</option>
                                         <?php 
-                                        if ($my_position_level == "2" || $my_position_level == "3") { 
+                                        if(isset($_GET["department_id"])){
                                         foreach($query_job as $result_job){ ?>
                                         <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
                                             <?php echo $result_job["job_name"]; ?>
@@ -302,6 +352,8 @@
                                 </div>
                                 </div>
                             </div>
+                            
+                            <?php } ?>
                             <div class="col-md-2 col-sm-6">
                                 <div class="form-group">
                                     <div class=" pull-right">
@@ -363,36 +415,29 @@
                                             WHERE MONTH(progress_time_update) = MONTH(NOW()) $condition_performance ";
                             $query_per = mysqli_query($conn, $sql_per);
                             $result_per = mysqli_fetch_array($query_per);
+                            $mile = $result_per["performance_mile"];
                             $current_month = $result_per["current_month"];
-//                            $month = "Call getMonthThai($current_month)";
-//                            $query_month = mysqli_query($conn, $month);
-//                            $result_month = mysqli_fetch_array($query_month);
+                                $sql_month_th = "SELECT * FROM month_th WHERE month_id = '$current_month'";
+                                $query_month_th = mysqli_query($conn, $sql_month_th);
+                                $result_month_th = mysqli_fetch_array($query_month_th);
+                                $month_th = $result_month_th["month_name_full"];
+                            
 
-                            if($result_per["performance_mile"] == ''){
                             ?>
-                                <h3 class="text-middle text-center">ยังไม่มีข้อมูล</h3>
-                            <?php 
-
-                            }else{
-
-                            ?> 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", function(event) {
                                         var score = new JustGage({
                                             id: "score",
                                             //value: getRandomInt(0, 100),
-                                            value : <?php echo $result_per["performance_mile"]; ?>,
+                                            value : <?php if($mile==''){  echo 0;}else{ echo $mile; }?>,
                                             min: 0,
                                             max: 100,
-                                            title: "ประจำเดือน: <?php echo $current_month; ?>",
+                                            title: "ประจำเดือน: <?php echo $month_th; ?>",
                                             label: "%",
                                             levelColorsGradient: true
                                         });
                                     });
                                 </script>
-                            <?php 
-                            }
-                            ?>
                             </div>
                         </div>
                         </div>
@@ -412,11 +457,11 @@
                         <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th width="80px" >ID</th>
+                                <th width="80px" class="text-center" >ID</th>
                                 <th>ชื่อ KPIs</th>
-                                <th width="90px">เป้าหมาย</th>
-                                <th width="90px">ทำจริง</th>
-                                <th width="150px">ประสิทธิภาพ</th>
+                                <th class="text-center" width="90px">เป้าหมาย</th>
+                                <th class="text-center" width="90px">ทำจริง</th>
+                                <th class="text-center" width="150px">ประสิทธิภาพ</th>
                                 <th width="60" style="text-align:center">%</th>
                             </tr>
                         </thead>
@@ -451,10 +496,10 @@
                             
                         ?>
                         <tr>
-                            <td><?php echo $result_kpi["kpi_code"]; ?></td>
+                            <td class="text-center"><?php echo $result_kpi["kpi_code"]; ?></td>
                             <td><?php echo $result_kpi["kpi_name"]; ?></td>
-                            <td><?php echo $result_kpi["target"]; ?></td>
-                            <td><?php echo $result_kpi["actual"]; ?></td>
+                            <td class="text-center"><?php echo $result_kpi["target"]; ?></td>
+                            <td class="text-center"><?php echo $result_kpi["actual"]; ?></td>
                             <td>
                                 <div class="progress progress-xs progress-striped active">
                                   <div class="progress-bar <?php if($percent_completed <= 40){ echo 'progress-bar-danger' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'progress-bar-warining' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'progress-bar-info' ;}else if($percent_completed > 75){ echo 'progress-bar-success' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>%"></div>

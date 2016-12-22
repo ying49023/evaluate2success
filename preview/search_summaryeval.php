@@ -156,10 +156,7 @@
                                 <?php
                                 $sql_emp_list = "SELECT
                                                         ee.employee_id,
-                                                        e.prefix,
-                                                        e.first_name,
-                                                        e.last_name,
-                                                        e.position_level_id,
+                                                        e.*,
                                                         ee.status_success,
                                                         ec.evaluate_employee_id,
                                                         d.department_name,
@@ -181,7 +178,8 @@
                         <table class="table table-bordered table-hover" width="90%" >
                             <thead>
                                 <tr>
-                                    <th><button class="sort" data-sort="emp_id">รหัสพนักงาน</button></th>
+                                    <th></th>
+                                    <th><button class="sort" data-sort="emp_id">ID</button></th>
                                     <th><button class="sort" data-sort="emp_name">ชื่อพนักงาน</button></th>
                                     <th><button class="sort" data-sort="job_name">ตำแหน่ง</button></th>
                                     <th><button class="sort" data-sort="dept_name">ฝ่าย/แผนก</button></th>
@@ -200,8 +198,10 @@
                                             $job_name = $result_emp_list["job_name"];
                                             $department_name = $result_emp_list["department_name"];
                                             $eval_emp_id = $result_emp_list["evaluate_employee_id"];
+                                            $profile_picture = $result_emp_list["profile_picture"];
                                             ?>
                                 <tr>
+                                    <td class="text-center"><img class="img-circle img-center img-sm" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($profile_picture ==''){ echo "default.png";} else { echo $profile_picture; } ?>" ></td>
                                     <td class="emp_id"><?php echo $employee_id; ?></td>
                                     <td class="emp_name"><?php echo $emp_name; ?></td>
                                     <td class="job_name"><?php echo $job_name; ?></td>

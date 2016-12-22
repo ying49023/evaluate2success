@@ -52,7 +52,7 @@
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Summary evaluation</li>
+                        <li class="active">My summary evaluation</li>
                     </ol>
                 </section>
                 <!--/Page header -->
@@ -215,7 +215,9 @@
                                         $score_2_2_m_1 = round($result_score["point_com1_part2"] ,1);
                                         $score_2_1_m_2 = round($result_score["point_com2_part1"] ,1);
                                         $score_2_2_m_2 = round($result_score["point_com2_part2"] ,1);
-                                        $score_3 = round(10-($result_score["point_leave"]+$result_score["point_penalty"]) ,1);
+                                        $point_leave = $result_score["point_leave"];
+                                        $point_penalty = $result_score["point_penalty"];
+                                        $score_3 = round(10-($point_leave+$point_penalty) ,1);
                                         if($get_pos_id!=3){
                                             $sum_score_m_1 = round(($score_1 + $score_2_1_m_1 + $score_2_2_m_1) + $score_3 ,1);
                                             $sum_score_m_2 = round(($score_1 + $score_2_1_m_2 + $score_2_2_m_2) + $score_3 ,1);
@@ -345,7 +347,7 @@
                                     </tr>
                                     <tr>
                                         <td align= right><b>สรุปคะแนนพิจารณาบทลงโทษทางวินัย</b></td>
-                                        <td colspan=4 class="text-center" style="background-color:#FAF0E6;"><b><input type="number" name="penaltypoint" min="0" max="100" disabled></b></td>
+                                        <td colspan=4 class="text-center" style="background-color:#FAF0E6;"><b><input type="number" name="penaltypoint" min="0" max="100" value="<?php echo $point_penalty; ?>" disabled></b></td>
                                        
                                     </tr>
                                     <tr>
@@ -370,7 +372,7 @@
                         </div>
                             <div class="box-footer">
                                 <div class="pull-right box-padding">
-                                    <button class="btn btn-foursquare" type="submit" ="window.location.href='compare_mygrade.php'"  >เปรียบเทียบย้อนหลัง</button>
+                                    <button class="btn btn-foursquare"  type="submit" disabled>เปรียบเทียบย้อนหลัง</button>
                                 </div>
                             </div>
                         </form>

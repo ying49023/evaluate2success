@@ -30,6 +30,11 @@
         if (isset($_GET["eval_code"])) {
             $get_eval_code = $_GET["eval_code"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
         }
+        $get_company_id = '1'; //ตั้งค่า Default = 1 ไว้เพื่อไม่ให้เกิด ERROR ในการ Query SQL
+        //เงื่อนไขนี้เป็นการเช็คว่ามีส่งมาไหม
+        if (isset($_GET["comp_id"])) {
+            $get_company_id = $_GET["comp_id"]; //GET ค่ามาจากหน้า hr_kpi_individual.php ผ่านลิงค์ 
+        }
         ?>
     
     <meta charset="utf-8">
@@ -83,7 +88,7 @@
                     JOIN departments d ON d.department_id = e.department_id
                     JOIN jobs j ON j.job_id = e.job_id
                     JOIN employees m ON e.manager_id = m.employee_id
-                    WHERE e.employee_id ='".$get_emp_id."'";
+                    WHERE e.employee_id ='".$get_emp_id."' and e.company_id = '$get_company_id'";
     $query_emp = mysqli_query($conn, $sql_emp);
     while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
         $manager_name_1 = $result_emp["manager_name_1"];
@@ -95,9 +100,9 @@
                         JOIN departments d ON d.department_id = e.department_id
                         JOIN jobs j ON j.job_id = e.job_id
                         JOIN employees m2 ON e.manager_id2 = m2.employee_id
-                        WHERE e.employee_id = '".$get_emp_id."'";
+                        WHERE e.employee_id = '".$get_emp_id."' and e.company_id = '$get_company_id' ";
             $query_man2 = mysqli_query($conn, $sql_man2);
-            $result_man2 = mysqli_fetch_row($query_man2);
+            $result_man2 = mysqli_fetch_array($query_man2);
             $manager_name_2 = $result_man2["manager_name_2"];
         }
         
@@ -170,19 +175,21 @@
                 <th>ชื่อ - นามสกุลของผู้ประเมินที่ 2</th>
                 <th>ระยะเวลาประเมินผล</th>
             </tr>
+          
             <tr>
                 <td class="text-center"> - </td>
                 <td><?php echo $manager_name_1; ?></td>
                 <td><?php echo $manager_name_2; ?></td>
                 <td>
                     <?php 
-                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '$eval_code' ";
+                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '".$my_eval_code."' ";
                     $query_eval_period = mysqli_query($conn, $sql_eval_period) or die(mysqli_errno());
                     $result_eval_period = mysqli_fetch_array($query_eval_period,MYSQLI_ASSOC);
                     ?>
                     <?php echo $result_eval_period["open_system_date"]; ?>  ถึง <?php echo $result_eval_period["close_system_date"]; ?>
                 </td>
             </tr>
+           
         </table>
     </div>
     

@@ -106,128 +106,128 @@
 
                 <!-- Main content -->
                 <div class="row box-padding">
-                <div class="box box-success">
-    <?php
-    $sql_emp = "SELECT
-                    GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
-                    GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1
-                    FROM
-                        employees e
-                    JOIN position_level p ON p.position_level_id = e.position_level_id
-                    JOIN departments d ON d.department_id = e.department_id
-                    JOIN jobs j ON j.job_id = e.job_id
-                    JOIN employees m ON e.manager_id = m.employee_id
-                    WHERE e.employee_id ='".$my_emp_id."'";
-    $query_emp = mysqli_query($conn, $sql_emp);
-    while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
-        $manager_name_1 = $result_emp["manager_name_1"];
-        $manager_name_2 = '';
-        if($result_emp["manager_id2"] != '' && $result_emp["manager_id2"] != 0){
-            $sql_man2 = "SELECT GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2
-                        FROM employees e
-                        JOIN position_level p ON p.position_level_id = e.position_level_id
-                        JOIN departments d ON d.department_id = e.department_id
-                        JOIN jobs j ON j.job_id = e.job_id
-                        JOIN employees m2 ON e.manager_id2 = m2.employee_id
-                        WHERE e.employee_id = '".$my_emp_id."'";
-            $query_man2 = mysqli_query($conn, $sql_man2);
-            $result_man2 = mysqli_fetch_array($query_man2);
-            $manager_name_2 = $result_man2["manager_name_2"];
-        }
-        
-        ?>
-    <div class="box-header">
-        <div class="col-md6">
-            
-            <div style="float: right;">
-                <img class='img-circle img-sm img-center' src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($result_emp["profile_picture"]== ''){ echo 'default.png' ;}else { echo  $result_emp["profile_picture"];} ?>"  > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
-                </button>
-            </div>
-                <div col-md-6>
-            <div style="float: left;">
-                    <?php
-                    $eval_code = '';
-                    if (isset($_GET["eval_code"])) {
-                        $eval_code = $_GET["eval_code"];
-                    }
+                    <div class="box box-success">
+                        <?php
+                        $sql_emp = "SELECT
+                                        GROUP_CONCAT(e.prefix,e.first_name,'  ',e.last_name) as emp_name,e.hiredate , e.*, p.*,j.*,d.*,
+                                        GROUP_CONCAT(m.prefix,m.first_name,'  ',m.last_name) as manager_name_1
+                                        FROM
+                                            employees e
+                                        JOIN position_level p ON p.position_level_id = e.position_level_id
+                                        JOIN departments d ON d.department_id = e.department_id
+                                        JOIN jobs j ON j.job_id = e.job_id
+                                        JOIN employees m ON e.manager_id = m.employee_id
+                                        WHERE e.employee_id ='".$my_emp_id."'";
+                        $query_emp = mysqli_query($conn, $sql_emp);
+                        while ($result_emp = mysqli_fetch_array($query_emp, MYSQLI_ASSOC)) {
+                            $manager_name_1 = $result_emp["manager_name_1"];
+                            $manager_name_2 = '';
+                            if($result_emp["manager_id2"] != '' && $result_emp["manager_id2"] != 0){
+                                $sql_man2 = "SELECT GROUP_CONCAT(m2.prefix,m2.first_name,'  ',m2.last_name) as manager_name_2
+                                            FROM employees e
+                                            JOIN position_level p ON p.position_level_id = e.position_level_id
+                                            JOIN departments d ON d.department_id = e.department_id
+                                            JOIN jobs j ON j.job_id = e.job_id
+                                            JOIN employees m2 ON e.manager_id2 = m2.employee_id
+                                            WHERE e.employee_id = '".$my_emp_id."'";
+                                $query_man2 = mysqli_query($conn, $sql_man2);
+                                $result_man2 = mysqli_fetch_array($query_man2);
+                                $manager_name_2 = $result_man2["manager_name_2"];
+                            }
 
-                    $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$my_eval_code'";
-                    $query_year_term = mysqli_query($conn, $sql_year_term);
-                    while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
-                        echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
-                        echo "<span style='font-size:18px'>รอบการประเมินที่ " . $term = $result_year_term["term_name"] . " : " . $result_year_term["start_month"] . "-" . $result_year_term["end_month"] . "</span>";
-                    }
-                    ?>
-            </div>
-        </div>
-    </div>  
-    </div>
-    <div class="box-body">
-        <table class="table table-bordered table-striped table-responsive">
-            
-            <tr >
-                <th rowspan="4" style="text-align: center;">
-                    <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php
-                             if ($result_emp["profile_picture"] == '') {
-                                 echo "default.png";
-                             } else {
-                                 echo $result_emp["profile_picture"];
-                             }
-                             ?>" >
-                </th>
-                <th>ชื่อ-นามสกุล</th>
-                <th>รหัส</th>
-                <th>ระดับ</th>
-            </tr>
-            <tr>
-                <td><?php $name=$result_emp["emp_name"]; echo $result_emp["emp_name"]; ?> </td>
-                <td><?php echo $result_emp["employee_id"]; ?></td>
-                <td><?php echo $result_emp["position_description"]; ?> </td>
-            </tr>
-            <tr>
-                <th>ตำแหน่ง</th>
-                <th>สังกัด / ฝ่าย / สายงาน</th>
-                <th>วันเริ่มงาน: </th>
-            </tr>
-            <tr>
-                <td><?php echo $result_emp["job_name"]; ?></td>
-                <td><?php echo $result_emp["department_name"]; ?></td>
-                <td><?php echo $result_emp["hiredate"]; ?> <span style="color:maroon;"></span> </td>
-            </tr>
-            <tr>
-                <th class="text-center">วันที่ประเมิน</th>
-                <th>ชื่อ - นามสกุลของผู้ประเมินที่ 1</th>
-                <th>ชื่อ - นามสกุลของผู้ประเมินที่ 2</th>
-                <th>ระยะเวลาประเมินผล</th>
-            </tr>
-            <tr>
-                <td class="text-center"> - </td>
-                <td><?php echo $manager_name_1; ?></td>
-                <td><?php echo $manager_name_2; ?></td>
-                <td>
-                    <?php 
-                    $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '$my_eval_code' ";
-                    $query_eval_period = mysqli_query($conn, $sql_eval_period) or die(mysqli_errno());
-                    $result_eval_period = mysqli_fetch_array($query_eval_period,MYSQLI_ASSOC);
-                    ?>
-                    <?php echo $result_eval_period["open_system_date"]; ?>  ถึง <?php echo $result_eval_period["close_system_date"]; ?>
-                </td>
-            </tr>
-        </table>
-    </div>
-    
-        <?php
-    }
-    ?>  
-</div>
-            </div>
+                            ?>
+                        <div class="box-header">
+                            <div class="col-md6">
+
+                                <div style="float: right;">
+                                    <img class='img-circle img-sm img-center' src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($result_emp["profile_picture"]== ''){ echo 'default.png' ;}else { echo  $result_emp["profile_picture"];} ?>"  > <span span style="font-size:18px"><?php echo "&nbsp;&nbsp;" . $result_emp["employee_id"] . ' : ' . $result_emp["emp_name"]; ?></span>
+                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"> <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                    <div col-md-6>
+                                <div style="float: left;">
+                                        <?php
+                                        $eval_code = '';
+                                        if (isset($_GET["eval_code"])) {
+                                            $eval_code = $_GET["eval_code"];
+                                        }
+
+                                        $sql_year_term = "SELECT * FROM evaluation e JOIN term t ON e.term_id=t.term_id WHERE evaluation_code = '$my_eval_code'";
+                                        $query_year_term = mysqli_query($conn, $sql_year_term);
+                                        while ($result_year_term = mysqli_fetch_array($query_year_term, MYSQLI_ASSOC)) {
+                                            echo "<span style='font-size:18px'><b>ปีการประเมิน " . $year = $result_year_term["year"] . "</b></span> | ";
+                                            echo "<span style='font-size:18px'>รอบการประเมินที่ " . $term = $result_year_term["term_name"] . " : " . $result_year_term["start_month"] . "-" . $result_year_term["end_month"] . "</span>";
+                                        }
+                                        ?>
+                                </div>
+                            </div>
+                        </div>  
+                        </div>
+                        <div class="box-body">
+                            <table class="table table-bordered table-striped table-responsive">
+
+                                <tr >
+                                    <th rowspan="4" style="text-align: center;">
+                                        <img class="img-center img-thumbnail" style="height: 130px;max-width: 110px;" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php
+                                                 if ($result_emp["profile_picture"] == '') {
+                                                     echo "default.png";
+                                                 } else {
+                                                     echo $result_emp["profile_picture"];
+                                                 }
+                                                 ?>" >
+                                    </th>
+                                    <th>ชื่อ-นามสกุล</th>
+                                    <th>รหัส</th>
+                                    <th>ระดับ</th>
+                                </tr>
+                                <tr>
+                                    <td><?php $name=$result_emp["emp_name"]; echo $result_emp["emp_name"]; ?> </td>
+                                    <td><?php echo $result_emp["employee_id"]; ?></td>
+                                    <td><?php echo $result_emp["position_description"]; ?> </td>
+                                </tr>
+                                <tr>
+                                    <th>ตำแหน่ง</th>
+                                    <th>สังกัด / ฝ่าย / สายงาน</th>
+                                    <th>วันเริ่มงาน: </th>
+                                </tr>
+                                <tr>
+                                    <td><?php echo $result_emp["job_name"]; ?></td>
+                                    <td><?php echo $result_emp["department_name"]; ?></td>
+                                    <td><?php echo $result_emp["hiredate"]; ?> <span style="color:maroon;"></span> </td>
+                                </tr>
+                                <tr>
+                                    <th class="text-center">วันที่ประเมิน</th>
+                                    <th>ชื่อ - นามสกุลของผู้ประเมินที่ 1</th>
+                                    <th>ชื่อ - นามสกุลของผู้ประเมินที่ 2</th>
+                                    <th>ระยะเวลาประเมินผล</th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center"> - </td>
+                                    <td><?php echo $manager_name_1; ?></td>
+                                    <td><?php echo $manager_name_2; ?></td>
+                                    <td>
+                                        <?php 
+                                        $sql_eval_period = "SELECT * FROM evaluation WHERE evaluation_code = '$my_eval_code' ";
+                                        $query_eval_period = mysqli_query($conn, $sql_eval_period) or die(mysqli_errno());
+                                        $result_eval_period = mysqli_fetch_array($query_eval_period,MYSQLI_ASSOC);
+                                        ?>
+                                        <?php echo $result_eval_period["open_system_date"]; ?>  ถึง <?php echo $result_eval_period["close_system_date"]; ?>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                            <?php
+                        }
+                        ?>  
+                    </div>
+                </div>
                 <!-- Chart -->
                 <div class="row box-padding">
                     <div class="box box-primary ">
                         <?php
                             $sql_kpi_title ="SELECT
-                                                    k.*,kr.*
+                                                    k.*,kr.*,MONTH(NOW()) as current_month
                                             FROM
                                                     kpi k
                                             JOIN kpi_responsible kr ON k.kpi_id = kr.kpi_id
@@ -255,14 +255,15 @@
                                 $query_round = mysqli_query($conn, $sql_round);
                                 $sql_round2 ="select @round as round limit 1";
                                 $query_round2 = mysqli_query($conn, $sql_round2);
-                                    // print_r($result_round1);
+                                // print_r($result_round1);
                                 while($result_round2 = mysqli_fetch_assoc($query_round2)) {
                                      $test = $result_round2["round"];
                                 }
-                                 
-                                
-                                
-                                 
+                                $current_month = $result_kpi["current_month"];
+                                    $sql_month_th = "SELECT * FROM month_th WHERE month_id = '$current_month'";
+                                    $query_month_th = mysqli_query($conn, $sql_month_th);
+                                    $result_month_th = mysqli_fetch_array($query_month_th);
+                                    $month_th = $result_month_th["month_name_full"];
                              ?>
                             <strong><?php echo $kpi_id;?> -<?php echo $kpi_name;?></strong> - <small>ข้อมูลความก้าวหน้าของงาน</small>
                                  <?php } ?>
@@ -292,6 +293,8 @@
                         <div class="box-header">                           
                             <p class="text-center">
                                 <strong>อัพเดต KPIs <?php echo ' '.$test; ?></strong>
+                                &nbsp;|&nbsp;
+                                <strong>ประจำเดือน: <?php echo $month_th; ?></strong>
                             </p>
                         </div>  
                         <form method="POST" action="" >

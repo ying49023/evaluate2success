@@ -139,12 +139,11 @@
                                     <?php 
                                         $sql_department = "SELECT * FROM departments ";
                                         $query_department = mysqli_query($conn, $sql_department);
-
                                     ?>
                                         <select class="form-control" name="department_id" onchange="getJobs(this.value);" <?php if ($my_position_level == "2" || $my_position_level == "3") { echo "disabled"; } ?>  >
                                         <option value="">เลือกทั้งหมด</option>
                                         
-                                        <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
+                                        <?php foreach ($query_department as $result_department){ ?>
                                             <option value="<?php  echo $result_department["department_id"];  ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
                                                 <?php echo $result_department["department_name"]; ?>
                                             </option>
@@ -157,28 +156,28 @@
                             </div>
                             <div class="col-md-5 col-sm-5">
                                 <div class="form-group" >
-                                <label class=" control-label">ตำแหน่ง</label>
-                                <div class="">
-                                <?php 
-                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
-                                    $query_job = mysqli_query($conn, $sql_job);
-                                    
-                                ?>
-                                    <select class="form-control" name="job_id" id="list">
-                                        <option value="">เลือกตำแหน่งทั้งหมด</option>
-                                        <?php 
-                                        if (isset($_GET["department_id"])) {
-                                            if($_GET["department_id"] != ''){
-                                        foreach($query_job as $result_job){ ?>
-                                        <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
-                                            <?php echo $result_job["job_name"]; ?>
-                                        </option>
-                                        <?php }
+                                    <label class=" control-label">ตำแหน่ง</label>
+                                    <div class="">
+                                    <?php 
+                                        $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$get_department_id."' ";
+                                        $query_job = mysqli_query($conn, $sql_job);
+
+                                    ?>
+                                        <select class="form-control" name="job_id" id="list">
+                                            <option value="">เลือกตำแหน่งทั้งหมด</option>
+                                            <?php 
+                                            if (isset($_GET["department_id"])) {
+                                                if($_GET["department_id"] != ''){
+                                            foreach($query_job as $result_job){ ?>
+                                            <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
+                                                <?php echo $result_job["job_name"]; ?>
+                                            </option>
+                                            <?php }
+                                                }
                                             }
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
+                                            ?>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-2">
@@ -199,7 +198,7 @@
                 <div id="filter" class="row box-padding">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <b>รายชื่อ KPIs ทั้งหมด</b>
+                            <h3 class="box-title">รายชื่อ KPIs ทั้งหมด</h3>
                             <button type="button" class="pull-right btn btn-success btn-sm" data-toggle="modal" data-target="#new_kpi">
                                 <i class="glyphicon glyphicon-plus" ></i> &nbsp;เพิ่ม
                             </button>  
@@ -243,11 +242,11 @@
                                                             <label>แผนก<span style="color: red;">*</span></label>
                                                             <select class="form-control" name="department_id" onchange="getJobs(this.value);" required>
                                                                 <option value="">--เลือกแผนก--</option>
-                                                                        <?php foreach ($query_department as $result_department) { ?>
+                                                                <?php foreach ($query_department as $result_department) { ?>
                                                                 <option value="<?php echo $result_department["department_id"]; ?>">
                                                                                 <?php echo $result_department["department_id"] . " - " . $result_department["department_name"]; ?>
                                                                 </option>
-                                                                        <?php } ?>
+                                                                <?php } ?>
                                                             </select>                                                        
                                                         </div>
                                                         <?php
@@ -266,21 +265,21 @@
                                                             </select>
                                                         </div>
                                                         <?php
-                                                        $sql_kpi_group = "SELECT * FROM kpi_group ";
-                                                        $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
+//                                                        $sql_kpi_group = "SELECT * FROM kpi_group ";
+//                                                        $query_kpi_group = mysqli_query($conn, $sql_kpi_group);
                                                         ?>
                                              
-                                                        <div class="form-group">
+<!--                                                        <div class="form-group">
                                                             <label>กลุ่ม KPI<span style="color: red;">*</span></label>
-                                                            <select class="form-control" name="department_id" onchange="getJobs(this.value);" required>
+                                                            <select class="form-control" name="kpi_group_id" required>
                                                                 <option value="">--เลือกกลุ่ม KPI--</option>
-                                                                        <?php foreach ($query_kpi_group as $result_kpi_group) { ?>
-                                                                <option value="<?php echo $result_kpi_group["kpi_group_id"]; ?>">
-                                                                                <?php echo $result_kpi_group["kpi_group_name"]; ?>
+                                                                        <?php //foreach ($query_kpi_group as $result_kpi_group) { ?>
+                                                                <option value="<?php //echo $result_kpi_group["kpi_group_id"]; ?>">
+                                                                                <?php //echo $result_kpi_group["kpi_group_name"]; ?>
                                                                 </option>
-                                                                        <?php } ?>
+                                                                        <?php //} ?>
                                                             </select>                                                        
-                                                        </div>
+                                                        </div>-->
                                                     </div>
                                                 </div>
                                             </div>

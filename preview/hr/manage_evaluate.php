@@ -130,13 +130,13 @@
                 <!--list employee-->
                 <div class="row box-padding">                   
 
-                    <div class="box-header with-border">                        
+<!--                    <div class="box-header with-border">                        
                         <ul id="tabs" class="nav nav-pills nav-justified" data-tabs="tabs">
                             <li class="active"><a href="#addEmp" data-toggle="tab">จัดการระบบการประเมิน</a></li>
                             <li><a href="#editEmp" data-toggle="tab">จัดการการติดตามKPIs</a></li>        
                         </ul>
 
-                    </div>                                                     
+                    </div>                                                     -->
 
                 </div>
                 <div id="my-tab-content" class="tab-content" >

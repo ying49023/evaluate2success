@@ -72,8 +72,8 @@
                         <small>ลบ/แก้ไข</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">manage employee</li>
+                        <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li class="active">Manage employee</li>
                         
                     </ol>
                 </section>

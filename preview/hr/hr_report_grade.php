@@ -65,12 +65,9 @@
                     <small>(ส่วนของเกรด)</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li>
-                        <a href="#"> <i class="fa fa-dashboard"></i>
-                            Home
-                        </a>
-                    </li>
-                    <li class="active">Summary evaluation</li>
+                    <li><a href="index.php"> <i class="fa fa-dashboard"></i>Home</a></li>
+                    <li><a href="" onclick="goBack()">Report</a></li>
+                    <li class="active">Grade report</li>
                 </ol>
             </section>
             <!--/Page header -->

@@ -153,12 +153,13 @@
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="<?php if ($page == 'edit_penalty_reward.php') { echo "active"; } ?>">
-                        <a href="edit_penalty_reward.php"><i class="fa fa-circle-o"></i>แก้ไขข้อมูลรางวัล / โทษ</a>
-                    </li>
                     <li class="<?php if ($page == 'manage_penalty_reward.php' || $page == 'manage_penalty_reward_detail.php') { echo "active"; } ?>">
                         <a href="manage_penalty_reward.php"><i class="fa fa-circle-o"></i>จัดการข้อมูลรางวัล / โทษ</a>
                     </li>
+                    <li class="<?php if ($page == 'edit_penalty_reward.php') { echo "active"; } ?>">
+                        <a href="edit_penalty_reward.php"><i class="fa fa-circle-o"></i>แก้ไขข้อมูลรางวัล / โทษ</a>
+                    </li>
+                    
                 </ul>
             </li>
             <!-- /Manage penalty reward -->

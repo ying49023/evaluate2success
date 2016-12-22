@@ -199,7 +199,7 @@
                         <form method="get">
                             <div class="col-md-2 col-sm-6">
                                 <div class="form-group">
-                                    <label class=" control-label">รอบ</label>
+                                    <label class=" control-label">ปี</label>
                                                 <?php
                                                 $sql_eval = "SELECT DISTINCT(year) FROM evaluation ORDER BY year , term_id ASC";
                                                 $query_eval = mysqli_query($conn, $sql_eval);
@@ -361,14 +361,12 @@
                                             WHERE MONTH(progress_time_update) = MONTH(NOW()) $condition_performance ";
                             $query_per = mysqli_query($conn, $sql_per);
                             $result_per = mysqli_fetch_array($query_per);
+                            $mile = $result_per["performance_mile"];
                             $current_month = $result_per["current_month"];
-                            
-                            if($result_per["performance_mile"] == ''){
-                            ?>
-                                <h3 class="text-middle text-center">ยังไม่มีข้อมูล</h3>
-                            <?php 
-
-                            }else{
+                                $sql_month_th = "SELECT * FROM month_th WHERE month_id = '$current_month'";
+                                $query_month_th = mysqli_query($conn, $sql_month_th);
+                                $result_month_th = mysqli_fetch_array($query_month_th);
+                                $month_th = $result_month_th["month_name_full"];
 
                             ?> 
                                 <script>
@@ -376,18 +374,15 @@
                                         var score = new JustGage({
                                             id: "score",
                                             //value: getRandomInt(0, 100),
-                                            value : <?php echo $result_per["performance_mile"]; ?>,
+                                            value : <?php if($mile==''){  echo 0;}else{ echo $mile; }?>,
                                             min: 0,
                                             max: 100,
-                                            title: "ประจำเดือน: <?php echo $current_month; ?>",
+                                            title: "ประจำเดือน: <?php echo $month_th; ?>",
                                             label: "%",
                                             levelColorsGradient: true
                                         });
                                     });
                                 </script>
-                            <?php 
-                            }
-                            ?>
                             </div>
                         </div>
                         </div>
@@ -407,11 +402,11 @@
                         <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th width="80px" >ID</th>
+                                <th class="text-center" width="80px" >ID</th>
                                 <th>ชื่อ KPIs</th>
-                                <th width="90px">เป้าหมาย</th>
-                                <th width="90px">ทำจริง</th>
-                                <th width="150px">ประสิทธิภาพ</th>
+                                <th class="text-center" width="90px">เป้าหมาย</th>
+                                <th class="text-center" width="90px">ทำจริง</th>
+                                <th class="text-center" width="150px">ประสิทธิภาพ</th>
                                 <th width="60" style="text-align:center">%</th>
                             </tr>
                         </thead>
@@ -446,10 +441,10 @@
                             
                         ?>
                         <tr>
-                            <td><?php echo $result_kpi["kpi_code"]; ?></td>
+                            <td class="text-center"><?php echo $result_kpi["kpi_code"]; ?></td>
                             <td><?php echo $result_kpi["kpi_name"]; ?></td>
-                            <td><?php echo $result_kpi["target"]; ?></td>
-                            <td><?php echo $result_kpi["actual"]; ?></td>
+                            <td class="text-center"><?php echo $result_kpi["target"]; ?></td>
+                            <td class="text-center"><?php echo $result_kpi["actual"]; ?></td>
                             <td>
                                 <div class="progress progress-xs progress-striped active">
                                   <div class="progress-bar <?php if($percent_completed <= 40){ echo 'progress-bar-danger' ; }else if($percent_completed >40 && $percent_completed <=50){ echo 'progress-bar-warining' ;}else if($percent_completed >50 && $percent_completed <=75){ echo 'progress-bar-info' ;}else if($percent_completed > 75){ echo 'progress-bar-success' ;}  ?>" style="width:<?php echo (int)$percent_completed ; ?>%"></div>

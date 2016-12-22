@@ -64,8 +64,14 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">summary evaluation</li>
+                        <li>
+                            <a href="#"> <i class="fa fa-dashboard"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li><a href="tracking_sub_list.php">Tracking</a></li>
+                        <li><a href="" onclick="goBack()">KPIs Tracking</a></li>
+                        <li class="active">KPI</li>
                     </ol>
                 </section>
                 <!--/Page header -->

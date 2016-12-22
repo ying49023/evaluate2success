@@ -68,8 +68,14 @@
                         <small></small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">summary evaluation</li>
+                        <li>
+                            <a href="index.php"> <i class="fa fa-dashboard"></i>
+                                Home
+                            </a>
+                        </li>
+                        <li ><a href="total_personal_dashboard.php">Personal dashboard</a></li>
+                        <li><a href="" onclick="goBack()" >Overall personal dashboard</a></li>
+                        <li class="active">Personal KPI</li>
                     </ol>
                 </section>
                 <!--/Page header -->
@@ -393,7 +399,7 @@
                 
                 
                 var options2 = {
-                    title: '<?php echo $kpi_id.' - '.$kpi_name; ?>',
+                    title: '<?php echo $kpi_id.' - '.$kpi_name ?>',
                     legend: 'none',
                     bar: {groupWidth: '70%'},
                     vAxis: { gridlines: { count: 5 } }

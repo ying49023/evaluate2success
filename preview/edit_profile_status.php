@@ -38,7 +38,7 @@ if ($get_emp_id != '') {
                         echo "Error Save [" . $add_query . "]";
                     }
                     
-                    $upload_image = new upload($_FILES['image_name']) ;
+            $upload_image = new upload($_FILES['image_name']) ;
             //  ถ้าหากมีภาพถูกอัปโหลดมาจริง
             if( $upload_image->uploaded ) {
                 // ย่อขนาดภาพให้เล็กลงหน่อย  โดยยึดขนาดภาพตามความกว้าง  ความสูงให้คำณวนอัตโนมัติ

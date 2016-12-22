@@ -201,6 +201,8 @@
                                 </div>
                             </div>
                             
+                            <?php if ($my_position_level == "2" || $my_position_level == "3") { ?>
+                                
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="form-group">
                                     <label class=" control-label">แผนก/ฝ่าย</label>
@@ -210,7 +212,53 @@
                                         $query_department = mysqli_query($conn, $sql_department);
 
                                     ?>
-                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" <?php if ($my_position_level == "2" || $my_position_level == "3") { echo "disabled"; } ?> >
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);" disabled  >
+                                        <option value="">เลือกทั้งหมด</option>
+                                        
+                                        <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
+                                            <option value="<?php  echo $result_department["department_id"];  ?>" <?php if($get_department_id == $result_department["department_id"]) { echo "selected"; }  ?> >
+                                                <?php echo $result_department["department_name"]; ?>
+                                            </option>
+                                            <?php } ?>
+                                        
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="form-group" >
+                                <label class=" control-label">ตำแหน่ง</label>
+                                <div class="">
+                                <?php 
+                                    $sql_job = "SELECT distinct(job_name), job_id FROM jobs WHERE department_id = '".$my_dept_id."' ";
+                                    $query_job = mysqli_query($conn, $sql_job);
+                                ?>
+                                    <select class="form-control" name="job_id" id="list" >
+                                        <option value="">เลือกตำแหน่งทั้งหมด</option>
+                                        <?php 
+
+                                        foreach($query_job as $result_job){ ?>
+                                        <option value="<?php echo $result_job["job_id"]; ?>" <?php if($get_job_id == $result_job["job_id"]){ echo "selected"; } ?> >
+                                            <?php echo $result_job["job_name"]; ?>
+                                        </option>
+                                        <?php }
+                                        ?>
+                                    </select>
+                                </div>
+                                </div>
+                            </div>
+                            <?php }else { ?>
+                            <div class="col-lg-3 col-md-3 col-sm-6">
+                                <div class="form-group">
+                                    <label class=" control-label">แผนก/ฝ่าย</label>
+                                    <div class="">
+                                    <?php 
+                                        $sql_department = "SELECT * FROM departments ";
+                                        $query_department = mysqli_query($conn, $sql_department);
+
+                                    ?>
+                                        <select class="form-control" name="department_id" onchange="getJobs(this.value);"  >
                                         <option value="">เลือกทั้งหมด</option>
                                         
                                         <?php while($result_department = mysqli_fetch_array($query_department,MYSQLI_ASSOC)) { ?>
@@ -247,6 +295,7 @@
                                 </div>
                                 </div>
                             </div>
+                            <?php } ?>
                             <div class="col-lg-2 col-md-2 col-sm-12">
                                 <div class="form-group">
                                     <div class=" pull-right">
@@ -288,8 +337,8 @@
                                         <th class="text-center"></th>
                                         <th class="text-center"><button class="sort" data-sort="id">ID</button></th>
                                         <th ><button class="sort" data-sort="name">ชื่อ-นามสกุล</button></th>
-                                        <th class="text-center"><button class="sort" data-sort="job">ตำแหน่ง</button></th>
-                                        <th class="text-center"><button class="sort" data-sort="dept">แผนก</button></th>
+                                        <th class=""><button class="sort" data-sort="job">ตำแหน่ง</button></th>
+                                        <th class=""><button class="sort" data-sort="dept">แผนก</button></th>
                                         <th width="100px"><center>ดูผลงาน</center></th>
                                         <th width="120px"><center>ความสำเร็จ(%)</center></th>
                                         <th class="text-center">ดู</th>
@@ -341,8 +390,8 @@
                                     <td class="text-center"><img class="img-circle img-center img-sm" src="http://palmup.xyz/evaluate2success/preview/upload_images/<?php if($profile_picture ==''){ echo "default.png";} else { echo $profile_picture; } ?>" ></td>
                                     <td class="id text-center"><?php  echo $emp_id; ?></td>
                                     <td class="name"><?php echo $name; ?></td>
-                                    <td class="job text-center"><?php echo $job; ?></td>
-                                    <td class="dept text-center"><?php echo $dept; ?></td>
+                                    <td class="job"><?php echo $job; ?></td>
+                                    <td class="dept"><?php echo $dept; ?></td>
                                    <td width="100px">
                                             <div class="progress progress-xs progress-striped active">
                                                 <div class="progress-bar progress-bar-success" style="width:<?php if($mile==''){  echo 0;}else{ echo $mile; }?>%"></div>
